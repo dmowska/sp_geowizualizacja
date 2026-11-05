@@ -1,0 +1,770 @@
+---
+format: live-html
+webr:
+  packages:
+    - dplyr
+    - tidyr
+  resources:
+    - dane/gapminder_regions.csv
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+```{webr}
+#| setup: true
+#| exercise:
+#|   - pd_1
+#|   - pd_2
+#|   - pd_3
+#|   - pd_4
+#|   - pd_5
+library(dplyr)
+library(tidyr)
+dane <- read.csv("dane/gapminder_regions.csv", encoding = "UTF-8") |>
+  mutate(across(where(is.character), as.factor))
+dane2007 <- dane |>
+  filter(year == 2007)
+```
+
+# Praca z danymi {#sec-praca-z-danymi}
+
+Rozdział przedstawia podstawowe zasady pracy w R: wczytanie danych, przegląd tabeli
+oraz przetwarzanie danych w **potoku** — ciągu operacji
+wykonywanych kolejno na tabeli. Wszystkie przykłady wykorzystują zbiór
+danych Gapminder, który jest podstawą przykładów raportów w dalszej części skryptu.
+
+Kod rozdziału jest dostępny w pliku `kod/03_praca_z_danymi.qmd`.
+Uruchamianie bloków kodu w RStudio opisuje @sec-rstudio.
+
+## Dane {#sec-pd-dane}
+
+Plik `dane/gapminder_regions.csv` zawiera dane Gapminder (<https://www.gapminder.org/data/>,
+licencja CC0 pakietu `gapminder`) dla 142 krajów w latach 1952–2007, co 5 lat. **Jednostką obserwacji jest kraj w danym
+roku**: każdy kraj występuje w zbiorze 12 razy, a zbiór liczy 142 × 12 = 1704 obserwacje.
+W rozdziale wykorzystywane są kolumny:
+
+| Kolumna | Znaczenie |
+|---|---|
+| `kraj` | nazwa kraju |
+| `kontynent` | kontynent, 5 kategorii |
+| `subregion_pl` | subregion świata, 18 kategorii |
+| `year` | rok pomiaru |
+| `lifeExp` | oczekiwana długość życia w chwili urodzenia, w latach |
+| `pop` | liczba ludności |
+| `gdpPercap` | PKB per capita w dolarach amerykańskich, skorygowany o inflację |
+| `income_grp_pl` | grupa dochodowa: niski, średni, wysoki |
+
+## Obiekty, funkcje i argumenty {#sec-pd-obiekty}
+
+Kod R składa się z wywołań **funkcji**. Funkcja wykonuje określoną operację na danych
+przekazanych w **argumentach**, wpisanych w nawiasie po nazwie funkcji i oddzielonych
+przecinkami:
+
+```{r}
+# zaokrąglenie liczby 81,757 do 1 miejsca po przecinku
+round(81.757, 1)
+```
+
+Funkcja `round()` przyjmuje dwa argumenty: liczbę do zaokrąglenia i liczbę miejsc po
+przecinku. Argumenty można podawać z nazwą, w postaci `nazwa = wartość` — zapis
+`round(81.757, digits = 1)` daje ten sam wynik. Nazwy i kolejność argumentów każdej
+funkcji podaje jej dokumentacja, wyświetlana w zakładce **Help** po wpisaniu w konsoli
+znaku zapytania i nazwy funkcji, np. `?round`.
+
+Wynik funkcji można zapisać jako **obiekt**. Znak `<-` oznacza **przypisanie**: wynik
+działania po prawej stronie zostaje zapisany pod nazwą podaną po lewej stronie.
+
+```{r}
+# zapisanie wyniku jako obiektu o nazwie wynik
+wynik <- round(81.757, 1)
+
+# wyświetlenie zawartości obiektu
+wynik
+```
+
+Przypisanie można zapisać także znakiem `=`: zapisy `wynik <- round(81.757, 1)`
+i `wynik = round(81.757, 1)` tworzą taki sam obiekt. Oba znaki są zamienne wyłącznie
+w samodzielnym poleceniu przypisania. W nawiasie wywołania funkcji znak `=` łączy nazwę
+argumentu z jego wartością i nie tworzy obiektu: po wykonaniu `round(81.757, digits = 1)`
+obiekt `digits` nie pojawia się w zakładce **Environment**. Znak `<-` można stosować
+w każdym miejscu kodu i oznacza on przypisanie. Skrypt stosuje `<-` przy tworzeniu obiektów,
+a `=` przy podawaniu argumentów.
+
+Utworzone obiekty widoczne są w zakładce **Environment**. Zasady zapisu kodu:
+
+- wielkość liter ma znaczenie: `lifeExp` i `lifeexp` to dwie różne nazwy;
+- tekst zapisuje się w cudzysłowie (`"Europa"`), liczby — bez cudzysłowu (`2007`);
+- w kodzie R separatorem dziesiętnym jest zawsze kropka (`81.757`), a przecinek oddziela
+  argumenty. Ustawienia regionalne komputera nie zmieniają tej zasady. Zapis `81,757`
+  samodzielnie jest błędem składni, a w wywołaniu funkcji zostaje odczytany jako dwa
+  argumenty.
+
+Zasada ta dotyczy kodu. W pliku z danymi separatorem dziesiętnym może być przecinek:
+`read.csv()` przyjmuje domyślnie kropkę, a plik z przecinkiem dziesiętnym wczytuje się
+z argumentem `dec = ","` (@sec-pd-wlasne).
+
+## Wczytanie i przegląd danych {#sec-pd-wczytanie}
+
+```{r}
+#| message: false
+# wczytanie pakietu tidyverse: zestawu pakietów do przetwarzania danych (dplyr, tidyr)
+# i tworzenia wykresów (ggplot2)
+library(tidyverse)
+
+# wczytanie pliku CSV i zapisanie tabeli jako obiektu o nazwie dane;
+# ścieżka jest względna wobec folderu z plikiem .qmd
+dane <- read.csv("dane/gapminder_regions.csv", encoding = "UTF-8")
+```
+
+- `library(tidyverse)` wczytuje pakiet. Pakiet instaluje się jeden raz
+  (@sec-inst-pakiety), natomiast wczytuje w każdej sesji pracy — dlatego wywołanie
+  `library()` znajduje się w każdym pliku `.qmd`, przed pierwszym użyciem pakietu.
+- `read.csv()` wczytuje plik tekstowy, w którym wartości oddzielone są przecinkami,
+  i zwraca **ramkę danych** (ang. *data frame*) — tabelę, w której każdy wiersz to jedna
+  obserwacja, a każda kolumna — jedna zmienna.
+- `encoding = "UTF-8"` informuje R, że tekst w pliku zapisano w kodowaniu UTF-8.
+  **Kodowanie** określa sposób zapisu znaków w pliku, w tym polskich liter. Argument
+  oznacza wczytany tekst jako zapisany w UTF-8 i nie zmienia jego zawartości. Wszystkie
+  pliki CSV w skrypcie mają kodowanie UTF-8. Plik w innym kodowaniu, np. Windows-1250,
+  wczytuje się z argumentem `fileEncoding = "CP1250"`, który zamienia tekst na kodowanie
+  używane przez R.
+- Ścieżka `"dane/gapminder_regions.csv"` jest **względna**: wskazuje plik
+  `gapminder_regions.csv` w podfolderze `dane/` folderu, w którym znajduje się plik `.qmd`.
+
+::: {.callout-important}
+## Katalog roboczy dokumentu `.qmd`
+Przy pracy z dokumentem `.qmd` katalogiem roboczym jest folder, w którym zapisano plik
+`.qmd`. Ścieżka `"dane/gapminder_regions.csv"` jest poprawna, jeżeli folder `dane/`
+znajduje się w tym samym folderze co plik `.qmd` (@sec-rs-katalog).
+:::
+
+Po wczytaniu sprawdza się zawartość tabeli:
+
+```{r}
+# pierwsze 6 wierszy tabeli
+head(dane)
+```
+
+```{r}
+# struktura tabeli: liczba obserwacji i kolumn, typ i pierwsze wartości każdej kolumny
+str(dane)
+```
+
+`str()` podaje liczbę obserwacji (`obs.`) i kolumn (`variables`), a dla każdej kolumny
+jej nazwę, typ i pierwsze wartości. Typ `chr` oznacza tekst, `int` — liczby całkowite,
+`num` — liczby rzeczywiste. Wiersze pliku nie są uporządkowane według roku: pierwsze
+wartości kolumny `year` to 2002, 2007, 1992.
+
+Zmienną jakościową można zapisać w R jako typ **factor** (czynnik). Zmienna typu factor
+przyjmuje wartości ze skończonego zbioru kategorii, nazywanych **poziomami**
+(ang. *levels*). Po zamianie kolumny tekstowej na factor funkcja `summary()` podaje liczbę obserwacji
+w każdej kategorii. Przykład dotyczy kolumny `kontynent`:
+
+```{r}
+# zamiana kolumny kontynent z tekstu na zmienną typu factor (zmienną jakościową)
+dane$kontynent <- as.factor(dane$kontynent)
+```
+
+```{r}
+# liczba obserwacji w każdej kategorii zmiennej jakościowej
+summary(dane$kontynent)
+```
+
+```{r}
+# kolumna tekstowa (bez zamiany na factor): summary() podaje tylko liczbę wartości i typ
+summary(dane$subregion_pl)
+```
+
+```{r}
+# minimum, kwartyle, mediana, średnia i maksimum zmiennej ilościowej
+summary(dane$lifeExp)
+```
+
+- Znak `$` odwołuje się do jednej kolumny tabeli: `dane$kontynent` oznacza kolumnę
+  `kontynent` z tabeli `dane`.
+- `as.factor()` zamienia kolumnę tekstową na factor. Wynik zostaje przypisany (`<-`)
+  z powrotem do tej samej kolumny, dlatego w tabeli `dane` kolumna `kontynent` ma od tej
+  chwili typ factor.
+- `summary()` podsumowuje zmienną zależnie od jej typu: dla zmiennej typu factor podaje
+  liczbę obserwacji w każdej kategorii, dla kolumny tekstowej — wyłącznie liczbę wartości
+  (`Length`) i typ, dla zmiennej liczbowej — minimum (`Min.`), pierwszy kwartyl
+  (`1st Qu.`), medianę, średnią, trzeci kwartyl (`3rd Qu.`) i maksimum.
+
+Zamianę wszystkich kolumn tekstowych na typ czynnikowy (factor) jednocześnie pokazuje
+@sec-pd-typy.
+
+## Potok przetwarzania danych {#sec-pd-potok}
+
+Przetwarzanie danych składa się zwykle z kilku kroków, np.: wybierz obserwacje
+z 2007 roku, podziel je według kontynentów, oblicz średnią. W R kroki te zapisuje się
+jako **potok** połączony operatorem `|>`. Operator `|>` przekazuje wynik znajdujący się po jego
+lewej stronie do funkcji po prawej stronie.
+
+Najprostszy potok ma jeden krok — wybór obserwacji z 2007 roku:
+
+```{r}
+# obserwacje z 2007 roku zapisane jako nowy obiekt dane2007
+dane2007 <- dane |>
+  filter(year == 2007)
+```
+
+Zapis czyta się: „weź tabelę `dane`, **a następnie** wybierz obserwacje, w których
+rok jest równy 2007; wynik zapisz jako obiekt `dane2007`”. Funkcja `filter()` pozostawia
+obserwacje spełniające warunek; operator `==` sprawdza równość. Nowa tabela pojawia się
+w zakładce **Environment**:
+
+```{r}
+# liczba wierszy tabeli wyjściowej i tabeli po wyborze obserwacji
+nrow(dane)
+nrow(dane2007)
+```
+
+Tabela `dane2007` zawiera 142 wiersze — po jednym dla każdego kraju. Tabela `dane`
+nie zmieniła się i nadal zawiera 1704 wiersze.
+
+### Przypisanie wyniku potoku {#sec-pd-przypisanie}
+
+Wynik potoku zapisuje się jako obiekt za pomocą przypisania `<-`: po lewej stronie
+znajduje się nazwa nowego obiektu, po prawej — potok. W ten sposób powstała tabela
+`dane2007`:
+
+```{r}
+#| eval: false
+# wynik potoku zapisany jako obiekt dane2007
+dane2007 <- dane |>
+  filter(year == 2007)
+```
+
+- Przypisanie stosuje się, gdy wynik potoku jest wykorzystywany w kolejnych krokach
+  analizy — tabela `dane2007` służy do obliczeń w dalszej części rozdziału.
+- Wynik końcowy, który służy do odczytania, np. tabela statystyk obliczona funkcją
+  `summarise()`, jest wyświetlany bez przypisania (@sec-pd-wybor).
+- Przypisanie do nazwy istniejącego obiektu (`dane <- dane |> ...`) zastępuje jego
+  dotychczasową zawartość.
+
+### Operatory `|>` i `%>%` {#sec-pd-operatory}
+
+W kodzie R występują dwa operatory potoku:
+
+- `|>` — operator wbudowany w R od wersji 4.1.0; nie wymaga wczytania pakietu. Funkcję
+  po prawej stronie zapisuje się zawsze z nawiasami: `dane |> head()`;
+- `%>%` — operator z pakietu `magrittr`, wczytywany razem z `tidyverse`. Funkcję po
+  prawej stronie można zapisać z nawiasami albo bez: `dane %>% head()`, `dane %>% head`.
+
+W zastosowaniach pokazanych w skrypcie oba operatory działają tak samo: wynik po lewej
+stronie staje się pierwszym argumentem funkcji po prawej stronie — zapis `x |> f(y)`
+oznacza `f(x, y)`. Skrypt wykorzystuje operator `|>`. Operator `%>%` występuje w wielu
+starszych materiałach, przykładach i odpowiedziach na forach.
+
+W RStudio operator potoku wstawia się skrótem **Ctrl+Shift+M**. To, który operator
+wstawia skrót, zależy od opcji **Use native pipe operator, |> (requires R 4.1+)**
+w menu **Tools → Global Options → Code → Editing**. Zaznaczona opcja oznacza
+wstawianie operatora `|>`. W wersjach RStudio od 2026.06 opcja ta jest domyślnie
+zaznaczona; w starszych wersjach należy ją zaznaczyć samodzielnie.
+
+### Potok zmieniający tabelę: zamiana typu kolumn {#sec-pd-typy}
+
+Potok może zmienić tabelę i zapisać wynik pod tą samą nazwą. Poniższy potok zamienia
+wszystkie kolumny tekstowe na zmienne typu factor:
+
+```{r}
+# zamiana wszystkich kolumn tekstowych na zmienne typu factor (zmienne jakościowe)
+dane <- dane |>
+  mutate(across(where(is.character), as.factor))
+```
+
+- `where(is.character)` wybiera kolumny tekstowe, `as.factor` zamienia każdą z nich
+  na factor, a `mutate(across(...))` zapisuje zmienione kolumny w tabeli.
+- Wynik zostaje przypisany do obiektu `dane` — tabela `dane` zostaje zastąpiona tabelą
+  z kolumnami typu factor.
+
+Tabela `dane2007` powstała wcześniej, z tabeli `dane` sprzed zamiany typów. Zmiana
+obiektu `dane` nie zmienia obiektów utworzonych z niego wcześniej, dlatego tabelę
+`dane2007` tworzy się ponownie:
+
+```{r}
+# ponowne utworzenie tabeli dane2007 z tabeli z kolumnami typu factor
+dane2007 <- dane |>
+  filter(year == 2007)
+```
+
+### Funkcje wykorzystywane w potokach
+
+Kroki potoku wykonują funkcje pakietów `dplyr` i `tidyr` (część `tidyverse`). Każda
+z nich wykonuje jedną operację na tabeli:
+
+| Funkcja | Operacja |
+|---|---|
+| `filter()` | wybór obserwacji (wierszy) spełniających warunek |
+| `select()` | wybór zmiennych (kolumn) |
+| `arrange()` | uporządkowanie wierszy według wartości zmiennej |
+| `mutate()` | utworzenie nowej zmiennej albo zmiana istniejącej |
+| `group_by()` | podział tabeli na grupy według zmiennej jakościowej |
+| `summarise()` | obliczenie podsumowania: jeden wiersz dla całej tabeli albo dla każdej grupy |
+| `pivot_wider()`, `pivot_longer()` | zmiana postaci tabeli: szeroka ↔ długa |
+| `left_join()` | połączenie dwóch tabel według wspólnej zmiennej |
+
+Pełny opis pakietów zawiera @sec-pakiety. Kolejne sekcje pokazują potoki
+odpowiadające na konkretne pytania o dane.
+
+## Braki danych {#sec-pd-braki}
+
+Brak danych R oznacza symbolem `NA` (ang. *not available*). `summary()` podaje liczbę
+braków w pozycji `NA's`. Funkcje obliczające statystyki, np. `mean()`, zwracają `NA`,
+jeżeli zmienna zawiera choć jeden brak; argument `na.rm = TRUE` pomija braki
+w obliczeniach.
+
+W pliku `gapminder_regions.csv` brakuje przypisania do grupy dochodowej dla dwóch
+krajów: Reunionu oraz Zachodniego Brzegu i Strefy Gazy. Pola te w pliku są puste.
+`read.csv()` wczytuje puste pole kolumny tekstowej jako pusty tekst `""`, a nie jako
+`NA` — w podsumowaniu pojawia się kategoria bez nazwy:
+
+```{r}
+# liczba obserwacji w grupach dochodowych; pierwsza pozycja to kategoria bez nazwy
+summary(dane$income_grp_pl)
+```
+
+Argument `na.strings = ""` funkcji `read.csv()` powoduje, że puste pola zostają
+wczytane jako `NA`:
+
+```{r}
+# wczytanie pliku z zamianą pustych pól na NA (obiekt pomocniczy dane_na)
+dane_na <- read.csv("dane/gapminder_regions.csv",
+                    encoding = "UTF-8", na.strings = "") |>
+  mutate(across(where(is.character), as.factor))
+
+summary(dane_na$income_grp_pl)
+```
+
+W obu przypadkach brak przypisania dotyczy 24 obserwacji (2 kraje × 12 lat).
+W dalszej części rozdziału i w przykładach raportów dane wczytywane są bez argumentu
+`na.strings`.
+
+## Wybór obserwacji i zmiennych {#sec-pd-wybor}
+
+**Które kraje Europy miały w 2007 roku najwyższą oczekiwaną długość życia?**
+
+```{r}
+# pięć krajów Europy o najwyższej oczekiwanej długości życia w 2007 roku
+dane |>
+  filter(kontynent == "Europa", year == 2007) |>   # obserwacje: Europa, rok 2007
+  select(kraj, lifeExp) |>                          # zmienne: kraj i lifeExp
+  arrange(desc(lifeExp)) |>                         # porządek malejący lifeExp
+  head(5)                                           # pierwsze 5 wierszy
+```
+
+W 2007 roku najwyższą oczekiwaną długość życia w Europie miały Islandia (81,8 roku)
+i Szwajcaria (81,7 roku).
+
+- `filter()` pozostawia obserwacje spełniające warunek. Operator `==` sprawdza równość
+  (pojedynczy znak `=` służy do podawania argumentów). Warunki oddzielone przecinkiem
+  muszą być spełnione jednocześnie: kontynent to Europa **i** rok to 2007.
+- `select()` pozostawia wymienione kolumny, w podanej kolejności.
+- `arrange()` porządkuje wiersze rosnąco; `desc()` odwraca porządek na malejący.
+- `head(5)` zwraca pierwsze 5 wierszy wyniku.
+
+**Jaka była średnia i mediana oczekiwanej długości życia w Europie w 2007 roku?**
+
+```{r}
+# liczba krajów, średnia i mediana oczekiwanej długości życia w Europie w 2007 roku
+dane |>
+  filter(kontynent == "Europa", year == 2007) |>
+  summarise(
+    n = n(),                              # liczba obserwacji
+    srednia = round(mean(lifeExp), 1),    # średnia arytmetyczna
+    mediana = round(median(lifeExp), 1)   # mediana
+  )
+```
+
+Dane obejmują 29 krajów Europy. Średnia oczekiwana długość życia w 2007 roku wynosiła
+77,9 roku, mediana — 78,9 roku.
+
+- `summarise()` tworzy nową tabelę. Każdy argument w postaci `nazwa = obliczenie`
+  tworzy w niej jedną kolumnę: `srednia = mean(lifeExp)` oznacza kolumnę `srednia`,
+  której wartość oblicza funkcja `mean()`.
+- `n()` zwraca liczbę obserwacji, `mean()` — średnią arytmetyczną, `median()` — medianę,
+  a `round(x, 1)` zaokrągla wynik do 1 miejsca po przecinku.
+
+## Podsumowanie w grupach {#sec-pd-grupy}
+
+**Jak różniła się oczekiwana długość życia między kontynentami w 2007 roku?**
+
+Potok wykorzystuje tabelę `dane2007` z obserwacjami z 2007 roku (@sec-pd-potok):
+
+```{r}
+# statystyki oczekiwanej długości życia w 2007 roku w podziale na kontynenty
+dane2007 |>
+  group_by(kontynent) |>                  # podział na grupy według kontynentu
+  summarise(
+    n = n(),
+    srednia = round(mean(lifeExp), 1),
+    mediana = round(median(lifeExp), 1),
+    minimum = min(lifeExp),
+    maksimum = max(lifeExp)
+  )
+```
+
+Najniższa średnia oczekiwana długość życia w 2007 roku dotyczyła Afryki (54,8 roku,
+52 kraje), najwyższa — kontynentu „Australia”, reprezentowanego przez dwa kraje:
+Australię i Nową Zelandię (80,7 roku).
+
+- `group_by(kontynent)` dzieli tabelę na grupy według kategorii zmiennej `kontynent`.
+  Kolejna funkcja, `summarise()`, oblicza podsumowanie osobno dla każdej grupy — wynik
+  zawiera jeden wiersz na kontynent.
+- Wynik `summarise()` jest wyświetlany jako **tibble** — odmiana ramki danych używana
+  w `tidyverse`. Pierwszy wiersz wydruku podaje wymiary tabeli (`5 × 6`: 5 wierszy,
+  6 kolumn), drugi — typ każdej kolumny: `<fct>` (factor), `<int>` (liczby całkowite),
+  `<dbl>` (liczby rzeczywiste).
+
+## Nowa zmienna {#sec-pd-mutate}
+
+**Jak zmieniała się oczekiwana długość życia i liczba ludności Polski w latach 1952–2007?**
+
+```{r}
+# oczekiwana długość życia i liczba ludności Polski w kolejnych latach
+dane |>
+  filter(kraj == "Polska") |>                 # obserwacje dla Polski
+  mutate(pop_mln = round(pop / 1000000, 1)) |>    # nowa zmienna: ludność w mln
+  select(year, lifeExp, pop_mln) |>           # wybrane zmienne
+  arrange(year)                               # porządek rosnący według roku
+```
+
+W latach 1952–2007 oczekiwana długość życia w Polsce wzrosła z 61,3 do 75,6 roku,
+a liczba ludności — z 25,7 do 38,5 mln.
+
+- `mutate()` tworzy nową kolumnę w postaci `nazwa = obliczenie`. Kolumna `pop_mln`
+  zawiera liczbę ludności podzieloną przez milion.
+- `arrange(year)` porządkuje wiersze według roku. Bez tego kroku wiersze wyświetlają
+  się w kolejności z pliku, która nie jest uporządkowana według roku.
+
+## Zmiana postaci tabeli {#sec-pd-pivot}
+
+Tabela `dane` ma **postać długą**: każda obserwacja (kraj w danym roku) zajmuje
+osobny wiersz, a rok jest zapisany w kolumnie `year`. W **postaci szerokiej** każdy kraj
+zajmuje jeden wiersz, a wartości z różnych lat znajdują się w osobnych kolumnach.
+Postać szeroka umożliwia obliczenia między latami, np. różnicę wartości.
+
+**O ile wzrosła oczekiwana długość życia w krajach Europy między 1952 a 2007 rokiem?**
+
+```{r}
+# tabela w postaci szerokiej: kraje Europy, wartości z lat 1952 i 2007 w osobnych kolumnach
+europa_szer <- dane |>
+  filter(kontynent == "Europa", year %in% c(1952, 2007)) |>
+  select(kraj, year, lifeExp) |>
+  pivot_wider(names_from = year, values_from = lifeExp, names_prefix = "r")
+
+europa_szer
+```
+
+```{r}
+# przyrost oczekiwanej długości życia; 5 krajów o największym przyroście
+europa_szer |>
+  mutate(przyrost = round(r2007 - r1952, 1)) |>
+  arrange(desc(przyrost)) |>
+  head(5)
+```
+
+Największy przyrost oczekiwanej długości życia w Europie w latach 1952–2007, wyrażony
+w latach, dotyczył Albanii (21,2) oraz Bośni i Hercegowiny (21,0).
+
+- `year %in% c(1952, 2007)` sprawdza, czy wartość zmiennej `year` należy do zbioru
+  podanych wartości. Funkcja `c()` łączy wartości w **wektor** — uporządkowany ciąg
+  wartości tego samego typu.
+- `pivot_wider()` zamienia postać długą na szeroką: `names_from = year` — nazwy nowych
+  kolumn pochodzą z wartości zmiennej `year`, `values_from = lifeExp` — wartości nowych
+  kolumn pochodzą ze zmiennej `lifeExp`, `names_prefix = "r"` — przedrostek nazw kolumn.
+  Przedrostek jest potrzebny, ponieważ poprawna składniowo nazwa w R zaczyna się od
+  litery; nazwa zaczynająca się od cyfry wymagałaby w kodzie zapisu w odwrotnych
+  apostrofach, np. `` `2007` ``.
+- `mutate(przyrost = r2007 - r1952)` oblicza różnicę między kolumnami w każdym wierszu.
+
+Funkcja `pivot_longer()` wykonuje operację odwrotną — zamienia postać szeroką na długą:
+
+```{r}
+# powrót do postaci długiej: kolumny r1952 i r2007 zamienione na pary rok–wartość
+europa_szer |>
+  pivot_longer(cols = c(r1952, r2007), names_to = "rok",
+               names_prefix = "r", values_to = "lifeExp") |>
+  head(4)
+```
+
+- `cols` — kolumny, które zostają zamienione na wiersze; `names_to` — nazwa nowej kolumny
+  z dotychczasowymi nazwami kolumn; `values_to` — nazwa nowej kolumny z wartościami;
+  `names_prefix = "r"` usuwa przedrostek z nazw.
+
+Postać długa jest potrzebna, gdy kilka zmiennych ma zostać przedstawionych na jednym
+wykresie jako kategorie jednej zmiennej — w raporcie o warunkach meteorologicznych w 2020 roku liczba dni z deszczem
+i liczba dni ze śniegiem zostają w ten sposób zapisane w jednej kolumnie.
+
+## Łączenie tabel {#sec-pd-join}
+
+**Które kraje Europy Wschodniej miały w 2007 roku oczekiwaną długość życia wyższą od
+średniej dla swojego subregionu?**
+
+Pierwszy potok tworzy tabelę średnich dla 18 subregionów. Drugi dołącza średnią
+subregionu do każdego kraju i oblicza różnicę.
+
+```{r}
+# średnia oczekiwana długość życia w 2007 roku w każdym subregionie
+srednie_subregionow <- dane2007 |>
+  group_by(subregion_pl) |>
+  summarise(srednia_subregionu = mean(lifeExp))
+```
+
+```{r}
+# kraje Europy Wschodniej: oczekiwana długość życia, średnia subregionu i różnica
+dane2007 |>
+  filter(subregion_pl == "Europa Wschodnia") |>
+  left_join(srednie_subregionow, by = "subregion_pl") |>     # dołączenie średniej
+  mutate(roznica = round(lifeExp - srednia_subregionu, 1),  # różnica z wartości dokładnej
+         srednia_subregionu = round(srednia_subregionu, 1)) |>
+  select(kraj, lifeExp, srednia_subregionu, roznica) |>
+  arrange(desc(roznica))
+```
+
+Średnia oczekiwana długość życia w Europie Wschodniej w 2007 roku wynosiła 74,3 roku.
+Wyższą wartość miały Czechy (o 2,2 roku), Polska (o 1,3 roku) i Słowacja (o 0,4 roku),
+niższą — Węgry, Bułgaria i Rumunia.
+
+- `left_join()` łączy dwie tabele według wspólnej zmiennej podanej w argumencie `by`.
+  Do każdego wiersza pierwszej tabeli dołączane są kolumny z wiersza drugiej tabeli
+  o tej samej wartości `subregion_pl`.
+- W `mutate()` różnica jest obliczana z dokładnej wartości średniej, a dopiero potem
+  średnia zostaje zaokrąglona — argumenty `mutate()` wykonywane są w podanej kolejności.
+
+To samo połączenie według wspólnej zmiennej wykorzystuje przykład raportu z mapą: do tabeli
+z danymi dołączana jest tabela z granicami państw.
+
+## Modyfikowanie potoku {#sec-pd-modyfikacja}
+
+Działający potok jest punktem wyjścia do kolejnych analiz. Zmiana jednego elementu
+potoku zmienia pytanie, na które odpowiada wynik. Na przykładzie potoku z
+@sec-pd-grupy:
+
+| Co zmienić | Gdzie w potoku | Przykład |
+|---|---|---|
+| badaną zmienną | nazwa zmiennej w funkcjach `mean()`, `median()`, `min()`, `max()` | `lifeExp` → `gdpPercap` |
+| grupowanie | zmienna w `group_by()` | `kontynent` → `income_grp_pl` |
+| rok | warunek w `filter()`, w potoku tworzącym `dane2007` | `year == 2007` → `year == 1952` |
+| zakres statystyk | argumenty `summarise()` | dodanie `odch_std = sd(lifeExp)` |
+
+**Jak różnił się PKB per capita między grupami dochodowymi w 2007 roku?**
+
+```{r}
+# statystyki PKB per capita w 2007 roku w podziale na grupy dochodowe
+dane2007 |>
+  group_by(income_grp_pl) |>
+  summarise(
+    n = n(),
+    srednia = round(mean(gdpPercap)),
+    mediana = round(median(gdpPercap))
+  )
+```
+
+W potoku zmieniono zmienną grupującą i badaną zmienną. Pierwszy wiersz wyniku to
+kategoria bez nazwy (`""`): dwa kraje bez przypisania do grupy dochodowej
+(@sec-pd-braki). `round()` bez drugiego argumentu zaokrągla do liczby całkowitej.
+
+## Wczytanie własnych danych {#sec-pd-wlasne}
+
+Plik z danymi do raportu umieszcza się w folderze `dane/`. Sposób wczytania zależy od formatu
+pliku, dlatego po wczytaniu należy sprawdzić wynik funkcją `str()`: kolumna liczbowa powinna
+mieć typ `num` albo `int`. Typ `chr` przy kolumnie liczbowej wskazuje zwykle na niewłaściwy
+separator kolumn albo separator dziesiętny.
+
+**Plik CSV.** Funkcja `read.csv()` domyślnie przyjmuje przecinek jako separator kolumn i kropkę
+jako separator dziesiętny. W pliku `dane/lasy_bld.csv`, pobranym z Banku Danych Lokalnych GUS,
+kolumny rozdziela średnik, a separatorem dziesiętnym jest przecinek:
+
+```{r}
+# plik CSV: kolumny rozdzielone średnikiem, przecinek jako separator dziesiętny
+lasy <- read.csv("dane/lasy_bld.csv", sep = ";", dec = ",", encoding = "UTF-8",
+                 colClasses = c(Kod = "character"))
+
+# kontrola typów kolumn
+str(lasy)
+```
+
+- `sep` podaje separator kolumn, a `dec` — separator dziesiętny.
+- `encoding = "UTF-8"` podaje kodowanie znaków pliku; odpowiada za poprawny odczyt polskich liter.
+- `colClasses = c(Kod = "character")` wczytuje kolumnę `Kod` jako tekst. Jako liczba kod
+  `0201000` straciłby zero na początku.
+- Pusta kolumna `X` powstała dlatego, że każdy wiersz pliku kończy się średnikiem. Usuwa ją
+  `select(-X)`.
+
+**Plik Excel.** Plik `.xlsx` wczytuje funkcja `read_excel()` z pakietu `readxl`. Pakiet instaluje
+się razem z `tidyverse`, ale `library(tidyverse)` go nie wczytuje, dlatego wymaga osobnego
+wywołania `library()`. Nazwa `moje_dane.xlsx` w poniższym bloku oznacza plik użytkownika, dlatego
+blok nie jest wykonywany podczas renderowania (`eval: false`).
+
+```{r}
+#| eval: false
+# plik Excel: pierwszy arkusz, z pominięciem dwóch wierszy nad nagłówkiem tabeli
+library(readxl)
+moje_dane <- read_excel("dane/moje_dane.xlsx", sheet = 1, skip = 2)
+str(moje_dane)
+```
+
+- `sheet` wskazuje arkusz: numerem albo nazwą w cudzysłowie.
+- `skip` podaje liczbę wierszy pomijanych na początku arkusza.
+- `na` podaje wartości traktowane jako brak danych, np. `na = c("", "-")`; domyślnie są nimi
+  puste komórki.
+
+Wynikiem `read_excel()` jest tibble (@sec-pd-grupy); dalsze przetwarzanie przebiega tak samo
+jak w przypadku tabeli wczytanej z pliku CSV. Pełny przykład przygotowania danych z pliku Excel
+zawiera @sec-bank-swiatowy.
+
+## Najczęstsze błędy {#sec-pd-bledy}
+
+Komunikaty o błędach R wyświetla w konsoli albo pod blokiem kodu. W systemie z polską
+wersją językową część komunikatów wyświetla się po polsku, np. `object 'x' not found`
+jako `nie znaleziono obiektu 'x'`.
+
+| Komunikat | Przyczyna | Przykład błędnego zapisu |
+|---|---|---|
+| tabela bez zmian po wykonaniu potoku albo `object 'dane2007' not found` | wynik potoku nie został przypisany do obiektu (@sec-pd-przypisanie) | potok bez `<-` i nazwy obiektu na początku |
+| `object 'Kontynent' not found` | błędna nazwa kolumny — wielkość liter ma znaczenie | `filter(Kontynent == "Europa")` |
+| `object 'Europa' not found` | brak cudzysłowu: R traktuje tekst jako nazwę obiektu | `filter(kontynent == Europa)` |
+| `We detected a named input` | `=` zamiast `==` w warunku | `filter(kontynent = "Europa")` |
+| `cannot open the connection` z ostrzeżeniem `cannot open file '...': No such file or directory` | błędna ścieżka do pliku albo brak folderu `dane/` obok pliku `.qmd` | `read.csv("gapminder_regions.csv", encoding = "UTF-8")` |
+| `could not find function "..."` | pakiet nie został wczytany — brak `library()` na początku pliku albo blok z `library()` nie został uruchomiony | — |
+| wynik bez wierszy | warunek nie pasuje do żadnej wartości, np. błąd w wielkości liter wartości tekstowej | `filter(kontynent == "europa")` |
+
+## Zadania do samodzielnego wykonania {#sec-pd-zadania}
+
+Zadania polegają na modyfikacji kodu z rozdziału i wykonuje się je w przeglądarce, bez
+instalowania R. Kod w polu można zmienić i uruchomić przyciskiem **Run Code**. Pierwsze
+uruchomienie pobiera środowisko R i pakiety, dlatego trwa dłużej i wymaga połączenia z internetem;
+jeżeli po kliknięciu wynik się nie pojawia, należy odczekać i kliknąć przycisk ponownie.
+Rozwiązanie wyświetla przycisk **Show Solution**.
+
+**Zadanie 1. Inny kontynent i rok.** Zmień warunki w `filter()` tak, aby potok podał pięć krajów Azji o najwyższej oczekiwanej długości życia w 1977 roku.
+
+```{webr}
+#| exercise: pd_1
+dane |>
+  filter(kontynent == "Europa", year == 2007) |>
+  select(kraj, lifeExp) |>
+  arrange(desc(lifeExp)) |>
+  head(5)
+```
+
+:::: {.solution exercise="pd_1"}
+::: {.callout-tip title="Rozwiązanie" collapse="false"}
+```r
+dane |>
+  filter(kontynent == "Azja", year == 1977) |>
+  select(kraj, lifeExp) |>
+  arrange(desc(lifeExp)) |>
+  head(5)
+```
+:::
+::::
+
+**Zadanie 2. Inna zmienna.** Oblicz te same statystyki dla PKB per capita (`gdpPercap`) zamiast oczekiwanej długości życia. Zmień nazwę zmiennej we wszystkich funkcjach.
+
+```{webr}
+#| exercise: pd_2
+dane2007 |>
+  group_by(kontynent) |>
+  summarise(
+    n = n(),
+    srednia = round(mean(lifeExp), 1),
+    mediana = round(median(lifeExp), 1),
+    minimum = min(lifeExp),
+    maksimum = max(lifeExp)
+  )
+```
+
+:::: {.solution exercise="pd_2"}
+::: {.callout-tip title="Rozwiązanie" collapse="false"}
+```r
+dane2007 |>
+  group_by(kontynent) |>
+  summarise(
+    n = n(),
+    srednia = round(mean(gdpPercap), 1),
+    mediana = round(median(gdpPercap), 1),
+    minimum = min(gdpPercap),
+    maksimum = max(gdpPercap)
+  )
+```
+:::
+::::
+
+**Zadanie 3. Inne grupowanie.** Oblicz statystyki w podziale na grupy dochodowe (`income_grp_pl`) zamiast kontynentów. Dwa kraje nie mają przypisanej grupy (@sec-pd-braki): pomiń je warunkiem `filter(income_grp_pl != "")` dodanym do potoku przed `group_by()`.
+
+```{webr}
+#| exercise: pd_3
+dane2007 |>
+  group_by(kontynent) |>
+  summarise(
+    n = n(),
+    srednia = round(mean(lifeExp), 1),
+    mediana = round(median(lifeExp), 1)
+  )
+```
+
+:::: {.solution exercise="pd_3"}
+::: {.callout-tip title="Rozwiązanie" collapse="false"}
+```r
+dane2007 |>
+  filter(income_grp_pl != "") |>
+  group_by(income_grp_pl) |>
+  summarise(
+    n = n(),
+    srednia = round(mean(lifeExp), 1),
+    mediana = round(median(lifeExp), 1)
+  )
+```
+:::
+::::
+
+**Zadanie 4. Nowa zmienna.** Wykonaj tabelę dla Niemiec. Dodaj nową zmienną `gdp_tys`: PKB per capita w tysiącach USD, zaokrąglone do 1 miejsca po przecinku, i wyświetl ją razem z rokiem i ludnością.
+
+```{webr}
+#| exercise: pd_4
+dane |>
+  filter(kraj == "Polska") |>
+  mutate(pop_mln = round(pop / 1000000, 1)) |>
+  select(year, lifeExp, pop_mln)
+```
+
+:::: {.solution exercise="pd_4"}
+::: {.callout-tip title="Rozwiązanie" collapse="false"}
+```r
+dane |>
+  filter(kraj == "Niemcy") |>
+  mutate(pop_mln = round(pop / 1000000, 1),
+         gdp_tys = round(gdpPercap / 1000, 1)) |>
+  select(year, pop_mln, gdp_tys)
+```
+:::
+::::
+
+**Zadanie 5. Zmiana postaci tabeli.** Zmień kontynent na Afrykę, a lata na 1977 i 2007. Nazwy kolumn utworzonych przez `pivot_wider()` zmieniają się wraz z latami, dlatego popraw je także w `mutate()`.
+
+```{webr}
+#| exercise: pd_5
+dane |>
+  filter(kontynent == "Europa", year %in% c(1952, 2007)) |>
+  select(kraj, year, lifeExp) |>
+  pivot_wider(names_from = year, values_from = lifeExp, names_prefix = "r") |>
+  mutate(przyrost = round(r2007 - r1952, 1)) |>
+  arrange(desc(przyrost)) |>
+  head(5)
+```
+
+:::: {.solution exercise="pd_5"}
+::: {.callout-tip title="Rozwiązanie" collapse="false"}
+```r
+dane |>
+  filter(kontynent == "Afryka", year %in% c(1977, 2007)) |>
+  select(kraj, year, lifeExp) |>
+  pivot_wider(names_from = year, values_from = lifeExp, names_prefix = "r") |>
+  mutate(przyrost = round(r2007 - r1977, 1)) |>
+  arrange(desc(przyrost)) |>
+  head(5)
+```
+:::
+::::

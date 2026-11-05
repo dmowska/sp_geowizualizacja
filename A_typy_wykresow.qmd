@@ -1,0 +1,547 @@
+# Katalog typów wykresów {#sec-katalog}
+
+Katalog zestawia podstawowe typy wykresów wykorzystywane w skrypcie. Dla każdego typu podaje odnośnik
+do dodatkowych przykładów w *The R Graph Gallery*, opis tego, co przedstawia wykres, kod
+`ggplot2` gotowy do uruchomienia i wykres, który kod tworzy. Kod zawiera dane, mapowanie,
+obiekt geometryczny, podpisy (`labs()`) i motyw (`theme_bw()`); skale i kolory dobiera się
+według @sec-formatowanie. Wybór wykresu do pytania badawczego omawia @sec-dobor.
+
+Przykłady wykorzystują dane Gapminder (@sec-pd-dane):
+
+```{r}
+#| message: false
+library(tidyverse)
+dane <- read.csv("dane/gapminder_regions.csv", encoding = "UTF-8") |>
+  mutate(across(where(is.character), as.factor))
+dane2007 <- dane |>
+  filter(year == 2007)
+
+# tabele pomocnicze wykorzystywane w kilku przykładach
+europa2007 <- dane2007 |>
+  filter(kontynent == "Europa")
+cztery_kraje <- dane |>
+  filter(kraj %in% c("Polska", "Niemcy", "Hiszpania", "Portugalia"),
+         year %in% c(1957, 1977, 2007))
+```
+
+## Podział wykresów {#sec-ap-podzial}
+
+Typy wykresów pogrupowano według klasyfikacji Wilkego (2019), opisanej w rozdziale „Directory of visualizations”. Klasyfikacja dzieli
+wykresy według tego, co przedstawiają, i jest jedną z możliwych klasyfikacji. Obejmuje sześć
+kategorii: ilości, rozkłady, proporcje, relacje, dane przestrzenne i niepewność; ich opis zawiera
+@sec-ty-klasyfikacja.
+
+Piktogramy i objaśnienia wszystkich typów wykresów w tych kategoriach zawiera @sec-typy.
+
+Katalog wprowadza do klasyfikacji dwie zmiany. Wykresy przedstawiające wartości w kolejnych
+latach tworzą osobną grupę **zmiany w czasie** — Wilke (2019) zalicza wykres liniowy do relacji. Grupa
+niepewności została pominięta, ponieważ skrypt wykorzystuje wykresy zakresu tylko do
+przedstawienia zmienności obserwacji (@sec-ty-niepewnosc).
+
+## Zestawienie {#sec-ap-zestawienie}
+
+Tabela przypisuje każdy typ wykresu do jednej z grup opisanych w @sec-ap-podzial. Kolumna
+„Funkcja” podaje funkcję `ggplot2` albo pakietu dodatkowego, a kolumna „Przykład w skrypcie”
+— miejsce, w którym wykres wykorzystano w analizie danych.
+
+| Grupa | Wykres | Funkcja | Przykład w skrypcie |
+|---|---|---|---|
+| ilości | [słupkowy](#sec-ap-slupkowy) | `geom_col()` | @sec-za-opad |
+| ilości | [słupkowy zgrupowany](#sec-ap-zgrupowany) | `geom_col(position = "dodge")` | @fig-za-dni-zgrupowany |
+| ilości | [słupkowy skumulowany](#sec-ap-skumulowany) | `geom_col(position = "stack")` | @sec-za-dni |
+| ilości | [kropkowy](#sec-ap-kropkowy) | `geom_point()` | @sec-wiz-kolejnosc |
+| ilości | [heatmapa (kafelkowy)](#sec-ap-heatmapa) | `geom_tile()` | @sec-meteo-temp |
+| rozkłady | [histogram](#sec-ap-histogram) | `geom_histogram()` | @sec-swiat |
+| rozkłady | [wykres gęstości](#sec-ap-gestosc) | `geom_density()` | @sec-ws-gestosc |
+| rozkłady | [pudełkowy](#sec-ap-pudelkowy) | `geom_boxplot()` | @sec-2007-kontynenty |
+| rozkłady | [skrzypcowy](#sec-ap-skrzypcowy) | `geom_violin()` | @sec-ws-pudelkowy |
+| rozkłady | [grzbietowy](#sec-ap-grzbietowy) | `ggridges::geom_density_ridges()` | @sec-eu-europa |
+| rozkłady | [dystrybuanta empiryczna](#sec-ap-ecdf) | `stat_ecdf()` | @sec-db-przyklad1 |
+| proporcje | [słupkowy liczności](#sec-ap-licznosci) | `geom_bar()` | @sec-ws-jakosciowa |
+| proporcje | [słupkowy skumulowany do 100%](#sec-ap-fill) | `geom_bar(position = "fill")` | @sec-ws-jakosciowa |
+| proporcje | [kołowy](#sec-ap-kolowy) | `geom_col()` + `coord_polar()` | @sec-db-przyklad2 |
+| proporcje | [treemap](#sec-ap-treemap) | `treemapify::geom_treemap()` | @sec-eu-europa |
+| relacje | [rozrzutu](#sec-ap-rozrzut) | `geom_point()` | @sec-gg-kroki |
+| relacje | [bąbelkowy](#sec-ap-rozrzut) | `geom_point(aes(size = ))` | @sec-wz-rozrzut |
+| relacje | [macierz wykresów rozrzutu](#sec-ap-korelogram) | `GGally::ggpairs()` | @sec-meteo-korelacja |
+| relacje | [korelogram](#sec-ap-korelogram) | `GGally::ggcorr()` | @sec-wz-korelogram |
+| zmiany w czasie | [liniowy](#sec-ap-liniowy) | `geom_line()`, `stat_summary(geom = "line")` | @sec-zmiany |
+| zmiany w czasie | [punkt z zakresem](#sec-ap-pointrange) | `stat_summary(geom = "pointrange")` | — |
+| zmiany w czasie | [wykres wstęgowy](#sec-ap-wstega) | `geom_ribbon()`, `stat_summary(geom = "ribbon")` | @sec-za-temp |
+| dane przestrzenne | [mapa (kolor obszaru)](#sec-ap-mapa) | `geom_sf(aes(fill = ))` | @sec-2007-mapa |
+| dane przestrzenne | [kartodiagram (wielkość znaku)](#sec-ap-kartodiagram) | `geom_sf(aes(size = ))` | @sec-meteo-dni |
+| dane przestrzenne | [kartodiagram strukturalny (wykresy kołowe)](#sec-ap-kartodiagram) | `scatterpie::geom_scatterpie()` | @sec-meteo-dni |
+
+## Ilości {#sec-ap-ilosci}
+
+Wykresy ilości przedstawiają wartości liczbowe dla kategorii.
+
+### Wykres słupkowy {#sec-ap-slupkowy}
+
+**Dodatkowe przykłady:** [R Graph Gallery — wykres słupkowy](https://r-graph-gallery.com/barplot.html){target="_blank"}
+
+Wysokość (długość) słupka odpowiada wartości przypisanej do kategorii, np. PKB per capita
+kraju. Oś przedstawiająca wartości zaczyna się od 0 (@sec-wiz-zero), a kategorie
+porządkuje się według wartości (@sec-wiz-kolejnosc).
+
+```{r}
+#| fig-height: 3.5
+cztery_kraje |>
+  filter(year == 2007) |>
+  ggplot(aes(x = gdpPercap, y = fct_reorder(kraj, gdpPercap))) +
+  geom_col() +
+  labs(title = "PKB per capita w czterech krajach, 2007",
+       x = "PKB per capita [USD]", y = NULL) +
+  theme_bw()
+```
+
+`geom_col()` rysuje słupki o wysokości podanej w danych; `geom_bar()` zlicza obserwacje
+w kategoriach (@sec-ap-proporcje).
+
+### Wykres słupkowy zgrupowany {#sec-ap-zgrupowany}
+
+**Dodatkowe przykłady:** [R Graph Gallery — wykres słupkowy zgrupowany i skumulowany](https://r-graph-gallery.com/stacked-barplot.html){target="_blank"}
+
+Przedstawia wartości zmiennej ilościowej według dwóch zmiennych jakościowych: na każdej
+pozycji osi znajduje się grupa słupków, np. kraj, a w grupie — słupki kolejnych lat.
+
+```{r}
+#| fig-height: 3.5
+ggplot(cztery_kraje, aes(x = kraj, y = gdpPercap, fill = factor(year))) +
+  geom_col(position = "dodge") +
+  labs(title = "PKB per capita w czterech krajach, 1957, 1977 i 2007",
+       x = NULL, y = "PKB per capita [USD]", fill = "Rok") +
+  theme_bw()
+```
+
+### Wykres słupkowy skumulowany {#sec-ap-skumulowany}
+
+**Dodatkowe przykłady:** [R Graph Gallery — wykres słupkowy zgrupowany i skumulowany](https://r-graph-gallery.com/stacked-barplot.html){target="_blank"}
+
+Słupki kategorii drugiej zmiennej są ustawione jeden na drugim; wysokość całego słupka
+jest sumą. Stosuje się go, gdy suma ma znaczenie, np. liczba ludności kontynentu
+w podziale na subregiony.
+
+```{r}
+#| fig-height: 4
+# kolory subregionów: odcienie pomarańczowego dla Afryki, odcienie niebieskiego dla Europy
+kolory_subregionow <- c("Afryka Północna" = "#fdd0a2", "Afryka Południowa" = "#fdae6b",
+                        "Afryka Środkowa" = "#fd8d3c", "Afryka Wschodnia" = "#e6550d",
+                        "Afryka Zachodnia" = "#a63603", "Europa Północna" = "#c6dbef",
+                        "Europa Południowa" = "#6baed6", "Europa Wschodnia" = "#3182bd",
+                        "Europa Zachodnia" = "#08519c")
+
+# suma ludności w subregionach: jeden odcinek słupka dla każdego subregionu
+dane2007 |>
+  filter(kontynent %in% c("Europa", "Afryka")) |>
+  group_by(kontynent, subregion_pl) |>
+  summarise(pop = sum(pop), .groups = "drop") |>
+  ggplot(aes(x = kontynent, y = pop / 1000000, fill = subregion_pl)) +
+  geom_col(position = "stack", colour = "white", linewidth = 0.3) +
+  scale_fill_manual(values = kolory_subregionow) +
+  labs(title = "Liczba ludności Afryki i Europy według subregionów, 2007",
+       x = NULL, y = "Liczba ludności [mln]", fill = "Subregion") +
+  theme_bw()
+```
+
+### Wykres kropkowy {#sec-ap-kropkowy}
+
+**Dodatkowe przykłady:** [R Graph Gallery — wykres lizakowy](https://r-graph-gallery.com/lollipop-plot.html){target="_blank"};
+galeria nie ma osobnej strony wykresu kropkowego, a wykres lizakowy łączy punkt z osią odcinkiem.
+
+Punkt umieszczony na osi wskazuje wartość kategorii. W odróżnieniu od wykresu słupkowego
+oś nie musi zaczynać się od 0, dlatego różnice między kategoriami są lepiej widoczne.
+
+```{r}
+#| fig-height: 5.5
+ggplot(europa2007, aes(x = lifeExp, y = fct_reorder(kraj, lifeExp))) +
+  geom_point() +
+  labs(title = "Oczekiwana długość życia w krajach Europy, 2007",
+       x = "Oczekiwana długość życia [lata]", y = NULL) +
+  theme_bw()
+```
+
+### Heatmapa (wykres kafelkowy) {#sec-ap-heatmapa}
+
+**Dodatkowe przykłady:** [R Graph Gallery — heatmapa](https://r-graph-gallery.com/heatmap.html){target="_blank"}
+
+Kolor kafelka przedstawia wartość dla pary kategorii, np. kraju i roku.
+
+```{r}
+#| fig-height: 5.5
+dane |>
+  filter(kontynent == "Europa") |>
+  ggplot(aes(x = year, y = kraj, fill = lifeExp)) +
+  geom_tile() +
+  labs(title = "Oczekiwana długość życia w krajach Europy, 1952–2007",
+       x = "Rok", y = NULL, fill = "Oczekiwana długość\nżycia [lata]") +
+  theme_bw()
+```
+
+## Rozkłady {#sec-ap-rozklady}
+
+Wykresy rozkładu przedstawiają, jak często występują wartości zmiennej ilościowej.
+
+### Histogram {#sec-ap-histogram}
+
+**Dodatkowe przykłady:** [R Graph Gallery — histogram](https://r-graph-gallery.com/histogram.html){target="_blank"}
+
+Zakres zmiennej jest dzielony na przedziały o równej szerokości; wysokość słupka to liczba
+obserwacji w przedziale. Szerokość przedziału (`binwidth`) zmienia obraz rozkładu
+(@sec-ws-histogram).
+
+```{r}
+#| fig-height: 3.5
+ggplot(dane2007, aes(x = lifeExp)) +
+  geom_histogram(binwidth = 5, fill = "grey40", colour = "white") +
+  labs(title = "Oczekiwana długość życia, 142 kraje, 2007",
+       x = "Oczekiwana długość życia [lata]", y = "Liczba krajów") +
+  theme_bw()
+```
+
+### Wykres gęstości {#sec-ap-gestosc}
+
+**Dodatkowe przykłady:** [R Graph Gallery — wykres gęstości](https://r-graph-gallery.com/density-plot.html){target="_blank"}
+
+Przedstawia rozkład jako ciągłą krzywą. Kilka krzywych na jednym wykresie porównuje się
+łatwiej niż kilka nakładających się histogramów.
+
+```{r}
+#| fig-height: 3.5
+dane2007 |>
+  filter(kontynent %in% c("Europa", "Afryka", "Azja")) |>
+  ggplot(aes(x = lifeExp, fill = kontynent)) +
+  geom_density(alpha = 0.5) +
+  labs(title = "Oczekiwana długość życia w Afryce, Azji i Europie, 2007",
+       x = "Oczekiwana długość życia [lata]", y = "Gęstość", fill = "Kontynent") +
+  theme_bw()
+```
+
+### Wykres pudełkowy {#sec-ap-pudelkowy}
+
+**Dodatkowe przykłady:** [R Graph Gallery — wykres pudełkowy](https://r-graph-gallery.com/boxplot.html){target="_blank"}
+
+Przedstawia medianę (linia w pudełku), kwartyle (krawędzie pudełka), zakres wartości
+w odległości do 1,5 × IQR od krawędzi pudełka (wąsy) i wartości odstające (punkty)
+(@sec-ws-pudelkowy).
+
+```{r}
+#| fig-height: 3.5
+ggplot(dane2007, aes(x = kontynent, y = lifeExp)) +
+  geom_boxplot() +
+  labs(title = "Oczekiwana długość życia według kontynentu, 2007",
+       x = NULL, y = "Oczekiwana długość życia [lata]") +
+  theme_bw()
+```
+
+### Wykres skrzypcowy {#sec-ap-skrzypcowy}
+
+**Dodatkowe przykłady:** [R Graph Gallery — wykres skrzypcowy](https://r-graph-gallery.com/violin.html){target="_blank"}
+
+Szerokość „skrzypiec” w danym miejscu przedstawia gęstość obserwacji. Wykres pokazuje
+rozkłady z kilkoma skupieniami, których nie widać na wykresie pudełkowym.
+
+```{r}
+#| fig-height: 3.5
+ggplot(dane2007, aes(x = kontynent, y = gdpPercap)) +
+  geom_violin() +
+  labs(title = "PKB per capita według kontynentu, 2007",
+       x = NULL, y = "PKB per capita [USD]") +
+  theme_bw()
+```
+
+### Wykres grzbietowy {#sec-ap-grzbietowy}
+
+**Dodatkowe przykłady:** [R Graph Gallery — wykres grzbietowy](https://r-graph-gallery.com/ridgeline-plot.html){target="_blank"}
+
+Krzywe gęstości kilku grup ustawione jedna nad drugą, ze wspólną osią x.
+
+```{r}
+#| fig-height: 4.5
+#| message: false
+library(ggridges)
+ggplot(dane, aes(x = lifeExp, y = factor(year))) +
+  geom_density_ridges() +
+  labs(title = "Oczekiwana długość życia, 142 kraje, 1952–2007",
+       x = "Oczekiwana długość życia [lata]", y = "Rok") +
+  theme_bw()
+```
+
+### Dystrybuanta empiryczna {#sec-ap-ecdf}
+
+**Dodatkowe przykłady:** galeria R Graph Gallery nie ma strony poświęconej temu wykresowi;
+przykłady zawiera [dokumentacja funkcji `stat_ecdf()`](https://ggplot2.tidyverse.org/reference/stat_ecdf.html){target="_blank"}.
+
+Definicję podaje @sec-ty-rozklady, a zastosowanie — @sec-db-przyklad1.
+
+```{r}
+#| fig-height: 3.5
+ggplot(dane2007, aes(x = lifeExp)) +
+  stat_ecdf() +
+  labs(title = "Dystrybuanta empiryczna oczekiwanej długości życia, 142 kraje, 2007",
+       x = "Oczekiwana długość życia [lata]", y = "Udział krajów") +
+  theme_bw()
+```
+
+## Proporcje {#sec-ap-proporcje}
+
+Wykresy proporcji przedstawiają podział całości na części.
+
+### Wykres słupkowy liczności {#sec-ap-licznosci}
+
+**Dodatkowe przykłady:** [R Graph Gallery — wykres słupkowy](https://r-graph-gallery.com/barplot.html){target="_blank"}
+
+`geom_bar()` zlicza obserwacje w każdej kategorii (@fig-gr-stat).
+
+```{r}
+#| fig-height: 3.5
+ggplot(dane2007, aes(x = kontynent)) +
+  geom_bar() +
+  labs(title = "Liczba krajów na kontynentach, 2007",
+       x = NULL, y = "Liczba krajów") +
+  theme_bw()
+```
+
+### Wykres słupkowy skumulowany do 100% {#sec-ap-fill}
+
+**Dodatkowe przykłady:** [R Graph Gallery — wykres słupkowy zgrupowany, skumulowany i skumulowany do 100%](https://r-graph-gallery.com/48-grouped-barplot-with-ggplot2.html){target="_blank"}
+
+Każdy słupek ma tę samą wysokość (100%), a jego podział przedstawia udziały kategorii
+drugiej zmiennej.
+
+```{r}
+#| fig-height: 3.5
+dane2007 |>
+  filter(income_grp_pl != "") |>
+  ggplot(aes(x = kontynent, fill = income_grp_pl)) +
+  geom_bar(position = "fill") +
+  labs(title = "Udział grup dochodowych wśród krajów każdego kontynentu, 2007",
+       x = NULL, y = "Udział krajów", fill = "Grupa dochodowa") +
+  theme_bw()
+```
+
+### Wykres kołowy {#sec-ap-kolowy}
+
+**Dodatkowe przykłady:** [R Graph Gallery — wykres kołowy](https://r-graph-gallery.com/pie-plot.html){target="_blank"}
+
+Kąt wycinka przedstawia udział kategorii w całości. Udziały o zbliżonej wielkości
+porównuje się na wykresie kołowym trudniej niż na słupkowym (@sec-wiz-kolowy). Motyw
+`theme_void()` usuwa osie i siatkę układu biegunowego; wartości odczytuje się z wielkości
+wycinków.
+
+```{r}
+#| fig-height: 3.5
+dane2007 |>
+  group_by(kontynent) |>
+  summarise(liczba = n()) |>
+  ggplot(aes(x = "", y = liczba, fill = kontynent)) +
+  geom_col() +
+  coord_polar(theta = "y") +
+  labs(title = "Udział kontynentów w liczbie krajów, 2007", fill = "Kontynent") +
+  theme_void()
+```
+
+### Treemap {#sec-ap-treemap}
+
+**Dodatkowe przykłady:** [R Graph Gallery — treemap](https://r-graph-gallery.com/treemap.html){target="_blank"};
+przykłady galerii wykorzystują pakiet `treemap`, a kod poniżej — pakiet `treemapify`.
+
+Prostokąt jest dzielony na mniejsze prostokąty, których pole przedstawia udział w całości,
+np. liczbę ludności kraju. Prostokąty można zagnieżdżać, np. kraje w obrębie kontynentów.
+Mapowanie `label` i warstwa `geom_treemap_text()` dodają nazwy krajów; nazwy mieszczą się
+w prostokątach o wystarczającym polu.
+
+```{r}
+#| fig-height: 5
+library(treemapify)
+ggplot(dane2007, aes(area = pop, fill = kontynent, subgroup = kontynent, label = kraj)) +
+  geom_treemap(colour = "white") +
+  geom_treemap_subgroup_border() +
+  geom_treemap_text(colour = "white", place = "centre") +
+  labs(title = "Liczba ludności 142 krajów, 2007", fill = "Kontynent") +
+  theme_bw()
+```
+
+## Relacje {#sec-ap-relacje}
+
+Wykresy relacji przedstawiają zależność między zmiennymi ilościowymi (@sec-wiz-zaleznosci).
+
+### Wykres rozrzutu i wykres bąbelkowy {#sec-ap-rozrzut}
+
+**Dodatkowe przykłady:** [R Graph Gallery — wykres rozrzutu](https://r-graph-gallery.com/scatterplot.html){target="_blank"},
+[wykres bąbelkowy](https://r-graph-gallery.com/bubble-chart.html){target="_blank"}
+
+Jedna obserwacja to jeden punkt. Trzecią zmienną przedstawia kolor (`colour`), kształt
+(`shape`) albo wielkość punktu (`size`) — w tym ostatnim przypadku jest to wykres
+bąbelkowy.
+
+```{r}
+#| fig-height: 3.5
+ggplot(dane2007, aes(x = gdpPercap, y = lifeExp, size = pop / 1000000)) +
+  geom_point(alpha = 0.5) +
+  scale_x_log10() +
+  labs(title = "Oczekiwana długość życia a PKB per capita, 142 kraje, 2007",
+       x = "PKB per capita [USD, skala logarytmiczna]",
+       y = "Oczekiwana długość życia [lata]", size = "Liczba ludności [mln]") +
+  theme_bw()
+```
+
+### Macierz wykresów rozrzutu i korelogram {#sec-ap-korelogram}
+
+**Dodatkowe przykłady:** [R Graph Gallery — korelogram](https://r-graph-gallery.com/correlogram.html){target="_blank"},
+[macierz wykresów rozrzutu i korelogram w pakiecie `GGally`](https://r-graph-gallery.com/199-correlation-matrix-with-ggally.html){target="_blank"}
+
+Macierz wykresów rozrzutu przedstawia wykres rozrzutu dla każdej pary zmiennych,
+a korelogram — współczynniki korelacji jako kolory pól. Oba wykresy wykorzystują
+współczynnik korelacji Spearmana (@sec-wz-korelogram). Argument `columnLabels` nadaje
+zmiennym w macierzy opisy; korelogram podaje nazwy kolumn tabeli (@sec-pd-dane).
+
+```{r}
+#| fig-height: 5
+#| message: false
+library(GGally)
+dane2007 |>
+  mutate(pop_mln = pop / 1000000) |>
+  select(lifeExp, gdpPercap, pop_mln) |>
+  ggpairs(upper = list(continuous = wrap("cor", method = "spearman")),
+          columnLabels = c("Oczekiwana długość\nżycia [lata]", "PKB per capita [USD]", "Ludność [mln]")) +
+  labs(title = "Macierz wykresów rozrzutu, 142 kraje, 2007") +
+  theme_bw()
+```
+
+```{r}
+#| fig-height: 4
+dane2007 |>
+  select(lifeExp, gdpPercap, pop) |>
+  ggcorr(method = c("pairwise", "spearman"), label = TRUE, label_round = 2) +
+  labs(title = "Współczynniki korelacji Spearmana, 142 kraje, 2007")
+```
+
+## Zmiany w czasie {#sec-ap-czas}
+
+Wykresy zmian w czasie przedstawiają wartości w kolejnych latach; wartości mierzone w czasie
+łączy linia, a zakres wartości w danym roku — odcinek albo wstęga.
+
+### Wykres liniowy {#sec-ap-liniowy}
+
+**Dodatkowe przykłady:** [R Graph Gallery — wykres liniowy](https://r-graph-gallery.com/line-plot.html){target="_blank"}
+
+Linia łączy kolejne wartości w czasie. `geom_line()` rysuje wartości z danych,
+a `stat_summary(geom = "line")` — wartość obliczoną w każdym roku, np. średnią.
+
+```{r}
+#| fig-height: 3.5
+dane |>
+  filter(kraj %in% c("Polska", "Niemcy", "Hiszpania", "Portugalia")) |>
+  ggplot(aes(x = year, y = lifeExp, colour = kraj)) +
+  geom_line() +
+  labs(title = "Oczekiwana długość życia w czterech krajach, 1952–2007",
+       x = "Rok", y = "Oczekiwana długość życia [lata]", colour = "Kraj") +
+  theme_bw()
+```
+
+```{r}
+#| fig-height: 3.5
+ggplot(dane, aes(x = year, y = lifeExp, colour = kontynent)) +
+  stat_summary(fun = mean, geom = "line") +
+  labs(title = "Średnia oczekiwana długość życia według kontynentu, 1952–2007",
+       x = "Rok", y = "Średnia oczekiwana długość życia [lata]", colour = "Kontynent") +
+  theme_bw()
+```
+
+### Punkt z zakresem {#sec-ap-pointrange}
+
+**Dodatkowe przykłady:** [R Graph Gallery — słupki błędu, w tym `geom_pointrange()`](https://r-graph-gallery.com/4-barplot-with-error-bar.html){target="_blank"};
+przykłady galerii przedstawiają odchylenie standardowe, błąd standardowy i przedział ufności.
+
+`geom = "pointrange"` rysuje punkt (`fun`) i odcinek od `fun.min` do `fun.max`, np. średnią
+oraz wartość najmniejszą i największą w każdym roku.
+
+```{r}
+#| fig-height: 3.5
+ggplot(dane, aes(x = year, y = lifeExp)) +
+  stat_summary(fun = mean, fun.min = min, fun.max = max, geom = "pointrange") +
+  labs(title = "Oczekiwana długość życia: średnia, minimum i maksimum, 1952–2007",
+       x = "Rok", y = "Oczekiwana długość życia [lata]") +
+  theme_bw()
+```
+
+### Wykres wstęgowy {#sec-ap-wstega}
+
+**Dodatkowe przykłady:** [R Graph Gallery — wykres wstęgowy](https://r-graph-gallery.com/104-plot-lines-with-error-envelopes-ggplot2.html){target="_blank"}
+
+Wstęga obejmuje zakres wartości między dwiema granicami, np. od minimum do maksimum
+w każdym roku.
+
+```{r}
+#| fig-height: 3.5
+ggplot(dane, aes(x = year, y = lifeExp)) +
+  stat_summary(fun.min = min, fun.max = max, geom = "ribbon", alpha = 0.4) +
+  stat_summary(fun = mean, geom = "line") +
+  labs(title = "Oczekiwana długość życia: rozstęp (wstęga) i średnia (linia), 1952–2007",
+       x = "Rok", y = "Oczekiwana długość życia [lata]") +
+  theme_bw()
+```
+
+## Dane przestrzenne {#sec-ap-mapy}
+
+Przygotowanie danych przestrzennych i pozostałe mapy wykorzystywane w skrypcie opisuje
+@sec-przestrzenne.
+
+### Mapa: kolor obszaru {#sec-ap-mapa}
+
+**Dodatkowe przykłady:** [R Graph Gallery — kartogram](https://r-graph-gallery.com/choropleth-map.html){target="_blank"}
+
+Kolor obszaru, np. państwa, przedstawia wartość zmiennej. Granice państw pochodzą
+z pakietu `rnaturalearth`; tabelę z danymi łączy się z granicami według kodu kraju
+(@sec-2007-mapa).
+
+```{r}
+#| fig-height: 4
+#| message: false
+library(sf)
+library(rnaturalearth)
+swiat <- ne_countries(scale = "medium", returnclass = "sf")
+
+swiat |>
+  left_join(dane2007, by = c("iso_a3_eh" = "Kod")) |>
+  ggplot(aes(fill = lifeExp)) +
+  geom_sf() +
+  labs(title = "Oczekiwana długość życia, 2007",
+       fill = "Oczekiwana długość\nżycia [lata]") +
+  theme_bw()
+```
+
+### Kartodiagram {#sec-ap-kartodiagram}
+
+**Dodatkowe przykłady:** [R Graph Gallery — mapa ze znakami proporcjonalnymi do wartości](https://r-graph-gallery.com/bubble-map.html){target="_blank"}
+
+Wielkość znaku umieszczonego w położeniu obiektu przedstawia wartość zmiennej, np. liczbę
+dni z opadem na stacji meteorologicznej (@sec-sf-kartodiagram). Kartodiagram strukturalny
+przedstawia w położeniu obiektu strukturę zjawiska, np. wykresami kołowymi (@sec-sf-kolowe).
+Przykłady z kodem zawiera raport o warunkach meteorologicznych w 2020 roku (@sec-meteo-dni).
+
+## Panele {#sec-ap-panele}
+
+**Dodatkowe przykłady:** [R Graph Gallery — panele](https://r-graph-gallery.com/223-faceting-with-ggplot2.html){target="_blank"}
+
+Każdy z powyższych wykresów można podzielić na panele według zmiennej jakościowej
+— `facet_wrap(~ zmienna)` (@sec-gg-modyfikacje).
+
+```{r}
+#| fig-height: 4.5
+ggplot(dane2007, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point() +
+  scale_x_log10() +
+  facet_wrap(~ kontynent) +
+  labs(title = "Oczekiwana długość życia a PKB per capita według kontynentu, 2007",
+       x = "PKB per capita [USD, skala logarytmiczna]",
+       y = "Oczekiwana długość życia [lata]") +
+  theme_bw()
+```
+
+## Źródła {#sec-ap-zrodla}
+
+- Wilke C.O., 2019. *Fundamentals of Data Visualization*, rozdział „Directory of
+  visualizations”: <https://clauswilke.com/dataviz/directory-of-visualizations.html>.
+- Holtz Y. *The R Graph Gallery*: <https://r-graph-gallery.com/>.

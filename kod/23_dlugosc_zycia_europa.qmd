@@ -1,0 +1,672 @@
+---
+title: "Zmienność oczekiwanej długości życia w Europie w latach 1952 i 2007"
+format: html
+---
+
+Kod do rozdziału „Zmienność oczekiwanej długości życia w Europie w latach 1952 i 2007”
+skryptu do ćwiczeń. Plik wymaga folderu `dane/` z plikiem `gapminder_regions.csv` w tym
+samym folderze co ten plik `.qmd` oraz pakietów `tidyverse`, `ggridges`, `sf`,
+`rnaturalearth` (z `rnaturalearthdata`), `treemapify` i `patchwork`.
+
+Pytania badawcze:
+
+1. Jak zmieniły się poziom oraz zróżnicowanie oczekiwanej długości życia w Europie,
+   w tym zróżnicowanie przestrzenne, między 1952 a 2007 rokiem?
+2. Jaka część ludności Europy żyła w krajach o krótkiej i o długiej oczekiwanej długości
+   życia?
+3. Czy w 1952 i w 2007 roku oczekiwana długość życia różniła się między subregionami
+   Europy i jak była zróżnicowana wewnątrz subregionów?
+4. Jak zmieniła się oczekiwana długość życia w poszczególnych krajach? Które kraje
+   odnotowały największy, a które najmniejszy wzrost oczekiwanej długości życia?
+
+## Dane
+
+```{r}
+#| message: false
+# pakiety: tidyverse (przetwarzanie danych i wykresy)
+library(tidyverse)
+
+# wczytanie danych i zamiana kolumn tekstowych na zmienne typu factor
+dane <- read.csv("dane/gapminder_regions.csv", encoding = "UTF-8") |>
+  mutate(across(where(is.character), as.factor))
+
+# parametry raportu: ich zmiana tworzy tabele i ryciny dla innych danych
+wybrany_kontynent <- "Europa"     # "Afryka", "Ameryki", "Azja" albo "Europa"
+rok_poczatkowy <- 1952            # lata z danych: od 1952 do 2007, co 5 lat
+rok_koncowy <- 2007
+
+# obserwacje z wybranego kontynentu i lat; rok jako zmienna jakościowa (kolory wykresów)
+europa <- dane |>
+  filter(kontynent == wybrany_kontynent, year %in% c(rok_poczatkowy, rok_koncowy)) |>
+  mutate(rok = factor(year))
+
+# kolory lat: pomarańczowy dla roku początkowego, niebieski dla końcowego
+kolory_lat <- c("orange", "steelblue")
+names(kolory_lat) <- c(rok_poczatkowy, rok_koncowy)
+
+# granice klas: co 5 lat, a przy zakresie wartości powyżej 40 lat co 10 lat (paleta ma 9 kolorów)
+krok_klas <- if (max(europa$lifeExp) - min(europa$lifeExp) > 40) 10 else 5
+zakres_klas <- c(floor(min(europa$lifeExp) / krok_klas),
+                 ceiling(max(europa$lifeExp) / krok_klas)) * krok_klas
+granice_klas <- seq(zakres_klas[1] + krok_klas, zakres_klas[2] - krok_klas, by = krok_klas)
+```
+
+## Wyniki
+
+### Oczekiwana długość życia w Europie w 1952 i 2007 roku
+
+```{r}
+#| label: tbl-eu-europa
+#| tbl-cap: "Statystyki opisowe oczekiwanej długości życia w Europie [lata; współczynnik zmienności w %]"
+# statystyki opisowe oczekiwanej długości życia, osobno dla każdego roku
+europa |>
+  group_by(rok) |>                                  # podział tabeli na lata
+  summarise(
+    n = n(),                                        # liczba krajów
+    srednia = mean(lifeExp),                        # średnia arytmetyczna
+    mediana = median(lifeExp),                      # mediana
+    q1 = quantile(lifeExp, 0.25),                   # pierwszy kwartyl
+    q3 = quantile(lifeExp, 0.75),                   # trzeci kwartyl
+    iqr = IQR(lifeExp),                             # rozstęp kwartylowy
+    minimum = min(lifeExp),                         # wartość najmniejsza
+    maksimum = max(lifeExp),                        # wartość największa
+    odch_std = sd(lifeExp),                         # odchylenie standardowe
+    wsp_zmiennosci = sd(lifeExp) / mean(lifeExp) * 100   # współczynnik zmienności [%]
+  ) |>
+  knitr::kable(
+    col.names = c("Rok", "n", "Średnia", "Mediana", "Q1", "Q3", "IQR",
+                  "Min.", "Maks.", "Odch. std.", "Wsp. zmienności"),
+    digits = 1,                                     # jedna cyfra po przecinku
+    format.args = list(decimal.mark = ",")          # przecinek dziesiętny
+  )
+```
+
+```{r}
+#| message: false
+#| label: fig-eu-grzbietowy
+#| fig-cap: "Rozkład oczekiwanej długości życia w 29 krajach Europy w 1952 i 2007 roku; kreski pod krzywą — poszczególne kraje, pionowa linia — mediana"
+#| fig-height: 4
+# pakiet do wykresów grzbietowych
+library(ggridges)
+
+# wykres grzbietowy: krzywa gęstości dla każdego roku, kraje jako kreski pod krzywą
+ggplot(europa, aes(x = lifeExp, y = rok, fill = rok)) +
+  geom_density_ridges(
+    alpha = 0.7,                                    # przezroczystość wypełnienia
+    quantile_lines = TRUE, quantiles = 2,           # linia mediany
+    jittered_points = TRUE,                         # obserwacje pod krzywą
+    position = position_points_jitter(height = 0),  # punkty bez przesunięcia
+    point_shape = "|", point_size = 3               # punkty w kształcie kreski
+  ) +
+  scale_fill_manual(values = kolory_lat) +
+  labs(x = "Oczekiwana długość życia [lata]", y = "Rok") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "none")                   # kolory objaśnia oś y
+```
+
+```{r}
+#| message: false
+# pakiety do pracy z danymi przestrzennymi i granice państw świata
+library(sf)
+library(rnaturalearth)
+
+# granice państw jako obiekt przestrzenny sf
+swiat <- ne_countries(scale = "medium", returnclass = "sf")
+
+# układ współrzędnych i zasięg mapy dla każdego kontynentu
+mapy <- list(
+  Europa = list(crs = 3035, x = c(2500000, 6500000), y = c(1400000, 5400000)),   # metry
+  Afryka = list(crs = 4326, x = c(-20, 55), y = c(-36, 38)),                     # stopnie
+  Ameryki = list(crs = 4326, x = c(-170, -30), y = c(-56, 72)),
+  Azja = list(crs = 4326, x = c(25, 150), y = c(-12, 55))
+)
+zasieg <- mapy[[wybrany_kontynent]]
+
+# granice 29 krajów połączone z danymi obu lat (dwa wiersze dla każdego kraju)
+mapa_europa <- swiat |>
+  inner_join(europa, by = c("iso_a3_eh" = "Kod"))
+
+# granice subregionów: połączenie (st_union) granic krajów należących do subregionu
+subregiony <- mapa_europa |>
+  filter(year == rok_koncowy) |>                    # jeden wiersz dla kraju
+  group_by(subregion_pl) |>
+  summarise(geometry = st_union(geometry))          # jeden obszar dla subregionu
+```
+
+```{r}
+#| label: fig-eu-mapa
+#| fig-cap: "Oczekiwana długość życia w krajach Europy w 1952 i 2007 roku; czarne linie — granice subregionów, szary kolor — kraje spoza 29 krajów raportu"
+#| fig-width: 10
+#| fig-height: 6.5
+# dwie mapy: warstwa szara (wszystkie państwa) i warstwa z danymi w panelach według roku
+ggplot() +
+  geom_sf(data = swiat, fill = "grey85", colour = "white", linewidth = 0.2) +
+  geom_sf(data = mapa_europa, aes(fill = lifeExp), colour = "white", linewidth = 0.2) +
+  geom_sf(data = subregiony, fill = NA, colour = "black", linewidth = 0.6) +   # subregiony
+  facet_wrap(~ rok) +                               # osobny panel dla każdego roku
+  scale_fill_fermenter(breaks = granice_klas,   # granice klas
+                       palette = "YlGnBu", direction = 1,
+                       limits = zakres_klas) +        # zakres skali (także na wykresie treemap)
+  coord_sf(crs = zasieg$crs, xlim = zasieg$x, ylim = zasieg$y) +   # układ i zasięg mapy
+  labs(fill = "Oczekiwana długość\nżycia [lata]") +
+  theme_void(base_size = 13) +
+  theme(legend.position = "bottom",
+        legend.key.width = unit(1.5, "cm"))         # szersze pola legendy
+```
+
+```{r}
+# liczba krajów i ludność w klasach oczekiwanej długości życia, osobno dla każdego roku
+klasy <- europa |>
+  mutate(klasa = cut(lifeExp, breaks = c(0, granice_klas, 100),
+                     right = FALSE)) |>            # przedziały domknięte z lewej strony
+  group_by(rok, klasa) |>
+  summarise(n = n(), ludnosc_mln = sum(pop) / 1e6, .groups = "drop_last") |>
+  mutate(udzial = ludnosc_mln / sum(ludnosc_mln) * 100) |>   # udział w ludności roku [%]
+  ungroup()
+
+# wiersz „Razem” dla każdego roku: łączna liczba krajów i ludności
+razem <- klasy |>
+  group_by(rok) |>
+  summarise(klasa = "Razem", n = sum(n), ludnosc_mln = sum(ludnosc_mln),
+            udzial = sum(udzial))
+
+# klasy i wiersze „Razem” w jednej tabeli, uporządkowane według roku
+klasy_razem <- bind_rows(klasy, razem) |>
+  arrange(rok)
+```
+
+```{r}
+#| label: tbl-eu-klasy-1952
+#| tbl-cap: "Liczba krajów, liczba ludności i udział w ludności 29 krajów Europy według klas oczekiwanej długości życia w 1952 roku"
+# tabela dla 1952 roku: wiersze tego roku, bez kolumny rok
+klasy_razem |>
+  filter(rok == rok_poczatkowy) |>
+  select(-rok) |>
+  knitr::kable(
+    col.names = c("Klasa [lata]", "Liczba krajów", "Ludność [mln]",
+                  "Udział w ludności [%]"),
+    digits = 1,
+    format.args = list(decimal.mark = ",")
+  )
+```
+
+```{r}
+#| label: tbl-eu-klasy-2007
+#| tbl-cap: "Liczba krajów, liczba ludności i udział w ludności 29 krajów Europy według klas oczekiwanej długości życia w 2007 roku"
+# tabela dla 2007 roku
+klasy_razem |>
+  filter(rok == rok_koncowy) |>
+  select(-rok) |>
+  knitr::kable(
+    col.names = c("Klasa [lata]", "Liczba krajów", "Ludność [mln]",
+                  "Udział w ludności [%]"),
+    digits = 1,
+    format.args = list(decimal.mark = ",")
+  )
+```
+
+```{r}
+#| label: fig-eu-treemap
+#| fig-cap: "Liczba ludności krajów Europy w 1952 i 2007 roku (pole prostokąta) według subregionów (białe obramowania) i klas oczekiwanej długości życia (kolor)"
+#| fig-width: 11
+#| fig-height: 6.5
+# pakiet do wykresów treemap
+library(treemapify)
+
+# treemap: pole prostokąta = liczba ludności, kolor = klasa oczekiwanej długości życia
+ggplot(europa, aes(area = pop, fill = lifeExp, label = kraj,
+                   subgroup = subregion_pl)) +
+  geom_treemap(colour = "grey40") +                 # prostokąty krajów
+  geom_treemap_subgroup_border(colour = "white", size = 4) +   # granice subregionów
+  geom_treemap_subgroup_text(colour = "white", place = "bottomleft",   # nazwy subregionów
+                             fontface = "bold", size = 13, padding.y = grid::unit(2, "mm")) +
+  geom_treemap_text(colour = "black", place = "topleft", grow = FALSE,  # nazwy krajów
+                    size = 11) +
+  facet_wrap(~ rok) +
+  scale_fill_fermenter(breaks = granice_klas,
+                       palette = "YlGnBu", direction = 1,
+                       limits = zakres_klas) +        # zakres skali jak na mapie
+  labs(fill = "Oczekiwana długość\nżycia [lata]") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "bottom",
+        legend.key.width = unit(1.5, "cm"))
+```
+
+### Zróżnicowanie między subregionami i wewnątrz subregionów
+
+```{r}
+#| label: tbl-eu-subregiony
+#| tbl-cap: "Statystyki opisowe oczekiwanej długości życia w subregionach Europy [lata; współczynnik zmienności w %]"
+# te same statystyki, osobno dla każdego subregionu w każdym roku
+europa |>
+  group_by(subregion_pl, rok) |>                    # podział na subregiony i lata
+  summarise(
+    n = n(),
+    srednia = mean(lifeExp),
+    mediana = median(lifeExp),
+    q1 = quantile(lifeExp, 0.25),
+    q3 = quantile(lifeExp, 0.75),
+    iqr = IQR(lifeExp),
+    minimum = min(lifeExp),
+    maksimum = max(lifeExp),
+    odch_std = sd(lifeExp),
+    wsp_zmiennosci = sd(lifeExp) / mean(lifeExp) * 100,
+    .groups = "drop"                                # usunięcie podziału na grupy
+  ) |>
+  knitr::kable(
+    col.names = c("Subregion", "Rok", "n", "Średnia", "Mediana", "Q1", "Q3", "IQR",
+                  "Min.", "Maks.", "Odch. std.", "Wsp. zmienności"),
+    digits = 1,
+    format.args = list(decimal.mark = ",")
+  )
+```
+
+```{r}
+# oznaczenie wartości odstających w każdym subregionie i roku (reguła 1,5 × IQR,
+# ta sama, którą stosuje geom_boxplot())
+europa_subregiony <- europa |>
+  group_by(subregion_pl, rok) |>
+  mutate(
+    q1 = quantile(lifeExp, 0.25),
+    q3 = quantile(lifeExp, 0.75),
+    iqr = IQR(lifeExp),
+    odstajaca = lifeExp < q1 - 1.5 * iqr | lifeExp > q3 + 1.5 * iqr   # TRUE albo FALSE
+  ) |>
+  ungroup()
+```
+
+```{r}
+#| label: fig-eu-subregiony
+#| fig-cap: "Oczekiwana długość życia w subregionach Europy w 1952 i 2007 roku; punkty — poszczególne kraje, czerwona gwiazdka — wartość odstająca"
+# wykres pudełkowy: dla każdego subregionu dwa pudełka (1952 i 2007) obok siebie
+ggplot(europa_subregiony, aes(x = subregion_pl, y = lifeExp, fill = rok)) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.6) +   # bez punktów wartości odstających
+  geom_point(aes(group = rok, shape = odstajaca, colour = odstajaca),   # punkty krajów
+             position = position_dodge(width = 0.75), size = 2) +
+  scale_fill_manual(values = kolory_lat) +
+  scale_shape_manual(values = c("FALSE" = 16, "TRUE" = 8),       # kółko, gwiazdka
+                     labels = c("kraj", "wartość odstająca")) +
+  scale_colour_manual(values = c("FALSE" = "black", "TRUE" = "red"),
+                      labels = c("kraj", "wartość odstająca")) +
+  labs(x = "Subregion", y = "Oczekiwana długość życia [lata]", fill = "Rok",
+       shape = NULL, colour = NULL) +               # jedna legenda dla kształtu i koloru
+  theme_bw(base_size = 13) +
+  theme(legend.position = "bottom")
+```
+
+### Zmiany i przyrost oczekiwanej długości życia w krajach
+
+```{r}
+# przyrost w każdym kraju: tabela szeroka z kolumną dla każdego roku
+przyrost <- europa |>
+  mutate(okres = if_else(year == rok_poczatkowy, "poczatek", "koniec")) |>
+  select(kraj, okres, lifeExp) |>
+  pivot_wider(names_from = okres, values_from = lifeExp) |>
+  mutate(przyrost = koniec - poczatek)
+
+# dane obu lat z dołączonym przyrostem kraju
+europa_przyrost <- europa |>
+  inner_join(select(przyrost, kraj, przyrost), by = "kraj")
+```
+
+```{r}
+#| label: fig-eu-hantlowy
+#| fig-cap: "Oczekiwana długość życia w 1952 i 2007 roku w 29 krajach Europy — wykres hantlowy; długość odcinka — przyrost; kraje uporządkowane według przyrostu"
+#| fig-height: 8
+# wykres hantlowy: odcinek łączy wartości kraju z 1952 i 2007 roku
+ggplot(europa_przyrost, aes(x = lifeExp, y = fct_reorder(kraj, przyrost))) +
+  geom_line(aes(group = kraj), colour = "grey60") +  # odcinek między dwoma latami
+  geom_point(aes(colour = rok), size = 2.5) +
+  scale_colour_manual(values = kolory_lat) +
+  labs(x = "Oczekiwana długość życia [lata]", y = NULL, colour = "Rok") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "bottom")
+```
+
+```{r}
+#| label: tbl-eu-przyrost
+#| tbl-cap: "Pięć krajów Europy o największym i pięć o najmniejszym przyroście oczekiwanej długości życia w latach 1952–2007 [lata]"
+# kraje uporządkowane według przyrostu: pierwszych i ostatnich pięć
+przyrost |>
+  arrange(desc(przyrost)) |>
+  slice(c(1:5, (n() - 4):n())) |>
+  select(kraj, poczatek, koniec, przyrost) |>
+  knitr::kable(digits = 1, format.args = list(decimal.mark = ","),
+               col.names = c("Kraj", rok_poczatkowy, rok_koncowy, "Przyrost"))
+```
+
+```{r}
+# pięć krajów o największym i pięć o najmniejszym przyroście
+skrajne <- bind_rows(
+  przyrost |> slice_max(przyrost, n = 5) |> mutate(grupa = "Największy przyrost"),
+  przyrost |> slice_min(przyrost, n = 5) |> mutate(grupa = "Najmniejszy przyrost")
+) |>
+  mutate(grupa = fct_inorder(grupa))                # kolejność paneli: jak w tabeli
+
+# dane obu lat dla wybranych krajów, z nazwą grupy
+europa_skrajne <- europa_przyrost |>
+  inner_join(select(skrajne, kraj, grupa), by = "kraj")
+```
+
+```{r}
+#| label: fig-eu-kraje
+#| fig-cap: "Oczekiwana długość życia w 1952 i 2007 roku w pięciu krajach Europy o największym i pięciu o najmniejszym przyroście; kraje uporządkowane według przyrostu"
+#| fig-height: 6
+# wykres słupkowy zgrupowany, poziomy: dwa słupki (1952, 2007) dla każdego kraju
+ggplot(europa_skrajne, aes(x = lifeExp,
+                           y = fct_reorder(kraj, przyrost),   # kolejność według przyrostu
+                           fill = rok)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~ grupa, ncol = 1, scales = "free_y") +  # dwa panele jeden pod drugim
+  scale_fill_manual(values = kolory_lat) +
+  labs(x = "Oczekiwana długość życia [lata]", y = NULL, fill = "Rok") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "bottom")
+```
+
+## Wybór sposobu prezentacji wyników
+
+### Rozkład w 1952 i 2007 roku
+
+```{r}
+#| label: fig-eu-wybor-histogram
+#| fig-cap: "Oczekiwana długość życia w Europie w 1952 i 2007 roku — histogramy (przedziały co 2 lata)"
+#| fig-height: 5
+# histogram w dwóch panelach ze wspólną osią x
+ggplot(europa, aes(x = lifeExp, fill = rok)) +
+  geom_histogram(binwidth = 2, colour = "white") +
+  facet_wrap(~ rok, ncol = 1) +
+  scale_fill_manual(values = kolory_lat) +
+  labs(x = "Oczekiwana długość życia [lata]", y = "Liczba krajów") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "none")
+```
+
+```{r}
+#| label: fig-eu-wybor-gestosc
+#| fig-cap: "Oczekiwana długość życia w Europie w 1952 i 2007 roku — nakładające się wykresy gęstości"
+#| fig-height: 4
+# dwie krzywe gęstości na wspólnej osi
+ggplot(europa, aes(x = lifeExp, fill = rok)) +
+  geom_density(alpha = 0.5) +
+  scale_fill_manual(values = kolory_lat) +
+  labs(x = "Oczekiwana długość życia [lata]", y = "Gęstość", fill = "Rok") +
+  theme_bw(base_size = 13)
+```
+
+```{r}
+#| label: fig-eu-wybor-pasek
+#| fig-cap: "Oczekiwana długość życia w Europie w 1952 i 2007 roku — wykres paskowy; kreska — kraj"
+#| fig-height: 3
+# wykres paskowy: każdy kraj jako kreska na osi wartości
+ggplot(europa, aes(x = lifeExp, y = rok, colour = rok)) +
+  geom_point(shape = "|", size = 8) +
+  scale_colour_manual(values = kolory_lat) +
+  labs(x = "Oczekiwana długość życia [lata]", y = "Rok") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "none")
+```
+
+### Rozmieszczenie przestrzenne
+
+```{r}
+#| label: fig-eu-wybor-mapy-osobne
+#| fig-cap: "Oczekiwana długość życia w krajach Europy w 1952 (A) i 2007 roku (B) — osobne skale dla każdego roku (wariant nieprzeznaczony do porównania lat); czarne linie — granice subregionów"
+#| fig-width: 11
+#| fig-height: 6
+# pakiet do łączenia wykresów w jedną rycinę
+library(patchwork)
+
+# mapa 1952: klasy co 3 lata dobrane do zakresu wartości z 1952 roku
+mapa_1952 <- ggplot() +
+  geom_sf(data = swiat, fill = "grey85", colour = "white", linewidth = 0.2) +
+  geom_sf(data = filter(mapa_europa, year == rok_poczatkowy), aes(fill = lifeExp),
+          colour = "white", linewidth = 0.2) +
+  geom_sf(data = subregiony, fill = NA, colour = "black", linewidth = 0.6) +
+  scale_fill_fermenter(breaks = c(57, 60, 63, 66, 69, 72),
+                       palette = "Oranges", direction = 1) +
+  coord_sf(crs = zasieg$crs, xlim = zasieg$x, ylim = zasieg$y) +
+  labs(fill = "Lata") +
+  theme_void(base_size = 13) +
+  theme(legend.position = "bottom", legend.key.width = unit(1, "cm"))
+
+# mapa 2007: klasy co 2 lata dobrane do zakresu wartości z 2007 roku
+mapa_2007 <- ggplot() +
+  geom_sf(data = swiat, fill = "grey85", colour = "white", linewidth = 0.2) +
+  geom_sf(data = filter(mapa_europa, year == rok_koncowy), aes(fill = lifeExp),
+          colour = "white", linewidth = 0.2) +
+  geom_sf(data = subregiony, fill = NA, colour = "black", linewidth = 0.6) +
+  scale_fill_fermenter(breaks = c(74, 76, 78, 80),
+                       palette = "Blues", direction = 1) +
+  coord_sf(crs = zasieg$crs, xlim = zasieg$x, ylim = zasieg$y) +
+  labs(fill = "Lata") +
+  theme_void(base_size = 13) +
+  theme(legend.position = "bottom", legend.key.width = unit(1, "cm"))
+
+mapa_1952 + mapa_2007 +
+  plot_annotation(tag_levels = "A")
+```
+
+```{r}
+#| label: fig-eu-wybor-mapa-przyrost
+#| fig-cap: "Przyrost oczekiwanej długości życia w krajach Europy w latach 1952–2007; czarne linie — granice subregionów"
+#| fig-width: 7
+#| fig-height: 7
+# granice krajów połączone z tabelą przyrostu (jeden wiersz dla kraju)
+mapa_przyrost <- swiat |>
+  inner_join(europa |> filter(year == rok_koncowy) |> select(kraj, Kod),
+             by = c("iso_a3_eh" = "Kod")) |>
+  inner_join(przyrost, by = "kraj")
+
+ggplot() +
+  geom_sf(data = swiat, fill = "grey85", colour = "white", linewidth = 0.2) +
+  geom_sf(data = mapa_przyrost, aes(fill = przyrost), colour = "white", linewidth = 0.2) +
+  geom_sf(data = subregiony, fill = NA, colour = "black", linewidth = 0.6) +
+  scale_fill_fermenter(breaks = c(10, 12, 14, 16, 18),   # klasy co 2 lata
+                       palette = "Purples", direction = 1) +
+  coord_sf(crs = zasieg$crs, xlim = zasieg$x, ylim = zasieg$y) +
+  labs(fill = "Przyrost [lata]") +
+  theme_void(base_size = 13) +
+  theme(legend.position = "bottom", legend.key.width = unit(1.5, "cm"))
+```
+
+### Struktura ludności
+
+```{r}
+#| label: fig-eu-wybor-treemap
+#| fig-cap: "Liczba ludności krajów Europy w 1952 i 2007 roku (pole prostokąta) i klasa oczekiwanej długości życia (kolor) — wykres treemap bez podziału na subregiony"
+#| fig-width: 11
+#| fig-height: 6.5
+# treemap bez argumentu subgroup: prostokąty krajów bez grupowania
+ggplot(europa, aes(area = pop, fill = lifeExp, label = kraj)) +
+  geom_treemap(colour = "white") +
+  geom_treemap_text(colour = "black", place = "centre", grow = FALSE) +
+  facet_wrap(~ rok) +
+  scale_fill_fermenter(breaks = granice_klas,
+                       palette = "YlGnBu", direction = 1, limits = zakres_klas) +
+  labs(fill = "Oczekiwana długość\nżycia [lata]") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "bottom", legend.key.width = unit(1.5, "cm"))
+```
+
+### Subregiony
+
+```{r}
+#| label: fig-eu-wybor-pudelkowy
+#| fig-cap: "Oczekiwana długość życia w subregionach Europy w 1952 i 2007 roku — wykres pudełkowy bez punktów krajów"
+# wykres pudełkowy z wartościami odstającymi w kolorze czerwonym
+ggplot(europa, aes(x = subregion_pl, y = lifeExp, fill = rok)) +
+  geom_boxplot(outlier.colour = "red") +
+  scale_fill_manual(values = kolory_lat) +
+  labs(x = "Subregion", y = "Oczekiwana długość życia [lata]", fill = "Rok") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "bottom")
+```
+
+```{r}
+#| label: fig-eu-wybor-skrzypcowy
+#| fig-cap: "Oczekiwana długość życia w subregionach Europy w 1952 i 2007 roku — wykres skrzypcowy"
+# wykres skrzypcowy: szerokość figury odpowiada gęstości obserwacji
+ggplot(europa, aes(x = subregion_pl, y = lifeExp, fill = rok)) +
+  geom_violin(alpha = 0.6) +
+  scale_fill_manual(values = kolory_lat) +
+  labs(x = "Subregion", y = "Oczekiwana długość życia [lata]", fill = "Rok") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "bottom")
+```
+
+```{r}
+#| message: false
+#| label: fig-eu-wybor-grzbietowy-subregiony
+#| fig-cap: "Oczekiwana długość życia w subregionach Europy w 1952 i 2007 roku — wykres grzbietowy"
+#| fig-height: 5
+# wykres grzbietowy: wiersz = subregion, kolor = rok
+ggplot(europa, aes(x = lifeExp, y = subregion_pl, fill = rok)) +
+  geom_density_ridges(alpha = 0.6) +
+  scale_fill_manual(values = kolory_lat) +
+  labs(x = "Oczekiwana długość życia [lata]", y = "Subregion", fill = "Rok") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "bottom")
+```
+
+### Zmiany i przyrost w krajach
+
+```{r}
+#| label: fig-eu-wybor-nachyleniowy
+#| fig-cap: "Miejsce krajów Europy w rankingu oczekiwanej długości życia w 1952 i 2007 roku — wykres nachyleniowy (1 — najwyższa wartość)"
+#| fig-width: 8
+#| fig-height: 9
+# miejsce kraju w rankingu w każdym roku (1 = najwyższa oczekiwana długość życia)
+ranking <- europa |>
+  group_by(rok) |>
+  mutate(miejsce = min_rank(desc(lifeExp))) |>
+  ungroup()
+
+# wykres nachyleniowy: odcinek łączy miejsce kraju w 1952 i 2007 roku
+ggplot(ranking, aes(x = rok, y = miejsce, group = kraj)) +
+  geom_line(colour = "grey50") +
+  geom_point(size = 2) +
+  geom_text(data = filter(ranking, year == rok_poczatkowy),   # nazwy krajów po lewej stronie
+            aes(label = kraj), hjust = 1, nudge_x = -0.05, size = 3.5) +
+  geom_text(data = filter(ranking, year == rok_koncowy),   # nazwy krajów po prawej stronie
+            aes(label = kraj), hjust = 0, nudge_x = 0.05, size = 3.5) +
+  scale_y_reverse(breaks = c(1, 5, 10, 15, 20, 25, 29)) +   # miejsce 1 na górze
+  labs(x = "Rok", y = "Miejsce w rankingu") +
+  theme_bw(base_size = 13)
+```
+
+```{r}
+#| label: fig-eu-wybor-lizakowy
+#| fig-cap: "Przyrost oczekiwanej długości życia w latach 1952–2007 w 29 krajach Europy — wykres lizakowy"
+#| fig-height: 8
+# wykres lizakowy: odcinek od zera do wartości przyrostu zakończony punktem
+ggplot(przyrost, aes(x = przyrost, y = fct_reorder(kraj, przyrost))) +
+  geom_segment(aes(x = 0, xend = przyrost, yend = fct_reorder(kraj, przyrost)),
+               colour = "grey60") +
+  geom_point(size = 2.5, colour = "steelblue") +
+  labs(x = "Przyrost oczekiwanej długości życia 1952–2007 [lata]", y = NULL) +
+  theme_bw(base_size = 13)
+```
+
+### Subregiony w analizie zmian w czasie
+
+```{r}
+#| label: fig-eu-wybor-hantlowy-subregiony
+#| fig-cap: "Oczekiwana długość życia w 1952 i 2007 roku w krajach Europy — wykres hantlowy w panelach subregionów; kraje uporządkowane według przyrostu w obrębie subregionu"
+#| fig-width: 8
+#| fig-height: 9
+# wykres hantlowy jak w raporcie, podzielony na panele według subregionu
+ggplot(europa_przyrost, aes(x = lifeExp, y = fct_reorder(kraj, przyrost))) +
+  geom_line(aes(group = kraj), colour = "grey60") +
+  geom_point(aes(colour = rok), size = 2.5) +
+  facet_grid(subregion_pl ~ .,                      # panele jeden pod drugim
+             scales = "free_y", space = "free_y") + # wysokość panelu = liczba krajów
+  scale_colour_manual(values = kolory_lat) +
+  labs(x = "Oczekiwana długość życia [lata]", y = NULL, colour = "Rok") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "bottom")
+```
+
+```{r}
+# kolory subregionów, inne niż kolory lat; kolejne kolory dotyczą kolejnych subregionów
+kolory_subregionow <- c("forestgreen", "firebrick", "darkorchid", "grey40", "goldenrod4",
+                        "deeppink3")
+
+# przyrost kraju z dołączonym subregionem (jeden wiersz dla kraju)
+przyrost_subregiony <- europa |>
+  filter(year == rok_koncowy) |>
+  select(kraj, subregion_pl) |>
+  inner_join(przyrost, by = "kraj")
+```
+
+```{r}
+#| label: fig-eu-wybor-przyrost-slupkowy
+#| fig-cap: "Przyrost oczekiwanej długości życia w latach 1952–2007 w krajach Europy — wykres słupkowy; kolor — subregion"
+#| fig-width: 9
+#| fig-height: 8
+# wykres słupkowy przyrostu: kolor słupka = subregion
+ggplot(przyrost_subregiony, aes(x = przyrost, y = fct_reorder(kraj, przyrost),
+                                fill = subregion_pl)) +
+  geom_col() +
+  scale_fill_manual(values = kolory_subregionow) +  # kolory subregionów
+  labs(x = "Przyrost oczekiwanej długości życia 1952–2007 [lata]", y = NULL,
+       fill = "Subregion") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "bottom")
+```
+
+```{r}
+#| label: fig-eu-wybor-przyrost-lizakowy
+#| fig-cap: "Przyrost oczekiwanej długości życia w latach 1952–2007 w krajach Europy — wykres lizakowy; kolor punktu — subregion"
+#| fig-width: 9
+#| fig-height: 8
+# wykres lizakowy przyrostu: kolor punktu = subregion
+ggplot(przyrost_subregiony, aes(x = przyrost, y = fct_reorder(kraj, przyrost))) +
+  geom_segment(aes(x = 0, xend = przyrost, yend = fct_reorder(kraj, przyrost)),
+               colour = "grey60") +
+  geom_point(aes(colour = subregion_pl), size = 3) +
+  scale_colour_manual(values = kolory_subregionow) +
+  labs(x = "Przyrost oczekiwanej długości życia 1952–2007 [lata]", y = NULL,
+       colour = "Subregion") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "bottom")
+```
+
+```{r}
+# etykieta „kraj_rok”: osobna kategoria dla kraju w każdym roku, uporządkowana
+# według oczekiwanej długości życia — kolejność krajów w każdym panelu jest inna
+europa_ranking <- europa |>
+  mutate(kraj_rok = fct_reorder(paste(kraj, rok, sep = "_"), lifeExp))
+```
+
+```{r}
+#| label: fig-eu-wybor-lata-slupkowy
+#| fig-cap: "Oczekiwana długość życia w krajach Europy w 1952 i 2007 roku — wykres słupkowy w panelach lat; kolor — subregion; kraje uporządkowane według wartości w danym roku"
+#| fig-width: 10
+#| fig-height: 8
+# wykres słupkowy: panel = rok, długość słupka = oczekiwana długość życia, kolor = subregion
+ggplot(europa_ranking, aes(x = lifeExp, y = kraj_rok, fill = subregion_pl)) +
+  geom_col() +
+  facet_wrap(~ rok, scales = "free_y") +            # każdy panel z własną kolejnością
+  scale_y_discrete(labels = function(x) str_remove(x, "_.*")) +   # podpis bez roku
+  scale_fill_manual(values = kolory_subregionow) +
+  labs(x = "Oczekiwana długość życia [lata]", y = NULL, fill = "Subregion") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "bottom")
+```
+
+```{r}
+#| label: fig-eu-wybor-lata-kropkowy
+#| fig-cap: "Oczekiwana długość życia w krajach Europy w 1952 i 2007 roku — wykres kropkowy w panelach lat; kolor — subregion; kraje uporządkowane według wartości w danym roku"
+#| fig-width: 10
+#| fig-height: 8
+# wykres kropkowy: te same dane, położenie punktu zamiast długości słupka
+ggplot(europa_ranking, aes(x = lifeExp, y = kraj_rok, colour = subregion_pl)) +
+  geom_point(size = 3) +
+  facet_wrap(~ rok, scales = "free") +              # własna kolejność i zakres osi x
+  scale_y_discrete(labels = function(x) str_remove(x, "_.*")) +
+  scale_colour_manual(values = kolory_subregionow) +
+  labs(x = "Oczekiwana długość życia [lata]", y = NULL, colour = "Subregion") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "bottom")
+```

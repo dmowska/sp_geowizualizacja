@@ -1,0 +1,133 @@
+---
+title: "Oczekiwana długość życia na świecie w 2007 roku"
+format: html
+---
+
+Kod do rozdziału „Oczekiwana długość życia na świecie w 2007 roku” skryptu do ćwiczeń.
+Plik wymaga folderu `dane/` z plikiem `gapminder_regions.csv` w tym samym folderze
+co ten plik `.qmd` oraz pakietów `tidyverse`, `sf`, `rnaturalearth` i `rnaturalearthdata`.
+
+Pytania badawcze:
+
+- Jaka była typowa oczekiwana długość życia na świecie w 2007 roku?
+- Czy oczekiwana długość życia różniła się między kontynentami i jak była zróżnicowana
+  wewnątrz nich?
+- Jak rozmieszczone są przestrzennie kraje o krótkiej i długiej oczekiwanej długości życia?
+
+## Przygotowanie danych
+
+```{r}
+#| message: false
+# wczytanie pakietu tidyverse: zestawu pakietów do przetwarzania danych (dplyr)
+# i tworzenia wykresów (ggplot2)
+library(tidyverse)
+
+# wczytanie pliku CSV i zapisanie tabeli jako obiektu o nazwie dane
+dane <- read.csv("dane/gapminder_regions.csv", encoding = "UTF-8")
+
+# zamiana wszystkich kolumn tekstowych na zmienne typu factor (zmienne jakościowe)
+dane <- dane |>
+  mutate(across(where(is.character), as.factor))
+```
+
+```{r}
+# wybrany rok; lata z danych: od 1952 do 2007, co 5 lat
+wybrany_rok <- 2007
+
+# wybór obserwacji z wybranego roku i zapisanie ich jako nowego obiektu dane2007
+dane2007 <- dane |>
+  filter(year == wybrany_rok)
+```
+
+## Oczekiwana długość życia na świecie
+
+```{r}
+# liczba krajów na każdym kontynencie w 2007 roku
+summary(dane2007$kontynent)
+```
+
+```{r}
+# podstawowe statystyki oczekiwanej długości życia w 2007 roku
+summary(dane2007$lifeExp)
+```
+
+## Zróżnicowanie oczekiwanej długości życia między kontynentami
+
+```{r}
+#| R.options:
+#|   width: 120
+# statystyki opisowe oczekiwanej długości życia, osobno dla każdego kontynentu
+dane2007 |>
+  group_by(kontynent) |>                            # podział tabeli na kontynenty
+  summarise(
+    n = n(),                                        # liczba krajów
+    srednia = round(mean(lifeExp), 1),              # średnia arytmetyczna
+    mediana = round(median(lifeExp), 1),            # mediana
+    minimum = round(min(lifeExp), 1),               # wartość najmniejsza
+    maksimum = round(max(lifeExp), 1),              # wartość największa
+    odch_std = round(sd(lifeExp), 1),               # odchylenie standardowe
+    wsp_zmiennosci = round(sd(lifeExp) / mean(lifeExp) * 100, 1)   # współczynnik zmienności [%]
+  )
+```
+
+```{r}
+#| label: fig-2007-boxplot
+#| fig-cap: "Oczekiwana długość życia w podziale na kontynenty, 2007"
+# wykres pudełkowy oczekiwanej długości życia w podziale na kontynenty
+ggplot(dane2007, aes(x = kontynent, y = lifeExp)) +    # dane i mapowanie
+  geom_boxplot(outlier.colour = "red") +           # wartości odstające w kolorze czerwonym
+  labs(x = "Kontynent", y = "Oczekiwana długość życia [lata]") +
+  theme_bw(base_size = 13)
+```
+
+```{r}
+# wartości odstające oczekiwanej długości życia, osobno dla każdego kontynentu
+dane2007 |>
+  group_by(kontynent) |>                            # podział tabeli na kontynenty
+  mutate(
+    q1 = quantile(lifeExp, 0.25),                   # pierwszy kwartyl kontynentu
+    q3 = quantile(lifeExp, 0.75),                   # trzeci kwartyl kontynentu
+    iqr = IQR(lifeExp)                              # rozstęp kwartylowy kontynentu
+  ) |>
+  ungroup() |>                                      # koniec obliczeń w grupach
+  filter(lifeExp < q1 - 1.5 * iqr |                 # poniżej zasięgu dolnego wąsa
+         lifeExp > q3 + 1.5 * iqr) |>               # albo powyżej zasięgu górnego wąsa
+  select(kontynent, kraj, year, lifeExp) |>         # wybór czterech kolumn
+  arrange(kontynent, lifeExp)                       # sortowanie: kontynent, potem wartość
+```
+
+## Rozmieszczenie przestrzenne
+
+```{r}
+#| message: false
+# pakiety do pracy z danymi przestrzennymi i granice państw świata
+library(sf)
+library(rnaturalearth)
+
+# granice państw jako obiekt przestrzenny sf
+swiat <- ne_countries(scale = "medium", returnclass = "sf")
+
+# połączenie granic z danymi: wszystkie państwa z mapy, dane tam, gdzie zgadza się kod
+mapa <- swiat |>
+  left_join(dane2007, by = c("iso_a3_eh" = "Kod"))
+```
+
+```{r}
+#| label: fig-2007-mapa
+#| fig-cap: "Oczekiwana długość życia w 2007 roku"
+#| fig-width: 9
+#| fig-height: 5.5
+# mapa: kolor państwa odpowiada klasie oczekiwanej długości życia
+ggplot(mapa) +
+  geom_sf(aes(fill = lifeExp), colour = "grey40", linewidth = 0.1) +  # państwa i granice
+  scale_fill_fermenter(breaks = c(50, 60, 70, 80),     # granice klas co 10 lat
+                       palette = "YlGnBu",               # paleta sekwencyjna Brewer
+                       direction = 1,                    # ciemniejszy kolor = wyższa wartość
+                       na.value = "grey85") +            # kolor państw bez danych
+  labs(fill = "Oczekiwana długość\nżycia [lata]") +      # tytuł legendy
+  theme_void(base_size = 13) +                           # motyw bez osi i siatki
+  theme(legend.position = "bottom")                      # legenda pod mapą
+```
+
+## Wnioski
+

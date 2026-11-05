@@ -1,0 +1,209 @@
+# Dane {#sec-zbiory-danych .unnumbered}
+
+Rozdział opisuje wszystkie zbiory danych wykorzystane w skrypcie. Pliki znajdują się w folderze `dane/`.
+Plik `.qmd` wczytuje dane ze ścieżki względnej `dane/…`, dlatego folder `dane/` powinien znajdować się
+obok pliku `.qmd`. Paczka `pliki_kursu.zip` zawiera folder `kod/` z podfolderem `dane/`.
+
+Dwa zbiory kod pobiera z internetu: dane IMGW-PIB pakietem `climate` przy każdym uruchomieniu
+oraz granice powiatów z bazy GADM przy pierwszym uruchomieniu.
+
+## Zestawienie zbiorów {#sec-zd-zestawienie}
+
+| Zbiór | Plik albo funkcja | Zawartość | Rozdziały i załączniki |
+|---|---|---|---|
+| Gapminder | `gapminder_regions.csv` | 142 kraje w latach 1952–2007, co 5 lat | [3](03_praca_z_danymi.qmd), [4](04_wykresy_ggplot2.qmd), [5](05_dane_przestrzenne.qmd), [7](07_quarto.qmd), [8](08_raport.qmd), [10](10_statystyki_opisowe.qmd), [11](11_korelacja.qmd), [12](12_po_co_wizualizujemy.qmd), [13](13_gramatyka_grafiki.qmd), [15](15_wizualizacja_statystyk.qmd), [16](16_wizualizacja_zaleznosci.qmd), [17](17_dobor_wykresu.qmd), [18](18_formatowanie.qmd), [20](20_dlugosc_zycia.qmd), [21](21_dlugosc_zycia_2007.qmd), [23](23_dlugosc_zycia_europa.qmd); [A](A_typy_wykresow.qmd), [D](D_dobor_wykresu_przyklady.qmd) |
+| IMGW-PIB, 2020 | `meteo2020.csv` | dane miesięczne z 59 stacji synoptycznych w 2020 roku | [5](05_dane_przestrzenne.qmd), [22](22_meteo_2020.qmd) |
+| IMGW-PIB, pobierany | `meteo_imgw_monthly()` z pakietu `climate` | dane miesięczne ze stacji synoptycznych z wybranego roku; w skrypcie 2023 | [24](24_meteo_zakopane.qmd), [25](25_meteo_trzy_stacje.qmd) |
+| BDL GUS, lasy | `lasy_bld.csv` | powierzchnia lasów w powiatach Polski w latach 2000 i 2025 | [3](03_praca_z_danymi.qmd), [5](05_dane_przestrzenne.qmd), [26](26_lasy_wielkopolska.qmd) |
+| BDL GUS, statystyka regionalna | folder `gus/` | gotowe pliki do wykonania wykresów w statystyce regionalnej | [B](B_wykresy_statystyka_regionalna.qmd) |
+| Bank Światowy | `API_SP.DYN.LE00.IN_…_1292.xls` | oczekiwana długość życia w chwili urodzenia, lata 1960–2025 | [E](E_bank_swiatowy.qmd) |
+| Bank Światowy, wyniki | `wb_dlugosc_zycia.csv`, `wb_dlugosc_zycia.gpkg` | pliki zapisywane przez kod załącznika | [E](E_bank_swiatowy.qmd) |
+| Natural Earth, państwa | `ne_countries()` z pakietu `rnaturalearth` | granice państw świata | [5](05_dane_przestrzenne.qmd), [8](08_raport.qmd), [21](21_dlugosc_zycia_2007.qmd), [23](23_dlugosc_zycia_europa.qmd); [A](A_typy_wykresow.qmd), [D](D_dobor_wykresu_przyklady.qmd), [E](E_bank_swiatowy.qmd) |
+| Natural Earth, województwa | `wojewodztwa.gpkg` | granice 16 województw | [5](05_dane_przestrzenne.qmd), [22](22_meteo_2020.qmd), [25](25_meteo_trzy_stacje.qmd) |
+| GADM | `gadm()` z pakietu `geodata` | granice powiatów Polski | [5](05_dane_przestrzenne.qmd), [26](26_lasy_wielkopolska.qmd) |
+| Kwartet Anscombe'a | `datasets::anscombe` w R | cztery zbiory po 11 par wartości | [12](12_po_co_wizualizujemy.qmd) |
+
+## Gapminder {#sec-zd-gapminder}
+
+Plik `gapminder_regions.csv` zawiera dane Gapminder (<https://www.gapminder.org/data/>), dostępne w R
+w pakiecie `gapminder` (licencja CC0). Kolumny z podziałem regionalnym, grupami dochodowymi i grupami
+gospodarczymi oraz nazwy polskie dodano w materiałach kursu. Kolumna `Kod` pochodzi z bazy World Development
+Indicators Banku Światowego; dla Reunionu i Tajwanu, nieobecnych w tej bazie, kod uzupełniono według
+normy ISO 3166. W pakiecie `gapminder` Turcja należy do Europy; w tym zbiorze przypisano ją do Azji, dlatego
+Azja obejmuje 34 kraje, a Europa 29 (w pakiecie: 33 i 30). Wartości `lifeExp`, `pop` i `gdpPercap` są takie
+same jak w pakiecie.
+
+- **Zakres:** 142 kraje, 12 lat: od 1952 do 2007 roku, co 5 lat.
+- **Jednostka obserwacji:** kraj w danym roku; zbiór liczy 142 × 12 = 1704 obserwacje i 14 kolumn.
+- **Braki danych:** kolumny liczbowe są kompletne. Reunion oraz Zachodni Brzeg i Strefa Gazy
+  (*West Bank and Gaza*) mają puste pola w kolumnach klasyfikacyjnych.
+
+| Kolumna | Znaczenie |
+|---|---|
+| `country`, `kraj` | nazwa kraju po angielsku i po polsku |
+| `continent`, `kontynent` | kontynent po angielsku i po polsku, 5 kategorii |
+| `subregion`, `subregion_pl` | subregion świata po angielsku i po polsku, 18 kategorii |
+| `year` | rok obserwacji |
+| `lifeExp` | oczekiwana długość życia w chwili urodzenia, w latach |
+| `pop` | liczba ludności |
+| `gdpPercap` | PKB per capita w dolarach amerykańskich, skorygowany o inflację |
+| `income_grp` | grupa dochodowa Banku Światowego, 5 kategorii uporządkowanych |
+| `income_grp_pl` | grupa dochodowa w 3 kategoriach: niski, średni, wysoki |
+| `economy_grp` | grupa gospodarcza, 7 kategorii uporządkowanych |
+| `Kod` | trzyliterowy kod kraju (ISO 3166-1 alfa-3) |
+
+## Dane meteorologiczne z 2020 roku {#sec-zd-meteo2020}
+
+Plik `meteo2020.csv` zawiera miesięczne wartości charakterystyk meteorologicznych ze stacji synoptycznych.
+Źródło danych: Instytut Meteorologii i Gospodarki Wodnej – Państwowy Instytut Badawczy (IMGW-PIB,
+<https://danepubliczne.imgw.pl>).
+
+- **Zakres:** 59 stacji synoptycznych w Polsce, 12 miesięcy 2020 roku.
+- **Jednostka obserwacji:** stacja w danym miesiącu; zbiór liczy 59 × 12 = 708 obserwacji i 17 kolumn.
+- **Warunki korzystania:** [regulamin udostępniania danych
+  IMGW-PIB](https://danepubliczne.imgw.pl/docs/regulamin_udostepniania_danych.pdf) wymaga wskazania źródła danych,
+  a w przypadku ich przetworzenia także informacji o przetworzeniu: Źródłem pochodzenia danych jest Instytut
+  Meteorologii i Gospodarki Wodnej – Państwowy Instytut Badawczy. Dane Instytutu Meteorologii i Gospodarki Wodnej –
+  Państwowego Instytutu Badawczego zostały przetworzone.
+- **Braki danych:** w pliku źródłowym część brakujących pomiarów zapisano jako 0; w materiałach kursu
+  wartości te zastąpiono pustym polem. Liczba braków: `temp_max_abs`, `temp_max_sr`, `temp_min_abs` i `temp_min_sr`
+  po 7, `temp_sr` 4, `temp_grunt_min` 31, `dni_snieg` 96. Szczegóły podaje @sec-meteo-dane.
+
+| Kolumna | Znaczenie |
+|---|---|
+| `id_stacji`, `stacja` | identyfikator i nazwa stacji |
+| `X_dlugosc_geogr`, `Y_szerokosc_geogr` | długość i szerokość geograficzna stacji [°] |
+| `wojewodztwo`, `woj_kod` | nazwa i kod TERYT województwa |
+| `miesiac` | miesiąc (1–12) |
+| `temp_max_abs`, `temp_min_abs` | absolutna maksymalna i absolutna minimalna temperatura powietrza [°C] |
+| `temp_max_sr`, `temp_min_sr` | średnia maksymalna i średnia minimalna temperatura powietrza [°C] |
+| `temp_sr` | średnia miesięczna temperatura powietrza [°C] |
+| `temp_grunt_min` | minimalna temperatura przy gruncie [°C] |
+| `opad_suma` | miesięczna suma opadu [mm] |
+| `opad_max_dobowy` | maksymalna dobowa suma opadu w miesiącu [mm] |
+| `dni_deszcz`, `dni_snieg` | liczba dni z opadem deszczu i z opadem śniegu |
+
+## Dane meteorologiczne pobierane pakietem `climate` {#sec-zd-climate}
+
+Funkcja `meteo_imgw_monthly()` z pakietu `climate` (Czernecki, Głogowski i Nowosad, 2020) pobiera miesięczne
+wartości charakterystyk meteorologicznych z publicznego zbioru IMGW-PIB (<https://danepubliczne.imgw.pl>).
+Stacje i rok wybiera się w kodzie, dlatego zbiór nie znajduje się w folderze `dane/`, a pobranie wymaga
+połączenia z internetem. Liczby poniżej dotyczą 2023 roku, wykorzystanego w skrypcie.
+
+- **Zakres:** 59 stacji synoptycznych w 2023 roku.
+- **Jednostka obserwacji:** stacja w danym miesiącu; zbiór liczy 707 obserwacji: 58 stacji ma po 12 obserwacji,
+  a stacja Resko-Smólsko 11 (brak lutego).
+- **Kolumny:** z argumentem `status = TRUE` tabela ma 78 kolumn, a z dodanymi współrzędnymi stacji 80 (@sec-tr-pobranie).
+  Kolumny statusu pomiaru mają nazwy z przedrostkiem `W`, np. `WTMAX`.
+- **Warunki korzystania:** obowiązuje regulamin IMGW-PIB opisany w poprzedniej sekcji.
+- **Braki danych:** brakujący pomiar ma w zbiorze zazwyczaj wartość 0, a informację o braku zawiera kolumna statusu.
+  Kod raportów zamienia takie wartości na `NA` (@sec-za-dane).
+
+| Kolumna | Znaczenie |
+|---|---|
+| `POST` | nazwa stacji |
+| `MC` | miesiąc (1–12) |
+| `TMAX`, `TMIN` | absolutna maksymalna i absolutna minimalna temperatura powietrza [°C] |
+| `TMXS`, `TMNS` | średnia maksymalna i średnia minimalna temperatura powietrza [°C] |
+| `STM` | średnia miesięczna temperatura powietrza [°C] |
+| `SUMM` | miesięczna suma opadu [mm] |
+| `DESD`, `SNID` | liczba dni z opadem deszczu i z opadem śniegu |
+
+## Powierzchnia lasów {#sec-zd-lasy}
+
+Plik `lasy_bld.csv` pochodzi z Banku Danych Lokalnych GUS (<https://bdl.stat.gov.pl/>): dziedzina „Leśnictwo
+i łowiectwo” → „Leśnictwo wszystkich form własności” → „Powierzchnia lasów”, zmienna „lasy ogółem”
+(identyfikator zmiennej 217916). Dane BDL są udostępniane na licencji CC BY 4.0.
+
+- **Zakres:** powiaty Polski, lata 2000 i 2025.
+- **Jednostka obserwacji:** powiat; miasta na prawach powiatu są osobnymi jednostkami. Plik liczy 381 wierszy.
+- **Zapis pliku:** kolumny rozdzielone średnikiem, przecinek dziesiętny, kody powiatów z województw o numerach
+  02–08 rozpoczynające się od zera (@sec-pd-wlasne).
+- **Braki danych:** w 11 wierszach brakuje wartości z jednego roku (9 braków dla 2000 roku, 2 dla 2025 roku).
+  Wiersze te odpowiadają zmianom podziału na powiaty.
+
+| Kolumna | Znaczenie | Jednostka |
+|---|---|---|
+| `Kod` | kod jednostki terytorialnej powiatu (TERYT), 7 cyfr | — |
+| `Nazwa` | nazwa powiatu | — |
+| `lasy2000` | powierzchnia lasów w 2000 roku | ha |
+| `lasy2025` | powierzchnia lasów w 2025 roku | ha |
+
+## Dane Banku Światowego {#sec-zd-wb}
+
+Plik `API_SP.DYN.LE00.IN_DS2_en_excel_v2_1292.xls` zawiera wskaźnik *Life expectancy at birth, total (years)*
+o kodzie `SP.DYN.LE00.IN` z bazy *World Development Indicators*
+(<https://data.worldbank.org/indicator/SP.DYN.LE00.IN>, licencja CC BY 4.0), według aktualizacji
+z 8 października 2026 roku. Pobranie, układ arkuszy i przygotowanie danych opisuje @sec-bank-swiatowy.
+
+- **Zakres:** lata 1960–2025; kolumna `2025` nie zawiera wartości.
+- **Jednostka obserwacji:** kraj albo grupa krajów; arkusz `Data` liczy 266 wierszy, w tym 217 krajów
+  i gospodarek po wyborze wierszy z podanym regionem.
+- **Braki danych:** wśród 217 jednostek brakuje 2 wartości w 1960 roku i żadnej w 2024 roku.
+
+Pliki `wb_dlugosc_zycia.csv` i `wb_dlugosc_zycia.gpkg` powstają w wyniku uruchomienia kodu załącznika.
+Opis ich kolumn zawiera @sec-bs-kraje.
+
+## Granice państw z bazy Natural Earth {#sec-zd-ne}
+
+Funkcja `ne_countries()` z pakietu `rnaturalearth` zwraca granice państw świata z bazy Natural Earth
+(<https://www.naturalearthdata.com/>, domena publiczna). Argument `scale = "medium"` wymaga pakietu
+`rnaturalearthdata`, który zawiera te dane, dlatego ich wczytanie przebiega bez połączenia z internetem.
+
+- **Zakres:** świat; 242 obiekty; układ współrzędnych WGS 84.
+- **Jednostka obserwacji:** państwo albo terytorium.
+- **Wykorzystane kolumny:** `iso_a3_eh` (trzyliterowy kod kraju, według którego następuje połączenie z danymi)
+  i `geometry` (granice). Kolumna `iso_a3` ma dla Francji i Norwegii wartość `-99`, dlatego kod pochodzi
+  z kolumny `iso_a3_eh`.
+
+## Granice województw {#sec-zd-woj}
+
+Plik `wojewodztwa.gpkg` w formacie GeoPackage zawiera granice województw z bazy Natural Earth (domena publiczna).
+
+- **Zakres:** 16 województw; układ współrzędnych WGS 84.
+- **Jednostka obserwacji:** województwo.
+
+| Kolumna | Znaczenie |
+|---|---|
+| `name`, `name_pl` | nazwa województwa po angielsku i po polsku |
+| `iso_3166_2` | kod województwa według normy ISO 3166-2, np. `PL-MA` |
+| `type` | typ jednostki |
+| `geom` | granice województwa |
+
+## Granice powiatów z bazy GADM {#sec-zd-gadm}
+
+Funkcja `gadm()` z pakietu `geodata` pobiera granice jednostek administracyjnych z bazy GADM w wersji 4.1
+(<https://gadm.org/>). Poziom 2 tej bazy to w Polsce powiaty. Przy pierwszym uruchomieniu kodu funkcja pobiera
+plik z serwera (ok. 22 MB; wymaga połączenia z internetem) i zapisuje go w folderze `granice/` obok pliku `.qmd`;
+przy kolejnych uruchomieniach wczytuje zapisany plik.
+
+- **Zakres:** 380 powiatów Polski; układ współrzędnych WGS 84.
+- **Jednostka obserwacji:** powiat.
+- **Warunki korzystania:** dane GADM są dostępne bezpłatnie do zastosowań akademickich i niekomercyjnych; ich
+  redystrybucja wymaga zgody, dlatego granice nie są dołączone do folderu `dane/`, a pobranego pliku nie należy
+  udostępniać innym osobom.
+
+| Kolumna | Znaczenie |
+|---|---|
+| `NAME_1` | nazwa województwa |
+| `CC_2` | kod powiatu (TERYT), 4 cyfry |
+| `geometry` | granice powiatu |
+
+## Kwartet Anscombe'a {#sec-zd-anscombe}
+
+Zbiór `anscombe` z pakietu `datasets`, wchodzącego w skład R, zawiera kwartet Anscombe'a (Anscombe, 1973):
+cztery zbiory po 11 par wartości $x$ i $y$ o tych samych statystykach opisowych (@sec-wiz-anscombe). Zbiór
+ma kolumny `x1`–`x4` i `y1`–`y4`, nie ma braków danych, a jego wczytanie nie wymaga pliku.
+
+## Źródła {#sec-zd-zrodla}
+
+- Anscombe F.J., 1973. Graphs in statistical analysis. *The American Statistician* 27, 17–21.
+- Czernecki B., Głogowski A., Nowosad J., 2020. Climate: An R Package to Access Free In-Situ Meteorological
+  and Hydrological Datasets For Environmental Assessment. *Sustainability* 12, 394.
+  <https://doi.org/10.3390/su12010394>.
+- Bank Danych Lokalnych GUS: <https://bdl.stat.gov.pl/>.
+- Bank Światowy, World Development Indicators: <https://data.worldbank.org/indicator>.
+- GADM: <https://gadm.org/>.
+- Gapminder: <https://www.gapminder.org/data/>.
+- IMGW-PIB, dane publiczne: <https://danepubliczne.imgw.pl>.
+- Natural Earth: <https://www.naturalearthdata.com/>.

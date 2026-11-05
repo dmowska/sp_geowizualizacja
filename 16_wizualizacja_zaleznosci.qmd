@@ -1,0 +1,424 @@
+---
+format: live-html
+code-fold: true
+code-summary: "Kod"
+webr:
+  packages:
+    - dplyr
+    - ggplot2
+    - GGally
+  resources:
+    - dane/gapminder_regions.csv
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+```{webr}
+#| setup: true
+#| exercise:
+#|   - wz_1
+#|   - wz_2
+#|   - wz_3
+#|   - wz_4
+library(dplyr)
+library(ggplot2)
+library(GGally)
+dane <- read.csv("dane/gapminder_regions.csv", encoding = "UTF-8") |>
+  mutate(across(where(is.character), as.factor))
+dane2007 <- dane |>
+  filter(year == 2007)
+```
+
+# Wizualizacja zależności {#sec-wiz-zaleznosci}
+
+Rozdział przedstawia wizualizację zależności między zmiennymi. Wykresy uzupełniają analizę korelacji (@sec-korelacja): wykres rozrzutu jest
+podstawą wyboru współczynnika korelacji, a korelogram i macierz wykresów rozrzutu
+przedstawiają zależności między wieloma zmiennymi jednocześnie. Przykłady wykorzystują
+dane Gapminder (@sec-pd-dane); kod jest zwinięty nad każdą ryciną.
+
+```{r}
+#| code-summary: "Kod: wczytanie pakietów i danych"
+#| message: false
+library(tidyverse)
+library(GGally)
+dane <- read.csv("dane/gapminder_regions.csv", encoding = "UTF-8") |>
+  mutate(across(where(is.character), as.factor))
+dane2007 <- dane |>
+  filter(year == 2007)
+```
+
+## Wykres rozrzutu {#sec-wz-rozrzut}
+
+Wykres rozrzutu jest podstawową formą przedstawienia zależności dwóch zmiennych
+ilościowych: jedna obserwacja to jeden punkt (@fig-wz-rozrzut). Obie osie mają skalę liniową:
+kształt zależności widoczny na wykresie jest podstawą wyboru współczynnika korelacji, a skala
+logarytmiczna zmienia ten kształt i może prowadzić do błędnego wyboru (@sec-kor-wspolczynniki).
+
+```{r}
+#| label: fig-wz-rozrzut
+#| fig-cap: "Oczekiwana długość życia a PKB per capita, 142 kraje, 2007"
+#| fig-height: 4.5
+ggplot(dane2007, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point(alpha = 0.7, size = 2.5, colour = "#1f4e79") +
+  labs(x = "PKB per capita [USD]",
+       y = "Oczekiwana długość życia [lata]") +
+  theme_bw(base_size = 13)
+```
+
+### Trzecia zmienna jakościowa: kolor
+
+Kolor punktu przedstawia trzecią zmienną, jakościową. Pozwala sprawdzić, czy zależność
+przebiega tak samo w każdej grupie (@fig-wz-kolor).
+
+```{r}
+#| label: fig-wz-kolor
+#| fig-cap: "Oczekiwana długość życia a PKB per capita w 2007 roku; kolor — kontynent"
+#| fig-height: 4.5
+ggplot(dane2007, aes(x = gdpPercap, y = lifeExp, colour = kontynent)) +
+  geom_point(alpha = 0.8, size = 2.5) +
+  scale_colour_brewer(palette = "Dark2") +
+  labs(x = "PKB per capita [USD]",
+       y = "Oczekiwana długość życia [lata]", colour = "Kontynent") +
+  theme_bw(base_size = 13)
+```
+
+### Trzecia zmienna ilościowa: wykres bąbelkowy
+
+Wielkość punktu przedstawia trzecią zmienną, ilościową — taki wykres nazywa się
+**wykresem bąbelkowym** (@fig-wz-babelkowy).
+
+```{r}
+#| label: fig-wz-babelkowy
+#| fig-cap: "Wykres bąbelkowy: oczekiwana długość życia a PKB per capita w 2007 roku; wielkość punktu — liczba ludności"
+#| fig-height: 4.5
+ggplot(dane2007, aes(x = gdpPercap, y = lifeExp, size = pop / 1000000)) +
+  geom_point(alpha = 0.45, colour = "#1f4e79") +
+  scale_size_area(max_size = 16) +                 # pole punktu proporcjonalne do wartości
+  labs(x = "PKB per capita [USD]",
+       y = "Oczekiwana długość życia [lata]", size = "Ludność [mln]") +
+  theme_bw(base_size = 13)
+```
+
+`scale_size_area()` ustala pole punktu proporcjonalnie do wartości zmiennej; wartość 0
+odpowiada punktowi o zerowym polu.
+
+## Korelogram {#sec-wz-korelogram}
+
+**Korelogram** przedstawia macierz współczynników korelacji jako obraz: każde pole
+odpowiada parze zmiennych, a kolor — wartości współczynnika (@fig-wz-korelogram).
+Korelogram stosuje się, gdy analiza obejmuje więcej niż dwie zmienne.
+
+```{r}
+#| label: fig-wz-korelogram
+#| fig-cap: "Korelogram: współczynniki korelacji Spearmana dla czterech zmiennych, 1704 obserwacje kraj–rok, 1952–2007"
+#| fig-height: 4.5
+dane |>
+  select(lifeExp, gdpPercap, pop, year) |>
+  ggcorr(method = c("pairwise", "spearman"),       # współczynnik Spearmana
+         label = TRUE, label_round = 2)            # wartości współczynników w polach
+```
+
+- `ggcorr()` z pakietu `GGally` oblicza współczynniki korelacji dla wszystkich par
+  zmiennych liczbowych tabeli i przedstawia je w postaci trójkąta macierzy.
+- `method = c("pairwise", "spearman")`: pierwsza wartość określa postępowanie z brakami
+  danych (obliczenie dla każdej pary z obserwacji kompletnych w tej parze), druga
+  — współczynnik.
+- `label = TRUE` wpisuje wartości współczynników w pola; `label_round = 2` zaokrągla je
+  do 2 miejsc po przecinku.
+
+Najsilniejszą korelację wykazują oczekiwana długość życia i PKB per capita (0,83).
+
+### Korelogram w pakiecie `corrplot` {#sec-wz-corrplot}
+
+Funkcje pakietów `corrplot`, `Hmisc`, `car`, `PerformanceAnalytics` i `psych` opisane w tym rozdziale
+rysują wykresy grafiką podstawową R, dlatego nie łączy się ich z warstwami `ggplot2` znakiem `+`.
+Kod wywołuje je zapisem `pakiet::funkcja()` (@sec-pakiety), bez wczytywania całych pakietów: część
+z nich zawiera funkcje o takich samych nazwach jak `tidyverse`, np. `recode()` w pakiecie `car`
+i `alpha()` w pakiecie `psych`.
+
+Funkcja `corrplot()` przedstawia gotową macierz współczynników korelacji (@sec-kor-obliczenia). Poniższa
+macierz zawiera te same współczynniki Spearmana co @fig-wz-korelogram. Kolor i wielkość koła
+odpowiadają wartości współczynnika (@fig-wz-corrplot).
+
+```{r}
+#| label: fig-wz-corrplot
+#| fig-cap: "Korelogram `corrplot()`: współczynniki korelacji Spearmana dla czterech zmiennych, 1704 obserwacje kraj–rok, 1952–2007"
+#| fig-height: 4.5
+# macierz współczynników korelacji Spearmana
+macierz_kor <- dane |>
+  select(lifeExp, gdpPercap, pop, year) |>
+  cor(method = "spearman")
+
+# korelogram: domyślnie koła na całej macierzy
+corrplot::corrplot(macierz_kor)
+```
+
+Argumenty funkcji zmieniają układ i kolory korelogramu (@fig-wz-corrplot-uklad).
+
+```{r}
+#| label: fig-wz-corrplot-uklad
+#| fig-cap: "Korelogram `corrplot()`: górny trójkąt macierzy, grupowanie zmiennych i inna paleta kolorów"
+#| fig-height: 4.5
+corrplot::corrplot(macierz_kor,
+                   type = "upper",                   # górny trójkąt macierzy
+                   order = "hclust",                 # kolejność zmiennych według grupowania
+                   tl.col = "black",                 # kolor opisów zmiennych
+                   tl.srt = 45,                      # obrót opisów górnych o 45 stopni
+                   col = corrplot::COL2("PuOr"))     # paleta kolorów
+```
+
+- `type = "upper"` przedstawia górny trójkąt macierzy. Dolny trójkąt powtarza te same wartości.
+- `order = "hclust"` ustawia zmienne w kolejności wynikającej z grupowania hierarchicznego
+  (ang. *hierarchical clustering*), dzięki czemu zmienne o podobnych współczynnikach sąsiadują ze sobą.
+- `col` wskazuje paletę kolorów; `COL2()` zwraca palety rozbieżne pakietu `corrplot`.
+
+Funkcja `corrplot.mixed()` łączy dwie formy: liczby w dolnym trójkącie i koła w górnym
+(@fig-wz-corrplot-mieszany).
+
+```{r}
+#| label: fig-wz-corrplot-mieszany
+#| fig-cap: "Korelogram `corrplot.mixed()`: wartości współczynników w dolnym trójkącie i koła w górnym"
+#| fig-height: 4.5
+corrplot::corrplot.mixed(macierz_kor,
+                         tl.col = "black",           # kolor opisów zmiennych
+                         lower.col = "black")        # kolor liczb w dolnym trójkącie
+```
+
+### Współczynniki i wartości p: pakiet `Hmisc` {#sec-wz-hmisc}
+
+Funkcja `rcorr()` z pakietu `Hmisc` oblicza dla każdej pary zmiennych współczynnik korelacji, liczbę
+obserwacji i wartość p testu istotności. Wynikiem jest zestawienie macierzy, a nie wykres.
+
+```{r}
+# zmienne z 2007 roku; ludność w mln: czytelniejsze opisy osi na dalszych wykresach
+zmienne_2007 <- dane2007 |>
+  mutate(pop_mln = pop / 1000000) |>
+  select(lifeExp, gdpPercap, pop_mln)
+
+# rcorr() wymaga macierzy, dlatego tabelę zamienia as.matrix()
+kor_2007 <- Hmisc::rcorr(as.matrix(zmienne_2007), type = "spearman")
+
+# współczynniki korelacji
+round(kor_2007$r, 2)
+
+# wartości p; na przekątnej brak wartości, ponieważ testu nie wykonuje się dla zmiennej z nią samą
+round(kor_2007$P, 3)
+```
+
+- `type = "spearman"` wybiera współczynnik Spearmana.
+- `$r`, `$n` i `$P` pobierają z wyniku macierz współczynników, liczby obserwacji i wartości p.
+- Wartość p 0,000 w wyniku zaokrąglenia oznacza p < 0,0005.
+
+Korelacja oczekiwanej długości życia i PKB per capita (0,86) jest istotna statystycznie. Współczynniki
+korelacji liczby ludności z oczekiwaną długością życia (0,00; p = 0,968) i z PKB per capita (−0,06;
+p = 0,445) nie są istotne statystycznie (@sec-kor-obliczenia).
+
+Wartości p z `rcorr()` można przekazać do `corrplot()`: pola współczynników, które nie są istotne
+statystycznie, pozostają puste (@fig-wz-corrplot-p).
+
+```{r}
+#| label: fig-wz-corrplot-p
+#| fig-cap: "Korelogram z wartościami p: puste pola oznaczają współczynniki nieistotne statystycznie (p ≥ 0,05), współczynniki korelacji Spearmana, 142 kraje, 2007"
+#| fig-height: 4
+# corrplot() wymaga macierzy bez braków, dlatego przekątna otrzymuje wartość 0
+wartosci_p <- kor_2007$P
+diag(wartosci_p) <- 0
+
+corrplot::corrplot(kor_2007$r, type = "upper", tl.col = "black",
+                   p.mat = wartosci_p,               # macierz wartości p
+                   sig.level = 0.05,                 # próg istotności
+                   insig = "blank")                  # puste pola dla p powyżej progu
+```
+
+## Macierz wykresów rozrzutu {#sec-wz-macierz}
+
+**Macierz wykresów rozrzutu** przedstawia wykres rozrzutu dla każdej pary zmiennych.
+Funkcja `ggpairs()` z pakietu `GGally` dodaje na przekątnej rozkład każdej zmiennej,
+a nad przekątną — współczynniki korelacji z oznaczeniem istotności (@fig-wz-macierz).
+
+```{r}
+#| label: fig-wz-macierz
+#| fig-cap: "Macierz wykresów rozrzutu ze współczynnikami korelacji Spearmana, 142 kraje, 2007"
+#| fig-height: 6
+#| message: false
+dane2007 |>
+  mutate(pop_mln = pop / 1000000) |>                # ludność w mln: czytelniejsze opisy osi
+  select(lifeExp, gdpPercap, pop_mln) |>
+  ggpairs(upper = list(continuous = wrap("cor", method = "spearman"))) +
+  theme_bw(base_size = 11)
+```
+
+Znaki przy współczynnikach oznaczają wartość p testu istotności (`cor.test()`):
+`***` — p < 0,001, `**` — p < 0,01, `*` — p < 0,05, `.` — p < 0,10; brak znaku — p ≥ 0,10. Macierz wykresów rozrzutu wykorzystuje raport o warunkach meteorologicznych w 2020 roku (@sec-meteo-korelacja).
+
+### Macierz wykresów rozrzutu w innych pakietach {#sec-wz-macierz-pakiety}
+
+Pakiety `car`, `PerformanceAnalytics` i `psych` tworzą macierz wykresów rozrzutu inaczej niż
+`ggpairs()`. Kod wykorzystuje obiekt `zmienne_2007` (@sec-wz-hmisc).
+
+**Pakiet `car`.** Funkcja `scatterplotMatrix()` umieszcza na przekątnej krzywą gęstości, a na wykresach
+rozrzutu także linię regresji liniowej i krzywą wygładzającą z obszarem rozproszenia wartości (@fig-wz-car).
+Argumenty `regLine = FALSE` i `smooth = FALSE` wyłączają te elementy. Funkcja nie podaje współczynników korelacji.
+
+```{r}
+#| label: fig-wz-car
+#| fig-cap: "Macierz wykresów rozrzutu `car::scatterplotMatrix()`, 142 kraje, 2007"
+#| fig-height: 6
+car::scatterplotMatrix(zmienne_2007)
+```
+
+**Pakiet `PerformanceAnalytics`.** Funkcja `chart.Correlation()` umieszcza na przekątnej histogram
+z krzywą gęstości, poniżej przekątnej wykresy rozrzutu z krzywą wygładzającą, a powyżej — współczynniki
+korelacji z oznaczeniem istotności (@fig-wz-pa). Znaki mają to samo znaczenie co na @fig-wz-macierz.
+Wielkość liczby rośnie wraz z wartością bezwzględną współczynnika.
+
+```{r}
+#| label: fig-wz-pa
+#| fig-cap: "Macierz wykresów rozrzutu `PerformanceAnalytics::chart.Correlation()`: współczynniki korelacji Spearmana, 142 kraje, 2007"
+#| fig-height: 6
+#| warning: false
+PerformanceAnalytics::chart.Correlation(zmienne_2007,
+                                        histogram = TRUE,     # histogram na przekątnej
+                                        pch = 19,             # punkty wypełnione
+                                        method = "spearman")  # współczynnik Spearmana
+```
+
+**Pakiet `psych`.** Funkcja `pairs.panels()` ma podobny układ: histogram z krzywą gęstości na przekątnej,
+wykresy rozrzutu z krzywą wygładzającą poniżej przekątnej i współczynniki korelacji powyżej (@fig-wz-psych).
+
+```{r}
+#| label: fig-wz-psych
+#| fig-cap: "Macierz wykresów rozrzutu `psych::pairs.panels()`: współczynniki korelacji Spearmana, 142 kraje, 2007"
+#| fig-height: 6
+psych::pairs.panels(zmienne_2007,
+                    method = "spearman",     # współczynnik Spearmana
+                    stars = TRUE,            # oznaczenie istotności
+                    ellipses = FALSE)        # bez elips korelacji
+```
+
+Współczynniki na @fig-wz-macierz, @fig-wz-pa i @fig-wz-psych różnią się wyłącznie zaokrągleniem, ponieważ
+dotyczą tych samych danych i tego samego współczynnika. Pakiety zapisują liczby z kropką dziesiętną.
+Różnią się układem i zawartością wykresu:
+
+| Funkcja | Przekątna | Współczynniki | Istotność | Elementy `ggplot2` |
+|---|---|---|---|---|
+| `GGally::ggpairs()` | krzywa gęstości | tak | tak | tak |
+| `car::scatterplotMatrix()` | krzywa gęstości | nie | nie | nie |
+| `PerformanceAnalytics::chart.Correlation()` | histogram i krzywa gęstości | tak | tak | nie |
+| `psych::pairs.panels()` | histogram i krzywa gęstości | tak | tak (`stars = TRUE`) | nie |
+
+## Podsumowanie: zależność i jej obraz {#sec-wz-podsumowanie}
+
+| Co przedstawia wykres | Wykres | Funkcja R |
+|---|---|---|
+| zależność dwóch zmiennych ilościowych | wykres rozrzutu | `geom_point()` |
+| zależność z podziałem na grupy | wykres rozrzutu z kolorem | `geom_point()` z `aes(colour = …)` |
+| zależność z trzecią zmienną ilościową | wykres bąbelkowy | `geom_point()` z `aes(size = …)` |
+| macierz współczynników jako obraz | korelogram | `GGally::ggcorr()`, `corrplot::corrplot()`, `corrplot::corrplot.mixed()` |
+| współczynniki wraz z wartościami p | zestawienie macierzy (bez wykresu) | `Hmisc::rcorr()` |
+| wszystkie pary zmiennych | macierz wykresów rozrzutu | `car::scatterplotMatrix()` |
+| wszystkie pary zmiennych ze współczynnikami | macierz wykresów rozrzutu | `GGally::ggpairs()`, `PerformanceAnalytics::chart.Correlation()`, `psych::pairs.panels()` |
+
+## Zadania do samodzielnego wykonania {#sec-wz-zadania}
+
+Zadania polegają na modyfikacji kodu z rozdziału i wykonuje się je w przeglądarce, bez
+instalowania R. Kod w polu można zmienić i uruchomić przyciskiem **Run Code**. Pierwsze
+uruchomienie pobiera środowisko R i pakiety, dlatego trwa dłużej i wymaga połączenia z internetem;
+jeżeli po kliknięciu wynik się nie pojawia, należy odczekać i kliknąć przycisk ponownie.
+Rozwiązanie wyświetla przycisk **Show Solution**.
+
+**Zadanie 1. Skala osi.** Dodaj warstwę `scale_x_log10()` i popraw opis osi x. Porównaj kształt zależności na obu wykresach: na którym z nich zależność wygląda na prostoliniową?
+
+```{webr}
+#| exercise: wz_1
+ggplot(dane2007, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point(alpha = 0.7, size = 2.5, colour = "#1f4e79") +
+  labs(x = "PKB per capita [USD]",
+       y = "Oczekiwana długość życia [lata]") +
+  theme_bw(base_size = 13)
+```
+
+:::: {.solution exercise="wz_1"}
+::: {.callout-tip title="Rozwiązanie" collapse="false"}
+```r
+ggplot(dane2007, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point(alpha = 0.7, size = 2.5, colour = "#1f4e79") +
+  scale_x_log10() +
+  labs(x = "PKB per capita [USD, skala logarytmiczna]",
+       y = "Oczekiwana długość życia [lata]") +
+  theme_bw(base_size = 13)
+```
+:::
+::::
+
+**Zadanie 2. Inna trzecia zmienna.** Przedstaw kolorem grupę dochodową (`income_grp_pl`) zamiast kontynentu i popraw tytuł legendy. Kraje bez przypisanej grupy pomiń, zastępując `dane2007` zapisem `filter(dane2007, income_grp_pl != "")`.
+
+```{webr}
+#| exercise: wz_2
+ggplot(dane2007, aes(x = gdpPercap, y = lifeExp, colour = kontynent)) +
+  geom_point(alpha = 0.8, size = 2.5) +
+  scale_colour_brewer(palette = "Dark2") +
+  labs(x = "PKB per capita [USD]",
+       y = "Oczekiwana długość życia [lata]", colour = "Kontynent") +
+  theme_bw(base_size = 13)
+```
+
+:::: {.solution exercise="wz_2"}
+::: {.callout-tip title="Rozwiązanie" collapse="false"}
+```r
+ggplot(filter(dane2007, income_grp_pl != ""),
+       aes(x = gdpPercap, y = lifeExp, colour = income_grp_pl)) +
+  geom_point(alpha = 0.8, size = 2.5) +
+  scale_colour_brewer(palette = "Dark2") +
+  labs(x = "PKB per capita [USD]",
+       y = "Oczekiwana długość życia [lata]", colour = "Grupa dochodowa") +
+  theme_bw(base_size = 13)
+```
+:::
+::::
+
+**Zadanie 3. Inny rok.** Wykonaj wykres bąbelkowy dla 1952 roku: zastąp `dane2007` zapisem `filter(dane, year == 1952)`.
+
+```{webr}
+#| exercise: wz_3
+ggplot(dane2007, aes(x = gdpPercap, y = lifeExp, size = pop / 1000000)) +
+  geom_point(alpha = 0.45, colour = "#1f4e79") +
+  scale_size_area(max_size = 16) +
+  labs(x = "PKB per capita [USD]",
+       y = "Oczekiwana długość życia [lata]", size = "Ludność [mln]") +
+  theme_bw(base_size = 13)
+```
+
+:::: {.solution exercise="wz_3"}
+::: {.callout-tip title="Rozwiązanie" collapse="false"}
+```r
+ggplot(filter(dane, year == 1952), aes(x = gdpPercap, y = lifeExp, size = pop / 1000000)) +
+  geom_point(alpha = 0.45, colour = "#1f4e79") +
+  scale_size_area(max_size = 16) +
+  labs(x = "PKB per capita [USD]",
+       y = "Oczekiwana długość życia [lata]", size = "Ludność [mln]") +
+  theme_bw(base_size = 13)
+```
+:::
+::::
+
+**Zadanie 4. Inny współczynnik korelacji.** Oblicz współczynnik korelacji Pearsona zamiast Spearmana. Porównaj wartości dla pary `lifeExp` i `gdpPercap` (@sec-kor-wspolczynniki).
+
+```{webr}
+#| exercise: wz_4
+dane |>
+  select(lifeExp, gdpPercap, pop, year) |>
+  ggcorr(method = c("pairwise", "spearman"),
+         label = TRUE, label_round = 2)
+```
+
+:::: {.solution exercise="wz_4"}
+::: {.callout-tip title="Rozwiązanie" collapse="false"}
+```r
+dane |>
+  select(lifeExp, gdpPercap, pop, year) |>
+  ggcorr(method = c("pairwise", "pearson"),
+         label = TRUE, label_round = 2)
+```
+:::
+::::

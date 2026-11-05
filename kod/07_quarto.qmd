@@ -1,0 +1,47 @@
+---
+title: "Quarto"
+lang: pl
+crossref:
+  fig-title: "Rycina"
+  fig-prefix: "Rycina"
+format: html
+---
+
+Kod do rozdziału „Quarto” skryptu do ćwiczeń: tabela i rycina z podpisami oraz odsyłacze.
+Plik wymaga folderu `dane/` z plikiem `gapminder_regions.csv` w tym samym folderze
+co ten plik `.qmd` oraz pakietu `tidyverse`.
+
+## Ryciny, tabele i odsyłacze
+
+```{r}
+#| message: false
+# przygotowanie danych do przykładu
+library(tidyverse)
+dane <- read.csv("dane/gapminder_regions.csv", encoding = "UTF-8") |>
+  mutate(across(where(is.character), as.factor))
+dane2007 <- dane |>
+  filter(year == 2007)
+```
+
+```{r}
+#| label: tbl-q-kontynenty
+#| tbl-cap: "Liczba krajów i średnia oczekiwana długość życia według kontynentu, 2007"
+# tabela z podpisem: etykieta z prefiksem tbl- i opcja tbl-cap
+dane2007 |>
+  group_by(kontynent) |>
+  summarise(n = n(), srednia = round(mean(lifeExp), 1)) |>
+  knitr::kable(col.names = c("Kontynent", "Liczba krajów", "Średnia [lata]"))
+```
+
+```{r}
+#| label: fig-q-histogram
+#| fig-cap: "Rozkład oczekiwanej długości życia, 142 kraje, 2007"
+# rycina z podpisem: etykieta z prefiksem fig- i opcja fig-cap
+ggplot(dane2007, aes(x = lifeExp)) +
+  geom_histogram(binwidth = 5) +
+  labs(x = "Oczekiwana długość życia [lata]", y = "Liczba krajów") +
+  theme_bw(base_size = 13)
+```
+
+Liczbę krajów na kontynentach podaje @tbl-q-kontynenty,
+a rozkład oczekiwanej długości życia przedstawia @fig-q-histogram.

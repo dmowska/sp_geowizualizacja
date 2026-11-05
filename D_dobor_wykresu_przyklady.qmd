@@ -1,0 +1,1182 @@
+---
+code-fold: true
+code-summary: "Kod"
+---
+
+# Dobór wykresu do problemu badawczego: przykłady {#sec-przyklady-doboru}
+
+Załącznik rozwija @sec-dobor. Dla kolejnych pytań badawczych z zestawienia w @sec-db-pula
+przedstawia statystyki, kilka wykresów tych samych danych oraz zestawienie tego, co pokazuje każdy
+z nich. Pytania o typową oczekiwaną długość życia i o liczność grup dochodowych omawiają
+@sec-db-przyklad1 i @sec-db-przyklad2. Przykłady wykorzystują dane Gapminder (@sec-pd-dane);
+kod jest zwinięty nad każdą ryciną i tabelą.
+
+Grupy dochodowe są opisane w @sec-db-przyklad2.
+
+```{r}
+#| code-summary: "Kod: wczytanie pakietów i danych, ustawienia wspólne"
+#| message: false
+library(tidyverse)
+library(scales)
+library(patchwork)
+library(knitr)
+
+# puste napisy w kolumnach klasyfikacyjnych oznaczają brak przypisania (2 kraje)
+dane <- read.csv("dane/gapminder_regions.csv", encoding = "UTF-8") |>
+  mutate(income_grp_pl = factor(income_grp_pl, levels = c("niski", "średni", "wysoki")),
+         kontynent = factor(kontynent),
+         economy_grp = factor(economy_grp),
+         income_grp = as.character(fct_recode(na_if(income_grp, ""),
+           "1. Wysokie dochody: OECD" = "1. High income: OECD",
+           "2. Wysokie dochody: poza OECD" = "2. High income: nonOECD",
+           "3. Wyższe średnie dochody" = "3. Upper middle income",
+           "4. Niższe średnie dochody" = "4. Lower middle income",
+           "5. Niskie dochody" = "5. Low income")),
+         economy_grp = fct_recode(economy_grp, NULL = "",
+           "1. Rozwinięte: G7" = "1. Developed region: G7",
+           "2. Rozwinięte: poza G7" = "2. Developed region: nonG7",
+           "3. Rozwijające się: BRIC" = "3. Emerging region: BRIC",
+           "4. Rozwijające się: MIKT" = "4. Emerging region: MIKT",
+           "5. Rozwijające się: G20" = "5. Emerging region: G20",
+           "6. Rozwijające się" = "6. Developing region",
+           "7. Najsłabiej rozwinięte" = "7. Least developed region"))
+dane2007 <- filter(dane, year == 2007)
+
+# motyw wszystkich rycin załącznika
+theme_set(theme_bw(base_size = 15) + theme(plot.title = element_text(size = 13)))
+motyw_trzy <- theme_get()
+
+# liczby w tabelach i tekście: przecinek dziesiętny, spacja jako separator tysięcy, lata bez separatora
+licz_pl <- function(v) {
+  s <- ifelse(v == round(v),
+              formatC(v, format = "d", big.mark = " "),
+              formatC(v, format = "f", digits = 3, drop0trailing = TRUE, big.mark = " "))
+  s <- ifelse(v == round(v) & v >= 1900 & v <= 2100, formatC(v, format = "d"), s)
+  gsub("\\.", ",", trimws(s))
+}
+
+# wspólny format tabel
+tab <- function(x, align = "r", ...) {
+  x <- mutate(as_tibble(x), across(where(is.numeric), licz_pl))
+  kable(x, align = align, ...)
+}
+```
+
+## B. Zróżnicowanie długości życia między regionami i wewnątrz nich
+
+**Czego chcemy się dowiedzieć:** czy kraje leżące w jednym regionie są do siebie podobne, czy region obejmuje kraje o skrajnie różnych wartościach.
+
+**Pytania badawcze w tym problemie:**
+
+- Czy oczekiwana długość życia różni się między kontynentami?
+- Czy średnia subregionu opisuje oczekiwaną długość życia jego krajów?
+
+### Czy oczekiwana długość życia różni się między kontynentami?
+
+```{r}
+#| label: tbl-dd-stat-03
+#| tbl-cap: "Statystyki opisowe oczekiwanej długości życia według kontynentu, 2007 [lata]"
+dane2007 |>
+  group_by(Kontynent = kontynent) |>
+  summarise(`Liczba krajów` = n(),
+                   Średnia = round(mean(lifeExp), 1), Mediana = round(median(lifeExp), 1),
+                   `Odch. std.` = round(sd(lifeExp), 2),
+                   Minimum = round(min(lifeExp), 1), Maksimum = round(max(lifeExp), 1)) |> tab()
+```
+
+```{r}
+#| label: tbl-dd-stat-03-b
+#| tbl-cap: "Liczba krajów w przedziałach oczekiwanej długości życia według kontynentu, 2007"
+dane2007 |>
+  mutate(Przedział = cut(lifeExp, c(35, 50, 60, 70, 75, 85),
+                  labels = c("35–50", "50–60", "60–70", "70–75", "75–85"))) |>
+  count(kontynent, Przedział) |>
+  pivot_wider(names_from = Przedział, values_from = n, values_fill = 0) |>
+  rename(Kontynent = kontynent) |> tab()
+```
+
+```{r}
+#| label: fig-dd-ryc-03
+#| fig-cap: "Oczekiwana długość życia według kontynentu, 2007: wykres pudełkowy (po lewej), heatmapa liczności (w środku) i wykres słupkowy skumulowany udziałów (po prawej)"
+#| fig-width: 14
+#| fig-height: 5
+dp <- dane2007 |>
+  mutate(przedzial = cut(lifeExp, c(35, 50, 60, 70, 75, 85),
+                 labels = c("35–50", "50–60", "60–70", "70–75", "75–85")))
+p1 <- ggplot(dane2007, aes(fct_reorder(kontynent, lifeExp), lifeExp)) +
+  geom_boxplot() + coord_flip() +
+  labs(title = "Wykres pudełkowy", x = NULL, y = "Oczekiwana długość życia [lata]") + motyw_trzy
+p2 <- dp |> count(kontynent, przedzial) |>
+  ggplot(aes(przedzial, fct_rev(kontynent), fill = n)) +
+  geom_tile(colour = "white") +
+  geom_text(aes(label = n), size = 4) +
+  scale_fill_distiller(palette = "Blues", direction = 1, name = "Kraje") +
+  labs(title = "Heatmapa liczności", x = "Przedział długości życia [lata]", y = NULL) +
+  motyw_trzy + theme(legend.position = "none")
+p3 <- dp |> count(kontynent, przedzial) |>
+  ggplot(aes(fct_rev(kontynent), n, fill = przedzial)) +
+  geom_col(position = "fill") + coord_flip() +
+  scale_fill_brewer(palette = "YlGnBu", name = NULL) + scale_y_continuous(labels = label_percent()) +
+  labs(title = "Słupkowy skumulowany udziałów", x = NULL, y = "Udział krajów kontynentu") +
+  motyw_trzy + theme(legend.position = "bottom", legend.text = element_text(size = 9))
+p1 + p2 + p3
+```
+
+| Wykres | Co pokazuje |
+|---|---|
+| wykres pudełkowy | medianę, rozstęp kwartylowy i obserwacje odstające w pięciu grupach naraz |
+| heatmapa kontynent × przedział długości życia | **bloki zerowe**: w Europie i Amerykach nie ma ani jednego kraju poniżej 60 lat, w Afryce 40 z 52 krajów mieści się poniżej 60 |
+| słupkowy skumulowany udziałów przedziałów w kontynencie | strukturę procentową: Afryka 77% krajów poniżej 60 lat, Europa 76% powyżej 75 lat |
+
+**Podsumowanie**
+
+- Wykres pudełkowy odpowiada na pytanie **o ile różnią się mediany oczekiwanej
+  długości życia między kontynentami**; pokazuje też rozstęp kwartylowy w każdym z nich.
+- Heatmapa odpowiada na pytanie **jakich kombinacji w danych nie ma**: w Europie
+  i w Amerykach nie ma ani jednego kraju poniżej 60 lat.
+- Słupkowy skumulowany odpowiada na pytanie **jak dzieli się pojedynczy kontynent**:
+  77% krajów Afryki poniżej 60 lat, 76% krajów Europy powyżej 75 lat.
+- Żaden z trzech wykresów nie podaje liczności grupy — **100% Australii to dwa kraje,
+  a 76% Europy to 22 kraje**. Liczność trzeba dopisać przy każdym z nich.
+
+### Czy średnia subregionu opisuje oczekiwaną długość życia jego krajów?
+
+```{r}
+#| label: tbl-dd-stat-04
+#| tbl-cap: "Statystyki opisowe oczekiwanej długości życia w Afryce Wschodniej i Zachodniej, 2007 [lata]"
+dane2007 |>
+  filter(subregion_pl %in% c("Afryka Wschodnia", "Afryka Zachodnia")) |>
+  group_by(Subregion = subregion_pl) |>
+  summarise(`Liczba krajów` = n(),
+                   Średnia = round(mean(lifeExp), 2), Mediana = round(median(lifeExp), 2),
+                   `Odch. std.` = round(sd(lifeExp), 2), `Rozstęp kwartylowy` = round(IQR(lifeExp), 2),
+                   Minimum = round(min(lifeExp), 1), Maksimum = round(max(lifeExp), 1)) |> tab()
+```
+
+```{r}
+#| label: fig-dd-ryc-04
+#| fig-cap: "Oczekiwana długość życia w Afryce Wschodniej i Zachodniej, 2007: cztery wykresy tych samych danych"
+#| fig-width: 14
+#| fig-height: 7.4
+d2 <- filter(dane2007, subregion_pl %in% c("Afryka Wschodnia", "Afryka Zachodnia"))
+p1 <- d2 |> group_by(subregion_pl) |> summarise(m = mean(lifeExp)) |>
+  ggplot(aes(subregion_pl, m)) +
+  geom_col(fill = "grey40", width = .5) +
+  geom_text(aes(label = round(m, 2)), vjust = -.6, size = 4) +
+  scale_y_continuous(expand = expansion(mult = c(0, .12))) +
+  labs(title = "Słupkowy średnich", x = NULL, y = "Średnia długość życia [lata]") + motyw_trzy
+p2 <- ggplot(d2, aes(lifeExp, fct_rev(subregion_pl))) +
+  geom_point(size = 2.5, alpha = .8) +
+  geom_text(data = filter(d2, lifeExp > 70), aes(label = kraj),
+            hjust = 1.15, size = 3.2) +
+  labs(title = "Kropkowy: każdy kraj osobno", x = "Oczekiwana długość życia [lata]", y = NULL) +
+  motyw_trzy
+p3 <- ggplot(d2, aes(lifeExp, fill = subregion_pl)) +
+  geom_density(alpha = .5, adjust = .9) +
+  geom_rug(aes(colour = subregion_pl), linewidth = .8, show.legend = FALSE) +
+  scale_fill_viridis_d(name = NULL, end = .7) + scale_colour_viridis_d(end = .7) +
+  labs(title = "Nakładające się gęstości", x = "Oczekiwana długość życia [lata]", y = "Gęstość") +
+  motyw_trzy + theme(legend.position = "bottom", legend.text = element_text(size = 9))
+p4 <- ggplot(d2, aes(fct_rev(subregion_pl), lifeExp)) +
+  geom_boxplot(width = .45) +
+  geom_jitter(width = .1, alpha = .5, size = 1.8) +
+  coord_flip() +
+  labs(title = "Pudełkowy z punktami krajów", x = NULL,
+       y = "Oczekiwana długość życia [lata]") + motyw_trzy
+(p1 + p2) / (p3 + p4)
+```
+
+| Wykres | Co pokazuje |
+|---|---|
+| wykres słupkowy średnich | dwa słupki praktycznie równej wysokości — powtarza tabelę i prowadzi do błędnego wniosku o podobieństwie regionów |
+| wykres kropkowy wszystkich 32 krajów, dwa wiersze | każdy kraj z nazwą: dwie najwyższe wartości Afryki Wschodniej przypadają na państwa wyspiarskie, a kraje kontynentalne obu regionów leżą w tym samym zakresie |
+| nakładające się wykresy gęstości, dwie krzywe na wspólnej osi | Afryka Wschodnia ma rozkład z oddzielonym drugim skupieniem, a Zachodnia jest jednolita; wspólna oś pozwala porównać kształty wprost |
+| wykres pudełkowy z punktami krajów | medianę i rozstęp kwartylowy w obu regionach oraz położenie każdego kraju: mediana Afryki Wschodniej (`r sub("\\.", ",", sprintf("%.1f", median(d2$lifeExp[d2$subregion_pl == "Afryka Wschodnia"])))`) jest niższa niż Afryki Zachodniej (`r sub("\\.", ",", sprintf("%.1f", median(d2$lifeExp[d2$subregion_pl == "Afryka Zachodnia"])))`), choć średnie są prawie równe; jedyną obserwacją odstającą jest Reunion (`r licz_pl(round(d2$lifeExp[d2$kraj == "Reunion"], 1))` roku) w Afryce Wschodniej |
+
+**Podsumowanie**
+
+- Średnie obu regionów w tabeli statystyk różnią się o 0,09 roku, co sugeruje **dwa takie same regiony**.
+- Wykres słupkowy średnich **pokazuje tylko jedną liczbę na region, mimo że jest poprawnie wykonany**. Li (2022, reguła 1)
+  odradza porównywanie średnich grup na wykresie słupkowym.
+- Pozostałe trzy wykresy pokazują **rzeczywiste zróżnicowanie**: odchylenie 9,91 roku
+  w Afryce Wschodniej wobec 6,73 w Zachodniej, a dwie najwyższe wartości na wschodzie
+  dotyczą państw wyspiarskich.
+
+## C. Wydłużanie się życia na świecie w latach 1952–2007
+
+**Czego chcemy się dowiedzieć:** jak szybko i czy równomiernie wydłużało się życie, gdzie wystąpiły pogorszenia i czy dystans między krajami zmalał.
+
+**Pytania badawcze w tym problemie:**
+
+- W jakim tempie rosła mediana oczekiwanej długości życia w latach 1952–2007?
+- W których krajach oczekiwana długość życia obniżyła się?
+- O ile wydłużyło się życie w subregionach i czy regiony o najniższym poziomie wyjściowym nadrobiły dystans?
+- Jak przebiegały zmiany oczekiwanej długości życia i PKB per capita w Polsce na tle świata i Europy?
+
+### W jakim tempie rosła mediana oczekiwanej długości życia w latach 1952–2007?
+
+```{r}
+#| label: tbl-dd-stat-05
+#| tbl-cap: "Mediana i średnia oczekiwanej długości życia oraz przyrost mediany w kolejnych latach [lata]"
+dane |>
+  group_by(Rok = as.character(year)) |>
+  summarise(Mediana = round(median(lifeExp), 1), Średnia = round(mean(lifeExp), 1)) |>
+  mutate(`Przyrost mediany` = c("—", sprintf("%.1f", diff(Mediana)))) |> tab()
+```
+
+```{r}
+#| label: fig-dd-ryc-05
+#| fig-cap: "Mediana oczekiwanej długości życia, 142 kraje, 1952–2007: wykres liniowy, wykres słupkowy mediany i wykres słupkowy przyrostów pięcioletnich"
+#| fig-width: 14
+#| fig-height: 5
+med <- dane |> group_by(year) |> summarise(m = median(lifeExp)) |>
+  mutate(przyrost = c(NA, diff(m)))
+p1 <- ggplot(med, aes(year, m)) +
+  geom_line(linewidth = 1) + geom_point(size = 2) +
+  labs(title = "Wykres liniowy", x = "Rok", y = "Mediana długości życia [lata]") + motyw_trzy
+p2 <- ggplot(med, aes(factor(year), m)) +
+  geom_col(fill = "grey40") +
+  labs(title = "Słupkowy mediany w kolejnych latach", x = "Rok",
+       y = "Mediana długości życia [lata]") +
+  motyw_trzy + theme(axis.text.x = element_text(angle = 90, vjust = .5))
+p3 <- ggplot(filter(med, !is.na(przyrost)), aes(factor(year), przyrost)) +
+  geom_col(fill = "grey40") +
+  geom_text(aes(label = sprintf("%.1f", przyrost)), vjust = -.4, size = 3.2) +
+  labs(title = "Słupkowy przyrostów pięcioletnich", x = "Rok", y = "Przyrost mediany [lata]") +
+  motyw_trzy + theme(axis.text.x = element_text(angle = 90, vjust = .5))
+p1 + p2 + p3
+```
+
+| Wykres | Co pokazuje |
+|---|---|
+| wykres liniowy | wzrost na całym okresie i jego wypłaszczenie po 1987 roku |
+| wykres słupkowy mediany w kolejnych latach | poziom w każdym z 12 pomiarów osobno, bez sugerowania wartości pośrednich |
+| wykres słupkowy przyrostów pięcioletnich | **wprost odpowiada na pytanie „jak szybko”** — spadek z +3,4 do +1,1 roku |
+
+```{r}
+#| label: dd-przed-05-pods
+#| code-summary: "Kod: przygotowanie danych"
+# Zakres osi y na rycinie: wykres liniowy (p1) i słupkowy mediany (p2) z poprzedniego bloku.
+y_lin  <- ggplot_build(p1)$layout$panel_params[[1]]$y.range
+y_slup <- ggplot_build(p2)$layout$panel_params[[1]]$y.range
+m_pocz <- med$m[1]
+m_kon  <- med$m[nrow(med)]
+# Część wysokości osi y zajmowana przez przyrost mediany 1952-2007.
+udz_lin  <- (m_kon - m_pocz) / diff(y_lin)
+udz_slup <- (m_kon - m_pocz) / diff(y_slup)
+```
+
+**Podsumowanie**
+
+- Pytanie dotyczy tempa wzrostu, a dwa pierwsze wykresy przedstawiają poziom.
+- **Wykres liniowy i słupkowy mediany pokazują te same `r nrow(med)` wartości, ale
+  z różnym zakresem osi Y.** Oś wykresu słupkowego zaczyna się od zera, bo wartość
+  przedstawia długość słupka (Wilke, 2019, rozdz. 17). Oś wykresu liniowego `ggplot2` dopasował
+  do zakresu danych: od ok. `r round(y_lin[1])` do `r round(y_lin[2])` lat.
+- Wzrost mediany z `r licz_pl(round(m_pocz, 1))` do `r licz_pl(round(m_kon, 1))` roku
+  zajmuje na wykresie liniowym `r round(100 * udz_lin)`% wysokości osi Y, a na
+  słupkowym — `r round(100 * udz_slup)`%. Ten sam przyrost jest więc na wykresie
+  liniowym optycznie większy. **Nachylenie linii zależy od zakresu osi Y**, dlatego
+  tempo zmian odczytuje się z wartości na osi, a nie z nachylenia linii.
+- Wykres przyrostów odpowiada na pytanie wprost i pokazuje wynik, który na wykresie liniowym jest mniej widoczny: **tempo wzrostu spadło trzykrotnie**.
+- Zestawienie wykresu liniowego i słupkowego pokazuje też, że linia łącząca pomiary z 1987 i 1992 roku przedstawia założenie o wartościach pośrednich, których zbiór nie zawiera.
+
+### W których krajach oczekiwana długość życia obniżyła się?
+
+```{r}
+#| label: tbl-dd-stat-06
+#| tbl-cap: "Liczba krajów ze spadkiem oczekiwanej długości życia, 1952–2007"
+zm <- dane |> arrange(country, year) |> group_by(kraj, kontynent) |>
+  mutate(z = lifeExp - lag(lifeExp)) |> ungroup()
+kraje <- zm |> group_by(kraj, kontynent) |>
+  summarise(spadki = sum(z < 0, na.rm = TRUE),
+                   najglebszy = min(z, na.rm = TRUE), .groups = "drop")
+tibble(
+  Ujęcie = c("Porównanie 1952 z 2007", "Wszystkie 11 pięcioleci",
+             "w tym w Afryce", "w tym w Europie", "w tym w Azji", "w tym w Amerykach"),
+  `Liczba krajów ze spadkiem` = c(
+    sum(dane2007$lifeExp < dane$lifeExp[dane$year == 1952][match(dane2007$country, dane$country[dane$year == 1952])]),
+    sum(kraje$spadki > 0),
+    sum(kraje$spadki > 0 & kraje$kontynent == "Afryka"),
+    sum(kraje$spadki > 0 & kraje$kontynent == "Europa"),
+    sum(kraje$spadki > 0 & kraje$kontynent == "Azja"),
+    sum(kraje$spadki > 0 & kraje$kontynent == "Ameryki"))
+) |> tab()
+```
+
+```{r}
+#| label: tbl-dd-stat-06-b
+#| tbl-cap: "Osiem krajów o największym spadku oczekiwanej długości życia w jednym pięcioleciu"
+kraje |> arrange(najglebszy) |> slice_head(n = 8) |>
+  transmute(Kraj = kraj, Kontynent = kontynent,
+                   `Pięcioleci ze spadkiem` = spadki,
+                   `Największy spadek w jednym pięcioleciu [lata]` = round(najglebszy, 1)) |> tab()
+```
+
+```{r}
+#| label: fig-dd-ryc-06-cz1
+#| fig-cap: "Zmiana oczekiwanej długości życia w pięcioleciach: wykres liniowy wszystkich 142 krajów"
+#| fig-width: 12
+#| fig-height: 6.0
+zm <- dane |> arrange(country, year) |> group_by(kraj, kontynent) |>
+  mutate(z = lifeExp - lag(lifeExp)) |> ungroup() |> filter(!is.na(z))
+ggplot(zm, aes(factor(year), fct_reorder(kraj, z, min), fill = z)) +
+  geom_tile() +
+  facet_grid(kontynent ~ ., scales = "free_y", space = "free_y", switch = "y") +
+  scale_fill_gradient2(name = "Zmiana\n[lata]", low = "#2166ac", mid = "white",
+                       high = "#b2182b", midpoint = 0, limits = c(-5, 5), oob = squish) +
+  labs(title = "Zmiana w pięcioleciu: wszystkie kraje w panelach kontynentów",
+       x = "Koniec pięciolecia", y = NULL) +
+  theme_minimal(base_size = 12) +
+  theme(axis.text.y = element_blank(), panel.grid = element_blank(),
+        strip.text.y.left = element_text(angle = 0))
+```
+
+```{r}
+#| label: fig-dd-ryc-06-cz2
+#| fig-cap: "Zmiana oczekiwanej długości życia w pięcioleciach: heatmapa kraj × pięciolecie w panelach kontynentów"
+#| fig-width: 12
+#| fig-height: 6.2
+afr <- dane |> filter(kontynent == "Afryka") |> arrange(country, year) |>
+  group_by(kraj) |> mutate(z = lifeExp - lag(lifeExp)) |>
+  ungroup() |> filter(!is.na(z))
+ggplot(afr, aes(factor(year), fct_reorder(kraj, z, min), fill = z)) +
+  geom_tile(colour = "white", linewidth = .2) +
+  scale_fill_gradient2(name = "Zmiana\n[lata]", low = "#2166ac", mid = "white",
+                       high = "#b2182b", midpoint = 0, limits = c(-12, 12), oob = squish) +
+  labs(title = "Ten sam wykres dla jednego kontynentu: 52 kraje Afryki",
+       subtitle = "Przy 52 wierszach nazwy krajów są czytelne i można wskazać konkretne państwo",
+       x = "Koniec pięciolecia", y = NULL) +
+  theme_minimal(base_size = 10) + theme(panel.grid = element_blank())
+```
+
+```{r}
+#| label: fig-dd-ryc-06-cz3
+#| fig-cap: "Dwadzieścia największych spadków oczekiwanej długości życia w jednym pięcioleciu: wykres słupkowy rozbieżny"
+#| fig-width: 12
+#| fig-height: 5.6
+kraje <- dane |> arrange(country, year) |> group_by(kraj, kontynent) |>
+  mutate(z = lifeExp - lag(lifeExp)) |>
+  summarise(najglebszy = min(z, na.rm = TRUE), .groups = "drop") |>
+  filter(najglebszy < 0) |> slice_min(najglebszy, n = 20)
+ggplot(kraje, aes(najglebszy, fct_reorder(kraj, -najglebszy), fill = kontynent)) +
+  geom_col() +
+  scale_fill_brewer(palette = "Dark2", name = NULL) +
+  labs(title = "Dwadzieścia najgłębszych spadków, barwa = kontynent",
+       x = "Największy spadek w jednym pięcioleciu [lata]", y = NULL) +
+  theme_minimal(base_size = 14) + theme(legend.position = "bottom")
+```
+
+| Wykres | Co pokazuje |
+|---|---|
+| wykres liniowy wszystkich 142 krajów | ogólny kierunek zmian i kilka przebiegów odbiegających od pozostałych |
+| heatmapa kraj × pięciolecie z krajami pogrupowanymi w panele kontynentów | **wszystkie 142 kraje i 11 pięcioleci naraz**, a podział na panele pozwala przypisać spadki do kontynentu: skupienie w Afryce po 1987 roku i w Europie w latach 1992–1997 |
+| wykres słupkowy rozbieżny najgłębszych spadków | dokładną wielkość i nazwę kraju dla kilkunastu przypadków |
+
+**Podsumowanie**
+
+- Statystyka porównująca rok początkowy z końcowym wskazuje **2 kraje**.
+- Ta sama zmienna rozpatrywana w kolejnych pięcioleciach wskazuje **52 kraje**.
+- Różnica wynika ze sformułowania pytania, a potrzebę pytania o pięciolecia pokazuje heatmapa.
+
+### O ile wydłużyło się życie w subregionach i czy regiony o najniższym poziomie wyjściowym nadrobiły dystans?
+
+```{r}
+#| label: tbl-dd-stat-07
+#| tbl-cap: "Średnia oczekiwana długość życia w subregionach w 1952 i 2007 roku: dziewięć subregionów o największym przyroście [lata]"
+sub_zm <- dane |> filter(year %in% c(1952, 2007)) |>
+  group_by(Subregion = subregion_pl, year) |>
+  summarise(m = mean(lifeExp), .groups = "drop") |>
+  pivot_wider(names_from = year, values_from = m) |>
+  transmute(Subregion, `Rok 1952` = round(`1952`, 1), `Rok 2007` = round(`2007`, 1),
+                   Zmiana = round(`2007` - `1952`, 1)) |>
+  arrange(desc(Zmiana))
+sub_zm |> slice_head(n = 9) |> tab()
+```
+
+```{r}
+#| label: tbl-dd-stat-07-b
+#| tbl-cap: "Średnia oczekiwana długość życia w subregionach w 1952 i 2007 roku: dziewięć subregionów o najmniejszym przyroście [lata]"
+sub_zm |> slice_tail(n = 9) |> tab()
+```
+
+```{r}
+#| label: fig-dd-ryc-07
+#| fig-cap: "Średnia oczekiwana długość życia w subregionach w 1952 i 2007 roku: wykres hantlowy, wykres słupkowy zmiany i wykres rozrzutu z linią równości"
+#| fig-width: 14
+#| fig-height: 5.4
+kont <- dane |> distinct(subregion_pl, kontynent)
+sub <- dane |> filter(year %in% c(1952, 2007)) |>
+  group_by(subregion_pl, year) |> summarise(m = mean(lifeExp), .groups = "drop") |>
+  pivot_wider(names_from = year, values_from = m, names_prefix = "r") |>
+  left_join(kont, by = "subregion_pl") |>
+  mutate(zmiana = r2007 - r1952, subregion_pl = fct_reorder(subregion_pl, r2007))
+p1 <- ggplot(sub, aes(y = subregion_pl)) +
+  geom_segment(aes(x = r1952, xend = r2007, yend = subregion_pl), linewidth = 1, colour = "grey60") +
+  geom_point(aes(x = r1952), size = 2.5, colour = "#b2182b") +
+  geom_point(aes(x = r2007), size = 2.5, colour = "#2166ac") +
+  labs(title = "Hantlowy:\n1952 (czerwony) → 2007 (niebieski)", x = "Średnia długość życia [lata]", y = NULL) +
+  motyw_trzy
+p2 <- ggplot(sub, aes(fct_reorder(subregion_pl, zmiana), zmiana, fill = kontynent)) +
+  geom_col() + coord_flip() +
+  scale_fill_brewer(palette = "Dark2", name = NULL) +
+  labs(title = "Słupkowy zmiany,\nbarwa = kontynent", x = NULL, y = "Zmiana 1952–2007 [lata]") +
+  motyw_trzy + theme(legend.position = "bottom", legend.text = element_text(size = 9))
+p3 <- ggplot(sub, aes(r1952, r2007)) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
+  geom_point(size = 2.5) +
+  # Podpisy wszystkich subregionów; ggrepel odsuwa etykiety, aby się nie nakładały.
+  ggrepel::geom_text_repel(aes(label = subregion_pl), size = 2.6, max.overlaps = Inf,
+                           min.segment.length = 0, segment.colour = "grey60", seed = 1) +
+  scale_x_continuous(limits = c(30, 85), breaks = seq(30, 85, 10)) +
+  scale_y_continuous(limits = c(30, 85), breaks = seq(30, 85, 10)) +
+  coord_fixed() +
+  labs(title = "Wykres rozrzutu:\npoziom 1952 wobec 2007", x = "Średnia w 1952 [lata]",
+       y = "Średnia w 2007 [lata]") + motyw_trzy
+p1 + p2 + p3
+```
+
+| Wykres | Co pokazuje |
+|---|---|
+| wykres hantlowy: punkt 1952 i 2007 połączony odcinkiem | oba poziomy i zmianę jednym znakiem graficznym; Afryka Północna i Afryka Zachodnia startowały z poziomu 42,3 i 36,2, a rozeszły się do 70,2 i 54,1 |
+| wykres słupkowy zmiany | ranking według wielkości zmiany, odczytywany dokładnie; nie pokazuje poziomu wyjściowego — Europa Północna (+`r licz_pl(round(sub$zmiana[sub$subregion_pl == "Europa Północna"], 1))`) wygląda na jeden z najsłabszych wyników, choć startowała z najwyższego poziomu (`r licz_pl(round(sub$r1952[sub$subregion_pl == "Europa Północna"], 1))` roku w 1952) |
+| wykres rozrzutu poziom 1952 wobec 2007 z linią równości, obie osie w tej samej skali | czy subregiony zbliżyły się do siebie, czy rozeszły — odległość od linii równości to zmiana, a rozrzut wzdłuż niej to zróżnicowanie |
+
+**Podsumowanie**
+
+- Pytanie obejmuje dwie wielkości: poziom i zmianę.
+- Wykres słupkowy pokazuje tylko drugą: Europa Północna ma na nim drugi najmniejszy przyrost (+`r licz_pl(round(sub$zmiana[sub$subregion_pl == "Europa Północna"], 1))`), choć w 1952 roku miała najwyższy poziom wyjściowy (`r licz_pl(round(sub$r1952[sub$subregion_pl == "Europa Północna"], 1))`).
+- Wykres hantlowy pokazuje obie wielkości: Europa Północna ma najwyższy poziom spośród subregionów w 1952 roku i zajmuje `r rank(-sub$r2007)[sub$subregion_pl == "Europa Północna"]`. miejsce w 2007 roku.
+- **Afryka Południowa +`r licz_pl(round(sub$zmiana[sub$subregion_pl == "Afryka Południowa"], 1))` to jedyny subregion, dla którego oba wykresy prowadzą do tego samego wniosku**. Wybór wykresu zmienia więc odpowiedź w konkretnych przypadkach, których nie można wskazać przed wykonaniem wykresów.
+
+### Jak przebiegały zmiany oczekiwanej długości życia i PKB per capita w Polsce na tle świata i Europy?
+
+```{r}
+#| label: tbl-dd-stat-09
+#| tbl-cap: "Oczekiwana długość życia [lata] i PKB per capita [USD] w Polsce na tle mediany świata, 1952–2007"
+sw <- dane |> group_by(year) |>
+  summarise(med_le = median(lifeExp), med_pkb = median(gdpPercap))
+dane |> filter(kraj == "Polska") |> arrange(year) |>
+  left_join(sw, by = "year") |>
+  transmute(Rok = year,
+    `Polska: lata` = round(lifeExp, 1),
+    `Świat: lata` = round(med_le, 1),
+    `Różnica` = round(lifeExp - med_le, 1),
+    `Polska: PKB` = round(gdpPercap),
+    `Krotność świata` = round(gdpPercap / med_pkb, 2)) |> tab()
+```
+
+```{r}
+#| label: fig-dd-ryc-09-cz1
+#| fig-cap: "Oczekiwana długość życia i PKB per capita w Polsce, 1952–2007: wykres rozrzutu z połączonymi punktami i dwa wykresy liniowe"
+#| fig-width: 12
+#| fig-height: 5.4
+sw <- dane |> group_by(year) |>
+  summarise(med_le = median(lifeExp), med_pkb = median(gdpPercap))
+pl <- dane |> filter(kraj == "Polska") |> arrange(year) |>
+  left_join(sw, by = "year")
+p1 <- ggplot(pl, aes(gdpPercap, lifeExp)) +
+  geom_path(linewidth = .8, colour = "grey50") +
+  geom_point(size = 2.5) +
+  geom_text(data = filter(pl, year %in% c(1952, 1972, 1992, 2007)),
+            aes(label = year), size = 3.2, hjust = -.2) +
+  scale_x_continuous(labels = label_number(big.mark = " ")) +
+  labs(title = "Trajektoria Polski: PKB a długość życia", x = "PKB per capita [USD]",
+       y = "Oczekiwana długość życia [lata]") + motyw_trzy
+p2a <- ggplot(pl, aes(year, lifeExp)) + geom_line(linewidth = 1) + geom_point(size = 1.6) +
+  labs(title = "Długość życia w Polsce", x = NULL, y = "Lata") + motyw_trzy
+p2b <- ggplot(pl, aes(year, gdpPercap)) + geom_line(linewidth = 1) + geom_point(size = 1.6) +
+  scale_y_continuous(labels = label_number(big.mark = " ")) +
+  labs(title = "PKB per capita w Polsce", x = "Rok", y = "USD") + motyw_trzy
+p3 <- ggplot(pl, aes(factor(year), lifeExp - med_le)) +
+  geom_col(fill = "grey40") +
+  geom_text(aes(label = sprintf("%.1f", lifeExp - med_le)), vjust = -.4, size = 3) +
+  labs(title = "Przewaga Polski nad medianą świata", x = "Rok", y = "Różnica [lata]") +
+  motyw_trzy + theme(axis.text.x = element_text(angle = 90, vjust = .5))
+p1 + (p2a / p2b)
+```
+
+```{r}
+#| label: fig-dd-ryc-09-cz2
+#| fig-cap: "Oczekiwana długość życia w Polsce a mediana świata, 1952–2007: wykres słupkowy różnicy"
+#| fig-width: 12
+#| fig-height: 5.6
+sw <- dane |> group_by(year) |>
+  summarise(min = min(lifeExp), q1 = quantile(lifeExp, .25), med = median(lifeExp),
+                   q3 = quantile(lifeExp, .75), max = max(lifeExp))
+pl <- dane |> filter(kraj == "Polska") |>
+  left_join(select(sw, year, med), by = "year")
+p1 <- ggplot(sw, aes(year)) +
+  geom_ribbon(aes(ymin = min, ymax = max), fill = "grey88") +
+  geom_ribbon(aes(ymin = q1, ymax = q3), fill = "grey70") +
+  geom_line(aes(y = med), linewidth = .9, colour = "grey25") +
+  geom_line(data = pl, aes(y = lifeExp), colour = "#b2182b", linewidth = 1.3) +
+  annotate("text", x = 2007, y = 76.5, label = "Polska", colour = "#b2182b", hjust = 1.1, size = 5) +
+  labs(title = "Polska na tle rozkładu świata",
+       subtitle = "Wstęgi: zakres min–max i przedział międzykwartylowy; linia ciemna: mediana",
+       x = "Rok", y = "Oczekiwana długość życia [lata]") +
+  theme_minimal(base_size = 15)
+p2 <- ggplot(pl, aes(factor(year), lifeExp - med)) +
+  geom_col(fill = "grey40") +
+  geom_text(aes(label = sprintf("%.1f", lifeExp - med)), vjust = -.4, size = 3.4) +
+  labs(title = "Przewaga Polski nad medianą świata", x = "Rok", y = "Różnica [lata]") +
+  theme_minimal(base_size = 14) + theme(axis.text.x = element_text(angle = 90, vjust = .5))
+p1 + p2
+```
+
+```{r}
+#| label: fig-dd-ryc-09-cz3
+#| fig-cap: "Oczekiwana długość życia w Polsce na tle rozkładu w świecie i w Europie, 1952–2007: wykresy wstęgowe"
+#| fig-width: 12
+#| fig-height: 5.4
+wsteg <- function(d, tytul, podtyt) {
+  s <- d |> group_by(year) |>
+    summarise(min = min(lifeExp), q1 = quantile(lifeExp, .25), med = median(lifeExp),
+                     q3 = quantile(lifeExp, .75), max = max(lifeExp))
+  pl <- filter(dane, kraj == "Polska")
+  ggplot(s, aes(year)) +
+    geom_ribbon(aes(ymin = min, ymax = max), fill = "grey88") +
+    geom_ribbon(aes(ymin = q1, ymax = q3), fill = "grey70") +
+    geom_line(aes(y = med), linewidth = .9, colour = "grey25") +
+    geom_line(data = pl, aes(y = lifeExp), colour = "#b2182b", linewidth = 1.3) +
+    labs(title = tytul, subtitle = podtyt, x = "Rok", y = "Oczekiwana długość życia [lata]") +
+    theme_minimal(base_size = 13)
+}
+p1 <- wsteg(dane, "Polska na tle świata", "Polska powyżej mediany we wszystkich 12 latach")
+p2 <- wsteg(filter(dane, kontynent == "Europa"), "Polska na tle Europy",
+            "Polska poniżej mediany we wszystkich 12 latach")
+p1 + p2
+```
+
+| Wykres | Co pokazuje |
+|---|---|
+| wykres rozrzutu z połączonymi punktami — trajektoria `lifeExp` wobec `gdpPercap` | obie zmienne i czas w jednym obrazie; zastój 1972–1992 jako poziomy zygzak |
+| dwa wykresy liniowe obok siebie: `lifeExp` i `gdpPercap` w czasie | przebieg każdej zmiennej osobno, z osią czasu wprost; zastój widoczny jako odcinek poziomy |
+| słupkowy różnicy między Polską a medianą świata w każdym roku | **przewaga Polski zmalała z 16,2 do 3,6 roku** — wynik, którego żaden z dwóch poprzednich wykresów nie zawiera |
+| wstęgowy: zakres min–max świata, przedział międzykwartylowy i mediana, na tym przebieg Polski | **pozycję Polski wewnątrz całego rozkładu świata w każdym roku**: położenie powyżej trzeciego kwartyla w latach 50. i zbliżanie się do mediany po 1990 roku |
+| ten sam wykres wstęgowy liczony dla samej Europy | **zmianę wniosku po zmianie grupy odniesienia**: wobec świata Polska leży powyżej mediany we wszystkich 12 latach, wobec Europy — poniżej niej we wszystkich 12 latach |
+
+**Podsumowanie**
+
+- Wykres rozrzutu z połączonymi punktami jest najtrudniejszy w odbiorze, ponieważ czas odczytuje się z kolejności punktów.
+- Dwa wykresy liniowe odpowiadają na pytanie szybciej.
+- Trzeci wykres pokazuje, że **sformułowanie „na tle świata” wymaga obliczenia innej wielkości**: przewaga Polski zmalała, ponieważ mediana świata wzrosła z 45,1 do 71,9 roku.
+- Wybór wykresu i wybór wielkości to dwie decyzje, nie jedna.
+- **Zmiana grupy odniesienia odwraca wniosek:** wobec mediany świata Polska jest
+  powyżej przez cały okres (od +16,2 do +3,6 roku), wobec mediany Europy — poniżej
+  przez cały okres (od −4,6 do −3,3 roku), z najmniejszym dystansem w 1972 roku (−0,1).
+- **Grupę odniesienia wybiera autor analizy i należy ją podać przy wyniku.**
+
+## E. Związek zamożności z długością życia
+
+**Czego chcemy się dowiedzieć:** czy w bogatszych krajach żyje się dłużej, jak silny jest ten związek i gdzie się nie sprawdza.
+
+**Pytania badawcze w tym problemie:**
+
+- Czy zależność między PKB per capita a oczekiwaną długością życia jest jednakowa we wszystkich grupach dochodowych?
+- Które kraje łączą wysokie PKB z długim życiem, a w których te cechy się rozchodzą?
+
+### Czy zależność między PKB per capita a oczekiwaną długością życia jest jednakowa we wszystkich grupach dochodowych?
+
+```{r}
+#| label: tbl-dd-stat-14
+#| tbl-cap: "Współczynnik korelacji Spearmana między PKB per capita a oczekiwaną długością życia według grupy dochodowej, 2007"
+# Jedna funkcja opisuje zależność w dowolnym podzbiorze, dzięki czemu kod się nie powtarza.
+opis_zaleznosci <- function(d, etykieta) {
+  ct <- suppressWarnings(cor.test(d$gdpPercap, d$lifeExp, method = "spearman"))
+  tibble(`Grupa dochodowa` = etykieta, n = nrow(d),
+    `Spearman rho` = round(ct$estimate, 3),
+    `p-value` = format.pval(ct$p.value, digits = 2))
+}
+grupy <- filter(dane2007, !is.na(income_grp))
+bind_rows(
+  opis_zaleznosci(dane2007, "WSZYSTKIE KRAJE"),
+  map_dfr(sort(unique(grupy$income_grp)),
+                 \(g) opis_zaleznosci(filter(grupy, income_grp == g), g))
+) |> tab()
+```
+
+```{r}
+#| label: fig-dd-ryc-14-cz1
+#| fig-cap: "Oczekiwana długość życia a PKB per capita, 2007: wykres rozrzutu w panelach grup dochodowych"
+#| fig-width: 12
+#| fig-height: 5.4
+d <- filter(dane2007, !is.na(income_grp))
+ggplot(d, aes(gdpPercap, lifeExp)) +
+  geom_point(size = 2) +
+  facet_wrap(~ income_grp, scales = "free", ncol = 3, labeller = label_wrap_gen(24)) +
+  scale_x_continuous(labels = label_number(big.mark = " ")) +
+  labs(title = "Rozrzutu w panelach grup dochodowych",
+       x = "PKB per capita [USD]", y = "Oczekiwana długość życia [lata]") +
+  theme_minimal(base_size = 13)
+```
+
+```{r}
+#| label: fig-dd-ryc-14-cz2
+#| fig-cap: "Współczynnik korelacji Spearmana według grupy dochodowej, 2007: wykres słupkowy"
+#| fig-width: 12
+#| fig-height: 5.2
+d <- filter(dane2007, !is.na(income_grp))
+d |> group_by(income_grp) |>
+  summarise(rho = suppressWarnings(cor(gdpPercap, lifeExp, method = "spearman"))) |>
+  ggplot(aes(rho, fct_rev(income_grp))) +
+  geom_col(fill = "grey40") +
+  geom_text(aes(label = sprintf("%.2f", rho)), hjust = -.15, size = 6) +
+  expand_limits(x = .95) + scale_y_discrete(labels = label_wrap(24)) +
+  labs(title = "Współczynnik Spearmana w grupach dochodowych", x = "rho", y = NULL) +
+  theme_minimal(base_size = 16)
+```
+
+```{r}
+#| label: fig-dd-ryc-14-cz3
+#| fig-cap: "Współczynnik korelacji Spearmana według grupy dochodowej i roku: heatmapa"
+#| fig-width: 12
+#| fig-height: 5.2
+dane |> filter(!is.na(income_grp)) |> group_by(income_grp, year) |>
+  summarise(rho = suppressWarnings(cor(gdpPercap, lifeExp, method = "spearman")), .groups = "drop") |>
+  # Klasy siły korelacji według skali z rozdziału o analizie korelacji.
+  mutate(klasa = cut(rho, c(-1, 0, .1, .3, .5, .7, .9, 1), right = FALSE, include.lowest = TRUE,
+                            labels = c("< 0 (ujemna)", "0–0,1", "0,1–0,3 słaba", "0,3–0,5 przeciętna",
+                                       "0,5–0,7 wysoka", "0,7–0,9 bardzo wysoka", "0,9–1 prawie pełna"))) |>
+  ggplot(aes(factor(year), fct_rev(income_grp), fill = klasa)) +
+  geom_tile(colour = "white", show.legend = c(fill = TRUE)) +
+  geom_text(aes(label = sub("\\.", ",", sprintf("%.2f", rho)),
+                colour = klasa %in% c("0,5–0,7 wysoka", "0,7–0,9 bardzo wysoka", "0,9–1 prawie pełna")),
+            size = 3.6, show.legend = FALSE) +
+  scale_colour_manual(values = c("grey10", "white"), guide = "none") +
+  scale_fill_manual(name = "Siła korelacji", drop = FALSE,
+                    # Wielobarwna paleta sekwencyjna YlGnBu (ColorBrewer), rozpoznawalna przy
+                    # zaburzeniach rozpoznawania barw: klasy uporządkowane od ujemnej do prawie pełnej.
+                    values = RColorBrewer::brewer.pal(7, "YlGnBu")) +
+  scale_y_discrete(labels = label_wrap(24)) +
+  labs(title = "Współczynnik Spearmana: grupa dochodowa × rok", x = "Rok", y = NULL) +
+  theme_minimal(base_size = 14) + theme(panel.grid = element_blank())
+```
+
+| Wykres | Co pokazuje |
+|---|---|
+| wykres rozrzutu w panelach według grup | w każdym panelu zakres obu osi jest inny, a chmura punktów ma inny kształt |
+| wykres słupkowy współczynnika Spearmana dla grup | **w grupie wyższych średnich dochodów związek jest najsłabszy** (ρ = 0,252), a w pozostałych czterech wyraźnie silniejszy |
+| heatmapa grupa × rok, barwa = ρ | czy słaby związek w grupie 3 występuje we wszystkich 12 latach, czy tylko w 2007 |
+
+**Podsumowanie**
+
+- Dla wszystkich 142 krajów ρ = 0,857.
+- W obrębie każdej z pięciu grup dochodowych współczynnik jest wyraźnie niższy (0,25–0,62), a w grupie wyższych średnich dochodów wynosi 0,252 i **nie jest istotny statystycznie** (p = 0,14).
+- Opis danych jednym współczynnikiem dla całego zbioru i opis tych samych danych w podziale na grupy prowadzą do różnych wniosków. Potrzebę obliczenia współczynników osobno pokazuje wykres rozrzutu w panelach.
+- **Ograniczenie interpretacji:** zestawienie opisuje siłę związku w grupach. Zbiór nie zawiera zmiennych, które pozwalają wskazać przyczynę różnicy między grupami.
+
+```{r}
+#| label: dd-przed-15
+#| code-summary: "Kod: przygotowanie danych"
+library(sf); library(rnaturalearth)
+if (!exists("swiat")) {
+  popr_nazw <- c(
+    "Bahrain"="Bahrain", "Bosnia and Herzegovina"="Bosnia and Herz.",
+    "Central African Republic"="Central African Rep.", "Comoros"="Comoros",
+    "Congo, Dem. Rep."="Dem. Rep. Congo", "Congo, Rep."="Congo",
+    "Cote d'Ivoire"="Côte d'Ivoire", "Czech Republic"="Czechia",
+    "Dominican Republic"="Dominican Rep.", "Equatorial Guinea"="Eq. Guinea",
+    "Hong Kong, China"="Hong Kong", "Korea, Dem. Rep."="North Korea",
+    "Korea, Rep."="South Korea", "Sao Tome and Principe"="São Tomé and Principe",
+    "Slovak Republic"="Slovakia", "Swaziland"="eSwatini",
+    "United States"="United States of America", "West Bank and Gaza"="Palestine",
+    "Yemen, Rep."="Yemen")
+  swiat <- ne_countries(scale = "medium", returnclass = "sf") |> select(name, geometry)
+}
+# Klasy wyznaczone kwartylami: ten sam podział dla obu cech.
+gr_pkb <- quantile(dane2007$gdpPercap, c(.25, .75))
+gr_le  <- quantile(dane2007$lifeExp,  c(.25, .75))
+klasy <- dane2007 |>
+  mutate(
+    kl_pkb = cut(gdpPercap, c(-Inf, gr_pkb, Inf), labels = c("niskie", "średnie", "wysokie")),
+    kl_le  = cut(lifeExp,  c(-Inf, gr_le,  Inf), labels = c("krótkie", "średnie", "długie")),
+    sektor = paste(kl_pkb, kl_le, sep = "–"),
+    nazwa_mapy = ifelse(country %in% names(popr_nazw), popr_nazw[country], country))
+# Paleta dwuzmienna 3x3 brewer.seqseq1 (pakiet pals, C. Brewer):
+# kolumny = klasa PKB (odcienie niebieskie), wiersze = klasa długości życia (odcienie różowe).
+pal_bi <- c("niskie–krótkie"="#e8e6f2", "średnie–krótkie"="#b5d3e7", "wysokie–krótkie"="#4fadd0",
+            "niskie–średnie"="#e5b4d9", "średnie–średnie"="#b8b3d8", "wysokie–średnie"="#3983bb",
+            "niskie–długie"="#de4fa6",  "średnie–długie"="#b03598",  "wysokie–długie"="#2a1a8a")
+# Mapy jednej cechy: skrajne kolumny palety dwuzmiennej (dolny wiersz i lewa kolumna).
+pal_pkb <- unname(pal_bi[c("niskie–krótkie", "średnie–krótkie", "wysokie–krótkie")])
+pal_le  <- unname(pal_bi[c("niskie–krótkie", "niskie–średnie", "niskie–długie")])
+# Kraje spoza zbioru: szarość odróżniająca się od najjaśniejszej barwy palety.
+kolor_poza <- "grey75"
+```
+
+### Które kraje łączą wysokie PKB z długim życiem, a w których te cechy się rozchodzą?
+
+```{r}
+#| label: tbl-dd-stat-15
+#| tbl-cap: "Granice klas PKB per capita [USD] i oczekiwanej długości życia [lata], 2007"
+tibble(
+  Granica = c("Kwartyl 1 PKB per capita", "Kwartyl 3 PKB per capita",
+              "Kwartyl 1 długości życia", "Kwartyl 3 długości życia"),
+  Wartość = c(round(gr_pkb[1]), round(gr_pkb[2]), round(gr_le[1], 1), round(gr_le[2], 1))
+) |> tab()
+```
+
+```{r}
+#| label: tbl-dd-stat-15-b
+#| tbl-cap: "Liczba krajów w dziewięciu sektorach, 2007 (kolumny: klasa PKB per capita)"
+klasy |> count(kl_le, kl_pkb) |>
+  pivot_wider(names_from = kl_pkb, values_from = n, values_fill = 0) |>
+  rename(`Długość życia` = kl_le) |>
+  tab()
+```
+
+```{r}
+#| label: fig-dd-ryc-15-cz1
+#| fig-cap: "Oczekiwana długość życia a PKB per capita, 2007: wykres rozrzutu z podziałem na dziewięć sektorów"
+#| fig-width: 12
+#| fig-height: 5.6
+skrajne <- c("niskie–długie", "wysokie–krótkie")
+ggplot(klasy, aes(gdpPercap, lifeExp)) +
+  geom_vline(xintercept = gr_pkb, linetype = "dashed", colour = "grey40") +
+  geom_hline(yintercept = gr_le, linetype = "dashed", colour = "grey40") +
+  geom_point(aes(colour = sektor), size = 3, show.legend = FALSE) +
+  geom_point(data = filter(klasy, sektor %in% skrajne),
+             aes(colour = sektor), size = 3.6, shape = 21, stroke = 1.4, colour = "black") +
+  annotate("text", x = c(600, 6000, 32000), y = 39,
+           label = c("PKB niskie", "PKB średnie", "PKB wysokie"), size = 4, colour = "grey25") +
+  annotate("text", x = 47000, y = c(48, 67, 80),
+           label = c("życie krótkie", "życie średnie", "życie długie"),
+           size = 4, colour = "grey25", hjust = 1) +
+  scale_colour_manual(values = pal_bi) +
+  scale_x_continuous(labels = label_number(big.mark = " ")) +
+  labs(title = "Podział na dziewięć sektorów granicami kwartyli",
+       x = "PKB per capita [USD]", y = "Oczekiwana długość życia [lata]") +
+  theme_minimal(base_size = 14)
+```
+
+```{r}
+#| label: fig-dd-ryc-15-cz2
+#| fig-cap: "Klasa PKB per capita i klasa oczekiwanej długości życia, 2007: dwie mapy"
+#| fig-width: 12
+#| fig-height: 5.4
+m <- swiat |> left_join(klasy, by = c("name" = "nazwa_mapy"))
+p1 <- ggplot(m) + geom_sf(aes(fill = kl_pkb), colour = "grey60", linewidth = .1) +
+  scale_fill_manual(values = pal_pkb, name = "PKB", na.value = kolor_poza,
+                    breaks = levels(klasy$kl_pkb)) +
+  coord_sf(crs = "+proj=robin") + labs(title = "Klasa PKB per capita") +
+  theme_minimal(base_size = 13) +
+  theme(axis.text = element_blank(), panel.grid = element_blank(), legend.position = "bottom")
+p2 <- ggplot(m) + geom_sf(aes(fill = kl_le), colour = "grey60", linewidth = .1) +
+  scale_fill_manual(values = pal_le, name = "Długość życia", na.value = kolor_poza,
+                    breaks = levels(klasy$kl_le)) +
+  coord_sf(crs = "+proj=robin") + labs(title = "Klasa oczekiwanej długości życia") +
+  theme_minimal(base_size = 13) +
+  theme(axis.text = element_blank(), panel.grid = element_blank(), legend.position = "bottom")
+p1 + p2
+```
+
+```{r}
+#| label: fig-dd-ryc-15-cz3
+#| fig-cap: "Klasa PKB per capita i klasa oczekiwanej długości życia, 2007: mapa dwuzmienna"
+#| fig-width: 12
+#| fig-height: 5.4
+m <- swiat |> left_join(klasy, by = c("name" = "nazwa_mapy"))
+mapa_bi <- ggplot(m) +
+  geom_sf(aes(fill = sektor), colour = "grey60", linewidth = .1) +
+  scale_fill_manual(values = pal_bi, na.value = kolor_poza, guide = "none") +
+  coord_sf(crs = "+proj=robin") +
+  labs(title = "Mapa dwuzmienna: PKB i długość życia w jednej barwie") +
+  theme_minimal(base_size = 14) +
+  theme(axis.text = element_blank(), panel.grid = element_blank())
+legenda <- expand_grid(kl_pkb = c("niskie", "średnie", "wysokie"),
+                              kl_le = c("krótkie", "średnie", "długie")) |>
+  mutate(sektor = paste(kl_pkb, kl_le, sep = "–"),
+                kl_pkb = factor(kl_pkb, levels = c("niskie", "średnie", "wysokie")),
+                kl_le = factor(kl_le, levels = c("krótkie", "średnie", "długie"))) |>
+  ggplot(aes(kl_pkb, kl_le, fill = sektor)) +
+  geom_tile(colour = "white") +
+  scale_fill_manual(values = pal_bi, guide = "none") +
+  labs(x = "PKB per capita →", y = "długość życia →") +
+  theme_minimal(base_size = 11) +
+  theme(axis.text = element_text(size = 8), panel.grid = element_blank())
+mapa_bi + legenda + patchwork::plot_layout(widths = c(3.2, 1))
+```
+
+```{r}
+#| label: fig-dd-ryc-15-cz4
+#| fig-cap: "Liczba krajów w dziewięciu sektorach, 2007: heatmapa liczności"
+#| fig-width: 9
+#| fig-height: 5.4
+# Heatmapa liczności: liczba krajów w każdym z dziewięciu sektorów, bez położenia na mapie.
+# Układ osi jak w legendzie mapy dwuzmiennej: PKB w poziomie, długość życia w pionie.
+klasy |>
+  count(kl_pkb, kl_le, .drop = FALSE) |>
+  ggplot(aes(kl_pkb, kl_le, fill = n)) +
+  geom_tile(colour = "white", linewidth = 1) +
+  geom_text(aes(label = n, colour = n > max(n) / 2), size = 7, show.legend = FALSE) +
+  scale_colour_manual(values = c("grey15", "white")) +
+  scale_fill_distiller(palette = "Purples", direction = 1, name = "Liczba\nkrajów") +
+  labs(title = sprintf("Heatmapa: liczba krajów w dziewięciu sektorach, rok %d",
+                       unique(dane2007$year)),
+       x = "Klasa PKB per capita", y = "Klasa oczekiwanej długości życia") +
+  theme_minimal(base_size = 15) +
+  theme(panel.grid = element_blank())
+```
+
+| Wykres | Co pokazuje |
+|---|---|
+| wykres rozrzutu z liniami podziału na dziewięć sektorów | gdzie przebiegają granice klas i które kraje trafiają do sektorów skrajnych |
+| dwie mapy obok siebie: klasa PKB i klasa długości życia | rozkład przestrzenny każdej cechy osobno, w tej samej klasyfikacji |
+| mapa dwuzmienna: barwa złożona z klasy PKB i klasy długości życia | obie cechy jednocześnie: jedna barwa odpowiada jednemu z dziewięciu sektorów |
+| heatmapa liczności sektorów | liczbę krajów w każdym z dziewięciu sektorów, odczytywaną wprost; bez informacji o położeniu krajów |
+
+**Podsumowanie**
+
+- Mapa dwuzmienna odpowiada na pytanie wprost, ale **wymaga od odbiorcy poznania nowego
+  typu legendy**.
+- Dwie mapy obok siebie są łatwiejsze w odbiorze, lecz odpowiadają na pytanie tylko
+  pośrednio — różnicę między nimi odbiorca musi znaleźć sam.
+- **To samo pytanie można rozpatrzyć bez map:** heatmapa liczności dziewięciu sektorów
+  daje odpowiedź liczbową, ale nie zawiera informacji o położeniu krajów.
+
+## F. Podział świata na kraje bogate i biedne
+
+**Czego chcemy się dowiedzieć:** ile krajów należy do każdej grupy zamożności, w których częściach świata leżą i czy różne klasyfikacje rozwoju dają ten sam podział.
+
+**Pytania badawcze w tym problemie:**
+
+- **Jak liczne są poszczególne grupy dochodowe?** (@sec-db-przyklad2)
+- Czy rozmieszczenie grup dochodowych jest przestrzennie zróżnicowane?
+- Czy klasyfikacja gospodarcza krajów pokrywa się z klasyfikacją dochodową?
+
+### Czy rozmieszczenie grup dochodowych jest przestrzennie zróżnicowane?
+
+```{r}
+#| label: tbl-dd-stat-17
+#| tbl-cap: "Udział grup dochodowych w obrębie kontynentu, 2007 [%]"
+dane2007 |>
+  mutate(grupa = fct_na_value_to_level(factor(income_grp), "brak")) |>
+  count(kontynent, grupa) |>
+  group_by(kontynent) |> mutate(p = round(100 * n / sum(n))) |>
+  select(-n) |> pivot_wider(names_from = grupa, values_from = p, values_fill = 0) |>
+  rename(Kontynent = kontynent) |> tab()
+```
+
+```{r}
+#| label: tbl-dd-stat-17-b
+#| tbl-cap: "Liczba krajów w grupach dochodowych według kontynentu, 2007"
+dane2007 |>
+  mutate(grupa = fct_na_value_to_level(factor(income_grp), "brak")) |>
+  count(kontynent, grupa) |>
+  pivot_wider(names_from = grupa, values_from = n, values_fill = 0) |>
+  rename(Kontynent = kontynent) |> tab()
+```
+
+```{r}
+#| label: fig-dd-ryc-17-cz1
+#| fig-cap: "Grupy dochodowe krajów, 2007: mapa"
+#| fig-width: 12
+#| fig-height: 5.6
+d <- dane2007 |>
+  mutate(grupa = fct_na_value_to_level(factor(income_grp), "brak danych"),
+                nazwa_mapy = ifelse(country %in% names(popr_nazw), popr_nazw[country], country))
+mapa <- swiat |> left_join(d, by = c("name" = "nazwa_mapy"))
+ggplot(mapa) +
+  geom_sf(aes(fill = grupa), colour = "grey50", linewidth = .1) +
+  scale_fill_brewer(palette = "Set2", name = NULL, na.value = "grey90", labels = label_wrap(26)) +
+  coord_sf(crs = "+proj=robin") +
+  labs(title = "Mapa: skala jakościowa") +
+  theme_minimal(base_size = 15) +
+  theme(axis.text = element_blank(), panel.grid = element_blank(), legend.position = "bottom")
+```
+
+```{r}
+#| label: fig-dd-ryc-17-cz3
+#| fig-cap: "Grupy dochodowe i liczba ludności krajów, 2007: kartodiagram"
+#| fig-width: 12
+#| fig-height: 5.6
+d <- dane2007 |>
+  mutate(grupa = fct_na_value_to_level(factor(income_grp), "brak danych"),
+                nazwa_mapy = ifelse(country %in% names(popr_nazw), popr_nazw[country], country))
+srodki <- swiat |> left_join(d, by = c("name" = "nazwa_mapy")) |>
+  filter(!is.na(grupa)) |> sf::st_centroid(of_largest_polygon = TRUE)
+ggplot() +
+  geom_sf(data = swiat, fill = "grey95", colour = "grey75", linewidth = .1) +
+  geom_sf(data = srodki, aes(colour = grupa, size = pop), alpha = .8) +
+  scale_colour_brewer(palette = "Set2", name = NULL, labels = label_wrap(26)) +
+  scale_size(range = c(1.5, 11), name = "Ludność (mln)",
+             breaks = c(1e7, 1e8, 5e8, 1e9), labels = c("10", "100", "500", "1000")) +
+  coord_sf(crs = "+proj=robin") +
+  labs(title = "Kartodiagram: barwa = grupa dochodowa, wielkość znaku = ludność") +
+  theme_minimal(base_size = 15) +
+  theme(axis.text = element_blank(), panel.grid = element_blank(), legend.position = "bottom",
+        legend.box = "vertical")
+```
+
+```{r}
+#| label: fig-dd-ryc-17-cz2
+#| fig-cap: "Grupy dochodowe według kontynentu, 2007: treemap, powierzchnia odpowiada liczbie krajów"
+#| fig-width: 12
+#| fig-height: 5.6
+dane2007 |>
+  mutate(grupa = fct_na_value_to_level(factor(income_grp), "brak danych")) |>
+  count(kontynent, grupa) |>
+  ggplot(aes(area = n, fill = grupa, subgroup = kontynent, label = grupa)) +
+  treemapify::geom_treemap(colour = "white") +
+  treemapify::geom_treemap_subgroup_border(colour = "black") +
+  treemapify::geom_treemap_subgroup_text(place = "centre", grow = TRUE, alpha = .4, colour = "black") +
+  scale_fill_brewer(palette = "Set2", name = NULL, labels = label_wrap(26)) +
+  labs(title = "Treemap zagnieżdżony: kontynent → grupa dochodowa, powierzchnia = liczba krajów") +
+  theme_minimal(base_size = 15) + theme(legend.position = "bottom")
+```
+
+**Konstrukcja:** cały prostokąt odpowiada wszystkim `r nrow(dane2007)` krajom z roku
+`r unique(dane2007$year)`. Pierwszy poziom podziału (gruba czarna ramka) to kontynenty,
+drugi (barwa) to grupy dochodowe w obrębie kontynentu. **Powierzchnia prostokąta jest
+proporcjonalna do liczby krajów**; położenie prostokątów wynika z algorytmu układania
+i nie odpowiada położeniu geograficznemu.
+
+```{r}
+#| label: fig-dd-ryc-17-cz4
+#| fig-cap: "Grupy dochodowe według kontynentu, 2007: treemap, powierzchnia odpowiada liczbie ludności"
+#| fig-width: 12
+#| fig-height: 5.6
+# Ta sama hierarchia kontynent -> grupa dochodowa, powierzchnia = suma ludności krajów.
+dane2007 |>
+  mutate(grupa = fct_na_value_to_level(factor(income_grp), "brak danych")) |>
+  group_by(kontynent, grupa) |>
+  summarise(ludnosc = sum(as.numeric(pop)), .groups = "drop") |>
+  ggplot(aes(area = ludnosc, fill = grupa, subgroup = kontynent, label = grupa)) +
+  treemapify::geom_treemap(colour = "white") +
+  treemapify::geom_treemap_subgroup_border(colour = "black") +
+  treemapify::geom_treemap_subgroup_text(place = "centre", grow = TRUE, alpha = .4, colour = "black") +
+  scale_fill_brewer(palette = "Set2", name = NULL, labels = label_wrap(26)) +
+  labs(title = "Treemap zagnieżdżony: kontynent → grupa dochodowa, powierzchnia = ludność") +
+  theme_minimal(base_size = 15) + theme(legend.position = "bottom")
+```
+
+**Konstrukcja:** cały prostokąt odpowiada łącznej ludności `r nrow(dane2007)` krajów
+w roku `r unique(dane2007$year)` (`r licz_pl(round(sum(as.numeric(dane2007$pop)) / 1e9, 2))` mld osób).
+Podział jest taki sam jak na poprzedniej rycinie: kontynenty (gruba czarna ramka),
+a w nich grupy dochodowe (barwa). **Powierzchnia prostokąta jest proporcjonalna do sumy
+ludności krajów danej grupy na danym kontynencie, a nie do liczby krajów.**
+
+| Wykres | Co pokazuje |
+|---|---|
+| mapa — barwa jakościowa według grupy | grupy tworzą zwarte obszary, a granica między nimi przebiega wzdłuż Sahary; sąsiedztwo krajów o tej samej grupie |
+| kartodiagram: znak w środku kraju, barwa = grupa dochodowa, wielkość = liczba ludności | **ten sam rozkład przestrzenny bez obciążenia powierzchnią pól odniesienia** — Kanada i Australia, rozległe i mało ludne, przestają dominować obrazem, a małe kraje o dużej ludności, np. Bangladesz i Japonia, stają się widoczne |
+| treemap zagnieżdżony: kontynent → grupa, powierzchnia = liczba krajów | ile krajów łącznie należy do każdej grupy i jak dzieli się na kontynenty |
+| treemap zagnieżdżony: kontynent → grupa, powierzchnia = liczba ludności | jaka część ludności 142 krajów należy do każdej grupy na każdym kontynencie; ten sam podział co wyżej, ważony liczbą ludności |
+
+**Podsumowanie**
+
+- Wykresy odpowiadają na różne pytania o podobnym brzmieniu: mapa na pytanie „gdzie leżą kraje danej grupy”, treemap na pytanie „ile ich jest”, a kartodiagram na pytanie „gdzie i ilu osób to dotyczy”.
+- Zestawienie mapy z kartodiagramem pokazuje **ograniczenie takiej mapy**: barwę odbiorca odczytuje razem z powierzchnią pola odniesienia, dlatego Kanada i Australia zajmują na mapie więcej miejsca niż kraje Europy Zachodniej łącznie, choć mają kilkakrotnie mniej mieszkańców.
+
+### Czy klasyfikacja gospodarcza krajów pokrywa się z klasyfikacją dochodową?
+
+```{r}
+#| label: tbl-dd-stat-18
+#| tbl-cap: "Liczba krajów według grupy gospodarczej i grupy dochodowej, 2007"
+tk <- dane2007 |> filter(!is.na(economy_grp), !is.na(income_grp)) |>
+  count(economy_grp, income_grp)
+tk |> pivot_wider(names_from = income_grp, values_from = n, values_fill = 0) |>
+  rename(`Grupa gospodarcza` = economy_grp) |> tab()
+```
+
+```{r}
+#| label: fig-dd-ryc-18
+#| fig-cap: "Grupy gospodarcze a grupy dochodowe, 2007: treemap, wykres słupkowy skumulowany i heatmapa liczności"
+#| fig-width: 14
+#| fig-height: 5.4
+tk <- dane2007 |> filter(!is.na(economy_grp), !is.na(income_grp)) |>
+  count(economy_grp, income_grp)
+p1 <- ggplot(tk, aes(area = n, fill = income_grp, subgroup = economy_grp, label = income_grp)) +
+  treemapify::geom_treemap(colour = "white") +
+  treemapify::geom_treemap_subgroup_border(colour = "black") +
+  treemapify::geom_treemap_subgroup_text(place = "centre", grow = TRUE, alpha = .4, colour = "black") +
+  scale_fill_brewer(palette = "Set2", guide = "none") +
+  labs(title = "Treemap: tylko kombinacje obecne w danych") + motyw_trzy
+p2 <- tk |>
+  complete(economy_grp, income_grp, fill = list(n = 0)) |>
+  ggplot(aes(income_grp, fct_rev(economy_grp), fill = n)) +
+  geom_tile(colour = "white") +
+  geom_text(aes(label = n, colour = n > 15), size = 3.4, show.legend = FALSE) +
+  scale_colour_manual(values = c("white", "grey10")) +
+  # Liczność w skali cividis (granat -> żółty), odrębnej od barw grup dochodowych.
+  scale_fill_viridis_c(option = "cividis", name = "Kraje") +
+  scale_x_discrete(labels = label_wrap(12)) + scale_y_discrete(labels = label_wrap(16)) +
+  labs(title = "Heatmapa: zero jest widoczne", x = NULL, y = NULL) +
+  motyw_trzy + theme(legend.position = "none", panel.grid = element_blank(),
+                     axis.text.x = element_text(size = 9))
+p3 <- ggplot(tk, aes(fct_rev(economy_grp), n, fill = income_grp)) +
+  geom_col(position = "fill") + coord_flip() +
+  scale_fill_brewer(palette = "Set2", name = NULL, labels = label_wrap(20)) +
+  scale_x_discrete(labels = label_wrap(18)) + scale_y_continuous(labels = label_percent()) +
+  labs(title = "Słupkowy skumulowany udziałów", x = NULL, y = "Udział grup dochodowych") +
+  guides(fill = guide_legend(nrow = 2, byrow = TRUE)) +
+  motyw_trzy
+# Kolejność: treemap, słupkowy skumulowany, heatmapa. Wspólna legenda grup dochodowych
+# pod dwoma pierwszymi wykresami (oba przedstawiają grupę kolorem).
+legenda_grup <- (p1 + p3) + patchwork::plot_layout(guides = "collect") &
+  theme(legend.position = "bottom", legend.text = element_text(size = 13),
+        legend.key.size = unit(1.1, "lines"))
+legenda_grup - p2 + patchwork::plot_layout(widths = c(2, 1))
+```
+
+| Wykres | Co pokazuje |
+|---|---|
+| treemap zagnieżdżony: grupa gospodarcza → grupa dochodowa | **tylko kombinacje, które występują** — G7 jako jednolity prostokąt, najsłabiej rozwinięte jako prostokąt w przewadze jednej barwy |
+| słupkowy skumulowany udziału grup dochodowych w każdej grupie gospodarczej | strukturę każdej grupy gospodarczej osobno, dokładnie i porównywalnie |
+| heatmapa liczności grupa × grupa | **gdzie są zera** — 16 pustych komórek tworzy widoczny obszar poza przekątną; zgodność dwóch klasyfikacji odczytuje się jako skupienie wartości wokół przekątnej |
+
+**Podsumowanie**
+
+- **Tylko heatmapa przedstawia brak kombinacji jako informację**: wartość zero jest na niej widoczna, a na treemapie i na wykresie słupkowym nie ma odpowiadającego jej elementu.
+- Dla porównania: w zestawieniu kontynentu z grupą dochodową (pytanie „Czy rozmieszczenie grup dochodowych jest przestrzennie zróżnicowane?”) pustych kombinacji jest mniej — `r sum(table(dane2007$kontynent, dane2007$income_grp) == 0)` z `r length(table(dane2007$kontynent, dane2007$income_grp))`.
+
+## G. Gdzie mieszka ludność świata, a gdzie wytwarzany jest dochód
+
+**Czego chcemy się dowiedzieć:** jaka część ludzkości mieszka w każdym regionie, jaka część dochodu świata w nim powstaje i jak nierówny jest ten rozdział.
+
+**Pytania badawcze w tym problemie:**
+
+- Czy udział regionu w ludności świata odpowiada jego udziałowi w gospodarce?
+- Czy udział kontynentów w ludności świata zmienił się w latach 1952–2007?
+
+### Czy udział regionu w ludności świata odpowiada jego udziałowi w gospodarce?
+
+```{r}
+#| label: tbl-dd-stat-19
+#| tbl-cap: "Udział kontynentów w ludności i w PKB 142 krajów, 2007"
+dane2007 |> mutate(pkb_total = pop * gdpPercap) |>
+  group_by(Kontynent = kontynent) |>
+  summarise(pkb = sum(pkb_total), lud = sum(pop)) |>
+  mutate(`Udział w ludności [%]` = round(100 * lud / sum(lud), 1),
+                `Udział w PKB [%]` = round(100 * pkb / sum(pkb), 1),
+                `Różnica (p.p.)` = round(`Udział w PKB [%]` - `Udział w ludności [%]`, 1)) |>
+  select(-pkb, -lud) |>
+  arrange(desc(`Różnica (p.p.)`)) |> tab()
+```
+
+```{r}
+#| label: fig-dd-ryc-19-cz1
+#| fig-cap: "Struktura ludności i PKB według kontynentów i krajów, 2007: dwa treemapy"
+#| fig-width: 13
+#| fig-height: 5.6
+d <- mutate(dane2007, pkb_total = pop * gdpPercap)
+p1 <- ggplot(d, aes(area = pop, fill = kontynent, subgroup = kontynent, label = kraj)) +
+  treemapify::geom_treemap(colour = "white") +
+  treemapify::geom_treemap_subgroup_text(place = "centre", grow = TRUE, alpha = .5, colour = "black") +
+  scale_fill_brewer(palette = "Dark2", guide = "none") +
+  labs(title = "Ludność") + theme_minimal(base_size = 15)
+p2 <- ggplot(d, aes(area = pkb_total, fill = kontynent, subgroup = kontynent, label = kraj)) +
+  treemapify::geom_treemap(colour = "white") +
+  treemapify::geom_treemap_subgroup_text(place = "centre", grow = TRUE, alpha = .5, colour = "black") +
+  scale_fill_brewer(palette = "Dark2", guide = "none") +
+  labs(title = "PKB") + theme_minimal(base_size = 15)
+p1 + p2
+```
+
+**Konstrukcja:** każdy mały prostokąt to jeden z `r nrow(dane2007)` krajów, a kraje są
+zgrupowane w bloki kontynentów (barwa i napis). Po lewej powierzchnia prostokąta jest
+proporcjonalna do liczby ludności kraju, po prawej — do łącznego PKB kraju, liczonego
+jako liczba ludności × PKB per capita (w dolarach amerykańskich, skorygowany o inflację). Dane
+z roku `r unique(dane2007$year)`; udziały dotyczą sumy dla `r nrow(dane2007)` krajów zbioru.
+Położenie prostokątów wynika z algorytmu układania, dlatego bloki kontynentów leżą
+na obu rycinach w innych miejscach.
+
+```{r}
+#| label: fig-dd-ryc-19-cz2
+#| fig-cap: "Udział kontynentów w ludności i w PKB, 2007: wykres słupkowy zgrupowany i wykres nachyleniowy"
+#| fig-width: 13
+#| fig-height: 5.6
+ud <- dane2007 |> mutate(pkb_total = pop * gdpPercap) |>
+  group_by(kontynent) |>
+  summarise(Ludność = sum(pop), PKB = sum(pkb_total)) |>
+  mutate(Ludność = 100 * Ludność / sum(Ludność), PKB = 100 * PKB / sum(PKB)) |>
+  pivot_longer(-kontynent, names_to = "wielkosc", values_to = "udzial")
+p1 <- ggplot(ud, aes(udzial, fct_rev(kontynent), fill = wielkosc)) +
+  geom_col(position = "dodge") +
+  scale_fill_brewer(palette = "Set1", name = NULL) +
+  labs(title = "Słupkowy zgrupowany udziałów", x = "Udział w świecie [%]", y = NULL) +
+  theme_minimal(base_size = 15) + theme(legend.position = "bottom")
+p2 <- ggplot(ud, aes(wielkosc, udzial, group = kontynent, colour = kontynent)) +
+  geom_line(linewidth = 1.2) + geom_point(size = 3) +
+  geom_text(data = filter(ud, wielkosc == "PKB"), aes(label = kontynent),
+            hjust = -.12, size = 4.5, show.legend = FALSE) +
+  scale_colour_brewer(palette = "Dark2", guide = "none") + expand_limits(x = 2.8) +
+  labs(title = "Nachyleniowy: ludność → PKB", x = NULL, y = "Udział w świecie [%]") +
+  theme_minimal(base_size = 15)
+p1 + p2
+```
+
+| Wykres | Co pokazuje |
+|---|---|
+| dwa treemapy o tej samej hierarchii, powierzchnia = ludność i = PKB | obie struktury naraz, z zachowaniem podziału na kraje wewnątrz kontynentu |
+| wykres słupkowy zgrupowany: para słupków dla każdego kontynentu | różnicę dla każdego kontynentu, odczytywaną ze wspólnej osi |
+| wykres nachyleniowy: odcinek od udziału w ludności do udziału w PKB | **kierunek i wielkość przesunięcia w jednym znaku graficznym**; przecinające się odcinki Azji i Ameryk |
+
+**Podsumowanie**
+
+- Pytanie dotyczy **relacji między dwiema strukturami**, a nie każdej z nich osobno.
+- Dwa treemapy przedstawiają obie struktury dokładnie, ale porównanie pozostawiają odbiorcy.
+- Wykres nachyleniowy przedstawia obie struktury w mniejszym stopniu, ale najlepiej odpowiada na pytanie.
+- **Dokładność przedstawienia danych i trafność odpowiedzi na pytanie są dwiema różnymi własnościami wykresu.**
+
+### Czy udział kontynentów w ludności świata zmienił się w latach 1952–2007?
+
+```{r}
+#| label: tbl-dd-stat-20
+#| tbl-cap: "Udział kontynentów w ludności 142 krajów, 1952–2007 [%]"
+dane |> group_by(year, kontynent) |>
+  summarise(p = sum(pop), .groups = "drop") |>
+  group_by(year) |> mutate(udzial = round(100 * p / sum(p), 1)) |>
+  select(-p) |> pivot_wider(names_from = kontynent, values_from = udzial) |>
+  rename(Rok = year) |> tab()
+```
+
+```{r}
+#| label: fig-dd-ryc-20
+#| fig-cap: "Udział kontynentów w ludności 142 krajów, 1952–2007: wykres warstwowy skumulowany, wykres liniowy i wykres słupkowy skumulowany"
+#| fig-width: 14
+#| fig-height: 5.2
+ud <- dane |> group_by(year, kontynent) |>
+  summarise(p = sum(pop), .groups = "drop") |>
+  group_by(year) |> mutate(udzial = 100 * p / sum(p)) |> ungroup()
+p1 <- ggplot(ud, aes(year, udzial, fill = fct_rev(kontynent))) +
+  geom_area(colour = "white", linewidth = .2) +
+  scale_fill_brewer(palette = "Dark2", name = NULL) +
+  labs(title = "Warstwowy skumulowany", x = "Rok", y = "Udział w ludności świata [%]") +
+  motyw_trzy + theme(legend.position = "bottom", legend.text = element_text(size = 11))
+p2 <- ggplot(ud, aes(year, udzial, colour = kontynent)) +
+  geom_line(linewidth = 1) + geom_point(size = 1.4) +
+  geom_text(data = filter(ud, year == 2007), aes(label = kontynent),
+            hjust = -.1, size = 3, show.legend = FALSE) +
+  scale_colour_brewer(palette = "Dark2", guide = "none") + expand_limits(x = 2022) +
+  labs(title = "Liniowy udziałów", x = "Rok", y = "Udział [%]") + motyw_trzy
+p3 <- ud |> filter(year %in% c(1952, 2007)) |>
+  ggplot(aes(factor(year), udzial, fill = fct_rev(kontynent))) +
+  geom_col(position = "fill", colour = "white") +
+  scale_fill_brewer(palette = "Dark2", guide = "none") + scale_y_continuous(labels = label_percent()) +
+  labs(title = "Słupkowy skumulowany: 1952 i 2007", x = "Rok", y = "Udział") +
+  motyw_trzy
+# wspólna legenda pod rycinami
+p1 + p2 + p3 + plot_layout(guides = "collect") &
+  theme(legend.position = "bottom", legend.text = element_text(size = 11))
+```
+
+| Wykres | Co pokazuje |
+|---|---|
+| wykres warstwowy skumulowany | udziały sumują się do 100% i jak zmienia się podział całości |
+| wykres liniowy udziałów, pięć linii od wspólnej osi | przebieg każdego kontynentu osobno: spadek Europy o 8,2 p.p. i wzrost Afryki o 5,0 p.p. |
+| wykres słupkowy skumulowany dla 1952 i 2007 | zestawienie punktu początkowego i końcowego, bez pośrednich |
+
+**Podsumowanie**
+
+- Na pytanie „jak zmieniał się udział” wykres warstwowy i liniowy odpowiadają równie dobrze, a **wybór między nimi zależy od tego, co ma zostać wyróżnione**: podział całości czy przebieg dla pojedynczego kontynentu.
+- O wyborze decyduje to, który element pytania jest ważniejszy.
+- Trzeci wykres zawiera mniej informacji i odpowiada na węższe pytanie „o ile zmienił się udział”, ale odpowiada na nie najszybciej.
+
+## Źródła {#sec-dd-zrodla}
+
+- Li C., 2022. *Friends Don't Let Friends Make Bad Graphs*:
+  <https://github.com/cxli233/FriendsDontLetFriends>.
+- Wilke C.O., 2019. *Fundamentals of Data Visualization*, rozdział 17:
+  <https://clauswilke.com/dataviz/proportional-ink.html>.

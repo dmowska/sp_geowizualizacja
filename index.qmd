@@ -1,0 +1,77 @@
+# O skrypcie {.unnumbered}
+
+Skrypt zawiera materiały do przedmiotu „Statystyczne i graficzne podstawy geowizualizacji”, prowadzonego
+w ramach Studiów Podyplomowych „Geoinformacja” na Wydziale Nauk Geograficznych i Geologicznych UAM. Celem
+przedmiotu jest omówienie podstawowych pojęć i miar statystyki opisowej oraz graficznych form prezentacji danych
+i zasad ich doboru do problemu badawczego.
+
+Przedmiot wprowadza także w analizę korelacji, podstawowe wykresy statystyczne wspomagające interpretację danych
+oraz zasady tworzenia wykresów komunikacyjnych w środowisku R i Quarto. Zajęcia przygotowują słuchaczy do tworzenia
+opracowań (raportów statystycznych) na dowolny temat z wykorzystaniem statystyki opisowej, analizy korelacji
+i różnorodnych form wizualizacji danych. Uczą również krytycznej oceny wyników opartych na danych przyrodniczych
+i społeczno-ekonomicznych.
+
+Skrypt służy jako materiał na zajęcia oraz jako opracowanie do samodzielnej pracy. Wszystkie obliczenia i wykresy
+wykonuje się w języku R, a raporty powstają jako dokumenty Quarto.
+
+Materiały przygotowano z wykorzystaniem narzędzia sztucznej inteligencji Claude Opus 5.5 (Anthropic, listopad 2026),
+które wspomagało redagowanie tekstu, opracowanie i uruchamianie kodu R oraz porządkowanie treści. Zakres i układ
+materiału oraz decyzje dydaktyczne należą do autorki, która oceniła treść merytoryczną i odpowiada za nią.
+
+## Układ skryptu
+
+| Część | Zawartość |
+|---|---|
+| **Dane** | opis wszystkich zbiorów danych wykorzystanych w skrypcie ([Dane](00_dane.qmd)) |
+| **Praca w R** | instalacja R i RStudio (@sec-instalacja), praca w RStudio (@sec-rstudio), wczytanie i przetwarzanie danych (@sec-praca-z-danymi), budowa wykresu w `ggplot2` (@sec-ggplot2), dane przestrzenne i mapy (@sec-przestrzenne), pakiety (@sec-pakiety) |
+| **Quarto** | budowa dokumentu Quarto i tworzenie z niego dokumentu HTML (@sec-quarto), zasady opracowania raportu statystycznego (@sec-raport) |
+| **Podstawy statystyki** | pojęcia podstawowe i skale pomiarowe (@sec-pojecia), statystyki opisowe (@sec-statystyki), analiza korelacji (@sec-korelacja) |
+| **Wizualizacja danych** | cele wizualizacji, gramatyka grafiki, typy wykresów, wizualizacja statystyk i zależności, dobór wykresu, formatowanie wykresów, źródła informacji (@sec-wizualizacja–@sec-zrodla) |
+| **Przykłady** | obliczenia dla poszczególnych etapów raportu i interpretacja wyników: oczekiwana długość życia na kontynentach i w 2007 roku (Gapminder), warunki meteorologiczne w Polsce w 2020 roku (IMGW-PIB) |
+| **Przykładowe raporty** | raporty z sekcjami dydaktycznymi: oczekiwana długość życia w Europie (Gapminder), warunki meteorologiczne jednej i trzech stacji (IMGW-PIB), lesistość powiatów województwa wielkopolskiego w latach 2000 i 2025 (BDL GUS, granice GADM) |
+| **Załącznik A** | katalog typów wykresów z kodem i odnośnikami do dodatkowych przykładów (@sec-katalog) |
+| **Załącznik B** | wykresy w statystyce regionalnej: typy według publikacji GUS, przykłady na danych BDL, kod wykresów i opis pobranych danych (@sec-a2) |
+| **Załącznik C** | zasady opracowywania wykresów ze wskazaniem źródeł i zasady według publikacji GUS (@sec-zasady) |
+| **Załącznik D** | przykłady doboru wykresu do pytania badawczego: statystyki, wykresy i ich porównanie (@sec-przyklady-doboru) |
+| **Załącznik E** | praca z danymi Banku Światowego: pobranie, połączenie arkuszy i granic państw, zapis wyników (@sec-bank-swiatowy) |
+
+## Jak korzystać ze skryptu
+
+**Przed pierwszymi ćwiczeniami** należy zainstalować R, RStudio i pakiety (@sec-instalacja)
+oraz zapoznać się z częścią „Praca w R”: z obsługą RStudio, wczytaniem danych, potokiem
+przetwarzania danych i budową wykresu.
+
+**Na ćwiczeniach** omawiane są przykłady raportów: od opisu danych,
+przez statystyki opisowe i wykresy, po wnioski. Kod R w rozdziałach jest gotowy
+do uruchomienia; pod wynikami znajduje się interpretacja oraz wyjaśnienie kodu
+(„Obliczenia w R”).
+
+Części „Quarto”, „Podstawy statystyki” i „Wizualizacja danych” oraz Załączniki A, B, C, D i E służą
+do samodzielnej lektury: przedstawiają podstawy statystyki i wizualizacji danych, opisują zasady opracowania raportu
+i pozwalają odnaleźć kod potrzebnego wykresu.
+
+## Kod
+
+Kod i dane można pobrać jako jeden plik: [pliki_kursu.zip](pliki_kursu.zip). Po rozpakowaniu
+powstaje folder `kod/` z plikami `.qmd` i podfolderem `dane/`, dlatego kod można uruchamiać
+bez przenoszenia plików.
+
+Kod przykładów raportów oraz rozdziałów o pracy z danymi, wykresach,
+danych przestrzennych, Quarto, raporcie, statystykach opisowych i korelacji jest dostępny
+także jako pliki `.qmd` w folderze `kod/`. Plik otwiera się w RStudio i uruchamia blok po
+bloku albo renderuje w całości (@sec-rs-qmd). Szablonem własnego raportu może być plik
+`kod/21_raport.qmd` (@sec-r-przyklad), a kod przygotowania danych Banku Światowego zawiera plik
+`kod/E_bank_swiatowy.qmd` (@sec-bs-pelny-kod). W pozostałych rozdziałach i załącznikach kod
+znajduje się wyłącznie w tekście rozdziału. W części rozdziałów kod jest zwinięty — rozwija
+się go przyciskiem **Kod** nad wynikiem.
+
+## Zadania do samodzielnego wykonania
+
+Na końcu większości przykładów raportów znajdują się zadania polegające na modyfikacji kodu
+pokazanego w rozdziale: zmianie zmiennej, grupowania albo typu wykresu. W raportach dla jednego
+roku, Europy, jednej i trzech stacji pierwsze zadanie pokazuje, że zmiana jednej wartości w kodzie
+i ponowne renderowanie tworzą tabele i ryciny dla nowego zestawu danych.
+
+Rozdziały „Praca z danymi”, „Wykresy w ggplot2”, „Dane przestrzenne w R”, „Wizualizacja statystyk
+opisowych”, „Wizualizacja zależności” i „Formatowanie wykresów” kończą się zadaniami, które
+wykonuje się w przeglądarce (webR), bez instalowania R, z możliwością wyświetlenia rozwiązania.

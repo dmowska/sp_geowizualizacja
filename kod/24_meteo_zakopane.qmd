@@ -1,0 +1,205 @@
+---
+title: "Warunki meteorologiczne wybranej stacji"
+format: html
+---
+
+Kod do rozdziału „Warunki meteorologiczne wybranej stacji” skryptu do ćwiczeń.
+Plik wymaga połączenia z internetem (dane są pobierane ze zbioru IMGW-PIB) oraz pakietów
+`tidyverse`, `climate` i `patchwork`. Stację wybiera się w obiekcie `wybrana_stacja`,
+a rok — w obiekcie `wybrany_rok`.
+
+Źródłem pochodzenia danych jest Instytut Meteorologii i Gospodarki Wodnej – Państwowy Instytut
+Badawczy. Dane Instytutu Meteorologii i Gospodarki Wodnej – Państwowego Instytutu Badawczego
+zostały przetworzone.
+
+Pytania badawcze:
+
+- Jak zmieniała się temperatura powietrza w ciągu 2023 roku — w ujęciu wartości średnich
+  i ekstremalnych?
+- Jak zmieniały się miesięczne sumy opadu?
+- Jak temperatura i opad na stacji wypadają na tle 59 stacji synoptycznych?
+- W których miesiącach występowały dni z deszczem i dni ze śniegiem?
+
+## Dane
+
+### Pobranie danych
+
+```{r}
+#| message: false
+#| output: false
+# pakiety: tidyverse (przetwarzanie danych i wykresy), climate (pobieranie danych IMGW-PIB)
+library(tidyverse)
+library(climate)
+
+# wybrana stacja (nazwa zapisana wielkimi literami) i rok
+wybrana_stacja <- "ZAKOPANE"
+wybrany_rok <- 2023
+
+# dane miesięczne wszystkich stacji synoptycznych z wybranego roku;
+# status = TRUE pozostawia kolumny ze statusem pomiaru
+meteo_imgw <- meteo_imgw_monthly(rank = "synop", year = wybrany_rok, status = TRUE)
+```
+
+### Przygotowanie danych
+
+```{r}
+# wartości oznaczone statusem braku pomiaru zamieniane na NA
+meteo <- meteo_imgw |>
+  mutate(
+    POST = as.factor(POST),
+    TMAX = replace(TMAX, WTMAX %in% 8, NA),
+    TMXS = replace(TMXS, WTMXS %in% 8, NA),
+    TMIN = replace(TMIN, WTMIN %in% 8, NA),
+    TMNS = replace(TMNS, WWTMNS %in% 8, NA),
+    STM = replace(STM, WSTM %in% 8, NA),
+    SUMM = replace(SUMM, WSUMM %in% 8, NA),
+    DESD = replace(DESD, WDESD %in% 9, NA),
+    SNID = replace(SNID, WSNID %in% 9, NA)
+  ) |>
+  # stacja z zerową liczbą dni ze śniegiem we wszystkich miesiącach: brak danych
+  group_by(POST) |>
+  mutate(SNID = replace(SNID, all(SNID == 0, na.rm = TRUE), NA)) |>
+  ungroup() |>
+  # kolumny wykorzystywane w raporcie
+  select(POST, MC, TMAX, TMXS, TMIN, TMNS, STM, SUMM, DESD, SNID)
+```
+
+### Wartości miesięczne dla wybranej stacji
+
+```{r}
+# obserwacje z wybranej stacji: 12 wierszy, po jednym dla każdego miesiąca
+stacja_dane <- meteo |>
+  filter(POST == wybrana_stacja)
+```
+
+```{r}
+#| label: tbl-za-dane
+#| tbl-cap: "Wartości miesięczne charakterystyk temperatury powietrza i opadu w Zakopanem, 2023"
+# wartości miesięczne wykorzystane w raporcie, sformatowane jako tabela
+stacja_dane |>
+  select(MC, TMAX, TMXS, STM, TMNS, TMIN,
+         SUMM, DESD, SNID) |>
+  knitr::kable(
+    col.names = c("Miesiąc",
+                  "Temp. maks. absolutna [°C]", "Temp. maks. średnia [°C]",
+                  "Temp. średnia [°C]",
+                  "Temp. min. średnia [°C]", "Temp. min. absolutna [°C]",
+                  "Suma opadu [mm]", "Dni z deszczem", "Dni ze śniegiem"),
+    digits = 1,                                     # jedna cyfra po przecinku
+    format.args = list(decimal.mark = ",")          # przecinek dziesiętny
+  )
+```
+
+## Wyniki
+
+### Przebieg temperatury powietrza w ciągu roku
+
+```{r}
+#| label: fig-za-temp
+#| fig-cap: "Temperatura powietrza w Zakopanem w 2023 roku. Jaśniejsza wstęga: od absolutnej minimalnej do absolutnej maksymalnej temperatury (`TMIN`–`TMAX`); ciemniejsza wstęga: od średniej minimalnej do średniej maksymalnej temperatury (`TMNS`–`TMXS`); linia: średnia miesięczna temperatura (`STM`)"
+# wstęgi i linia: kolejne warstwy rysowane jedna na drugiej
+ggplot(stacja_dane, aes(x = MC)) +
+  geom_ribbon(aes(ymin = TMIN, ymax = TMAX),   # zakres ekstremów
+              fill = "grey80") +
+  geom_ribbon(aes(ymin = TMNS, ymax = TMXS),     # zakres średnich
+              fill = "salmon", alpha = 0.7) +
+  geom_line(aes(y = STM), colour = "darkred", linewidth = 1) +   # średnia
+  scale_x_continuous(breaks = 1:12) +               # podziałka osi x co 1 miesiąc
+  labs(x = "Miesiąc", y = "Temperatura powietrza [°C]") +
+  theme_bw(base_size = 13)
+```
+
+### Zmienność miesięcznych sum opadu w ciągu roku
+
+```{r}
+#| label: fig-za-opad
+#| fig-cap: "Miesięczna suma opadu w Zakopanem w 2023 roku"
+# wykres słupkowy: wysokość słupka = suma opadu w miesiącu
+ggplot(stacja_dane, aes(x = factor(MC), y = SUMM)) +
+  geom_col(fill = "steelblue") +
+  labs(x = "Miesiąc", y = "Suma opadu [mm]") +
+  theme_bw(base_size = 13)
+```
+
+### Temperatura i opad na tle sieci stacji synoptycznych
+
+```{r}
+#| message: false
+#| label: fig-za-siec
+#| fig-cap: "Średnia miesięczna temperatura powietrza (A) i miesięczna suma opadu (B) na 59 stacjach (wykresy pudełkowe) i w Zakopanem (czerwone punkty), 2023"
+#| fig-width: 12
+#| fig-height: 5
+# pakiet do łączenia kilku wykresów w jedną rycinę
+library(patchwork)
+
+# wykres pudełkowy dla wszystkich stacji i punkty z wybranej stacji
+wykres_temp <- ggplot(meteo, aes(x = factor(MC), y = STM)) +
+  geom_boxplot(na.rm = TRUE) +
+  geom_point(data = stacja_dane, colour = "red", size = 3) +   # warstwa z innej tabeli
+  labs(x = "Miesiąc", y = "Średnia temperatura powietrza [°C]") +
+  theme_bw(base_size = 13)
+
+wykres_opad <- ggplot(meteo, aes(x = factor(MC), y = SUMM)) +
+  geom_boxplot(na.rm = TRUE) +
+  geom_point(data = stacja_dane, colour = "red", size = 3) +
+  labs(x = "Miesiąc", y = "Suma opadu [mm]") +
+  theme_bw(base_size = 13)
+
+# dwa wykresy obok siebie, oznaczone literami A i B
+wykres_temp + wykres_opad +
+  plot_annotation(tag_levels = "A")
+```
+
+### Dni z opadem deszczu i śniegu w ciągu roku
+
+```{r}
+# zamiana tabeli z postaci szerokiej na długą: jedna kolumna z rodzajem opadu
+stacja_dni <- stacja_dane |>
+  pivot_longer(
+    cols = c(DESD, SNID),
+    names_to = "rodzaj",
+    values_to = "dni"
+  )
+```
+
+```{r}
+#| label: fig-za-dni
+#| fig-cap: "Liczba dni z deszczem i ze śniegiem w Zakopanem w 2023 roku"
+# wykres słupkowy skumulowany: słupki rodzajów opadu ułożone jeden na drugim
+ggplot(stacja_dni, aes(x = factor(MC), y = dni, fill = rodzaj)) +
+  geom_col(position = "stack") +
+  scale_fill_manual(values = c(DESD = "navy", SNID = "lightskyblue"),
+                    labels = c("deszcz", "śnieg")) +
+  labs(x = "Miesiąc", y = "Liczba dni", fill = "Rodzaj opadu") +
+  theme_bw(base_size = 13)
+```
+
+## Wybór sposobu prezentacji wyników
+
+```{r}
+#| label: fig-za-dni-zgrupowany
+#| fig-cap: "Liczba dni z deszczem i ze śniegiem w Zakopanem w 2023 roku — wykres słupkowy zgrupowany"
+# wykres słupkowy zgrupowany: słupki rodzajów opadu ustawione obok siebie
+ggplot(stacja_dni, aes(x = factor(MC), y = dni, fill = rodzaj)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = c(DESD = "navy", SNID = "lightskyblue"),
+                    labels = c("deszcz", "śnieg")) +
+  labs(x = "Miesiąc", y = "Liczba dni", fill = "Rodzaj opadu") +
+  theme_bw(base_size = 13)
+```
+
+```{r}
+#| label: fig-za-dni-kafelkowy
+#| fig-cap: "Liczba dni z deszczem i ze śniegiem w Zakopanem w 2023 roku — wykres kafelkowy; szary kafelek — brak dni z danym rodzajem opadu (0)"
+#| fig-height: 3
+# wykres kafelkowy: miesiące na osi x, rodzaj opadu na osi y, kolor = liczba dni
+ggplot(stacja_dni, aes(x = factor(MC), y = rodzaj,
+                       fill = na_if(dni, 0))) +   # 0 dni jako brak wartości koloru
+  geom_tile(colour = "white") +
+  geom_label(aes(label = dni), fill = "white") +     # liczba dni w środku kafelka
+  scale_fill_fermenter(breaks = c(5, 10, 15, 20), palette = "Blues", direction = 1,
+                       na.value = "grey85") +      # kolor kafelków z 0 dni
+  scale_y_discrete(labels = c(DESD = "deszcz", SNID = "śnieg")) +
+  labs(x = "Miesiąc", y = NULL, fill = "Liczba dni") +
+  theme_bw(base_size = 13)
+```

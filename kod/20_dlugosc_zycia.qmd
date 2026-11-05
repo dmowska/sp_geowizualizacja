@@ -1,0 +1,145 @@
+---
+title: "Oczekiwana długość życia na kontynentach w latach 1952–2007"
+format: html
+---
+
+Kod do rozdziału „Oczekiwana długość życia na kontynentach w latach 1952–2007”
+skryptu do ćwiczeń. Plik wymaga folderu `dane/` z plikiem `gapminder_regions.csv`
+w tym samym folderze co ten plik `.qmd`.
+
+Pytania badawcze:
+
+- Jaka jest typowa oczekiwana długość życia na świecie i jak rozkładają się jej wartości?
+- Jak zmieniała się oczekiwana długość życia na kontynentach w latach 1952–2007?
+
+## Przegląd danych
+
+```{r}
+#| message: false
+# wczytanie pakietu tidyverse: zestawu pakietów do przetwarzania danych (dplyr)
+# i tworzenia wykresów (ggplot2)
+library(tidyverse)
+
+# wczytanie pliku CSV i zapisanie tabeli jako obiektu o nazwie dane;
+# ścieżka jest względna wobec folderu z plikiem .qmd
+dane <- read.csv("dane/gapminder_regions.csv", encoding = "UTF-8")
+```
+
+```{r}
+# pierwsze 6 wierszy tabeli
+head(dane)
+```
+
+```{r}
+# struktura tabeli: liczba obserwacji i kolumn, typ i pierwsze wartości każdej kolumny
+str(dane)
+```
+
+```{r}
+# podsumowanie wszystkich kolumn tabeli
+summary(dane)
+```
+
+```{r}
+# zamiana wszystkich kolumn tekstowych na zmienne typu factor (zmienne jakościowe)
+dane <- dane |>
+  mutate(across(where(is.character), as.factor))
+```
+
+```{r}
+# podsumowanie zmiennej jakościowej: liczba obserwacji w każdej kategorii
+summary(dane$kontynent)
+```
+
+```{r}
+# podsumowanie zmiennej ilościowej: minimum, kwartyle, mediana, średnia i maksimum
+summary(dane$lifeExp)
+```
+
+## Oczekiwana długość życia na świecie
+
+```{r}
+#| R.options:
+#|   width: 120
+# miary położenia i zmienności oczekiwanej długości życia;
+# każda wartość zaokrąglona do 1 miejsca po przecinku
+dane |>
+  summarise(
+    n = n(),                                        # liczba obserwacji
+    srednia = round(mean(lifeExp), 1),              # średnia arytmetyczna
+    mediana = round(median(lifeExp), 1),            # mediana
+    q1 = round(quantile(lifeExp, 0.25), 1),         # pierwszy kwartyl
+    q3 = round(quantile(lifeExp, 0.75), 1),         # trzeci kwartyl
+    minimum = round(min(lifeExp), 1),               # wartość najmniejsza
+    maksimum = round(max(lifeExp), 1),              # wartość największa
+    rozstep = round(max(lifeExp) - min(lifeExp), 1),   # rozstęp: maksimum - minimum
+    odch_std = round(sd(lifeExp), 1),               # odchylenie standardowe
+    iqr = round(IQR(lifeExp), 1),                   # rozstęp kwartylowy: Q3 - Q1
+    wsp_zmiennosci = round(sd(lifeExp) / mean(lifeExp) * 100, 1)   # współczynnik zmienności [%]
+  )
+```
+
+```{r}
+#| label: fig-swiat-histogram
+#| fig-cap: "Rozkład oczekiwanej długości życia, 142 kraje, lata 1952–2007"
+# histogram oczekiwanej długości życia
+ggplot(dane, aes(x = lifeExp)) +                    # dane i mapowanie: lifeExp na osi X
+  geom_histogram(binwidth = 5) +                    # histogram, przedziały o szerokości 5 lat
+  labs(x = "Oczekiwana długość życia [lata]",       # podpis osi X
+       y = "Liczba obserwacji") +                   # podpis osi Y
+  theme_bw(base_size = 13)                          # motyw: białe tło i siatka, czcionka 13
+```
+
+```{r}
+# liczba obserwacji w przedziałach histogramu; granice przedziałów co 5 lat
+dane |>
+  mutate(przedzial = cut(lifeExp, breaks = seq(22.5, 87.5, by = 5))) |>
+  count(przedzial)
+```
+
+## Zmiany w latach 1952–2007
+
+```{r}
+#| label: fig-zmiany-liniowy
+#| fig-cap: "Średnia oczekiwana długość życia na kontynentach w latach 1952–2007"
+# średnia oczekiwana długość życia w kolejnych latach, osobna linia dla każdego kontynentu
+ggplot(dane, aes(x = year, y = lifeExp, colour = kontynent)) +
+  stat_summary(fun = mean, geom = "line", linewidth = 1) +   # linie średnich, grubość 1
+  scale_colour_manual(                                       # kolory linii ustalone ręcznie
+    values = c(
+      "Afryka" = "orange",
+      "Ameryki" = "blue",
+      "Australia" = "darkgreen",
+      "Azja" = "purple",
+      "Europa" = "red"
+    )
+  ) +
+  labs(
+    x = "Rok",
+    y = "Średnia oczekiwana długość życia [lata]",
+    colour = "Kontynent"                                     # tytuł legendy
+  ) +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "bottom")                          # legenda pod wykresem
+```
+
+```{r}
+# średnia oczekiwana długość życia na kontynentach w 1952 i 2007 roku oraz przyrost
+dane |>
+  filter(year %in% c(1952, 2007)) |>
+  group_by(kontynent, year) |>
+  summarise(srednia = mean(lifeExp), .groups = "drop") |>
+  pivot_wider(names_from = year, values_from = srednia, names_prefix = "r") |>
+  mutate(przyrost = r2007 - r1952)
+```
+
+```{r}
+# średnia oczekiwana długość życia w Afryce od 1987 roku
+dane |>
+  filter(kontynent == "Afryka", year >= 1987) |>
+  group_by(year) |>
+  summarise(srednia = mean(lifeExp))
+```
+
+## Wnioski
+

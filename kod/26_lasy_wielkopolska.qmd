@@ -1,0 +1,244 @@
+---
+title: "Lesistość powiatów województwa wielkopolskiego w latach 2000 i 2025"
+format: html
+---
+
+Kod do rozdziału „Lesistość powiatów województwa wielkopolskiego w latach 2000 i 2025”
+skryptu do ćwiczeń. Plik wymaga folderu `dane/` z plikiem `lasy_bld.csv` w tym samym
+folderze co ten plik `.qmd` oraz pakietów `tidyverse`, `sf`, `geodata` i `ggridges`.
+Przy pierwszym uruchomieniu funkcja `gadm()` pobiera granice powiatów z bazy GADM (wymaga połączenia
+z internetem) i zapisuje je w folderze `granice/`; kolejne uruchomienia wczytują zapisany
+plik. Pobranego pliku nie należy udostępniać innym osobom (warunki korzystania z GADM).
+
+Pytania badawcze:
+
+- Jaka była lesistość powiatów w 2000 i 2025 roku i jak różniła się między powiatami?
+- Jak zmieniła się lesistość powiatów w latach 2000–2025?
+
+## Dane
+
+```{r}
+#| message: false
+# pakiety: tidyverse (przetwarzanie danych i wykresy), sf (dane przestrzenne),
+# geodata (pobieranie granic jednostek administracyjnych)
+library(tidyverse)
+library(sf)
+library(geodata)
+
+# powierzchnia lasów w powiatach: kolumny rozdzielone średnikiem, przecinek dziesiętny,
+# kod TERYT wczytany jako tekst, aby zachować zero na początku
+lasy <- read.csv("dane/lasy_bld.csv", sep = ";", dec = ",", encoding = "UTF-8",
+                 colClasses = c(Kod = "character")) |>
+  select(Kod, Nazwa, lasy2000, lasy2025)
+
+# granice powiatów Polski (GADM, poziom 2) zapisane w folderze granice/
+# (pobierane tylko przy pierwszym uruchomieniu) i zamienione na obiekt sf
+granice_powiatow <- gadm(country = "POL", level = 2, path = "granice/") |>
+  st_as_sf()
+```
+
+```{r}
+# dołączenie danych o lasach do granic, wybór województwa i obliczenie lesistości
+powiaty <- granice_powiatow |>
+  mutate(Kod = paste0(CC_2, "000")) |>                 # 7-cyfrowy kod, jak w kolumnie Kod
+  left_join(lasy, by = "Kod") |>
+  filter(NAME_1 == "Wielkopolskie") |>
+  st_transform(2180) |>                                 # układ współrzędnych PUWG 1992
+  mutate(nazwa = str_remove(Nazwa, "Powiat "),          # krótka nazwa do wykresów
+         pow_ha = as.numeric(st_area(geometry)) / 10000,  # powierzchnia: m² → ha
+         les2000 = lasy2000 / pow_ha * 100,             # lesistość w 2000 roku [%]
+         les2025 = lasy2025 / pow_ha * 100,             # lesistość w 2025 roku [%]
+         zmiana = les2025 - les2000)                    # zmiana lesistości [p.p.]
+```
+
+## Wyniki
+
+### Lesistość powiatów w 2000 i 2025 roku
+
+```{r}
+# tabela w postaci długiej: jeden wiersz = powiat w danym roku
+powiaty_dlugie <- powiaty |>
+  select(nazwa, les2000, les2025) |>
+  pivot_longer(c(les2000, les2025), names_to = "rok", names_prefix = "les",
+               values_to = "lesistosc")
+
+# lesistość województwa: suma powierzchni lasów / suma powierzchni powiatów
+lesistosc_woj <- powiaty |>
+  st_drop_geometry() |>
+  summarise(`2000` = sum(lasy2000) / sum(pow_ha) * 100,
+            `2025` = sum(lasy2025) / sum(pow_ha) * 100) |>
+  pivot_longer(everything(), names_to = "rok", values_to = "wojewodztwo")
+```
+
+```{r}
+#| label: tbl-lw-statystyki
+#| tbl-cap: "Statystyki opisowe lesistości 35 powiatów województwa wielkopolskiego oraz lesistość województwa, 2000 i 2025 [%]"
+# statystyki opisowe lesistości powiatów w każdym roku i lesistość województwa
+powiaty_dlugie |>
+  st_drop_geometry() |>
+  group_by(rok) |>
+  summarise(n = n(),
+            srednia = mean(lesistosc),
+            mediana = median(lesistosc),
+            odch_std = sd(lesistosc),
+            min = min(lesistosc),
+            q1 = quantile(lesistosc, 0.25),
+            q3 = quantile(lesistosc, 0.75),
+            max = max(lesistosc)) |>
+  left_join(lesistosc_woj, by = "rok") |>
+  knitr::kable(digits = 1,
+               col.names = c("Rok", "Liczba powiatów", "Średnia", "Mediana",
+                             "Odchylenie standardowe", "Minimum", "Pierwszy kwartyl",
+                             "Trzeci kwartyl", "Maksimum", "Województwo"),
+               format.args = list(decimal.mark = ","))
+```
+
+```{r}
+#| label: fig-lw-rozklad
+#| fig-cap: "Lesistość 35 powiatów województwa wielkopolskiego, 2000 i 2025; punkty — powiaty"
+#| fig-width: 6
+#| fig-height: 5
+# wykres pudełkowy z punktami powiatów rozsuniętymi w poziomie
+ggplot(powiaty_dlugie, aes(x = rok, y = lesistosc)) +
+  geom_boxplot(outlier.shape = NA, width = 0.5) +       # punkty odstające rysuje geom_jitter
+  geom_jitter(width = 0.1, height = 0, alpha = 0.6) +
+  labs(x = NULL, y = "Lesistość [%]") +
+  theme_bw(base_size = 13)
+```
+
+```{r}
+#| label: fig-lw-mapy
+#| fig-cap: "Kartogram lesistości powiatów województwa wielkopolskiego, 2000 i 2025"
+#| fig-width: 10
+#| fig-height: 5.5
+# kartogram w dwóch panelach według roku, wspólne klasy co 10%
+ggplot(powiaty_dlugie) +
+  geom_sf(aes(fill = lesistosc), colour = "grey40", linewidth = 0.2) +
+  facet_wrap(~rok) +
+  scale_fill_fermenter(breaks = seq(10, 50, by = 10),   # granice klas co 10%
+                       palette = "Greens", direction = 1) +
+  labs(fill = "Lesistość [%]") +
+  theme_void(base_size = 13)
+```
+
+### Zmiana lesistości w latach 2000–2025
+
+```{r}
+# klasy zmiany lesistości z granicą w 0 i kolory: brązowy — spadek, zielone — wzrost
+powiaty <- powiaty |>
+  mutate(klasa_zmiany = cut(zmiana,
+                            breaks = c(-Inf, 0, 0.25, 0.5, 1, Inf),
+                            labels = c("spadek", "0–0,25", "0,25–0,5", "0,5–1", "powyżej 1")))
+
+kolory_zmiany <- c("spadek" = "#BF812D", "0–0,25" = "#C7EAE5", "0,25–0,5" = "#80CDC1",
+                   "0,5–1" = "#35978F", "powyżej 1" = "#01665E")
+```
+
+```{r}
+#| label: fig-lw-mapa-zmiany
+#| fig-cap: "Zmiana lesistości powiatów województwa wielkopolskiego w latach 2000–2025 [p.p.]"
+#| fig-width: 6
+#| fig-height: 5.5
+# mapa zmiany lesistości: kolor według klasy zmiany
+ggplot(powiaty) +
+  geom_sf(aes(fill = klasa_zmiany), colour = "grey40", linewidth = 0.2) +
+  scale_fill_manual(values = kolory_zmiany) +
+  labs(fill = "Zmiana lesistości\n[p.p.]") +
+  theme_void(base_size = 13)
+```
+
+```{r}
+#| label: fig-lw-zmiana-slupki
+#| fig-cap: "Zmiana lesistości powiatów województwa wielkopolskiego w latach 2000–2025 [p.p.]; kolory klas jak na rycinie [-@fig-lw-mapa-zmiany]"
+#| fig-width: 7
+#| fig-height: 8
+# wykres słupkowy: powiaty uporządkowane według zmiany lesistości
+ggplot(powiaty, aes(x = zmiana, y = fct_reorder(nazwa, zmiana), fill = klasa_zmiany)) +
+  geom_col() +
+  scale_fill_manual(values = kolory_zmiany) +
+  labs(x = "Zmiana lesistości [p.p.]", y = NULL, fill = "Zmiana lesistości\n[p.p.]") +
+  theme_bw(base_size = 12)
+```
+
+## Wybór sposobu prezentacji wyników
+
+### Rozkład lesistości
+
+```{r}
+#| label: fig-lw-wybor-hist
+#| fig-cap: "Lesistość 35 powiatów województwa wielkopolskiego, 2000 i 2025 — histogramy, klasy co 5%"
+#| fig-width: 7
+#| fig-height: 5.5
+# histogram w osobnym panelu dla każdego roku, panele jeden pod drugim
+ggplot(powiaty_dlugie, aes(x = lesistosc, fill = rok)) +
+  geom_histogram(binwidth = 5, boundary = 0, colour = "white") +  # klasy co 5%, od 0
+  facet_wrap(~rok, ncol = 1) +
+  scale_fill_manual(values = c("2000" = "#BF812D", "2025" = "#01665E")) +
+  labs(x = "Lesistość [%]", y = "Liczba powiatów") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "none")                    # rok podany w nagłówku panelu
+```
+
+```{r}
+#| message: false
+#| label: fig-lw-wybor-grzbietowy
+#| fig-cap: "Lesistość 35 powiatów województwa wielkopolskiego, 2000 i 2025 — wykres grzbietowy; linia pionowa: mediana, kreski: powiaty"
+#| fig-width: 7
+#| fig-height: 4.5
+# pakiet z wykresem grzbietowym
+library(ggridges)
+
+# krzywa gęstości dla każdego roku, mediana i powiaty pod krzywą
+ggplot(powiaty_dlugie, aes(x = lesistosc, y = rok, fill = rok)) +
+  geom_density_ridges(
+    alpha = 0.7,                                    # przezroczystość wypełnienia
+    quantile_lines = TRUE, quantiles = 2,           # linia mediany
+    jittered_points = TRUE,                         # obserwacje pod krzywą
+    position = position_points_jitter(height = 0),  # punkty bez przesunięcia
+    point_shape = "|", point_size = 3               # punkty w kształcie kreski
+  ) +
+  scale_fill_manual(values = c("2000" = "#BF812D", "2025" = "#01665E")) +
+  labs(x = "Lesistość [%]", y = "Rok") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "none")
+```
+
+### Zmiana lesistości
+
+```{r}
+#| label: fig-lw-hantle
+#| fig-cap: "Lesistość powiatów województwa wielkopolskiego w 2000 i 2025 roku — wykres hantlowy"
+#| fig-width: 7
+#| fig-height: 8
+# kolejność powiatów na osi y: według lesistości w 2025 roku
+kolejnosc <- powiaty |>
+  arrange(les2025) |>
+  pull(nazwa)
+
+# odcinek od lesistości w 2000 do lesistości w 2025 roku i punkty dla obu lat
+ggplot() +
+  geom_segment(data = powiaty,
+               aes(x = les2000, xend = les2025, y = nazwa, yend = nazwa),
+               colour = "grey50") +
+  geom_point(data = powiaty_dlugie,
+             aes(x = lesistosc, y = nazwa, colour = rok),
+             size = 2) +
+  scale_y_discrete(limits = kolejnosc) +
+  scale_colour_manual(values = c("2000" = "#BF812D", "2025" = "#01665E")) +
+  labs(x = "Lesistość [%]", y = NULL, colour = "Rok") +
+  theme_bw(base_size = 12)
+```
+
+```{r}
+#| label: fig-lw-rozrzut
+#| fig-cap: "Lesistość powiatów województwa wielkopolskiego w 2025 roku względem lesistości w 2000 roku; linia przerywana: y = x"
+#| fig-width: 6
+#| fig-height: 6
+# wykres rozrzutu z linią y = x i jednakową skalą obu osi
+ggplot(powiaty, aes(x = les2000, y = les2025)) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed") +
+  geom_point() +
+  coord_equal() +
+  labs(x = "Lesistość w 2000 roku [%]", y = "Lesistość w 2025 roku [%]") +
+  theme_bw(base_size = 13)
+```

@@ -1,0 +1,155 @@
+---
+title: "Oczekiwana długość życia na kontynentach w latach 1952–2007"
+author: "Imię Nazwisko"
+lang: pl
+crossref:
+  fig-title: "Rycina"
+  fig-prefix: "Rycina"
+format:
+  html:
+    toc: true
+    number-sections: true
+    embed-resources: true
+    code-fold: true
+    code-summary: "Kod"
+execute:
+  message: false
+  warning: false
+---
+
+## Wprowadzenie {#sec-wprowadzenie}
+
+Raport opisuje oczekiwaną długość życia w chwili urodzenia w 142 krajach świata
+w latach 1952–2007: jej poziom i zróżnicowanie na świecie oraz zmiany w czasie
+na poszczególnych kontynentach.
+
+Raport odpowiada na pytania badawcze:
+
+1. Jaka jest typowa oczekiwana długość życia na świecie i jak rozkładają się
+   jej wartości? (@sec-swiat)
+2. Jak zmieniała się oczekiwana długość życia na kontynentach w latach
+   1952–2007? (@sec-zmiany)
+
+## Dane {#sec-dane}
+
+Analiza wykorzystuje dane Gapminder (<https://www.gapminder.org/data/>), dostępne w R
+w pakiecie `gapminder` (licencja CC0). Zbiór obejmuje 142 kraje i 12 lat: od 1952 do 2007 roku,
+co 5 lat. Jednostką obserwacji jest kraj w danym roku; zbiór liczy 142 × 12 = 1704 obserwacje.
+Zmienne wykorzystane w raporcie nie zawierają braków danych.
+
+| Kolumna | Znaczenie | Jednostka | Skala pomiarowa |
+|---|---|---|---|
+| `kontynent` | kontynent | — | nominalna |
+| `year` | rok obserwacji | rok | przedziałowa |
+| `lifeExp` | oczekiwana długość życia w chwili urodzenia | lata | ilorazowa |
+
+```{r}
+#| label: dane
+# pakiety i dane
+library(tidyverse)
+
+dane <- read.csv("dane/gapminder_regions.csv", encoding = "UTF-8") |>
+  mutate(across(where(is.character), as.factor))
+```
+
+## Metody {#sec-metody}
+
+Poziom i zróżnicowanie oczekiwanej długości życia opisano miarami położenia (średnia,
+mediana, kwartyle) i zmienności (rozstęp, odchylenie standardowe, rozstęp kwartylowy,
+współczynnik zmienności). Rozkład wartości przedstawiono na histogramie o przedziałach
+szerokości 5 lat, a zmiany w czasie — na wykresie liniowym średnich dla kontynentów.
+Obliczenia wykonano w R z pakietem `tidyverse`.
+
+## Wyniki {#sec-wyniki}
+
+### Oczekiwana długość życia na świecie {#sec-swiat}
+
+W latach 1952–2007 oczekiwana długość życia w chwili urodzenia mieściła się w przedziale
+od 23,6 do 82,6 roku (rozstęp 59 lat; @tbl-swiat). Średnia wynosiła 59,5 roku, odchylenie
+standardowe 12,9 roku, a współczynnik zmienności 21,7%. Mediana (60,7 roku) wskazuje, że
+w połowie obserwacji oczekiwana długość życia przekraczała 60,7 roku. Połowa obserwacji
+mieściła się w przedziale od 48,2 do 70,8 roku.
+
+Rozkład wartości przedstawia histogram (@fig-histogram). Najliczniejszy jest przedział
+od 67,5 do 72,5 roku; drugie, mniejsze skupienie obserwacji tworzą przedziały od 42,5 do 52,5
+roku. Statystyki i histogram łączą wartości z 12 lat dla 142 krajów.
+
+```{r}
+#| label: tbl-swiat
+#| tbl-cap: "Statystyki opisowe oczekiwanej długości życia, 1704 obserwacje, 1952–2007 [lata; współczynnik zmienności: %]"
+# miary położenia i zmienności
+dane |>
+  summarise(minimum = min(lifeExp),
+            q1 = quantile(lifeExp, 0.25),
+            mediana = median(lifeExp),
+            srednia = mean(lifeExp),
+            q3 = quantile(lifeExp, 0.75),
+            maksimum = max(lifeExp),
+            odch_std = sd(lifeExp),
+            wsp_zmiennosci = sd(lifeExp) / mean(lifeExp) * 100) |>
+  knitr::kable(digits = 1,
+               col.names = c("Minimum", "Pierwszy kwartyl", "Mediana", "Średnia",
+                             "Trzeci kwartyl", "Maksimum", "Odchylenie standardowe",
+                             "Współczynnik zmienności"))
+```
+
+```{r}
+#| label: fig-histogram
+#| fig-cap: "Rozkład oczekiwanej długości życia, 142 kraje, lata 1952–2007"
+#| fig-width: 7
+#| fig-height: 4
+# histogram, przedziały o szerokości 5 lat
+ggplot(dane, aes(x = lifeExp)) +
+  geom_histogram(binwidth = 5) +
+  labs(x = "Oczekiwana długość życia [lata]", y = "Liczba obserwacji") +
+  theme_bw(base_size = 12)
+```
+
+### Zmiany w latach 1952–2007 {#sec-zmiany}
+
+Średnia oczekiwana długość życia wzrosła między 1952 a 2007 rokiem na wszystkich kontynentach
+(@fig-zmiany, @tbl-zmiany). Największy przyrost dotyczy Azji (o 24,5 roku), najmniejszy — Australii
+(o 11,5 roku) i Europy (o 12,7 roku), w których poziom wyjściowy był najwyższy. Wykres pokazuje,
+że w Afryce wzrost zatrzymał się w latach 1987–2002. Średnie dla Australii opisują dwa kraje,
+a średnie dla pozostałych kontynentów — od 25 do 52 krajów.
+
+```{r}
+#| label: fig-zmiany
+#| fig-cap: "Średnia oczekiwana długość życia na kontynentach w latach 1952–2007"
+#| fig-width: 7
+#| fig-height: 4.5
+# linie średnich; osobna linia i kolor dla każdego kontynentu
+ggplot(dane, aes(x = year, y = lifeExp, colour = kontynent)) +
+  stat_summary(fun = mean, geom = "line", linewidth = 1) +
+  scale_colour_manual(values = c("Afryka" = "orange", "Ameryki" = "blue",
+                                 "Australia" = "darkgreen", "Azja" = "purple",
+                                 "Europa" = "red")) +
+  labs(x = "Rok", y = "Średnia oczekiwana długość życia [lata]", colour = "Kontynent") +
+  theme_bw(base_size = 12) +
+  theme(legend.position = "bottom")
+```
+
+```{r}
+#| label: tbl-zmiany
+#| tbl-cap: "Średnia oczekiwana długość życia na kontynentach w 1952 i 2007 roku oraz przyrost [lata]"
+# średnie w 1952 i 2007 roku oraz różnica obliczona z wartości niezaokrąglonych
+dane |>
+  filter(year %in% c(1952, 2007)) |>
+  group_by(kontynent, year) |>
+  summarise(srednia = mean(lifeExp), .groups = "drop") |>
+  pivot_wider(names_from = year, values_from = srednia, names_prefix = "r") |>
+  mutate(przyrost = r2007 - r1952) |>
+  knitr::kable(digits = 1, col.names = c("Kontynent", "1952", "2007", "Przyrost"))
+```
+
+## Wnioski {#sec-wnioski}
+
+1. W latach 1952–2007 oczekiwana długość życia wynosiła od 23,6 do 82,6 roku, przy średniej
+   59,5 roku i medianie 60,7 roku (@sec-swiat).
+2. Średnia oczekiwana długość życia wzrosła na wszystkich kontynentach, najsilniej w Azji
+   (o 24,5 roku), najsłabiej w Australii (o 11,5 roku) i w Europie (o 12,7 roku). W Afryce wzrost
+   zatrzymał się w latach 1987–2002 (@sec-zmiany).
+
+## Źródła {#sec-zrodla}
+
+- Gapminder: <https://www.gapminder.org/data/>.

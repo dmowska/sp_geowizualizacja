@@ -1,0 +1,52 @@
+---
+title: "Oczekiwana długość życia w 2007 roku"
+author: "Imię Nazwisko"
+lang: pl
+crossref:
+  fig-title: "Rycina"
+  fig-prefix: "Rycina"
+format:
+  html:
+    toc: true
+    number-sections: true
+    embed-resources: true
+---
+
+## Dane
+
+Zbiór **Gapminder** zawiera dane dla 142 krajów. Dokument wykorzystuje obserwacje
+z 2007 roku.
+
+```{r}
+#| message: false
+library(tidyverse)
+dane <- read.csv("dane/gapminder_regions.csv", encoding = "UTF-8")
+dane2007 <- dane |>
+  filter(year == 2007)
+```
+
+## Statystyki opisowe
+
+Liczbę krajów i średnią oczekiwaną długość życia podaje @tbl-kontynenty.
+
+```{r}
+#| label: tbl-kontynenty
+#| tbl-cap: "Liczba krajów i średnia oczekiwana długość życia według kontynentu, 2007"
+dane2007 |>
+  group_by(kontynent) |>
+  summarise(n = n(), srednia = round(mean(lifeExp), 1)) |>
+  knitr::kable(col.names = c("Kontynent", "Liczba krajów", "Średnia [lata]"))
+```
+
+## Wykres
+
+Rozkład oczekiwanej długości życia przedstawia @fig-histogram.
+
+```{r}
+#| label: fig-histogram
+#| fig-cap: "Rozkład oczekiwanej długości życia, 142 kraje, 2007"
+ggplot(dane2007, aes(x = lifeExp)) +
+  geom_histogram(binwidth = 5) +
+  labs(x = "Oczekiwana długość życia [lata]", y = "Liczba krajów") +
+  theme_bw(base_size = 13)
+```

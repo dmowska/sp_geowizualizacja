@@ -1,0 +1,237 @@
+# Zasady opracowywania wykresów {#sec-zasady}
+
+Zestawienie łączy zasady podane w źródłach wykorzystanych w skrypcie; pełne opisy źródeł zawiera
+@sec-zas-zrodla. Zasady te mają charakter zaleceń. Healy (2026) wskazuje, że uczciwego
+przedstawienia danych nie rozstrzygają sztywne reguły, a Wilke (2019, rozdz. 23) część decyzji
+projektowych określa jako kwestię osobistej oceny. Listę najważniejszych zasad do sprawdzenia
+gotowego wykresu zawiera @sec-wiz-lista. Oddzielnie przedstawiono zasady GUS (2014)
+(@sec-zas-gus).
+
+## Cel i zasady ogólne
+
+| Zasada | Warunki, wyjątki, różnice między źródłami | Źródła |
+|:---|:---|:---|
+| informację przedstawia się jasno i precyzyjnie, bez wprowadzania odbiorcy w błąd | cel główny (@sec-wiz-cel) | GUS (2014); Broman (2018); Bryan (2019) |
+| wykres ma prostą budowę, atrakcyjną formę i zwięzły, czytelny opis | | GUS (2014) |
+| forma wykresu odpowiada danym i pytaniu | np. wykres liniowy do przebiegu zjawiska w czasie; dobór opisuje @sec-dobor | GUS (2014); Holtz i Healy (2018) |
+| wykres ułatwia porównania i ujawnia trendy | | Bryan (2019) |
+| wykres pokazuje możliwie dużo informacji i nie zaciemnia przekazu | | Broman (2018) |
+| z wykresu usuwa się elementy poboczne wobec przekazu | nie należy zakładać, że odbiorca szybko odczyta złożoną rycinę; złożony wykres poprzedza się prostszym fragmentem | Wilke (2019, rozdz. 29) |
+| wykres uzupełnia tekst i mapy, nie powiela ich treści | | GUS (2014) |
+| tekst i podpis są zgodne z ryciną | wartości wpisane na wykresie należy sprawdzić | Bryan (2019); Biecek (2016); Holtz i Healy (2018) |
+| zakresu skali i zbioru danych nie dobiera się pod tezę | zniekształcenie jest wadą niezależnie od intencji autora | Healy (2026); Holtz i Healy (2018) |
+
+: {tbl-colwidths="[42,36,22]"}
+
+## Przedstawienie wartości
+
+| Zasada | Warunki, wyjątki, różnice między źródłami | Źródła |
+|:---|:---|:---|
+| wartości ilościowe przedstawia się przede wszystkim położeniem na wspólnej skali | mniej dokładne są długość, kąt i pole (@sec-db-mapowanie) | Healy (2026); Broman (2018); Bryan (2019) |
+| pole zacieniowanego obszaru jest proporcjonalne do przedstawianej wartości | zasada proporcjonalnego atramentu; odbiorca ocenia długość dokładniej niż pole | Wilke (2019, rozdz. 17) |
+| wartość przedstawiana wielkością znaku odpowiada polu znaku, nie promieniowi | Broman (2018) zaleca w takim przypadku długość zamiast pola | Broman (2018); Holtz i Healy (2018); Biecek (2016) |
+| wykresów trójwymiarowych nie stosuje się | dotyczy wykresów, w których trzeci wymiar nie przedstawia danych (@sec-wiz-3d) | GUS (2014); Wilke (2019, rozdz. 26); Broman (2018); Kosara (2010); Biecek (2016); Holtz i Healy (2018) |
+| wykresu nie obraca się ani nie nachyla | utrudnia to odczytanie wartości | Biecek (2016) |
+| nie łączy się wielu kanałów dla wielu zmiennych | wyjątek: dane o wyraźnej strukturze | Healy (2026) |
+
+: {tbl-colwidths="[42,36,22]"}
+
+## Osie i skale
+
+| Zasada | Warunki, wyjątki, różnice między źródłami | Źródła |
+|:---|:---|:---|
+| oś wykresu słupkowego zaczyna się od zera | Healy (2026) mówi o umiarkowanej zgodzie w tej sprawie; wykres słupkowy może przedstawiać jawnie podaną różnicę, z wartościami ujemnymi poniżej zera (@sec-wiz-zero) | Wilke (2019, rozdz. 17); Healy (2026); Holtz i Healy (2018); Li (2022); Bryan (2019); Biecek (2016) |
+| oś wykresu liniowego i punktowego może nie zaczynać się od zera | Bryan (2019) nie podaje ogólnej reguły i zaleca ocenę w każdym przypadku; zakres nie może wzmacniać tezy | Holtz i Healy (2018); Healy (2026); Li (2022); Bryan (2019) |
+| skalę logarytmiczną stosuje się przy zmianach multiplikatywnych i danych skośnych | na tej skali słupki przedstawiają ilorazy i zaczynają się od 1; wielkości przedstawia się punktami | Bryan (2019); Broman (2018); Wilke (2019, rozdz. 17) |
+| porównywane wykresy mają wspólny zakres i skalę osi | jeżeli różne skale są konieczne, informuje o tym podpis (@sec-wiz-skala) | Wilke (2019, rozdz. 21); Broman (2018); Bryan (2019); Holtz i Healy (2018) |
+| na jednej osi nie umieszcza się dwóch różnych skal dla dwóch zmiennych | dopuszczalne są dwie jednostki tej samej wielkości, np. °C i °F; alternatywą są panele | Bryan (2019); Holtz i Healy (2018) |
+| oś czasu jest podzielona proporcjonalnie | okresy bez danych zaznacza się linią przerywaną | GUS (2014); Holtz i Healy (2018) |
+| proporcje wykresu dobiera się do odczytu zmian | Bryan (2019): średni odcinek linii pod kątem około 45° | Bryan (2019); Healy (2026); Holtz i Healy (2018) |
+| punkty łączy się linią tylko przy uporządkowanej osi x, np. czasu | na nieuporządkowanej osi kategorii linia sugeruje nieistniejący przebieg | Bryan (2019) |
+| wykres biegunowy stosuje się tylko do zmian w zamkniętym cyklu czasu | do zróżnicowania regionalnego nie jest zalecany | GUS (2014); Holtz i Healy (2018) |
+| osie są czytelne i pozwalają odczytać wartości | brak osi uniemożliwia wykrycie zniekształcenia (@sec-wiz-wilke) | Wilke (2019); Biecek (2016); Healy (2026) |
+
+: {tbl-colwidths="[42,36,22]"}
+
+## Porównania i układ
+
+| Zasada | Warunki, wyjątki, różnice między źródłami | Źródła |
+|:---|:---|:---|
+| porównywane elementy znajdują się obok siebie | słupki jednej grupy na wykresie zgrupowanym są blisko siebie (@sec-wiz-porownania) | Broman (2018); Bryan (2019); Holtz i Healy (2018) |
+| porównywane wykresy wyrównuje się w pionie | szczególnie rozkłady jednej zmiennej | Broman (2018); Wilke (2019, rozdz. 21); Holtz i Healy (2018) |
+| jeżeli przedmiotem porównania jest różnica, wykres przedstawia różnicę | odbiorca nie powinien obliczać jej w pamięci | Bryan (2019); Broman (2018); Holtz i Healy (2018) |
+| dwie wartości w wielu grupach można przedstawić wykresem hantlowym | | Holtz i Healy (2018) |
+| na wykresie liniowym nie umieszcza się wielu linii | Holtz i Healy (2018): od około 5 grup; rozwiązania: wyróżnienie jednej linii na tle szarych albo panele | Holtz i Healy (2018) |
+| na wykresie dynamicznym stosuje się najwyżej 3 szeregi słupków | | GUS (2014) |
+| wiele grup przedstawia się w panelach zamiast nakładania | Bryan (2019): nakładanie wymaga różnych kształtów, wypełnień i kolorów | Bryan (2019); Wilke (2019, rozdz. 18) |
+| ciągu wykresów skumulowanych o więcej niż dwóch segmentach zwykle się nie stosuje | łatwo odczytać tylko dolny segment; słupek skumulowany nie zawiera miar rozrzutu | Wilke (2019, rozdz. 10); Bryan (2019); Li (2022); Holtz i Healy (2018) |
+
+: {tbl-colwidths="[42,36,22]"}
+
+## Kolejność
+
+| Zasada | Warunki, wyjątki, różnice między źródłami | Źródła |
+|:---|:---|:---|
+| kategorie porządkuje się według wartości, nie alfabetycznie | kategorie o naturalnym porządku, np. miesiące, zachowują ten porządek; GUS (2014) dopuszcza też kolejność zgodną z klasyfikacją (@sec-wiz-kolejnosc) | Holtz i Healy (2018); Broman (2018); GUS (2014); Biecek (2016) |
+| panele porządkuje się w sposób logiczny | np. według klasy, roku albo malejącej wartości | Wilke (2019, rozdz. 21) |
+| kolejność w legendzie odpowiada kolejności na wykresie | | Wilke (2019, rozdz. 20); BBC (2019) |
+| wiersze i kolumny heatmapy można uporządkować | wyjątek: układ wynikający z fizycznego położenia obiektów | Li (2022); Holtz i Healy (2018) |
+
+: {tbl-colwidths="[42,36,22]"}
+
+## Rozkłady i obserwacje
+
+| Zasada | Warunki, wyjątki, różnice między źródłami | Źródła |
+|:---|:---|:---|
+| wykres w miarę możliwości pokazuje obserwacje | | Broman (2018); Holtz i Healy (2018) |
+| przed porównaniem średnich sprawdza się rozkłady | jednakowe średnie i odchylenia mogą opisywać różne rozkłady (@sec-wiz-anscombe); dlatego Li (2022) odradza wykres słupkowy do tego porównania | Li (2022); Holtz i Healy (2018) |
+| przy słupkach błędu podaje się przedstawianą miarę | odchylenie standardowe, błąd standardowy albo przedział ufności | Holtz i Healy (2018) |
+| wykres pudełkowy uzupełnia się obserwacjami albo zastępuje wykresem skrzypcowym | wykres pudełkowy ukrywa liczebność i kształt rozkładu; nie nadaje się do rozkładu dwumodalnego | Holtz i Healy (2018); Li (2022) |
+| wykresów skrzypcowych i krzywych gęstości nie stosuje się przy małej liczebności | Li (2022) podaje stabilizację kwartyli powyżej n = 50 we własnym doświadczeniu | Li (2022) |
+| histogram sprawdza się przy kilku szerokościach przedziału | przy n < 30 Li (2022) zaleca pokazanie wszystkich obserwacji (@sec-ws-histogram) | Holtz i Healy (2018); Li (2022) |
+| na wykresie podaje się liczebność | | Holtz i Healy (2018) |
+| nakładające się punkty rozdziela się przezroczystością i niewielkim rozsunięciem | zbyt duże rozsunięcie tworzy punkty w niereprezentatywnych miejscach; przy bardzo dużej liczbie obserwacji stosuje się histogram dwuwymiarowy, sześciokąty albo izolinie | Wilke (2019, rozdz. 18); Holtz i Healy (2018) |
+
+: {tbl-colwidths="[42,36,22]"}
+
+## Wykres kołowy
+
+Źródła oceniają ten wykres różnie. Lima (2018) opisuje spór o wykres kołowy: chwalony za intuicyjność i krytykowany za małą dokładność.
+
+| Zasada | Warunki, wyjątki, różnice między źródłami | Źródła |
+|:---|:---|:---|
+| do porównania wartości stosuje się wykres słupkowy albo punktowy, nie kołowy | kąty i pola odczytuje się mało dokładnie (@sec-wiz-kolowy); Holtz i Healy (2018), Li (2022) i Biecek (2016) odradzają wykres kołowy w ogóle | Healy (2026); Broman (2018); Bryan (2019); Holtz i Healy (2018); Li (2022); Biecek (2016) |
+| wykres kołowy może przedstawiać prosty udział w całości | Wilke (2019, rozdz. 10): proste ułamki i bardzo małe zbiory, a żaden z wykresów proporcji nie jest zawsze najlepszy; Kosara (2010): części tworzą sensowną całość i wzajemnie się wykluczają | Wilke (2019, rozdz. 10); Kosara (2010) |
+| struktura obejmuje niewiele elementów | GUS (2014) zaleca 5–7 elementów; Kosara (2010) przy większej liczbie zaleca inny wykres | GUS (2014); Kosara (2010) |
+| kilku wykresów kołowych nie stosuje się do porównań | zmiany w czasie przedstawia się wykresem liniowym albo słupkowym | Kosara (2010); Bryan (2019); Biecek (2016) |
+| nie stosuje się koncentrycznych wykresów pierścieniowych | zewnętrzny pierścień wydaje się dłuższy; środek koła nie jest zasłonięty | Li (2022); Kosara (2010) |
+| na wykresie kołowym podaje się liczby, a udziały sumują się do 100% | | Kosara (2010); Holtz i Healy (2018) |
+
+: {tbl-colwidths="[42,36,22]"}
+
+## Kolor
+
+| Zasada | Warunki, wyjątki, różnice między źródłami | Źródła |
+|:---|:---|:---|
+| kolor stosuje się w określonym celu | rozróżnienie grup, przedstawienie wartości albo wyróżnienie; kolor użyty bez celu jest błędem (@sec-fo-kolor) | Wilke (2019, rozdz. 4, 19); Holtz i Healy (2018) |
+| liczba kolorów jest niewielka | Wilke (2019, rozdz. 19): najlepiej 3–5, najwyżej 8 kategorii; przy większej liczbie stosuje się bezpośrednie etykiety | Wilke (2019, rozdz. 19); GUS (2014); Holtz i Healy (2018) |
+| wartości ilościowe przedstawia się skalą sekwencyjną | barwy nie mogą sugerować nieistniejącego porządku; do grup nie stosuje się gradientu | Wilke (2019, rozdz. 4); Holtz i Healy (2018) |
+| skalę rozbieżną stosuje się dla odchyleń od znaczącego punktu środkowego | jasny środek i zrównoważone połowy; Li (2022): nie dla danych jednokierunkowych | Wilke (2019, rozdz. 4); Li (2022); Holtz i Healy (2018) |
+| skali tęczowej nie stosuje się | barwy nie zmieniają się monotonicznie i wyróżniają przypadkowe wartości | Wilke (2019, rozdz. 19); Li (2022); Holtz i Healy (2018) |
+| kolory dobiera się z uwzględnieniem zaburzeń rozpoznawania barw | unika się kontrastu czerwień–zieleń; paleta Okabe–Ito, palety typu viridis; wykres warto sprawdzić w symulatorze | Wilke (2019, rozdz. 19); Li (2022); Broman (2018); Healy (2026); Holtz i Healy (2018) |
+| kluczowej informacji nie przekazuje się wyłącznie kolorem | ta sama zmienna może mieć też kształt punktu; linii przerywanych zwykle się unika | Wilke (2019, rozdz. 20) |
+| unika się dużych obszarów o silnie nasyconych barwach | | Wilke (2019, rozdz. 19); Holtz i Healy (2018) |
+| wyróżnia się barwą element, na który odbiorca ma zwrócić uwagę | pozostałe elementy mają barwy stonowane | GUS (2014); Wilke (2019, rozdz. 4) |
+| te same grupy mają ten sam kolor na wszystkich rycinach | | Wilke (2019, rozdz. 21); Holtz i Healy (2018) |
+| palety dobiera się świadomie, nie według ustawień domyślnych | pomocą jest <https://colorbrewer2.org> | GUS (2014); Healy (2026) |
+
+: {tbl-colwidths="[42,36,22]"}
+
+## Opisy, legendy i etykiety
+
+| Zasada | Warunki, wyjątki, różnice między źródłami | Źródła |
+|:---|:---|:---|
+| osie mają nazwę zmiennej i jednostkę | zmienne jakościowe nie mają jednostek; tytuł można pominąć, gdy etykiety są jednoznaczne, np. lata | GUS (2014); Wilke (2019, rozdz. 22) |
+| rycina ma tytuł albo podpis określający jej przedmiot | GUS (2014): tytuł jednoznacznie definiuje przedmiot; Wilke (2019, rozdz. 22) oraz Holtz i Healy (2018): tytuł formułuje wniosek; tytuł wewnątrz grafiki Wilke (2019, rozdz. 22) zaleca głównie dla publikacji bez podpisu | GUS (2014); Wilke (2019, rozdz. 22); Holtz i Healy (2018) |
+| podpis ryciny znajduje się pod ryciną, podpis tabeli — nad tabelą | | Wilke (2019, rozdz. 22) |
+| dane opisuje się etykietami zamiast legendy, jeżeli to możliwe | GUS (2014): opis na wykresie ogranicza legendę | Broman (2018); Wilke (2019, rozdz. 20); BBC (2019); Wickham, Navarro i Pedersen; GUS (2014); Holtz i Healy (2018) |
+| etykiet nie dodaje się do wszystkich obserwacji | opisuje się wartości wyróżniające się albo reprezentatywny podzbiór (@sec-fo-tekst) | Wickham, Navarro i Pedersen; Wilke (2019, rozdz. 19) |
+| etykiety nie nachodzą na dane i na siebie | | Wickham, Navarro i Pedersen; Holtz i Healy (2018) |
+| tekst na wykresie jest odpowiednio duży | sprawdza się rycinę w docelowym rozmiarze; domyślne wielkości bywają za małe | Wilke (2019, rozdz. 24); Holtz i Healy (2018) |
+| etykiety są poziome, a liczby zaokrąglone | nie trzeba opisywać każdej podziałki | Holtz i Healy (2018) |
+| wykres zawiera informację o źródle danych | w grafikach BBC umieszcza się ją w stopce | BBC (2019) |
+
+: {tbl-colwidths="[42,36,22]"}
+
+## Elementy, które nie przedstawiają danych
+
+| Zasada | Warunki, wyjątki, różnice między źródłami | Źródła |
+|:---|:---|:---|
+| elementy, które nie przedstawiają danych, ogranicza się w rozsądnym zakresie | Tufte (1983), za: Wilke (2019, rozdz. 23); Few, za: Dark Horse Analytics (2013): część powtórzeń ułatwia odbiór (@sec-wiz-mniej) | Wilke (2019, rozdz. 23); Dark Horse Analytics (2013); Bryan (2019); Broman (2018); Holtz i Healy (2018) |
+| usuwa się zbędne ramki i pomocnicze linie siatki | główne linie siatki są jasnoszare; Wilke (2019, rozdz. 23) uznaje część wyborów, np. ramkę panelu, za kwestię oceny | Wilke (2019, rozdz. 23); Holtz i Healy (2018) |
+| siatka odpowiada zmiennej głównej | linie prostopadłe do osi tej zmiennej; dla danych sparowanych linia y = x | Wilke (2019, rozdz. 23) |
+| linia odniesienia ułatwia odczyt | wartości takiej linii są znaczące, np. 100 albo 50%; można ją dodać też w panelach | Wilke (2019, rozdz. 10, 23); Wickham, Navarro i Pedersen |
+| tekst osi i legendy nie jest zbyt blady | | Wilke (2019, rozdz. 23) |
+| używa się niewielu krojów pisma | Holtz i Healy (2018): dwa kroje; Wilke (2019, rozdz. 21): oznaczenia paneli tym samym krojem | Holtz i Healy (2018); Wilke (2019, rozdz. 21) |
+
+: {tbl-colwidths="[42,36,22]"}
+
+## Wykresy złożone i panele
+
+| Zasada | Warunki, wyjątki, różnice między źródłami | Źródła |
+|:---|:---|:---|
+| panele mają ten sam zakres i skalę osi | zob. „Osie i skale” | Wilke (2019, rozdz. 21); Holtz i Healy (2018) |
+| części ryciny złożonej oznacza się literami | oznaczenia nie dominują; małych wielokrotności zwykle się nimi nie oznacza | Wilke (2019, rozdz. 21) |
+| panele mają wspólny język wizualny | te same kolory i kolejność grup, jedna legenda | Wilke (2019, rozdz. 21); Holtz i Healy (2018) |
+| osie i elementy paneli są wyrównane | między wykresami pozostawia się odstępy | Wilke (2019, rozdz. 21); Holtz i Healy (2018) |
+
+: {tbl-colwidths="[42,36,22]"}
+
+## Mapy
+
+| Zasada | Warunki, wyjątki, różnice między źródłami | Źródła |
+|:---|:---|:---|
+| wartości na mapie odnosi się do odpowiedniej podstawy | zob. kartogram i pole odniesienia (@sec-sf-kartogram) | Holtz i Healy (2018) |
+| brak danych przedstawia się jako brak danych | | Holtz i Healy (2018) |
+| małe obszary pozostają widoczne | | Holtz i Healy (2018) |
+| układ odwzorowania dobiera się świadomie | Holtz i Healy (2018) ostrzega przed odwzorowaniem Mercatora (@sec-sf-crs) | Holtz i Healy (2018) |
+| przed wyborem mapy rozważa się inny wykres | mapa nie zawsze jest potrzebna | Holtz i Healy (2018) |
+
+: {tbl-colwidths="[42,36,22]"}
+
+## Wybrane zasady tworzenia wykresów statystycznych według GUS (2014) {#sec-zas-gus}
+
+GUS (2014, rozdz. 2.4) porządkuje dobre praktyki opracowywania wykresów statystycznych w pięciu
+grupach (@tbl-zas-gus).
+
+| Grupa zasad | Zasada |
+|:---|:---|
+| ogólne | budowa wykresu jest prosta, forma atrakcyjna, a opis krótki i czytelny |
+| ogólne | wykres uzupełnia tekst i mapy publikacji, zamiast powtarzać ich treść |
+| ogólne | informacja jest przekazana jasno i dokładnie, bez wprowadzania odbiorcy w błąd |
+| treść | na osiach podaje się jednostkę |
+| treść | tytuł jednoznacznie określa przedmiot wykresu; tytuł wykresu złożonego może być ogólny, a treść uzupełniają wtedy opisy osi |
+| treść | opis umieszczony bezpośrednio na wykresie, np. liniowym, ogranicza zawartość legendy |
+| forma | formę wykresu dobiera się do szeregu statystycznego; np. przebieg zjawiska w czasie przedstawia wykres liniowy |
+| forma | wykresów trójwymiarowych się nie zaleca |
+| forma | struktura składa się z 5–7 elementów; większą ich liczbę można pokazać, wydzielając część wykresu w większej skali |
+| forma | oś czasu na wykresach dynamicznych dzieli się proporcjonalnie, a lukę w szeregu danych zaznacza się linią przerywaną |
+| forma | wykres biegunowy przedstawia zmiany w zamkniętym cyklu czasu (miesięcznym, kwartalnym, rocznym); do zróżnicowania regionalnego nie jest zalecany |
+| forma | na wykresie dynamicznym nie umieszcza się więcej niż 3 szeregów słupków |
+| kolorystyka | liczba kolorów i typów szrafów jest ograniczona |
+| kolorystyka | zamiast automatycznej kolorystyki MS Excel stosuje się barwy dobrane, np. w ColorBrewer (<https://colorbrewer2.org/>) |
+| pozostałe | barwą albo teksturą można wyróżnić element, na który należy zwrócić uwagę czytelnika |
+| pozostałe | elementy szeregu opartego na cechach niemierzalnych porządkuje się najczęściej zgodnie z klasyfikacją, co zapewnia jednolitość publikacji; porządek od największego do najmniejszego ułatwia porównanie danych |
+
+: Wybrane zasady tworzenia wykresów statystycznych; opracowanie na podstawie: GUS (2014, rozdz. 2.4, tab. 2.1) {#tbl-zas-gus tbl-colwidths="[18,82]"}
+
+## Źródła {#sec-zas-zrodla}
+
+- Anscombe F.J., 1973. Graphs in statistical analysis. *The American Statistician* 27, 17–21.
+- BBC Visual and Data Journalism, 2019. *BBC Visual and Data Journalism cookbook for R graphics*:
+  <https://bbc.github.io/rcookbook/>.
+- Biecek P., 2016. *Odkrywać! Ujawniać! Objaśniać! Zbiór esejów o sztuce przedstawiania danych*,
+  esej „Info-pomyłka”. Fundacja Naukowa SmarterPoland.pl: <http://biecek.pl/Eseje/indexPomylka.html>.
+- Broman K., 2018. *Creating effective figures and tables*: <https://github.com/kbroman/Talk_Graphs>.
+- Bryan J., 2019. *STAT 545*, rozdział „Do's and don'ts of making effective graphics”:
+  <https://stat545.com/effective-graphs.html>.
+- de Saint-Exupéry A., 1939. *Terre des hommes*. Gallimard.
+- Dark Horse Analytics, 2013. *Data Looks Better Naked*:
+  <https://www.darkhorseanalytics.com/blog/data-looks-better-naked>.
+- Główny Urząd Statystyczny (GUS), 2014. *Graficzna prezentacja danych statystycznych. Wykresy,
+  mapy, GIS*. Warszawa (licencja CC BY 3.0 PL), rozdział 2.4, tabela 2.1.
+- Healy K., 2026. *Data Visualization: A practical introduction*, wydanie 2 (wersja internetowa),
+  rozdział 1 „Look at Data”: <https://socviz.co/01-look-at-data.html#what-makes-bad-figures-bad>.
+- Holtz Y., Healy C., 2018. *From Data to Viz*, zestawienie błędów:
+  <https://www.data-to-viz.com/caveats.html>.
+- Kosara R., 2010. *Understanding pie charts*: <https://eagereyes.org/blog/2010/pie-charts>.
+- Li C., 2022. *Friends Don't Let Friends Make Bad Graphs*:
+  <https://github.com/cxli233/FriendsDontLetFriends>.
+- Lima M., 2018. *Why humans love pie charts*:
+  <https://medium.com/@mslima/why-humans-love-pie-charts-9cd346000bdc>.
+- Tufte E.R., 1983. *The Visual Display of Quantitative Information*. Graphics Press.
+- Wickham H., Navarro D., Pedersen T.L. *ggplot2: Elegant Graphics for Data Analysis*,
+  wydanie 3 w przygotowaniu (wersja internetowa), rozdział o adnotacjach:
+  <https://ggplot2-book.org/annotations.html>.
+- Wilke C.O., 2019. *Fundamentals of Data Visualization*, rozdziały 1, 4, 10, 17–24, 26 i 29:
+  <https://clauswilke.com/dataviz/>.

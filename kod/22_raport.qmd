@@ -1,0 +1,246 @@
+---
+title: "Warunki meteorologiczne w Polsce w 2020 roku"
+author: "Imię Nazwisko"
+lang: pl
+crossref:
+  fig-title: "Rycina"
+  fig-prefix: "Rycina"
+format:
+  html:
+    toc: true
+    number-sections: true
+    embed-resources: true
+    code-fold: true
+    code-summary: "Kod"
+execute:
+  message: false
+  warning: false
+---
+
+## Wprowadzenie {#sec-wprowadzenie}
+
+Raport opisuje miesięczne charakterystyki temperatury powietrza i opadu atmosferycznego
+na 59 stacjach synoptycznych w Polsce w 2020 roku.
+
+Raport odpowiada na pytania badawcze:
+
+1. Jak rozmieszczone są stacje pomiarowe? (@sec-stacje)
+2. Jak zmieniała się temperatura powietrza w ciągu roku? (@sec-temp)
+3. Jak zróżnicowane są opady: roczna suma oraz udział dni z deszczem, ze śniegiem
+   i bez opadu? (@sec-opad)
+4. Jakie zależności występują między charakterystykami temperatury i opadem? (@sec-korelacja)
+
+## Dane {#sec-dane}
+
+Plik `meteo2020.csv` zawiera miesięczne wartości charakterystyk meteorologicznych
+dla 59 stacji synoptycznych w 2020 roku. Źródło danych: Instytut Meteorologii
+i Gospodarki Wodnej – Państwowy Instytut Badawczy (IMGW-PIB). Dane Instytutu Meteorologii
+i Gospodarki Wodnej – Państwowego Instytutu Badawczego zostały przetworzone. Jednostką
+obserwacji jest stacja w danym miesiącu; zbiór liczy 59 × 12 = 708 obserwacji. Granice
+województw pochodzą z bazy Natural Earth (domena publiczna).
+
+| Kolumna | Znaczenie | Jednostka | Skala pomiarowa |
+|---|---|---|---|
+| `stacja` | nazwa stacji | — | nominalna |
+| `miesiac` | miesiąc | 1–12 | porządkowa |
+| `temp_sr` | średnia miesięczna temperatura powietrza | °C | przedziałowa |
+| `temp_max_sr`, `temp_min_sr` | średnia maksymalna i średnia minimalna temperatura | °C | przedziałowa |
+| `temp_grunt_min` | minimalna temperatura przy gruncie | °C | przedziałowa |
+| `opad_suma` | miesięczna suma opadu | mm | ilorazowa |
+| `dni_deszcz`, `dni_snieg` | liczba dni z opadem deszczu i z opadem śniegu | dni | ilorazowa |
+
+Braki danych dotyczą kolumn temperatury (`temp_sr` — 4, `temp_max_sr` i `temp_min_sr` — po 7,
+`temp_grunt_min` — 31) oraz kolumny `dni_snieg` (96 braków, 8 stacji × 12 miesięcy). Obserwacje
+z brakami pominięto w obliczeniach dotyczących tych zmiennych. Kartodiagram strukturalny
+obejmuje 51 stacji z kompletem danych.
+
+```{r}
+#| label: dane
+# pakiety, dane meteorologiczne i granice województw
+library(tidyverse)
+library(sf)
+library(ggrepel)
+library(scatterpie)
+library(GGally)
+
+meteo <- read.csv("dane/meteo2020.csv", encoding = "UTF-8") |>
+  mutate(across(where(is.character), as.factor))
+wojewodztwa <- st_read("dane/wojewodztwa.gpkg", quiet = TRUE)
+
+# zestawienie roczne dla każdej stacji, zapisane jako punkty o współrzędnych geograficznych
+stacje_sf <- meteo |>
+  group_by(stacja, X_dlugosc_geogr, Y_szerokosc_geogr) |>
+  summarise(opad_rok = sum(opad_suma),
+            dni_deszcz_rok = sum(dni_deszcz),
+            dni_snieg_rok = sum(dni_snieg),
+            .groups = "drop") |>
+  st_as_sf(coords = c("X_dlugosc_geogr", "Y_szerokosc_geogr"), crs = 4326)
+```
+
+## Metody {#sec-metody}
+
+Temperaturę w kolejnych miesiącach opisano miarami położenia (minimum, mediana, maksimum)
+i przedstawiono na wykresie pudełkowym. Roczną sumę opadu przedstawiono na mapie punktowej
+z klasami o nierównej szerokości, a udział dni z deszczem, ze śniegiem i bez opadu —
+na kartodiagramie strukturalnym. Liczbę dni bez opadu obliczono jako 366 minus liczba dni
+z deszczem i ze śniegiem. Zależności oceniono na macierzy wykresów rozrzutu
+i współczynnikiem korelacji Spearmana, ze względu na asymetryczny rozkład sumy opadu i obecność
+wartości odstających. Obliczenia wykonano w R z pakietami `tidyverse`, `sf`, `ggrepel`,
+`scatterpie` i `GGally`.
+
+## Wyniki {#sec-wyniki}
+
+### Sieć stacji synoptycznych {#sec-stacje}
+
+Raport obejmuje 59 stacji synoptycznych rozmieszczonych na całym obszarze Polski
+(@fig-stacje). W południowej części kraju kilka stacji leży w górach: w Sudetach (Śnieżka)
+i w Tatrach (Kasprowy Wierch, Hala Gąsienicowa, Zakopane).
+
+```{r}
+#| label: fig-stacje
+#| fig-cap: "Rozmieszczenie stacji synoptycznych"
+#| fig-width: 10
+#| fig-height: 9
+# mapa: granice województw, punkty stacji i ich nazwy
+ggplot() +
+  geom_sf(data = wojewodztwa, fill = "grey95") +
+  geom_sf(data = stacje_sf, colour = "red", size = 2) +
+  geom_text_repel(data = stacje_sf,
+                  aes(label = stacja, geometry = geometry),
+                  stat = "sf_coordinates",
+                  size = 2.8, max.overlaps = Inf) +
+  labs(x = NULL, y = NULL) +
+  theme_bw(base_size = 13)
+```
+
+### Temperatura powietrza w ciągu roku {#sec-temp}
+
+Mediana średniej miesięcznej temperatury była najniższa w grudniu (1,9°C) i styczniu (2,0°C),
+a najwyższa w sierpniu (19,8°C; @tbl-temp, @fig-temp). Wartości odstające występują wyłącznie
+poniżej pudełek i dotyczą stacji górskich: Kasprowego Wierchu i Śnieżki (we wszystkich
+12 miesiącach), Hali Gąsienicowej (10 miesięcy), Zakopanego (5) i Jeleniej Góry (1).
+
+```{r}
+#| label: tbl-temp
+#| tbl-cap: "Średnia miesięczna temperatura powietrza na stacjach według miesiąca, 2020 [°C]"
+# statystyki w podziale na miesiące; braki danych pominięte
+meteo |>
+  filter(!is.na(temp_sr)) |>
+  group_by(miesiac) |>
+  summarise(stacje = n(),
+            minimum = min(temp_sr),
+            mediana = median(temp_sr),
+            maksimum = max(temp_sr)) |>
+  knitr::kable(digits = 1,
+               col.names = c("Miesiąc", "Liczba stacji", "Minimum", "Mediana", "Maksimum"))
+```
+
+```{r}
+#| label: fig-temp
+#| fig-cap: "Średnia miesięczna temperatura powietrza na 59 stacjach, 2020"
+#| fig-width: 7
+#| fig-height: 4.5
+# wykres pudełkowy: jedno pudełko = wartości ze wszystkich stacji w danym miesiącu
+ggplot(meteo, aes(x = factor(miesiac), y = temp_sr)) +
+  geom_boxplot(outlier.colour = "red", na.rm = TRUE) +
+  labs(x = "Miesiąc", y = "Średnia temperatura powietrza [°C]") +
+  theme_bw(base_size = 12)
+```
+
+### Opady atmosferyczne {#sec-opad}
+
+Roczna suma opadu w 2020 roku wynosiła od 410,2 mm (Szczecin) do 1980,0 mm (Hala Gąsienicowa);
+mediana dla 59 stacji to 633,6 mm (@fig-opad). Sumę 1000 mm i więcej odnotowano na 5 stacjach,
+wszystkie leżą w górach lub na ich przedpolu.
+
+```{r}
+#| label: fig-opad
+#| fig-cap: "Roczna suma opadu na stacjach synoptycznych w 2020 roku"
+#| fig-width: 7
+#| fig-height: 6
+# mapa: kolor wypełnienia punktu odpowiada klasie rocznej sumy opadu
+ggplot() +
+  geom_sf(data = wojewodztwa, fill = "white") +
+  geom_sf(data = stacje_sf, aes(fill = opad_rok),
+          shape = 21, colour = "grey30", size = 3.5) +
+  scale_fill_fermenter(breaks = c(500, 600, 700, 800, 1000),
+                       palette = "YlGnBu", direction = 1) +
+  labs(fill = "Opad [mm]") +
+  theme_bw(base_size = 12)
+```
+
+Kartodiagram strukturalny (@fig-dni) pokazuje podział roku na dni z deszczem, ze śniegiem i bez
+opadu. Na większości stacji dni bez opadu stanowią ponad połowę roku: ich liczba wynosi od 142
+(Śnieżka) do 237 (Leszno), mediana — 205 dni. Udział dni ze śniegiem jest wyraźnie większy
+na stacjach górskich.
+
+```{r}
+#| label: fig-dni
+#| fig-cap: "Dni z deszczem, ze śniegiem i bez opadu w 2020 roku, 51 stacji z kompletem danych"
+#| fig-width: 7
+#| fig-height: 7
+# stacje z kompletem danych; liczba dni bez opadu (2020 - rok przestępny, 366 dni)
+struktura <- stacje_sf |>
+  filter(!is.na(dni_snieg_rok)) |>
+  mutate(dni_bez_opadu_rok = 366 - dni_deszcz_rok - dni_snieg_rok)
+
+# współrzędne w układzie metrycznym PUWG 1992 (EPSG:2180), aby koła nie były zniekształcone
+xy <- st_coordinates(st_transform(struktura, 2180))
+struktura <- struktura |>
+  st_drop_geometry() |>
+  mutate(x = xy[, 1], y = xy[, 2])
+
+# kartodiagram strukturalny: wykres kołowy w położeniu każdej stacji
+ggplot() +
+  geom_sf(data = st_transform(wojewodztwa, 2180), fill = "grey95") +
+  geom_scatterpie(data = struktura, aes(x = x, y = y),
+                  cols = c("dni_deszcz_rok", "dni_snieg_rok", "dni_bez_opadu_rok"),
+                  pie_scale = 2, colour = NA) +
+  scale_fill_manual(values = c(dni_deszcz_rok = "navy",
+                               dni_snieg_rok = "lightskyblue",
+                               dni_bez_opadu_rok = "grey80"),
+                    labels = c("deszcz", "śnieg", "bez opadu")) +
+  labs(fill = "Dni") +
+  coord_sf(crs = 2180) +
+  theme_void(base_size = 12)
+```
+
+### Zależności między parametrami meteorologicznymi {#sec-korelacja}
+
+Macierz wykresów rozrzutu (@fig-macierz) pokazuje dodatnie zależności między wszystkimi parami
+zmiennych. Korelacje między charakterystykami temperatury są bardzo wysokie albo prawie pełne:
+od 0,79 (temperatura maksymalna i minimalna przy gruncie) do 0,98 (średnia temperatura maksymalna
+i średnia temperatura). Korelacje temperatur z sumą opadu są przeciętne: od 0,38
+(średnia temperatura maksymalna) do 0,57 (minimalna temperatura przy gruncie). Wartość p testu
+istotności jest przy każdym współczynniku mniejsza od 0,001. Obserwacje obejmują wszystkie stacje
+i wszystkie miesiące, więc współczynnik łączy zróżnicowanie między miesiącami i między stacjami.
+
+```{r}
+#| label: fig-macierz
+#| fig-cap: "Macierz wykresów rozrzutu i współczynników korelacji Spearmana: charakterystyki temperatury i opad"
+#| fig-width: 9
+#| fig-height: 9
+# macierz wykresów rozrzutu; nad przekątną współczynnik korelacji Spearmana
+meteo |>
+  select(temp_max_sr, temp_min_sr, temp_sr, temp_grunt_min, opad_suma) |>
+  ggpairs(upper = list(continuous = wrap("cor", method = "spearman")))
+```
+
+## Wnioski {#sec-wnioski}
+
+1. 59 stacji synoptycznych pokrywa obszar całej Polski; kilka z nich leży w Sudetach i Tatrach
+   (@sec-stacje).
+2. Mediana średniej miesięcznej temperatury wynosiła od 1,9°C (grudzień) do 19,8°C (sierpień);
+   wartości odstające dotyczą stacji górskich (@sec-temp).
+3. Roczna suma opadu wynosiła od 410,2 mm (Szczecin) do 1980,0 mm (Hala Gąsienicowa), mediana —
+   633,6 mm. Najwyższe sumy i największy udział dni ze śniegiem odnotowano na stacjach górskich
+   (@sec-opad).
+4. Korelacje charakterystyk temperatury są bardzo wysokie albo prawie pełne (współczynnik
+   Spearmana 0,79–0,98); korelacje temperatur z sumą opadu są przeciętne (0,38–0,57).
+   Wszystkie korelacje są istotne statystycznie (@sec-korelacja).
+
+## Źródła {#sec-zrodla}
+
+- Instytut Meteorologii i Gospodarki Wodnej – Państwowy Instytut Badawczy, dane publiczne:
+  <https://danepubliczne.imgw.pl>.
+- Natural Earth: <https://www.naturalearthdata.com/>.

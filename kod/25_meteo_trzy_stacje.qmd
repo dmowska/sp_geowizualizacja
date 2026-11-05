@@ -1,0 +1,351 @@
+---
+title: "Porównanie warunków meteorologicznych trzech stacji"
+format: html
+---
+
+Kod do rozdziału „Porównanie warunków meteorologicznych trzech stacji” skryptu do ćwiczeń.
+Plik wymaga połączenia z internetem (dane są pobierane ze zbioru IMGW-PIB), folderu `dane/`
+z plikiem `wojewodztwa.gpkg` w tym samym folderze co ten plik `.qmd` oraz pakietów `tidyverse`,
+`sf`, `climate` i `ggrepel`. Stacje wybiera się w obiekcie `wybrane_stacje`, a rok — w obiekcie
+`wybrany_rok`.
+
+Źródłem pochodzenia danych jest Instytut Meteorologii i Gospodarki Wodnej – Państwowy Instytut
+Badawczy. Dane Instytutu Meteorologii i Gospodarki Wodnej – Państwowego Instytutu Badawczego
+zostały przetworzone.
+
+Pytania badawcze:
+
+- Jak różnił się przebieg średniej miesięcznej temperatury między stacjami i jak wypadał
+  na tle 59 stacji synoptycznych?
+- Jak różniła się między stacjami różnica między średnią maksymalną a średnią minimalną
+  temperaturą?
+- Jak różniły się miesięczne sumy opadu?
+- Jak różniła się liczba dni z deszczem i dni ze śniegiem?
+
+## Dane
+
+### Pobranie danych
+
+```{r}
+#| message: false
+#| output: false
+# pakiety: tidyverse (przetwarzanie danych i wykresy), sf (dane przestrzenne),
+# climate (pobieranie danych IMGW-PIB)
+library(tidyverse)
+library(sf)
+library(climate)
+
+# wybrane stacje (nazwy zapisane wielkimi literami) i rok
+wybrane_stacje <- c("HEL", "WARSZAWA-OKĘCIE", "ZAKOPANE")
+wybrany_rok <- 2023
+
+# dane miesięczne wszystkich stacji synoptycznych z wybranego roku;
+# status = TRUE pozostawia kolumny ze statusem pomiaru, coords = TRUE dodaje współrzędne stacji
+meteo_imgw <- meteo_imgw_monthly(rank = "synop", year = wybrany_rok,
+                                 status = TRUE, coords = TRUE)
+```
+
+### Przygotowanie danych
+
+```{r}
+# wartości oznaczone statusem braku pomiaru zamieniane na NA
+meteo <- meteo_imgw |>
+  mutate(
+    POST = as.factor(POST),
+    TMAX = replace(TMAX, WTMAX %in% 8, NA),
+    TMXS = replace(TMXS, WTMXS %in% 8, NA),
+    TMIN = replace(TMIN, WTMIN %in% 8, NA),
+    TMNS = replace(TMNS, WWTMNS %in% 8, NA),
+    STM = replace(STM, WSTM %in% 8, NA),
+    SUMM = replace(SUMM, WSUMM %in% 8, NA),
+    DESD = replace(DESD, WDESD %in% 9, NA),
+    SNID = replace(SNID, WSNID %in% 9, NA)
+  ) |>
+  # stacja z zerową liczbą dni ze śniegiem we wszystkich miesiącach: brak danych
+  group_by(POST) |>
+  mutate(SNID = replace(SNID, all(SNID == 0, na.rm = TRUE), NA)) |>
+  ungroup() |>
+  # kolumny wykorzystywane w raporcie
+  select(POST, X, Y, MC, TMAX, TMXS, TMIN, TMNS, STM, SUMM, DESD, SNID)
+```
+
+### Wartości miesięczne i położenie wybranych stacji
+
+```{r}
+# obserwacje z wybranych stacji: 3 stacje × 12 miesięcy = 36 wierszy
+stacje_dane <- meteo |>
+  filter(POST %in% wybrane_stacje)
+```
+
+```{r}
+# położenie stacji: jeden wiersz dla stacji (współrzędne są takie same w każdym miesiącu)
+stacje_polozenie <- stacje_dane |>
+  filter(MC == 1) |>
+  st_as_sf(coords = c("X", "Y"), crs = 4326)
+
+# granice województw (Natural Earth)
+wojewodztwa <- st_read("dane/wojewodztwa.gpkg", quiet = TRUE)
+```
+
+```{r}
+#| message: false
+#| warning: false
+#| label: fig-tr-mapa
+#| fig-cap: "Położenie porównywanych stacji synoptycznych"
+#| fig-width: 7
+#| fig-height: 6
+# pakiet do rozmieszczania etykiet bez nakładania się
+library(ggrepel)
+
+# mapa: granice województw, punkty stacji w kolorach stacji i ich nazwy
+ggplot() +
+  geom_sf(data = wojewodztwa, fill = "grey95") +
+  geom_sf(data = stacje_polozenie, aes(colour = POST), size = 4) +
+  geom_text_repel(data = stacje_polozenie,
+                  aes(label = POST, geometry = geometry),
+                  stat = "sf_coordinates", size = 4) +
+  scale_colour_brewer(palette = "Dark2") +          # kolory stacji (paleta Brewer)
+  labs(x = NULL, y = NULL) +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "none")                   # nazwy stacji podane na mapie
+```
+
+## Wyniki
+
+### Charakterystyki roczne stacji
+
+```{r}
+#| label: tbl-tr-roczne
+#| tbl-cap: "Charakterystyki roczne porównywanych stacji, 2023"
+# wartości roczne obliczone z 12 wartości miesięcznych dla każdej stacji
+stacje_dane |>
+  group_by(POST) |>
+  summarise(
+    temp_sr_rok = mean(STM),                    # średnia z 12 średnich miesięcznych
+    temp_sr_najnizsza = min(STM),
+    temp_sr_najwyzsza = max(STM),
+    temp_sr_roznica = temp_sr_najwyzsza - temp_sr_najnizsza,
+    temp_min_abs_rok = min(TMIN),           # najniższa temperatura w roku
+    temp_max_abs_rok = max(TMAX),           # najwyższa temperatura w roku
+    opad_rok = sum(SUMM),
+    dni_deszcz_rok = sum(DESD),
+    dni_snieg_rok = sum(SNID)
+  ) |>
+  knitr::kable(
+    col.names = c("Stacja",
+                  "Temp. średnia — średnia z 12 miesięcy [°C]",
+                  "Temp. średnia — najniższa [°C]", "Temp. średnia — najwyższa [°C]",
+                  "Różnica [°C]",
+                  "Temp. min. absolutna [°C]", "Temp. maks. absolutna [°C]",
+                  "Suma opadu [mm]", "Dni z deszczem", "Dni ze śniegiem"),
+    digits = 1,
+    format.args = list(decimal.mark = ",")
+  )
+```
+
+### Przebieg średniej miesięcznej temperatury na tle sieci stacji
+
+```{r}
+# wartości średniej miesięcznej temperatury z 59 stacji w każdym miesiącu:
+# minimum, kwantyle rzędu 0,05; 0,25; 0,75; 0,95 i maksimum
+siec <- meteo |>
+  group_by(MC) |>
+  summarise(
+    minimum = min(STM, na.rm = TRUE),
+    p05 = quantile(STM, probs = 0.05, na.rm = TRUE),
+    q1 = quantile(STM, probs = 0.25, na.rm = TRUE),
+    q3 = quantile(STM, probs = 0.75, na.rm = TRUE),
+    p95 = quantile(STM, probs = 0.95, na.rm = TRUE),
+    maksimum = max(STM, na.rm = TRUE)
+  )
+```
+
+```{r}
+#| label: fig-tr-temp
+#| fig-cap: "Średnia miesięczna temperatura powietrza (`STM`) na trzech stacjach (linie) na tle 59 stacji synoptycznych, 2023. Wstęgi 59 stacji: najjaśniejsza — od wartości najmniejszej do największej, środkowa — od 5. do 95. percentyla, najciemniejsza — od pierwszego do trzeciego kwartyla"
+#| fig-width: 9
+#| fig-height: 6
+# trzy wstęgi z tabeli siec (od najszerszej) i linie z tabeli stacje_dane
+ggplot() +
+  geom_ribbon(data = siec, aes(x = MC, ymin = minimum, ymax = maksimum),
+              fill = "grey90") +
+  geom_ribbon(data = siec, aes(x = MC, ymin = p05, ymax = p95),
+              fill = "grey75") +
+  geom_ribbon(data = siec, aes(x = MC, ymin = q1, ymax = q3),
+              fill = "grey55") +
+  geom_line(data = stacje_dane, aes(x = MC, y = STM, colour = POST),
+            linewidth = 1.2) +                      # kolor linii według stacji
+  scale_colour_brewer(palette = "Dark2") +
+  scale_x_continuous(breaks = 1:12) +
+  labs(x = "Miesiąc", y = "Średnia temperatura powietrza [°C]", colour = "Stacja") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "bottom")
+```
+
+### Średnia maksymalna i średnia minimalna temperatura na stacjach
+
+```{r}
+#| label: fig-tr-dobowa
+#| fig-cap: "Średnia maksymalna i średnia minimalna temperatura powietrza (wstęga, `TMNS`–`TMXS`) i średnia miesięczna temperatura (linia, `STM`) na trzech stacjach, 2023"
+#| fig-width: 10
+#| fig-height: 4.5
+# wstęga i linia w osobnym panelu dla każdej stacji
+ggplot(stacje_dane, aes(x = MC)) +
+  geom_ribbon(aes(ymin = TMNS, ymax = TMXS, fill = POST), alpha = 0.4) +
+  geom_line(aes(y = STM, colour = POST), linewidth = 1) +
+  facet_wrap(~ POST) +                            # osobny panel dla stacji
+  scale_fill_brewer(palette = "Dark2") +
+  scale_colour_brewer(palette = "Dark2") +
+  scale_x_continuous(breaks = 1:12) +
+  labs(x = "Miesiąc", y = "Temperatura powietrza [°C]") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "none")                   # nazwy stacji w nagłówkach paneli
+```
+
+### Zmienność miesięcznych sum opadu
+
+```{r}
+#| label: fig-tr-opad
+#| fig-cap: "Miesięczna suma opadu na trzech stacjach, 2023"
+#| fig-width: 9
+# wykres słupkowy zgrupowany: dla każdego miesiąca słupki stacji obok siebie
+ggplot(stacje_dane, aes(x = factor(MC), y = SUMM, fill = POST)) +
+  geom_col(position = "dodge") +
+  scale_fill_brewer(palette = "Dark2") +
+  labs(x = "Miesiąc", y = "Suma opadu [mm]", fill = "Stacja") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "bottom")
+```
+
+### Dni z opadem deszczu i śniegu
+
+```{r}
+# zamiana tabeli z postaci szerokiej na długą: jedna kolumna z rodzajem opadu
+stacje_dni <- stacje_dane |>
+  pivot_longer(
+    cols = c(DESD, SNID),
+    names_to = "rodzaj",
+    values_to = "dni"
+  )
+```
+
+```{r}
+#| label: fig-tr-dni
+#| fig-cap: "Liczba dni z deszczem i ze śniegiem na trzech stacjach, 2023"
+#| fig-width: 10
+#| fig-height: 4.5
+# wykres słupkowy skumulowany w osobnym panelu dla każdej stacji
+ggplot(stacje_dni, aes(x = factor(MC), y = dni, fill = rodzaj)) +
+  geom_col(position = "stack") +
+  facet_wrap(~ POST) +
+  scale_fill_manual(values = c(DESD = "navy", SNID = "lightskyblue"),
+                    labels = c("deszcz", "śnieg")) +
+  labs(x = "Miesiąc", y = "Liczba dni", fill = "Rodzaj opadu") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "bottom")
+```
+
+## Wybór sposobu prezentacji wyników
+
+### Miesięczne sumy opadu
+
+```{r}
+#| label: fig-tr-opad-panele
+#| fig-cap: "Miesięczna suma opadu na trzech stacjach, 2023 — wykres słupkowy w osobnych panelach"
+#| fig-width: 10
+#| fig-height: 4.5
+ggplot(stacje_dane, aes(x = factor(MC), y = SUMM, fill = POST)) +
+  geom_col() +
+  facet_wrap(~ POST) +
+  scale_fill_brewer(palette = "Dark2") +
+  labs(x = "Miesiąc", y = "Suma opadu [mm]") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "none")
+```
+
+### Dni z deszczem i ze śniegiem
+
+```{r}
+#| label: fig-tr-dni-rodzaj
+#| fig-cap: "Liczba dni z deszczem i ze śniegiem na trzech stacjach, 2023 — wykres słupkowy zgrupowany w panelach według rodzaju opadu"
+#| fig-width: 9
+#| fig-height: 7
+# panel dla rodzaju opadu, w panelu słupki stacji obok siebie
+ggplot(stacje_dni, aes(x = factor(MC), y = dni, fill = POST)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~ rodzaj, ncol = 1,                    # panele jeden pod drugim
+             labeller = as_labeller(c(DESD = "Dni z deszczem",
+                                      SNID = "Dni ze śniegiem"))) +
+  scale_fill_brewer(palette = "Dark2") +
+  labs(x = "Miesiąc", y = "Liczba dni", fill = "Stacja") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "bottom")
+```
+
+```{r}
+#| label: fig-tr-dni-kafelkowy
+#| fig-cap: "Liczba dni z deszczem i ze śniegiem na trzech stacjach, 2023 — wykres kafelkowy; szary kafelek — brak dni z danym rodzajem opadu (0)"
+#| fig-width: 9
+#| fig-height: 5
+# wykres kafelkowy: miesiące na osi x, stacje na osi y, panel dla rodzaju opadu
+ggplot(stacje_dni, aes(x = factor(MC), y = fct_rev(POST),
+                       fill = na_if(dni, 0))) +
+  geom_tile(colour = "white") +
+  geom_label(aes(label = dni), fill = "white", size = 3) +
+  facet_wrap(~ rodzaj, ncol = 1,
+             labeller = as_labeller(c(DESD = "Dni z deszczem",
+                                      SNID = "Dni ze śniegiem"))) +
+  scale_fill_fermenter(breaks = c(5, 10, 15, 20), palette = "Blues", direction = 1,
+                       na.value = "grey85") +
+  labs(x = "Miesiąc", y = NULL, fill = "Liczba dni") +
+  theme_bw(base_size = 13)
+```
+
+```{r}
+# struktura dni roku: dni z deszczem, ze śniegiem i bez opadu
+struktura_roku <- stacje_dane |>
+  group_by(POST) |>
+  summarise(
+    DESD = sum(DESD),
+    SNID = sum(SNID),
+    dni_razem = sum(days_in_month(make_date(wybrany_rok, MC)))   # liczba dni w miesiącach z danymi
+  ) |>
+  mutate(dni_bez_opadu = dni_razem - DESD - SNID) |>
+  pivot_longer(cols = c(DESD, SNID, dni_bez_opadu),
+               names_to = "rodzaj", values_to = "dni")
+```
+
+```{r}
+#| label: fig-tr-dni-struktura
+#| fig-cap: "Struktura dni roku na trzech stacjach: dni z deszczem, ze śniegiem i bez opadu, 2023"
+#| fig-width: 9
+#| fig-height: 4
+# słupki skumulowane do 100%: długość części słupka = udział dni w roku
+ggplot(struktura_roku, aes(x = POST, y = dni, fill = rodzaj)) +
+  geom_col(position = "fill") +
+  coord_flip() +                                    # słupki poziome
+  scale_fill_manual(values = c(DESD = "navy", SNID = "lightskyblue",
+                               dni_bez_opadu = "grey80"),
+                    breaks = c("SNID", "DESD", "dni_bez_opadu"),
+                    labels = c("śnieg", "deszcz", "bez opadu")) +
+  scale_y_continuous(labels = scales::label_percent()) +   # oś w procentach
+  labs(x = NULL, y = "Udział w liczbie dni roku", fill = "Dni") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "bottom")
+```
+
+### Porównanie z siecią stacji: wykres wstęgowy a wykres pudełkowy
+
+```{r}
+#| label: fig-tr-pudelkowy
+#| fig-cap: "Średnia miesięczna temperatura powietrza na 59 stacjach (wykresy pudełkowe) i na trzech porównywanych stacjach (punkty), 2023"
+#| fig-width: 9
+#| fig-height: 6
+ggplot(meteo, aes(x = factor(MC), y = STM)) +
+  geom_boxplot(na.rm = TRUE, outlier.colour = "grey60") +
+  geom_point(data = stacje_dane, aes(colour = POST), size = 3) +
+  scale_colour_brewer(palette = "Dark2") +
+  labs(x = "Miesiąc", y = "Średnia temperatura powietrza [°C]", colour = "Stacja") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "bottom")
+```

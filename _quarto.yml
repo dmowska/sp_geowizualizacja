@@ -1,0 +1,74 @@
+project:
+  type: book
+
+lang: pl
+language:
+  title-block-published: "Data wygenerowania"
+
+book:
+  title: "Statystyczne i graficzne podstawy geowizualizacji"
+  author: "Anna Dmowska"
+  date: today
+  date-format: "D MMMM YYYY"
+  chapters:
+    - index.qmd
+    - 00_dane.qmd
+    - part: "PRACA W R"
+      chapters:
+        - 01_instalacja.qmd
+        - 02_rstudio.qmd
+        - 03_praca_z_danymi.qmd
+        - 04_wykresy_ggplot2.qmd
+        - 05_dane_przestrzenne.qmd
+        - 06_pakiety.qmd
+    - part: "QUARTO"
+      chapters:
+        - 07_quarto.qmd
+        - 08_raport.qmd
+    - part: "PODSTAWY STATYSTYKI"
+      chapters:
+        - 09_pojecia_podstawowe.qmd
+        - 10_statystyki_opisowe.qmd
+        - 11_korelacja.qmd
+    - part: "WIZUALIZACJA DANYCH"
+      chapters:
+        - 12_po_co_wizualizujemy.qmd
+        - 13_gramatyka_grafiki.qmd
+        - 14_typy_wykresow.qmd
+        - 15_wizualizacja_statystyk.qmd
+        - 16_wizualizacja_zaleznosci.qmd
+        - 17_dobor_wykresu.qmd
+        - 18_formatowanie.qmd
+        - 19_zrodla.qmd
+    - part: "PRZYKŁADY"
+      chapters:
+        - 20_dlugosc_zycia.qmd
+        - 21_dlugosc_zycia_2007.qmd
+        - 22_meteo_2020.qmd
+    - part: "PRZYKŁADOWE RAPORTY"
+      chapters:
+        - 23_dlugosc_zycia_europa.qmd
+        - 24_meteo_zakopane.qmd
+        - 25_meteo_trzy_stacje.qmd
+        - 26_lasy_wielkopolska.qmd
+  appendices:
+    - A_typy_wykresow.qmd
+    - B_wykresy_statystyka_regionalna.qmd
+    - C_zasady_wykresow.qmd
+    - D_dobor_wykresu_przyklady.qmd
+    - E_bank_swiatowy.qmd
+
+execute:
+  freeze: auto
+
+format: live-html
+link-external-newwindow: true
+crossref:
+  fig-title: "Rycina"
+  fig-prefix: "Rycina"
+resources:
+  - dane
+  - pliki_kursu.zip
+engine: knitr
+
+number-depth: 3

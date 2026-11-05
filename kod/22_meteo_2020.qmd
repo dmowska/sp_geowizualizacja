@@ -1,0 +1,309 @@
+---
+title: "Warunki meteorologiczne w Polsce w 2020 roku"
+format: html
+---
+
+Kod do rozdziału „Warunki meteorologiczne w Polsce w 2020 roku” skryptu do ćwiczeń.
+Plik wymaga folderu `dane/` z plikiem `meteo2020.csv` w tym samym folderze co ten plik
+`.qmd` oraz pliku `wojewodztwa.gpkg` z granicami województw i pakietów `tidyverse`, `sf`,
+`scatterpie`, `GGally` i `ggrepel`.
+
+Źródłem pochodzenia danych jest Instytut Meteorologii i Gospodarki Wodnej – Państwowy Instytut
+Badawczy. Dane Instytutu Meteorologii i Gospodarki Wodnej – Państwowego Instytutu Badawczego
+zostały przetworzone.
+
+Pytania badawcze:
+
+- Jak rozmieszczone są stacje pomiarowe?
+- Jak zróżnicowana jest temperatura powietrza — przestrzennie w styczniu i lipcu
+  oraz w ciągu roku?
+- Jak zróżnicowane są opady — roczna suma, przebieg w ciągu roku oraz liczba dni
+  z deszczem i ze śniegiem?
+- Jakie zależności występują między charakterystykami temperatury i opadem?
+
+## Przygotowanie danych
+
+```{r}
+#| message: false
+# pakiety: tidyverse (przetwarzanie danych i wykresy), sf (dane przestrzenne)
+library(tidyverse)
+library(sf)
+
+# wczytanie danych i zamiana kolumn tekstowych na zmienne typu factor
+meteo <- read.csv("dane/meteo2020.csv", encoding = "UTF-8") |>
+  mutate(across(where(is.character), as.factor))
+```
+
+```{r}
+# podsumowanie wszystkich kolumn: miary położenia i liczba braków danych (NA's)
+summary(meteo)
+```
+
+## Sieć stacji synoptycznych
+
+### Charakterystyki roczne stacji
+
+```{r}
+#| R.options:
+#|   width: 120
+# zestawienie roczne dla każdej stacji: suma opadu, liczba dni z deszczem i ze śniegiem
+stacje <- meteo |>
+  group_by(stacja, X_dlugosc_geogr, Y_szerokosc_geogr) |>
+  summarise(
+    opad_rok = sum(opad_suma),                      # roczna suma opadu [mm]
+    dni_deszcz_rok = sum(dni_deszcz),               # roczna liczba dni z deszczem
+    dni_snieg_rok = sum(dni_snieg),                 # roczna liczba dni ze śniegiem
+    .groups = "drop"                                # usunięcie podziału na grupy
+  )
+
+# pierwsze wiersze tabeli stacje
+head(stacje)
+```
+
+### Rozmieszczenie stacji
+
+```{r}
+# zamiana tabeli na obiekt przestrzenny: punkty o współrzędnych geograficznych (WGS 84)
+stacje_sf <- st_as_sf(stacje,
+                      coords = c("X_dlugosc_geogr", "Y_szerokosc_geogr"),
+                      crs = 4326)
+
+# granice województw (Natural Earth)
+wojewodztwa <- st_read("dane/wojewodztwa.gpkg", quiet = TRUE)
+```
+
+```{r}
+#| message: false
+#| warning: false
+#| label: fig-meteo-stacje
+#| fig-cap: "Rozmieszczenie stacji synoptycznych"
+#| fig-width: 10
+#| fig-height: 9
+# pakiet do rozmieszczania etykiet bez nakładania się
+library(ggrepel)
+
+# mapa: granice województw, punkty stacji i ich nazwy
+ggplot() +
+  geom_sf(data = wojewodztwa, fill = "grey95") +    # tło: granice województw
+  geom_sf(data = stacje_sf, colour = "red", size = 2) +  # stacje
+  geom_text_repel(data = stacje_sf,
+                  aes(label = stacja, geometry = geometry),
+                  stat = "sf_coordinates",          # współrzędne etykiet z geometrii punktów
+                  size = 2.8, max.overlaps = Inf) + # etykiety wszystkich stacji
+  labs(x = NULL, y = NULL) +
+  theme_bw(base_size = 13)
+```
+
+## Temperatura powietrza
+
+### Zróżnicowanie przestrzenne średniej temperatury w styczniu i lipcu
+
+```{r}
+# obserwacje ze stycznia i lipca jako punkty na mapie
+styczen_lipiec <- meteo |>
+  filter(miesiac %in% c(1, 7)) |>                  # styczeń i lipiec
+  st_as_sf(coords = c("X_dlugosc_geogr", "Y_szerokosc_geogr"), crs = 4326)
+```
+
+```{r}
+#| label: fig-meteo-temp-styczen-lipiec
+#| fig-cap: "Średnia temperatura powietrza w styczniu i lipcu 2020 roku"
+#| fig-width: 10
+#| fig-height: 5.5
+# dwie mapy obok siebie: kolor wypełnienia punktu odpowiada klasie średniej temperatury
+ggplot() +
+  geom_sf(data = wojewodztwa, fill = "white") +
+  geom_sf(data = styczen_lipiec, aes(fill = temp_sr),
+          shape = 21, colour = "grey30", size = 4) +    # punkt z obwódką
+  facet_wrap(~ miesiac,                             # osobny panel dla każdego miesiąca
+             labeller = as_labeller(c(`1` = "Styczeń", `7` = "Lipiec"))) +
+  scale_fill_fermenter(breaks = seq(0, 18, by = 3),   # granice klas co 3°C
+                       palette = "RdYlBu", direction = -1,
+                       na.value = "grey60") +            # stacja bez danych
+  labs(fill = "Temperatura powietrza [°C]") +
+  theme_bw(base_size = 13) +
+  theme(legend.position = "bottom",                 # legenda pod mapami
+        legend.key.width = unit(1.5, "cm"))         # szerokość pola klasy w legendzie
+```
+
+```{r}
+# średnia temperatura w styczniu i lipcu: liczba stacji z danymi, zakres i mediana
+meteo |>
+  filter(miesiac %in% c(1, 7), !is.na(temp_sr)) |>
+  group_by(miesiac) |>
+  summarise(stacje = n(), minimum = min(temp_sr), mediana = median(temp_sr),
+            maksimum = max(temp_sr))
+```
+
+```{r}
+#| R.options:
+#|   width: 120
+# stacje o najniższej i najwyższej średniej temperaturze w każdym z miesięcy
+meteo |>
+  filter(miesiac %in% c(1, 7)) |>
+  group_by(miesiac) |>
+  slice_min(temp_sr, n = 8) |>
+  select(miesiac, stacja, temp_sr) |>
+  print(n = 16)
+meteo |>
+  filter(miesiac %in% c(1, 7)) |>
+  group_by(miesiac) |>
+  slice_max(temp_sr, n = 5) |>
+  select(miesiac, stacja, temp_sr) |>
+  print(n = 11)
+```
+
+```{r}
+# liczba stacji w klasach temperatury użytych na mapie
+meteo |>
+  filter(miesiac %in% c(1, 7), !is.na(temp_sr)) |>
+  mutate(klasa = cut(temp_sr, breaks = c(-Inf, seq(0, 18, by = 3), Inf), right = FALSE)) |>
+  count(miesiac, klasa)
+```
+
+### Zmienność średniej miesięcznej temperatury w ciągu roku
+
+```{r}
+#| label: fig-meteo-temp-miesiace
+#| fig-cap: "Średnia miesięczna temperatura powietrza na 59 stacjach, 2020"
+# wykres pudełkowy: jedno pudełko = wartości ze wszystkich stacji w danym miesiącu
+ggplot(meteo, aes(x = factor(miesiac), y = temp_sr)) +
+  geom_boxplot(outlier.colour = "red", na.rm = TRUE) +
+  labs(x = "Miesiąc", y = "Średnia temperatura powietrza [°C]") +
+  theme_bw(base_size = 13)
+```
+
+```{r}
+#| label: fig-meteo-temp-kafelkowy
+#| fig-cap: "Średnia miesięczna temperatura powietrza na stacjach synoptycznych, 2020"
+#| fig-height: 11
+# wykres kafelkowy: miesiące na osi x, stacje na osi y (alfabetycznie od góry),
+# kolor kafelka = średnia temperatura
+ggplot(meteo, aes(x = factor(miesiac),
+                  y = fct_rev(stacja),              # odwrócona kolejność: A na górze
+                  fill = temp_sr)) +
+  geom_tile(colour = "white") +                     # kafelki z białą obwódką
+  scale_fill_fermenter(breaks = seq(0, 18, by = 3), # klasy co 3°C
+                       palette = "RdYlBu", direction = -1,
+                       na.value = "grey60") +
+  labs(x = "Miesiąc", y = NULL, fill = "Temperatura powietrza [°C]") +
+  theme_bw(base_size = 11)
+```
+
+## Opady atmosferyczne
+
+### Zróżnicowanie przestrzenne rocznej sumy opadu
+
+```{r}
+#| label: fig-meteo-opad
+#| fig-cap: "Roczna suma opadu na stacjach synoptycznych w 2020 roku"
+# mapa: kolor wypełnienia punktu odpowiada klasie rocznej sumy opadu
+ggplot() +
+  geom_sf(data = wojewodztwa, fill = "white") +
+  geom_sf(data = stacje_sf, aes(fill = opad_rok),
+          shape = 21, colour = "grey30", size = 3.5) +   # punkt z obwódką
+  scale_fill_fermenter(breaks = c(500, 600, 700, 800, 1000),   # granice klas [mm]
+                       palette = "YlGnBu", direction = 1) +
+  labs(fill = "Opad [mm]") +
+  theme_bw(base_size = 13)
+```
+
+### Zmienność miesięcznych sum opadu w ciągu roku
+
+```{r}
+#| label: fig-meteo-opad-miesiace
+#| fig-cap: "Miesięczna suma opadu na 59 stacjach, 2020"
+ggplot(meteo, aes(x = factor(miesiac), y = opad_suma)) +
+  geom_boxplot(outlier.colour = "red") +
+  labs(x = "Miesiąc", y = "Suma opadu [mm]") +
+  theme_bw(base_size = 13)
+```
+
+### Dni z opadem deszczu i śniegu
+
+```{r}
+# zamiana tabeli z postaci szerokiej na długą: jedna kolumna z rodzajem opadu
+dni_dlugie <- stacje_sf |>
+  pivot_longer(
+    cols = c(dni_deszcz_rok, dni_snieg_rok),        # kolumny do połączenia
+    names_to = "rodzaj",                            # nowa kolumna z nazwą kolumny źródłowej
+    values_to = "dni"                               # nowa kolumna z wartością
+  ) |>
+  filter(!is.na(dni))                               # pominięcie stacji bez danych
+```
+
+```{r}
+#| label: fig-meteo-dni-punktowe
+#| fig-cap: "Roczna liczba dni z deszczem i ze śniegiem, 2020"
+#| fig-width: 10
+#| fig-height: 5.5
+# dwa kartodiagramy obok siebie: wielkość punktu = liczba dni
+ggplot() +
+  geom_sf(data = wojewodztwa, fill = "grey95") +
+  geom_sf(data = dni_dlugie, aes(size = dni), colour = "steelblue", alpha = 0.6) +
+  facet_wrap(~ rodzaj,                              # osobny panel dla rodzaju opadu
+             labeller = as_labeller(c(dni_deszcz_rok = "Liczba dni z deszczem",
+                                      dni_snieg_rok = "Liczba dni ze śniegiem"))) +
+  scale_size_area(max_size = 12) +                  # zakres wielkości punktów
+  labs(size = "Liczba dni") +
+  theme_bw(base_size = 13)
+```
+
+```{r}
+#| message: false
+# pakiet do wykresów kołowych w położeniu punktów
+library(scatterpie)
+
+# stacje z kompletem danych; liczba dni bez opadu (2020 - rok przestępny, 366 dni)
+struktura <- stacje_sf |>
+  filter(!is.na(dni_snieg_rok)) |>
+  mutate(dni_bez_opadu_rok = 366 - dni_deszcz_rok - dni_snieg_rok)
+
+# współrzędne w układzie metrycznym PUWG 1992 (EPSG:2180), aby koła nie były zniekształcone
+xy <- st_coordinates(st_transform(struktura, 2180))
+struktura <- struktura |>
+  st_drop_geometry() |>                             # zwykła tabela bez geometrii
+  mutate(x = xy[, 1], y = xy[, 2])
+```
+
+```{r}
+#| label: fig-meteo-dni-kolowe
+#| fig-cap: "Dni z deszczem, ze śniegiem i bez opadu w 2020 roku"
+#| fig-height: 7
+# kartodiagram strukturalny: wykres kołowy w położeniu każdej stacji
+ggplot() +
+  geom_sf(data = st_transform(wojewodztwa, 2180), fill = "grey95") +
+  geom_scatterpie(data = struktura, aes(x = x, y = y),
+                  cols = c("dni_deszcz_rok", "dni_snieg_rok", "dni_bez_opadu_rok"),
+                  pie_scale = 2, colour = NA) +
+  scale_fill_manual(values = c(dni_deszcz_rok = "navy",
+                               dni_snieg_rok = "lightskyblue",
+                               dni_bez_opadu_rok = "grey80"),
+                    labels = c("deszcz", "śnieg", "bez opadu")) +
+  labs(fill = "Dni") +
+  coord_sf(crs = 2180) +
+  theme_void(base_size = 13)
+```
+
+## Analiza korelacji parametrów meteorologicznych
+
+```{r}
+#| message: false
+#| warning: false
+#| label: fig-meteo-macierz
+#| fig-cap: "Macierz wykresów rozrzutu i współczynników korelacji Spearmana: charakterystyki temperatury i opad"
+#| fig-width: 9
+#| fig-height: 9
+library(GGally)
+
+# wybór pięciu zmiennych do analizy korelacji
+zmienne <- meteo |>
+  select(temp_max_sr, temp_min_sr, temp_sr, temp_grunt_min, opad_suma)
+
+# macierz wykresów rozrzutu; nad przekątną współczynnik korelacji Spearmana
+ggpairs(zmienne,
+        upper = list(continuous = wrap("cor", method = "spearman")))
+```
+
+## Wnioski
+

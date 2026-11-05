@@ -1,0 +1,69 @@
+---
+title: "Analiza korelacji — obliczenia w R"
+lang: pl
+format: html
+---
+
+Kod do rozdziału „Analiza korelacji” skryptu do ćwiczeń.
+Plik wymaga folderu `dane/` z plikiem `gapminder_regions.csv` w tym samym folderze
+co ten plik `.qmd` oraz pakietu `tidyverse`.
+
+## Obliczenia w R
+
+```{r}
+#| message: false
+# wczytanie pakietów i danych; obserwacje z 2007 roku
+library(tidyverse)
+dane <- read.csv("dane/gapminder_regions.csv", encoding = "UTF-8") |>
+  mutate(across(where(is.character), as.factor))
+dane2007 <- dane |>
+  filter(year == 2007)
+```
+
+### Wykres rozrzutu
+
+```{r}
+#| label: fig-kor-rozrzut
+#| fig-cap: "Oczekiwana długość życia a PKB per capita, 142 kraje, 2007"
+# wykres rozrzutu: PKB per capita na osi x, oczekiwana długość życia na osi y
+ggplot(dane2007, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point() +
+  labs(x = "PKB per capita [USD]", y = "Oczekiwana długość życia [lata]") +
+  theme_bw(base_size = 13)
+```
+
+### Współczynniki korelacji
+
+```{r}
+# współczynnik korelacji Pearsona i Spearmana, zaokrąglone do 2 miejsc
+round(cor(dane2007$gdpPercap, dane2007$lifeExp, method = "pearson"), 2)
+round(cor(dane2007$gdpPercap, dane2007$lifeExp, method = "spearman"), 2)
+```
+
+### Test istotności
+
+```{r}
+# test istotności współczynnika korelacji rang Spearmana
+cor.test(dane2007$gdpPercap, dane2007$lifeExp, method = "spearman")
+```
+
+```{r}
+# test istotności współczynnika korelacji Pearsona
+cor.test(dane2007$gdpPercap, dane2007$lifeExp, method = "pearson")
+```
+
+### Macierz współczynników korelacji
+
+```{r}
+# współczynniki korelacji Spearmana dla każdej pary trzech zmiennych
+dane2007 |>
+  select(lifeExp, gdpPercap, pop) |>
+  cor(method = "spearman") |>
+  round(3)
+```
+
+```{r}
+# p-value testu Spearmana dla par z liczbą ludności
+cor.test(dane2007$pop, dane2007$lifeExp, method = "spearman")$p.value
+cor.test(dane2007$pop, dane2007$gdpPercap, method = "spearman")$p.value
+```

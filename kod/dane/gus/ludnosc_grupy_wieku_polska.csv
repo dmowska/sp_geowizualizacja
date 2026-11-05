@@ -1,0 +1,829 @@
+rok,miejsce,plec,grupa_wieku,ludnosc
+2003,miasto,kobiety,0-15,1920818
+2003,miasto,kobiety,16-19,745627
+2003,miasto,kobiety,20-64,7811279
+2003,miasto,kobiety,65 i więcej,1858892
+2004,miasto,kobiety,0-15,1857576
+2004,miasto,kobiety,16-19,707649
+2004,miasto,kobiety,20-64,7861257
+2004,miasto,kobiety,65 i więcej,1895307
+2005,miasto,kobiety,0-15,1804203
+2005,miasto,kobiety,16-19,668132
+2005,miasto,kobiety,20-64,7902831
+2005,miasto,kobiety,65 i więcej,1929069
+2006,miasto,kobiety,0-15,1756598
+2006,miasto,kobiety,16-19,641577
+2006,miasto,kobiety,20-64,7929693
+2006,miasto,kobiety,65 i więcej,1957240
+2007,miasto,kobiety,0-15,1719049
+2007,miasto,kobiety,16-19,619797
+2007,miasto,kobiety,20-64,7951867
+2007,miasto,kobiety,65 i więcej,1976644
+2008,miasto,kobiety,0-15,1699991
+2008,miasto,kobiety,16-19,592318
+2008,miasto,kobiety,20-64,7970839
+2008,miasto,kobiety,65 i więcej,1994724
+2009,miasto,kobiety,0-15,1690231
+2009,miasto,kobiety,16-19,566322
+2009,miasto,kobiety,20-64,7984732
+2009,miasto,kobiety,65 i więcej,2014243
+2010,miasto,kobiety,0-15,1696172
+2010,miasto,kobiety,16-19,534272
+2010,miasto,kobiety,20-64,8032332
+2010,miasto,kobiety,65 i więcej,2035156
+2011,miasto,kobiety,0-15,1687251
+2011,miasto,kobiety,16-19,499473
+2011,miasto,kobiety,20-64,7999678
+2011,miasto,kobiety,65 i więcej,2099208
+2012,miasto,kobiety,0-15,1681739
+2012,miasto,kobiety,16-19,479520
+2012,miasto,kobiety,20-64,7930799
+2012,miasto,kobiety,65 i więcej,2171898
+2013,miasto,kobiety,0-15,1673556
+2013,miasto,kobiety,16-19,457970
+2013,miasto,kobiety,20-64,7842579
+2013,miasto,kobiety,65 i więcej,2251104
+2014,miasto,kobiety,0-15,1675198
+2014,miasto,kobiety,16-19,437993
+2014,miasto,kobiety,20-64,7755492
+2014,miasto,kobiety,65 i więcej,2337503
+2015,miasto,kobiety,0-15,1679925
+2015,miasto,kobiety,16-19,425161
+2015,miasto,kobiety,20-64,7653439
+2015,miasto,kobiety,65 i więcej,2423205
+2016,miasto,kobiety,0-15,1688601
+2016,miasto,kobiety,16-19,412681
+2016,miasto,kobiety,20-64,7543949
+2016,miasto,kobiety,65 i więcej,2519321
+2017,miasto,kobiety,0-15,1705453
+2017,miasto,kobiety,16-19,403297
+2017,miasto,kobiety,20-64,7435615
+2017,miasto,kobiety,65 i więcej,2610804
+2018,miasto,kobiety,0-15,1720713
+2018,miasto,kobiety,16-19,394607
+2018,miasto,kobiety,20-64,7320188
+2018,miasto,kobiety,65 i więcej,2699999
+2019,miasto,kobiety,0-15,1734398
+2019,miasto,kobiety,16-19,388581
+2019,miasto,kobiety,20-64,7207838
+2019,miasto,kobiety,65 i więcej,2788618
+2020,miasto,kobiety,0-15,1693606
+2020,miasto,kobiety,16-19,364250
+2020,miasto,kobiety,20-64,7121932
+2020,miasto,kobiety,65 i więcej,2817790
+2021,miasto,kobiety,0-15,1688024
+2021,miasto,kobiety,16-19,362605
+2021,miasto,kobiety,20-64,7002270
+2021,miasto,kobiety,65 i więcej,2870957
+2022,miasto,kobiety,0-15,1669308
+2022,miasto,kobiety,16-19,373816
+2022,miasto,kobiety,20-64,6878107
+2022,miasto,kobiety,65 i więcej,2938044
+2023,miasto,kobiety,0-15,1636267
+2023,miasto,kobiety,16-19,392483
+2023,miasto,kobiety,20-64,6767859
+2023,miasto,kobiety,65 i więcej,3006895
+2024,miasto,kobiety,0-15,1591609
+2024,miasto,kobiety,16-19,416505
+2024,miasto,kobiety,20-64,6676961
+2024,miasto,kobiety,65 i więcej,3068942
+2025,miasto,kobiety,0-15,1540017
+2025,miasto,kobiety,16-19,438343
+2025,miasto,kobiety,20-64,6598216
+2025,miasto,kobiety,65 i więcej,3115499
+2003,miasto,mężczyźni,0-15,2018266
+2003,miasto,mężczyźni,16-19,771679
+2003,miasto,mężczyźni,20-64,7279910
+2003,miasto,mężczyźni,65 i więcej,1106918
+2004,miasto,mężczyźni,0-15,1953858
+2004,miasto,mężczyźni,16-19,730565
+2004,miasto,mężczyźni,20-64,7335074
+2004,miasto,mężczyźni,65 i więcej,1128800
+2005,miasto,mężczyźni,0-15,1898313
+2005,miasto,mężczyźni,16-19,690627
+2005,miasto,mężczyźni,20-64,7381329
+2005,miasto,mężczyźni,65 i więcej,1149236
+2006,miasto,mężczyźni,0-15,1849168
+2006,miasto,mężczyźni,16-19,662577
+2006,miasto,mężczyźni,20-64,7406174
+2006,miasto,mężczyźni,65 i więcej,1165851
+2007,miasto,mężczyźni,0-15,1809477
+2007,miasto,mężczyźni,16-19,639674
+2007,miasto,mężczyźni,20-64,7424786
+2007,miasto,mężczyźni,65 i więcej,1175591
+2008,miasto,mężczyźni,0-15,1789894
+2008,miasto,mężczyźni,16-19,611933
+2008,miasto,mężczyźni,20-64,7441917
+2008,miasto,mężczyźni,65 i więcej,1186565
+2009,miasto,mężczyźni,0-15,1781240
+2009,miasto,mężczyźni,16-19,584727
+2009,miasto,mężczyźni,20-64,7458821
+2009,miasto,mężczyźni,65 i więcej,1197871
+2010,miasto,mężczyźni,0-15,1784457
+2010,miasto,mężczyźni,16-19,551727
+2010,miasto,mężczyźni,20-64,7558964
+2010,miasto,mężczyźni,65 i więcej,1223425
+2011,miasto,mężczyźni,0-15,1776679
+2011,miasto,mężczyźni,16-19,517691
+2011,miasto,mężczyźni,20-64,7533391
+2011,miasto,mężczyźni,65 i więcej,1272457
+2012,miasto,mężczyźni,0-15,1771660
+2012,miasto,mężczyźni,16-19,496023
+2012,miasto,mężczyźni,20-64,7475889
+2012,miasto,mężczyźni,65 i więcej,1328761
+2013,miasto,mężczyźni,0-15,1764731
+2013,miasto,mężczyźni,16-19,473398
+2013,miasto,mężczyźni,20-64,7404495
+2013,miasto,mężczyźni,65 i więcej,1390076
+2014,miasto,mężczyźni,0-15,1766811
+2014,miasto,mężczyźni,16-19,453604
+2014,miasto,mężczyźni,20-64,7334351
+2014,miasto,mężczyźni,65 i więcej,1455400
+2015,miasto,mężczyźni,0-15,1771142
+2015,miasto,mężczyźni,16-19,440244
+2015,miasto,mężczyźni,20-64,7252209
+2015,miasto,mężczyźni,65 i więcej,1521104
+2016,miasto,mężczyźni,0-15,1780337
+2016,miasto,mężczyźni,16-19,427888
+2016,miasto,mężczyźni,20-64,7165428
+2016,miasto,mężczyźni,65 i więcej,1591287
+2017,miasto,mężczyźni,0-15,1798632
+2017,miasto,mężczyźni,16-19,418780
+2017,miasto,mężczyźni,20-64,7078048
+2017,miasto,mężczyźni,65 i więcej,1658624
+2018,miasto,mężczyźni,0-15,1814847
+2018,miasto,mężczyźni,16-19,409744
+2018,miasto,mężczyźni,20-64,6984825
+2018,miasto,mężczyźni,65 i więcej,1722321
+2019,miasto,mężczyźni,0-15,1829377
+2019,miasto,mężczyźni,16-19,403844
+2019,miasto,mężczyźni,20-64,6893744
+2019,miasto,mężczyźni,65 i więcej,1786666
+2020,miasto,mężczyźni,0-15,1784889
+2020,miasto,mężczyźni,16-19,379761
+2020,miasto,mężczyźni,20-64,6818166
+2020,miasto,mężczyźni,65 i więcej,1796881
+2021,miasto,mężczyźni,0-15,1777908
+2021,miasto,mężczyźni,16-19,380157
+2021,miasto,mężczyźni,20-64,6715062
+2021,miasto,mężczyźni,65 i więcej,1827031
+2022,miasto,mężczyźni,0-15,1757928
+2022,miasto,mężczyźni,16-19,391409
+2022,miasto,mężczyźni,20-64,6609612
+2022,miasto,mężczyźni,65 i więcej,1871702
+2023,miasto,mężczyźni,0-15,1722636
+2023,miasto,mężczyźni,16-19,409410
+2023,miasto,mężczyźni,20-64,6519581
+2023,miasto,mężczyźni,65 i więcej,1921416
+2024,miasto,mężczyźni,0-15,1676466
+2024,miasto,mężczyźni,16-19,433253
+2024,miasto,mężczyźni,20-64,6448317
+2024,miasto,mężczyźni,65 i więcej,1963914
+2025,miasto,mężczyźni,0-15,1621985
+2025,miasto,mężczyźni,16-19,455302
+2025,miasto,mężczyźni,20-64,6388013
+2025,miasto,mężczyźni,65 i więcej,1995029
+2003,miasto,ogółem,0-15,3939084
+2003,miasto,ogółem,16-19,1517306
+2003,miasto,ogółem,20-64,15091189
+2003,miasto,ogółem,65 i więcej,2965810
+2004,miasto,ogółem,0-15,3811434
+2004,miasto,ogółem,16-19,1438214
+2004,miasto,ogółem,20-64,15196331
+2004,miasto,ogółem,65 i więcej,3024107
+2005,miasto,ogółem,0-15,3702516
+2005,miasto,ogółem,16-19,1358759
+2005,miasto,ogółem,20-64,15284160
+2005,miasto,ogółem,65 i więcej,3078305
+2006,miasto,ogółem,0-15,3605766
+2006,miasto,ogółem,16-19,1304154
+2006,miasto,ogółem,20-64,15335867
+2006,miasto,ogółem,65 i więcej,3123091
+2007,miasto,ogółem,0-15,3528526
+2007,miasto,ogółem,16-19,1259471
+2007,miasto,ogółem,20-64,15376653
+2007,miasto,ogółem,65 i więcej,3152235
+2008,miasto,ogółem,0-15,3489885
+2008,miasto,ogółem,16-19,1204251
+2008,miasto,ogółem,20-64,15412756
+2008,miasto,ogółem,65 i więcej,3181289
+2009,miasto,ogółem,0-15,3471471
+2009,miasto,ogółem,16-19,1151049
+2009,miasto,ogółem,20-64,15443553
+2009,miasto,ogółem,65 i więcej,3212114
+2010,miasto,ogółem,0-15,3480629
+2010,miasto,ogółem,16-19,1085999
+2010,miasto,ogółem,20-64,15591296
+2010,miasto,ogółem,65 i więcej,3258581
+2011,miasto,ogółem,0-15,3463930
+2011,miasto,ogółem,16-19,1017164
+2011,miasto,ogółem,20-64,15533069
+2011,miasto,ogółem,65 i więcej,3371665
+2012,miasto,ogółem,0-15,3453399
+2012,miasto,ogółem,16-19,975543
+2012,miasto,ogółem,20-64,15406688
+2012,miasto,ogółem,65 i więcej,3500659
+2013,miasto,ogółem,0-15,3438287
+2013,miasto,ogółem,16-19,931368
+2013,miasto,ogółem,20-64,15247074
+2013,miasto,ogółem,65 i więcej,3641180
+2014,miasto,ogółem,0-15,3442009
+2014,miasto,ogółem,16-19,891597
+2014,miasto,ogółem,20-64,15089843
+2014,miasto,ogółem,65 i więcej,3792903
+2015,miasto,ogółem,0-15,3451067
+2015,miasto,ogółem,16-19,865405
+2015,miasto,ogółem,20-64,14905648
+2015,miasto,ogółem,65 i więcej,3944309
+2016,miasto,ogółem,0-15,3468938
+2016,miasto,ogółem,16-19,840569
+2016,miasto,ogółem,20-64,14709377
+2016,miasto,ogółem,65 i więcej,4110608
+2017,miasto,ogółem,0-15,3504085
+2017,miasto,ogółem,16-19,822077
+2017,miasto,ogółem,20-64,14513663
+2017,miasto,ogółem,65 i więcej,4269428
+2018,miasto,ogółem,0-15,3535560
+2018,miasto,ogółem,16-19,804351
+2018,miasto,ogółem,20-64,14305013
+2018,miasto,ogółem,65 i więcej,4422320
+2019,miasto,ogółem,0-15,3563775
+2019,miasto,ogółem,16-19,792425
+2019,miasto,ogółem,20-64,14101582
+2019,miasto,ogółem,65 i więcej,4575284
+2020,miasto,ogółem,0-15,3478495
+2020,miasto,ogółem,16-19,744011
+2020,miasto,ogółem,20-64,13940098
+2020,miasto,ogółem,65 i więcej,4614671
+2021,miasto,ogółem,0-15,3465932
+2021,miasto,ogółem,16-19,742762
+2021,miasto,ogółem,20-64,13717332
+2021,miasto,ogółem,65 i więcej,4697988
+2022,miasto,ogółem,0-15,3427236
+2022,miasto,ogółem,16-19,765225
+2022,miasto,ogółem,20-64,13487719
+2022,miasto,ogółem,65 i więcej,4809746
+2023,miasto,ogółem,0-15,3358903
+2023,miasto,ogółem,16-19,801893
+2023,miasto,ogółem,20-64,13287440
+2023,miasto,ogółem,65 i więcej,4928311
+2024,miasto,ogółem,0-15,3268075
+2024,miasto,ogółem,16-19,849758
+2024,miasto,ogółem,20-64,13125278
+2024,miasto,ogółem,65 i więcej,5032856
+2025,miasto,ogółem,0-15,3162002
+2025,miasto,ogółem,16-19,893645
+2025,miasto,ogółem,20-64,12986229
+2025,miasto,ogółem,65 i więcej,5110528
+2003,ogółem,kobiety,0-15,3488747
+2003,ogółem,kobiety,16-19,1239209
+2003,ogółem,kobiety,20-64,11898403
+2003,ogółem,kobiety,65 i więcej,3077819
+2004,ogółem,kobiety,0-15,3380909
+2004,ogółem,kobiety,16-19,1185567
+2004,ogółem,kobiety,20-64,12016976
+2004,ogółem,kobiety,65 i więcej,3120130
+2005,ogółem,kobiety,0-15,3285535
+2005,ogółem,kobiety,16-19,1133839
+2005,ogółem,kobiety,20-64,12127256
+2005,ogółem,kobiety,65 i więcej,3156570
+2006,ogółem,kobiety,0-15,3196301
+2006,ogółem,kobiety,16-19,1101306
+2006,ogółem,kobiety,20-64,12218206
+2006,ogółem,kobiety,65 i więcej,3182891
+2007,ogółem,kobiety,0-15,3121887
+2007,ogółem,kobiety,16-19,1077514
+2007,ogółem,kobiety,20-64,12309660
+2007,ogółem,kobiety,65 i więcej,3195079
+2008,ogółem,kobiety,0-15,3075187
+2008,ogółem,kobiety,16-19,1045103
+2008,ogółem,kobiety,20-64,12394575
+2008,ogółem,kobiety,65 i więcej,3206085
+2009,ogółem,kobiety,0-15,3041589
+2009,ogółem,kobiety,16-19,1010082
+2009,ogółem,kobiety,20-64,12469876
+2009,ogółem,kobiety,65 i więcej,3217040
+2010,ogółem,kobiety,0-15,3066390
+2010,ogółem,kobiety,16-19,971997
+2010,ogółem,kobiety,20-64,12607136
+2010,ogółem,kobiety,65 i więcej,3231218
+2011,ogółem,kobiety,0-15,3041160
+2011,ogółem,kobiety,16-19,924819
+2011,ogółem,kobiety,20-64,12613104
+2011,ogółem,kobiety,65 i więcej,3304787
+2012,ogółem,kobiety,0-15,3021617
+2012,ogółem,kobiety,16-19,885336
+2012,ogółem,kobiety,20-64,12584453
+2012,ogółem,kobiety,65 i więcej,3392559
+2013,ogółem,kobiety,0-15,3000544
+2013,ogółem,kobiety,16-19,847219
+2013,ogółem,kobiety,20-64,12526944
+2013,ogółem,kobiety,65 i więcej,3491417
+2014,ogółem,kobiety,0-15,2991156
+2014,ogółem,kobiety,16-19,809311
+2014,ogółem,kobiety,20-64,12457700
+2014,ogółem,kobiety,65 i więcej,3600626
+2015,ogółem,kobiety,0-15,2984526
+2015,ogółem,kobiety,16-19,780687
+2015,ogółem,kobiety,20-64,12365056
+2015,ogółem,kobiety,65 i więcej,3708979
+2016,ogółem,kobiety,0-15,2988775
+2016,ogółem,kobiety,16-19,757383
+2016,ogółem,kobiety,20-64,12260587
+2016,ogółem,kobiety,65 i więcej,3833081
+2017,ogółem,kobiety,0-15,3007302
+2017,ogółem,kobiety,16-19,736958
+2017,ogółem,kobiety,20-64,12146806
+2017,ogółem,kobiety,65 i więcej,3949317
+2018,ogółem,kobiety,0-15,3025046
+2018,ogółem,kobiety,16-19,718932
+2018,ogółem,kobiety,20-64,12022008
+2018,ogółem,kobiety,65 i więcej,4063276
+2019,ogółem,kobiety,0-15,3038795
+2019,ogółem,kobiety,16-19,704550
+2019,ogółem,kobiety,20-64,11893804
+2019,ogółem,kobiety,65 i więcej,4178375
+2020,ogółem,kobiety,0-15,3068120
+2020,ogółem,kobiety,16-19,683055
+2020,ogółem,kobiety,20-64,11682930
+2020,ogółem,kobiety,65 i więcej,4237297
+2021,ogółem,kobiety,0-15,3056735
+2021,ogółem,kobiety,16-19,683731
+2021,ogółem,kobiety,20-64,11538481
+2021,ogółem,kobiety,65 i więcej,4305840
+2022,ogółem,kobiety,0-15,3023821
+2022,ogółem,kobiety,16-19,697539
+2022,ogółem,kobiety,20-64,11393865
+2022,ogółem,kobiety,65 i więcej,4401781
+2023,ogółem,kobiety,0-15,2965256
+2023,ogółem,kobiety,16-19,723363
+2023,ogółem,kobiety,20-64,11258284
+2023,ogółem,kobiety,65 i więcej,4507206
+2024,ogółem,kobiety,0-15,2882021
+2024,ogółem,kobiety,16-19,760858
+2024,ogółem,kobiety,20-64,11138073
+2024,ogółem,kobiety,65 i więcej,4601108
+2025,ogółem,kobiety,0-15,2789953
+2025,ogółem,kobiety,16-19,794989
+2025,ogółem,kobiety,20-64,11042799
+2025,ogółem,kobiety,65 i więcej,4677865
+2003,ogółem,mężczyźni,0-15,3662538
+2003,ogółem,mężczyźni,16-19,1295343
+2003,ogółem,mężczyźni,20-64,11655049
+2003,ogółem,mężczyźni,65 i więcej,1873500
+2004,ogółem,mężczyźni,0-15,3551934
+2004,ogółem,mężczyźni,16-19,1239301
+2004,ogółem,mężczyźni,20-64,11780875
+2004,ogółem,mężczyźni,65 i więcej,1898143
+2005,ogółem,mężczyźni,0-15,3452830
+2005,ogółem,mężczyźni,16-19,1186254
+2005,ogółem,mężczyźni,20-64,11895518
+2005,ogółem,mężczyźni,65 i więcej,1919253
+2006,ogółem,mężczyźni,0-15,3360846
+2006,ogółem,mężczyźni,16-19,1152027
+2006,ogółem,mężczyźni,20-64,11980283
+2006,ogółem,mężczyźni,65 i więcej,1933619
+2007,ogółem,mężczyźni,0-15,3283399
+2007,ogółem,mężczyźni,16-19,1126357
+2007,ogółem,mężczyźni,20-64,12065448
+2007,ogółem,mężczyźni,65 i więcej,1936297
+2008,ogółem,mężczyźni,0-15,3236472
+2008,ogółem,mężczyźni,16-19,1092971
+2008,ogółem,mężczyźni,20-64,12145281
+2008,ogółem,mężczyźni,65 i więcej,1940202
+2009,ogółem,mężczyźni,0-15,3204037
+2009,ogółem,mężczyźni,16-19,1056132
+2009,ogółem,mężczyźni,20-64,12224143
+2009,ogółem,mężczyźni,65 i więcej,1944430
+2010,ogółem,mężczyźni,0-15,3226767
+2010,ogółem,mężczyźni,16-19,1014952
+2010,ogółem,mężczyźni,20-64,12452215
+2010,ogółem,mężczyźni,65 i więcej,1959191
+2011,ogółem,mężczyźni,0-15,3203069
+2011,ogółem,mężczyźni,16-19,964653
+2011,ogółem,mężczyźni,20-64,12466627
+2011,ogółem,mężczyźni,65 i więcej,2020228
+2012,ogółem,mężczyźni,0-15,3183344
+2012,ogółem,mężczyźni,16-19,924979
+2012,ogółem,mężczyźni,20-64,12445857
+2012,ogółem,mężczyźni,65 i więcej,2095154
+2013,ogółem,mężczyźni,0-15,3162363
+2013,ogółem,mężczyźni,16-19,885609
+2013,ogółem,mężczyźni,20-64,12400372
+2013,ogółem,mężczyźni,65 i więcej,2181191
+2014,ogółem,mężczyźni,0-15,3153072
+2014,ogółem,mężczyźni,16-19,849109
+2014,ogółem,mężczyźni,20-64,12344207
+2014,ogółem,mężczyźni,65 i więcej,2273421
+2015,ogółem,mężczyźni,0-15,3146656
+2015,ogółem,mężczyźni,16-19,820411
+2015,ogółem,mężczyźni,20-64,12263485
+2015,ogółem,mężczyźni,65 i więcej,2367439
+2016,ogółem,mężczyźni,0-15,3151062
+2016,ogółem,mężczyźni,16-19,795910
+2016,ogółem,mężczyźni,20-64,12175870
+2016,ogółem,mężczyźni,65 i więcej,2470324
+2017,ogółem,mężczyźni,0-15,3170792
+2017,ogółem,mężczyźni,16-19,774903
+2017,ogółem,mężczyźni,20-64,12076550
+2017,ogółem,mężczyźni,65 i więcej,2570930
+2018,ogółem,mężczyźni,0-15,3190637
+2018,ogółem,mężczyźni,16-19,755620
+2018,ogółem,mężczyźni,20-64,11966545
+2018,ogółem,mężczyźni,65 i więcej,2669084
+2019,ogółem,mężczyźni,0-15,3205983
+2019,ogółem,mężczyźni,16-19,740679
+2019,ogółem,mężczyźni,20-64,11851746
+2019,ogółem,mężczyźni,65 i więcej,2768644
+2020,ogółem,mężczyźni,0-15,3235607
+2020,ogółem,mężczyźni,16-19,717800
+2020,ogółem,mężczyźni,20-64,11649287
+2020,ogółem,mężczyźni,65 i więcej,2814468
+2021,ogółem,mężczyźni,0-15,3223852
+2021,ogółem,mężczyźni,16-19,718859
+2021,ogółem,mężczyźni,20-64,11510904
+2021,ogółem,mężczyźni,65 i więcej,2869302
+2022,ogółem,mężczyźni,0-15,3188989
+2022,ogółem,mężczyźni,16-19,733105
+2022,ogółem,mężczyźni,20-64,11375553
+2022,ogółem,mężczyźni,65 i więcej,2951674
+2023,ogółem,mężczyźni,0-15,3126883
+2023,ogółem,mężczyźni,16-19,760222
+2023,ogółem,mężczyźni,20-64,11252606
+2023,ogółem,mężczyźni,65 i więcej,3042688
+2024,ogółem,mężczyźni,0-15,3040961
+2024,ogółem,mężczyźni,16-19,797963
+2024,ogółem,mężczyźni,20-64,11144161
+2024,ogółem,mężczyźni,65 i więcej,3123942
+2025,ogółem,mężczyźni,0-15,2944704
+2025,ogółem,mężczyźni,16-19,833190
+2025,ogółem,mężczyźni,20-64,11058893
+2025,ogółem,mężczyźni,65 i więcej,3190117
+2003,ogółem,ogółem,0-15,7151285
+2003,ogółem,ogółem,16-19,2534552
+2003,ogółem,ogółem,20-64,23553452
+2003,ogółem,ogółem,65 i więcej,4951319
+2004,ogółem,ogółem,0-15,6932843
+2004,ogółem,ogółem,16-19,2424868
+2004,ogółem,ogółem,20-64,23797851
+2004,ogółem,ogółem,65 i więcej,5018273
+2005,ogółem,ogółem,0-15,6738365
+2005,ogółem,ogółem,16-19,2320093
+2005,ogółem,ogółem,20-64,24022774
+2005,ogółem,ogółem,65 i więcej,5075823
+2006,ogółem,ogółem,0-15,6557147
+2006,ogółem,ogółem,16-19,2253333
+2006,ogółem,ogółem,20-64,24198489
+2006,ogółem,ogółem,65 i więcej,5116510
+2007,ogółem,ogółem,0-15,6405286
+2007,ogółem,ogółem,16-19,2203871
+2007,ogółem,ogółem,20-64,24375108
+2007,ogółem,ogółem,65 i więcej,5131376
+2008,ogółem,ogółem,0-15,6311659
+2008,ogółem,ogółem,16-19,2138074
+2008,ogółem,ogółem,20-64,24539856
+2008,ogółem,ogółem,65 i więcej,5146287
+2009,ogółem,ogółem,0-15,6245626
+2009,ogółem,ogółem,16-19,2066214
+2009,ogółem,ogółem,20-64,24694019
+2009,ogółem,ogółem,65 i więcej,5161470
+2010,ogółem,ogółem,0-15,6293157
+2010,ogółem,ogółem,16-19,1986949
+2010,ogółem,ogółem,20-64,25059351
+2010,ogółem,ogółem,65 i więcej,5190409
+2011,ogółem,ogółem,0-15,6244229
+2011,ogółem,ogółem,16-19,1889472
+2011,ogółem,ogółem,20-64,25079731
+2011,ogółem,ogółem,65 i więcej,5325015
+2012,ogółem,ogółem,0-15,6204961
+2012,ogółem,ogółem,16-19,1810315
+2012,ogółem,ogółem,20-64,25030310
+2012,ogółem,ogółem,65 i więcej,5487713
+2013,ogółem,ogółem,0-15,6162907
+2013,ogółem,ogółem,16-19,1732828
+2013,ogółem,ogółem,20-64,24927316
+2013,ogółem,ogółem,65 i więcej,5672608
+2014,ogółem,ogółem,0-15,6144228
+2014,ogółem,ogółem,16-19,1658420
+2014,ogółem,ogółem,20-64,24801907
+2014,ogółem,ogółem,65 i więcej,5874047
+2015,ogółem,ogółem,0-15,6131182
+2015,ogółem,ogółem,16-19,1601098
+2015,ogółem,ogółem,20-64,24628541
+2015,ogółem,ogółem,65 i więcej,6076418
+2016,ogółem,ogółem,0-15,6139837
+2016,ogółem,ogółem,16-19,1553293
+2016,ogółem,ogółem,20-64,24436457
+2016,ogółem,ogółem,65 i więcej,6303405
+2017,ogółem,ogółem,0-15,6178094
+2017,ogółem,ogółem,16-19,1511861
+2017,ogółem,ogółem,20-64,24223356
+2017,ogółem,ogółem,65 i więcej,6520247
+2018,ogółem,ogółem,0-15,6215683
+2018,ogółem,ogółem,16-19,1474552
+2018,ogółem,ogółem,20-64,23988553
+2018,ogółem,ogółem,65 i więcej,6732360
+2019,ogółem,ogółem,0-15,6244778
+2019,ogółem,ogółem,16-19,1445229
+2019,ogółem,ogółem,20-64,23745550
+2019,ogółem,ogółem,65 i więcej,6947019
+2020,ogółem,ogółem,0-15,6303727
+2020,ogółem,ogółem,16-19,1400855
+2020,ogółem,ogółem,20-64,23332217
+2020,ogółem,ogółem,65 i więcej,7051765
+2021,ogółem,ogółem,0-15,6280587
+2021,ogółem,ogółem,16-19,1402590
+2021,ogółem,ogółem,20-64,23049385
+2021,ogółem,ogółem,65 i więcej,7175142
+2022,ogółem,ogółem,0-15,6212810
+2022,ogółem,ogółem,16-19,1430644
+2022,ogółem,ogółem,20-64,22769418
+2022,ogółem,ogółem,65 i więcej,7353455
+2023,ogółem,ogółem,0-15,6092139
+2023,ogółem,ogółem,16-19,1483585
+2023,ogółem,ogółem,20-64,22510890
+2023,ogółem,ogółem,65 i więcej,7549894
+2024,ogółem,ogółem,0-15,5922982
+2024,ogółem,ogółem,16-19,1558821
+2024,ogółem,ogółem,20-64,22282234
+2024,ogółem,ogółem,65 i więcej,7725050
+2025,ogółem,ogółem,0-15,5734657
+2025,ogółem,ogółem,16-19,1628179
+2025,ogółem,ogółem,20-64,22101692
+2025,ogółem,ogółem,65 i więcej,7867982
+2003,wieś,kobiety,0-15,1567929
+2003,wieś,kobiety,16-19,493582
+2003,wieś,kobiety,20-64,4087124
+2003,wieś,kobiety,65 i więcej,1218927
+2004,wieś,kobiety,0-15,1523333
+2004,wieś,kobiety,16-19,477918
+2004,wieś,kobiety,20-64,4155719
+2004,wieś,kobiety,65 i więcej,1224823
+2005,wieś,kobiety,0-15,1481332
+2005,wieś,kobiety,16-19,465707
+2005,wieś,kobiety,20-64,4224425
+2005,wieś,kobiety,65 i więcej,1227501
+2006,wieś,kobiety,0-15,1439703
+2006,wieś,kobiety,16-19,459729
+2006,wieś,kobiety,20-64,4288513
+2006,wieś,kobiety,65 i więcej,1225651
+2007,wieś,kobiety,0-15,1402838
+2007,wieś,kobiety,16-19,457717
+2007,wieś,kobiety,20-64,4357793
+2007,wieś,kobiety,65 i więcej,1218435
+2008,wieś,kobiety,0-15,1375196
+2008,wieś,kobiety,16-19,452785
+2008,wieś,kobiety,20-64,4423736
+2008,wieś,kobiety,65 i więcej,1211361
+2009,wieś,kobiety,0-15,1351358
+2009,wieś,kobiety,16-19,443760
+2009,wieś,kobiety,20-64,4485144
+2009,wieś,kobiety,65 i więcej,1202797
+2010,wieś,kobiety,0-15,1370218
+2010,wieś,kobiety,16-19,437725
+2010,wieś,kobiety,20-64,4574804
+2010,wieś,kobiety,65 i więcej,1196062
+2011,wieś,kobiety,0-15,1353909
+2011,wieś,kobiety,16-19,425346
+2011,wieś,kobiety,20-64,4613426
+2011,wieś,kobiety,65 i więcej,1205579
+2012,wieś,kobiety,0-15,1339878
+2012,wieś,kobiety,16-19,405816
+2012,wieś,kobiety,20-64,4653654
+2012,wieś,kobiety,65 i więcej,1220661
+2013,wieś,kobiety,0-15,1326988
+2013,wieś,kobiety,16-19,389249
+2013,wieś,kobiety,20-64,4684365
+2013,wieś,kobiety,65 i więcej,1240313
+2014,wieś,kobiety,0-15,1315958
+2014,wieś,kobiety,16-19,371318
+2014,wieś,kobiety,20-64,4702208
+2014,wieś,kobiety,65 i więcej,1263123
+2015,wieś,kobiety,0-15,1304601
+2015,wieś,kobiety,16-19,355526
+2015,wieś,kobiety,20-64,4711617
+2015,wieś,kobiety,65 i więcej,1285774
+2016,wieś,kobiety,0-15,1300174
+2016,wieś,kobiety,16-19,344702
+2016,wieś,kobiety,20-64,4716638
+2016,wieś,kobiety,65 i więcej,1313760
+2017,wieś,kobiety,0-15,1301849
+2017,wieś,kobiety,16-19,333661
+2017,wieś,kobiety,20-64,4711191
+2017,wieś,kobiety,65 i więcej,1338513
+2018,wieś,kobiety,0-15,1304333
+2018,wieś,kobiety,16-19,324325
+2018,wieś,kobiety,20-64,4701820
+2018,wieś,kobiety,65 i więcej,1363277
+2019,wieś,kobiety,0-15,1304397
+2019,wieś,kobiety,16-19,315969
+2019,wieś,kobiety,20-64,4685966
+2019,wieś,kobiety,65 i więcej,1389757
+2020,wieś,kobiety,0-15,1374514
+2020,wieś,kobiety,16-19,318805
+2020,wieś,kobiety,20-64,4560998
+2020,wieś,kobiety,65 i więcej,1419507
+2021,wieś,kobiety,0-15,1368711
+2021,wieś,kobiety,16-19,321126
+2021,wieś,kobiety,20-64,4536211
+2021,wieś,kobiety,65 i więcej,1434883
+2022,wieś,kobiety,0-15,1354513
+2022,wieś,kobiety,16-19,323723
+2022,wieś,kobiety,20-64,4515758
+2022,wieś,kobiety,65 i więcej,1463737
+2023,wieś,kobiety,0-15,1328989
+2023,wieś,kobiety,16-19,330880
+2023,wieś,kobiety,20-64,4490425
+2023,wieś,kobiety,65 i więcej,1500311
+2024,wieś,kobiety,0-15,1290412
+2024,wieś,kobiety,16-19,344353
+2024,wieś,kobiety,20-64,4461112
+2024,wieś,kobiety,65 i więcej,1532166
+2025,wieś,kobiety,0-15,1249936
+2025,wieś,kobiety,16-19,356646
+2025,wieś,kobiety,20-64,4444583
+2025,wieś,kobiety,65 i więcej,1562366
+2003,wieś,mężczyźni,0-15,1644272
+2003,wieś,mężczyźni,16-19,523664
+2003,wieś,mężczyźni,20-64,4375139
+2003,wieś,mężczyźni,65 i więcej,766582
+2004,wieś,mężczyźni,0-15,1598076
+2004,wieś,mężczyźni,16-19,508736
+2004,wieś,mężczyźni,20-64,4445801
+2004,wieś,mężczyźni,65 i więcej,769343
+2005,wieś,mężczyźni,0-15,1554517
+2005,wieś,mężczyźni,16-19,495627
+2005,wieś,mężczyźni,20-64,4514189
+2005,wieś,mężczyźni,65 i więcej,770017
+2006,wieś,mężczyźni,0-15,1511678
+2006,wieś,mężczyźni,16-19,489450
+2006,wieś,mężczyźni,20-64,4574109
+2006,wieś,mężczyźni,65 i więcej,767768
+2007,wieś,mężczyźni,0-15,1473922
+2007,wieś,mężczyźni,16-19,486683
+2007,wieś,mężczyźni,20-64,4640662
+2007,wieś,mężczyźni,65 i więcej,760706
+2008,wieś,mężczyźni,0-15,1446578
+2008,wieś,mężczyźni,16-19,481038
+2008,wieś,mężczyźni,20-64,4703364
+2008,wieś,mężczyźni,65 i więcej,753637
+2009,wieś,mężczyźni,0-15,1422797
+2009,wieś,mężczyźni,16-19,471405
+2009,wieś,mężczyźni,20-64,4765322
+2009,wieś,mężczyźni,65 i więcej,746559
+2010,wieś,mężczyźni,0-15,1442310
+2010,wieś,mężczyźni,16-19,463225
+2010,wieś,mężczyźni,20-64,4893251
+2010,wieś,mężczyźni,65 i więcej,735766
+2011,wieś,mężczyźni,0-15,1426390
+2011,wieś,mężczyźni,16-19,446962
+2011,wieś,mężczyźni,20-64,4933236
+2011,wieś,mężczyźni,65 i więcej,747771
+2012,wieś,mężczyźni,0-15,1411684
+2012,wieś,mężczyźni,16-19,428956
+2012,wieś,mężczyźni,20-64,4969968
+2012,wieś,mężczyźni,65 i więcej,766393
+2013,wieś,mężczyźni,0-15,1397632
+2013,wieś,mężczyźni,16-19,412211
+2013,wieś,mężczyźni,20-64,4995877
+2013,wieś,mężczyźni,65 i więcej,791115
+2014,wieś,mężczyźni,0-15,1386261
+2014,wieś,mężczyźni,16-19,395505
+2014,wieś,mężczyźni,20-64,5009856
+2014,wieś,mężczyźni,65 i więcej,818021
+2015,wieś,mężczyźni,0-15,1375514
+2015,wieś,mężczyźni,16-19,380167
+2015,wieś,mężczyźni,20-64,5011276
+2015,wieś,mężczyźni,65 i więcej,846335
+2016,wieś,mężczyźni,0-15,1370725
+2016,wieś,mężczyźni,16-19,368022
+2016,wieś,mężczyźni,20-64,5010442
+2016,wieś,mężczyźni,65 i więcej,879037
+2017,wieś,mężczyźni,0-15,1372160
+2017,wieś,mężczyźni,16-19,356123
+2017,wieś,mężczyźni,20-64,4998502
+2017,wieś,mężczyźni,65 i więcej,912306
+2018,wieś,mężczyźni,0-15,1375790
+2018,wieś,mężczyźni,16-19,345876
+2018,wieś,mężczyźni,20-64,4981720
+2018,wieś,mężczyźni,65 i więcej,946763
+2019,wieś,mężczyźni,0-15,1376606
+2019,wieś,mężczyźni,16-19,336835
+2019,wieś,mężczyźni,20-64,4958002
+2019,wieś,mężczyźni,65 i więcej,981978
+2020,wieś,mężczyźni,0-15,1450718
+2020,wieś,mężczyźni,16-19,338039
+2020,wieś,mężczyźni,20-64,4831121
+2020,wieś,mężczyźni,65 i więcej,1017587
+2021,wieś,mężczyźni,0-15,1445944
+2021,wieś,mężczyźni,16-19,338702
+2021,wieś,mężczyźni,20-64,4795842
+2021,wieś,mężczyźni,65 i więcej,1042271
+2022,wieś,mężczyźni,0-15,1431061
+2022,wieś,mężczyźni,16-19,341696
+2022,wieś,mężczyźni,20-64,4765941
+2022,wieś,mężczyźni,65 i więcej,1079972
+2023,wieś,mężczyźni,0-15,1404247
+2023,wieś,mężczyźni,16-19,350812
+2023,wieś,mężczyźni,20-64,4733025
+2023,wieś,mężczyźni,65 i więcej,1121272
+2024,wieś,mężczyźni,0-15,1364495
+2024,wieś,mężczyźni,16-19,364710
+2024,wieś,mężczyźni,20-64,4695844
+2024,wieś,mężczyźni,65 i więcej,1160028
+2025,wieś,mężczyźni,0-15,1322719
+2025,wieś,mężczyźni,16-19,377888
+2025,wieś,mężczyźni,20-64,4670880
+2025,wieś,mężczyźni,65 i więcej,1195088
+2003,wieś,ogółem,0-15,3212201
+2003,wieś,ogółem,16-19,1017246
+2003,wieś,ogółem,20-64,8462263
+2003,wieś,ogółem,65 i więcej,1985509
+2004,wieś,ogółem,0-15,3121409
+2004,wieś,ogółem,16-19,986654
+2004,wieś,ogółem,20-64,8601520
+2004,wieś,ogółem,65 i więcej,1994166
+2005,wieś,ogółem,0-15,3035849
+2005,wieś,ogółem,16-19,961334
+2005,wieś,ogółem,20-64,8738614
+2005,wieś,ogółem,65 i więcej,1997518
+2006,wieś,ogółem,0-15,2951381
+2006,wieś,ogółem,16-19,949179
+2006,wieś,ogółem,20-64,8862622
+2006,wieś,ogółem,65 i więcej,1993419
+2007,wieś,ogółem,0-15,2876760
+2007,wieś,ogółem,16-19,944400
+2007,wieś,ogółem,20-64,8998455
+2007,wieś,ogółem,65 i więcej,1979141
+2008,wieś,ogółem,0-15,2821774
+2008,wieś,ogółem,16-19,933823
+2008,wieś,ogółem,20-64,9127100
+2008,wieś,ogółem,65 i więcej,1964998
+2009,wieś,ogółem,0-15,2774155
+2009,wieś,ogółem,16-19,915165
+2009,wieś,ogółem,20-64,9250466
+2009,wieś,ogółem,65 i więcej,1949356
+2010,wieś,ogółem,0-15,2812528
+2010,wieś,ogółem,16-19,900950
+2010,wieś,ogółem,20-64,9468055
+2010,wieś,ogółem,65 i więcej,1931828
+2011,wieś,ogółem,0-15,2780299
+2011,wieś,ogółem,16-19,872308
+2011,wieś,ogółem,20-64,9546662
+2011,wieś,ogółem,65 i więcej,1953350
+2012,wieś,ogółem,0-15,2751562
+2012,wieś,ogółem,16-19,834772
+2012,wieś,ogółem,20-64,9623622
+2012,wieś,ogółem,65 i więcej,1987054
+2013,wieś,ogółem,0-15,2724620
+2013,wieś,ogółem,16-19,801460
+2013,wieś,ogółem,20-64,9680242
+2013,wieś,ogółem,65 i więcej,2031428
+2014,wieś,ogółem,0-15,2702219
+2014,wieś,ogółem,16-19,766823
+2014,wieś,ogółem,20-64,9712064
+2014,wieś,ogółem,65 i więcej,2081144
+2015,wieś,ogółem,0-15,2680115
+2015,wieś,ogółem,16-19,735693
+2015,wieś,ogółem,20-64,9722893
+2015,wieś,ogółem,65 i więcej,2132109
+2016,wieś,ogółem,0-15,2670899
+2016,wieś,ogółem,16-19,712724
+2016,wieś,ogółem,20-64,9727080
+2016,wieś,ogółem,65 i więcej,2192797
+2017,wieś,ogółem,0-15,2674009
+2017,wieś,ogółem,16-19,689784
+2017,wieś,ogółem,20-64,9709693
+2017,wieś,ogółem,65 i więcej,2250819
+2018,wieś,ogółem,0-15,2680123
+2018,wieś,ogółem,16-19,670201
+2018,wieś,ogółem,20-64,9683540
+2018,wieś,ogółem,65 i więcej,2310040
+2019,wieś,ogółem,0-15,2681003
+2019,wieś,ogółem,16-19,652804
+2019,wieś,ogółem,20-64,9643968
+2019,wieś,ogółem,65 i więcej,2371735
+2020,wieś,ogółem,0-15,2825232
+2020,wieś,ogółem,16-19,656844
+2020,wieś,ogółem,20-64,9392119
+2020,wieś,ogółem,65 i więcej,2437094
+2021,wieś,ogółem,0-15,2814655
+2021,wieś,ogółem,16-19,659828
+2021,wieś,ogółem,20-64,9332053
+2021,wieś,ogółem,65 i więcej,2477154
+2022,wieś,ogółem,0-15,2785574
+2022,wieś,ogółem,16-19,665419
+2022,wieś,ogółem,20-64,9281699
+2022,wieś,ogółem,65 i więcej,2543709
+2023,wieś,ogółem,0-15,2733236
+2023,wieś,ogółem,16-19,681692
+2023,wieś,ogółem,20-64,9223450
+2023,wieś,ogółem,65 i więcej,2621583
+2024,wieś,ogółem,0-15,2654907
+2024,wieś,ogółem,16-19,709063
+2024,wieś,ogółem,20-64,9156956
+2024,wieś,ogółem,65 i więcej,2692194
+2025,wieś,ogółem,0-15,2572655
+2025,wieś,ogółem,16-19,734534
+2025,wieś,ogółem,20-64,9115463
+2025,wieś,ogółem,65 i więcej,2757454

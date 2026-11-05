@@ -1,0 +1,253 @@
+---
+title: "Praca z danymi"
+format: html
+---
+
+Kod do rozdziału „Praca z danymi” skryptu do ćwiczeń.
+Plik wymaga folderu `dane/` z plikami `gapminder_regions.csv` i `lasy_bld.csv` w tym samym folderze
+co ten plik `.qmd` oraz pakietu `tidyverse`.
+
+## Obiekty, funkcje i argumenty
+
+```{r}
+# zaokrąglenie liczby 81,757 do 1 miejsca po przecinku
+round(81.757, 1)
+```
+
+```{r}
+# zapisanie wyniku jako obiektu o nazwie wynik
+wynik <- round(81.757, 1)
+
+# wyświetlenie zawartości obiektu
+wynik
+```
+
+## Wczytanie i przegląd danych
+
+```{r}
+#| message: false
+# wczytanie pakietu tidyverse: zestawu pakietów do przetwarzania danych (dplyr, tidyr)
+# i tworzenia wykresów (ggplot2)
+library(tidyverse)
+
+# wczytanie pliku CSV i zapisanie tabeli jako obiektu o nazwie dane;
+# ścieżka jest względna wobec folderu z plikiem .qmd
+dane <- read.csv("dane/gapminder_regions.csv", encoding = "UTF-8")
+```
+
+```{r}
+# pierwsze 6 wierszy tabeli
+head(dane)
+```
+
+```{r}
+# struktura tabeli: liczba obserwacji i kolumn, typ i pierwsze wartości każdej kolumny
+str(dane)
+```
+
+```{r}
+# zamiana kolumny kontynent z tekstu na zmienną typu factor (zmienną jakościową)
+dane$kontynent <- as.factor(dane$kontynent)
+```
+
+```{r}
+# liczba obserwacji w każdej kategorii zmiennej jakościowej
+summary(dane$kontynent)
+```
+
+```{r}
+# kolumna tekstowa (bez zamiany na factor): summary() podaje tylko liczbę wartości i typ
+summary(dane$subregion_pl)
+```
+
+```{r}
+# minimum, kwartyle, mediana, średnia i maksimum zmiennej ilościowej
+summary(dane$lifeExp)
+```
+
+## Potok przetwarzania danych
+
+```{r}
+# obserwacje z 2007 roku zapisane jako nowy obiekt dane2007
+dane2007 <- dane |>
+  filter(year == 2007)
+```
+
+```{r}
+# liczba wierszy tabeli wyjściowej i tabeli po wyborze obserwacji
+nrow(dane)
+nrow(dane2007)
+```
+
+### Potok zmieniający tabelę: zamiana typu kolumn
+
+```{r}
+# zamiana wszystkich kolumn tekstowych na zmienne typu factor (zmienne jakościowe)
+dane <- dane |>
+  mutate(across(where(is.character), as.factor))
+```
+
+```{r}
+# ponowne utworzenie tabeli dane2007 z tabeli z kolumnami typu factor
+dane2007 <- dane |>
+  filter(year == 2007)
+```
+
+## Braki danych
+
+```{r}
+# liczba obserwacji w grupach dochodowych; pierwsza pozycja to kategoria bez nazwy
+summary(dane$income_grp_pl)
+```
+
+```{r}
+# wczytanie pliku z zamianą pustych pól na NA (obiekt pomocniczy dane_na)
+dane_na <- read.csv("dane/gapminder_regions.csv",
+                    encoding = "UTF-8", na.strings = "") |>
+  mutate(across(where(is.character), as.factor))
+
+summary(dane_na$income_grp_pl)
+```
+
+## Wybór obserwacji i zmiennych
+
+**Które kraje Europy miały w 2007 roku najwyższą oczekiwaną długość życia?**
+
+```{r}
+# pięć krajów Europy o najwyższej oczekiwanej długości życia w 2007 roku
+dane |>
+  filter(kontynent == "Europa", year == 2007) |>   # obserwacje: Europa, rok 2007
+  select(kraj, lifeExp) |>                          # zmienne: kraj i lifeExp
+  arrange(desc(lifeExp)) |>                         # porządek malejący lifeExp
+  head(5)                                           # pierwsze 5 wierszy
+```
+
+**Jaka była średnia i mediana oczekiwanej długości życia w Europie w 2007 roku?**
+
+```{r}
+# liczba krajów, średnia i mediana oczekiwanej długości życia w Europie w 2007 roku
+dane |>
+  filter(kontynent == "Europa", year == 2007) |>
+  summarise(
+    n = n(),                              # liczba obserwacji
+    srednia = round(mean(lifeExp), 1),    # średnia arytmetyczna
+    mediana = round(median(lifeExp), 1)   # mediana
+  )
+```
+
+## Podsumowanie w grupach
+
+**Jak różniła się oczekiwana długość życia między kontynentami w 2007 roku?**
+
+```{r}
+# statystyki oczekiwanej długości życia w 2007 roku w podziale na kontynenty
+dane2007 |>
+  group_by(kontynent) |>                  # podział na grupy według kontynentu
+  summarise(
+    n = n(),
+    srednia = round(mean(lifeExp), 1),
+    mediana = round(median(lifeExp), 1),
+    minimum = min(lifeExp),
+    maksimum = max(lifeExp)
+  )
+```
+
+## Nowa zmienna
+
+**Jak zmieniała się oczekiwana długość życia i liczba ludności Polski w latach 1952–2007?**
+
+```{r}
+# oczekiwana długość życia i liczba ludności Polski w kolejnych latach
+dane |>
+  filter(kraj == "Polska") |>                 # obserwacje dla Polski
+  mutate(pop_mln = round(pop / 1000000, 1)) |>    # nowa zmienna: ludność w mln
+  select(year, lifeExp, pop_mln) |>           # wybrane zmienne
+  arrange(year)                               # porządek rosnący według roku
+```
+
+## Zmiana postaci tabeli
+
+**O ile wzrosła oczekiwana długość życia w krajach Europy między 1952 a 2007 rokiem?**
+
+```{r}
+# tabela w postaci szerokiej: kraje Europy, wartości z lat 1952 i 2007 w osobnych kolumnach
+europa_szer <- dane |>
+  filter(kontynent == "Europa", year %in% c(1952, 2007)) |>
+  select(kraj, year, lifeExp) |>
+  pivot_wider(names_from = year, values_from = lifeExp, names_prefix = "r")
+
+europa_szer
+```
+
+```{r}
+# przyrost oczekiwanej długości życia; 5 krajów o największym przyroście
+europa_szer |>
+  mutate(przyrost = round(r2007 - r1952, 1)) |>
+  arrange(desc(przyrost)) |>
+  head(5)
+```
+
+```{r}
+# powrót do postaci długiej: kolumny r1952 i r2007 zamienione na pary rok–wartość
+europa_szer |>
+  pivot_longer(cols = c(r1952, r2007), names_to = "rok",
+               names_prefix = "r", values_to = "lifeExp") |>
+  head(4)
+```
+
+## Łączenie tabel
+
+**Które kraje Europy Wschodniej miały w 2007 roku oczekiwaną długość życia wyższą od
+średniej dla swojego subregionu?**
+
+```{r}
+# średnia oczekiwana długość życia w 2007 roku w każdym subregionie
+srednie_subregionow <- dane2007 |>
+  group_by(subregion_pl) |>
+  summarise(srednia_subregionu = mean(lifeExp))
+```
+
+```{r}
+# kraje Europy Wschodniej: oczekiwana długość życia, średnia subregionu i różnica
+dane2007 |>
+  filter(subregion_pl == "Europa Wschodnia") |>
+  left_join(srednie_subregionow, by = "subregion_pl") |>     # dołączenie średniej
+  mutate(roznica = round(lifeExp - srednia_subregionu, 1),  # różnica z wartości dokładnej
+         srednia_subregionu = round(srednia_subregionu, 1)) |>
+  select(kraj, lifeExp, srednia_subregionu, roznica) |>
+  arrange(desc(roznica))
+```
+
+## Modyfikowanie potoku
+
+**Jak różnił się PKB per capita między grupami dochodowymi w 2007 roku?**
+
+```{r}
+# statystyki PKB per capita w 2007 roku w podziale na grupy dochodowe
+dane2007 |>
+  group_by(income_grp_pl) |>
+  summarise(
+    n = n(),
+    srednia = round(mean(gdpPercap)),
+    mediana = round(median(gdpPercap))
+  )
+```
+
+## Wczytanie własnych danych
+
+```{r}
+# plik CSV: kolumny rozdzielone średnikiem, przecinek jako separator dziesiętny
+lasy <- read.csv("dane/lasy_bld.csv", sep = ";", dec = ",", encoding = "UTF-8",
+                 colClasses = c(Kod = "character"))
+
+# kontrola typów kolumn
+str(lasy)
+```
+
+```{r}
+#| eval: false
+# plik Excel: pierwszy arkusz, z pominięciem dwóch wierszy nad nagłówkiem tabeli
+library(readxl)
+moje_dane <- read_excel("dane/moje_dane.xlsx", sheet = 1, skip = 2)
+str(moje_dane)
+```

@@ -1,0 +1,404 @@
+# Raport statystyczny {#sec-raport}
+
+Raport statystyczny przedstawia opracowanie danych: pytania badawcze, opis danych,
+zastosowane metody, wyniki w postaci tekstu, tabel i rycin oraz wnioski. Rozdział
+opisuje budowę raportu i zasady opracowania jego części. Przykłady w tym rozdziale pochodzą
+z raportu o oczekiwanej długości życia na świecie w 2007 roku (@sec-dl2007), którego pełny tekst
+zawiera @sec-r-przyklad. Rozbudowany raport przedstawia @sec-europa. Techniczne zasady pracy
+z dokumentem `.qmd` przedstawia @sec-quarto.
+
+## Struktura raportu {#sec-r-struktura}
+
+| Część | Zawartość |
+|---|---|
+| Wprowadzenie | temat i zakres raportu; pytania badawcze z odesłaniem do sekcji wyników |
+| Dane | źródło, zakres czasowy i przestrzenny, jednostka obserwacji, liczba obserwacji, zmienne, braki danych |
+| Metody | metody analizy danych, formy prezentacji wyników, oprogramowanie |
+| Wyniki | podsekcje odpowiadające pytaniom badawczym: tekst, tabele i ryciny |
+| Wnioski | odpowiedzi na pytania badawcze, z odesłaniem do sekcji wyników |
+| Źródła | źródło danych i publikacje, na które powołuje się raport |
+
+Każdą z tych części zawiera raport przedstawiony w @sec-r-przyklad. Kolejne sekcje opisują
+zawartość każdej części.
+
+### Wprowadzenie
+
+Wprowadzenie określa, czego dotyczy raport: badaną cechę, obiekty, okres i obszar.
+Kończy się listą **pytań badawczych**. Pytanie badawcze:
+
+- dotyczy zmiennych dostępnych w zbiorze danych;
+- jest sformułowane tak, że odpowiedź na nie da się odczytać z tabeli albo wykresu;
+- ma w raporcie odpowiadającą mu sekcję wyników i odpowiedź we wnioskach.
+
+Przykład z raportu:
+
+> Czy oczekiwana długość życia różniła się między kontynentami i jak była zróżnicowana
+> wewnątrz nich? (@sec-2007-kontynenty)
+
+Odesłanie w nawiasie wskazuje sekcję wyników, która odpowiada na pytanie (@sec-q-odsylacze).
+
+### Dane
+
+Opis danych pozwala czytelnikowi ocenić, czego dotyczą wyniki. Zawiera:
+
+- **źródło danych** — instytucję albo projekt, adres strony, warunki udostępniania
+  (licencję), jeżeli są znane;
+- **zakres** — okres, obszar i **jednostkę obserwacji**, np. „kraj w danym roku”
+  albo „stacja w danym miesiącu”;
+- **liczbę obserwacji** wykorzystanych w raporcie, z podaniem, jak powstała, np.
+  „142 kraje w 2007 roku, czyli 142 obserwacje”;
+- **zmienne** wykorzystane w raporcie — w tabeli: nazwa kolumny, znaczenie, jednostka
+  i skala pomiarowa;
+- **braki danych** — których zmiennych i obserwacji dotyczą i jak potraktowano je
+  w analizie.
+
+### Metody
+
+Metody opisują, jak opracowano dane:
+
+- **metody analizy danych** — które statystyki obliczono, dla jakich grup i w jakim celu,
+  np. miary położenia opisujące poziom cechy i miary zmienności opisujące zróżnicowanie;
+  przy analizie korelacji — wybrany współczynnik z uzasadnieniem wyboru;
+- **formy prezentacji wyników** — jakie tabele i wykresy wykorzystano i co przedstawia
+  każdy z nich;
+- **oprogramowanie** — R i wykorzystane pakiety.
+
+### Wyniki
+
+Wyniki dzielą się na podsekcje odpowiadające pytaniom badawczym. Tytuł podsekcji
+określa jej treść, np. „Zróżnicowanie między kontynentami”.
+Każda podsekcja składa się z tekstu oraz tabel i rycin, do których tekst się odwołuje
+(@sec-r-tekst).
+
+### Wnioski
+
+Wnioski zbierają wyniki wszystkich podsekcji i odpowiadają na każde pytanie badawcze,
+z odesłaniem do sekcji wyników i rycin. Wnioski podają najważniejsze wartości liczbowe,
+na których opiera się odpowiedź. Jeżeli dane mają ograniczenia, które wpływają
+na odpowiedź — np. braki danych albo mała liczba obserwacji w grupie — wnioski je
+wskazują.
+
+## Tekst, tabele i ryciny {#sec-r-tekst}
+
+**Tekst poprzedza tabelę albo rycinę i odwołuje się do niej.** Każda tabela i rycina
+zamieszczona w raporcie jest omówiona w tekście. Odwołanie ma postać odsyłacza
+(`@tbl-…`, `@fig-…`), który Quarto zamienia na numer tabeli albo ryciny (@sec-q-odsylacze).
+
+Ryciny:
+
+- mają podpis (`fig-cap`) określający, co przedstawia rycina, czego dotyczy, gdzie i kiedy,
+  np. „Oczekiwana długość życia według kontynentu, 2007”;
+- mają opisane osie: nazwa zmiennej i jednostka, np. „Oczekiwana długość życia [lata]”;
+- mają legendę z tytułem, jeżeli kolor, wielkość albo kształt przedstawiają zmienną;
+- stosują te same kolory dla tych samych kategorii na wszystkich rycinach raportu
+  — np. dany kontynent ma ten sam kolor na każdej rycinie.
+
+Tabele:
+
+- mają podpis (`tbl-cap`) z jednostkami wartości;
+- mają nazwy kolumn w języku polskim (`knitr::kable(col.names = …)`);
+- podają wartości zaokrąglone do liczby miejsc po przecinku odpowiedniej dla danych,
+  np. do 1 miejsca dla oczekiwanej długości życia w latach.
+
+Liczby podane w tekście są takie same jak w tabelach i na rycinach, z tymi samymi
+zaokrągleniami i jednostkami. Różnice oblicza się z wartości niezaokrąglonych, dlatego mogą
+się różnić o 0,1 od różnicy wartości podanych w tabeli. W tekście separatorem dziesiętnym
+jest przecinek.
+
+Kod R w raporcie jest ukryty albo zwinięty, aby nie przerywał tekstu:
+
+- `echo: false` w ustawieniu `execute` nagłówka YAML ukrywa kod wszystkich bloków
+  (@sec-q-yaml);
+- `code-fold: true` w nagłówku YAML zwija kod — czytelnik rozwija go przyciskiem nad
+  wynikiem. Tak przygotowano pliki raportów (@sec-r-wzorce).
+
+## Opis wyniku i interpretacja {#sec-r-interpretacja}
+
+Tekst w sekcji **Wyniki** opisuje, co przedstawia tabela albo rycina: wartości, różnice
+i porównania, z podaniem liczb. Może też objaśniać wynik pojęciami statystycznymi
+(@sec-statystyki, @sec-korelacja). Przykład z raportu (@sec-2007-kontynenty):
+
+> W 2007 roku oczekiwana długość życia różniła się między kontynentami. Najwyższa średnia
+> dotyczy Australii (80,7 roku) i Europy (77,9 roku), najniższa — Afryki (54,8 roku). […]
+> Największy współczynnik zmienności ma Afryka (17,6%) i Azja (11,1%), najmniejszy — Australia
+> (0,9%) i Europa (3,6%).
+
+**Wnioski** łączą wyniki różnych sekcji i odpowiadają na pytania badawcze. Przykład
+z wniosków tego samego raportu (@sec-eu-wnioski):
+
+> Oczekiwana długość życia różniła się między kontynentami: średnia w Afryce była o 23,0 roku
+> niższa niż w Europie. Największy współczynnik zmienności miały Afryka (17,6%) i Azja (11,1%)
+> (@sec-2007-kontynenty). Statystyki dla Australii opisują dwa kraje.
+
+Opis i wnioski opierają się wyłącznie na wynikach przedstawionych w raporcie.
+Wyjaśnienie przyczyn zjawiska, np. powodów wzrostu oczekiwanej długości życia, wymaga
+źródeł spoza danych — publikacji, na które raport się powołuje i które wymienia
+w części „Źródła”.
+
+## Przykłady raportów {#sec-r-wzorce}
+
+| Rozdział | Co pokazuje jako wzorzec |
+|---|---|
+| @sec-dlugosc, @sec-dl2007 i @sec-meteo | obliczenia dla poszczególnych etapów raportu i interpretacja wyników; pliki `kod/20_raport.qmd`, `kod/21_raport.qmd` i `kod/22_raport.qmd` zawierają wyłącznie elementy raportu |
+| @sec-europa | pełny raport: pytania badawcze z odesłaniami, opis danych, metody analizy i formy prezentacji, wyniki w podsekcjach, wnioski z odpowiedziami na pytania |
+| Warunki meteorologiczne wybranej stacji (@sec-za-dane) | raport dla jednej stacji: dobór wykresów do zmiennych opisany w metodach |
+| Porównanie trzech stacji (@sec-tr-dane) | raport porównujący kilka obiektów |
+
+Sekcje „Jak czytać ten rozdział”, „Od przykładu do raportu”, „Wybór sposobu prezentacji wyników”,
+„Obliczenia w R” i „Zadania do samodzielnego wykonania” są częściami dydaktycznymi skryptu
+i nie należą do raportu.
+
+## Lista kontrolna {#sec-r-lista}
+
+Przed oddaniem raportu:
+
+- [ ] dokument renderuje się od początku bez błędów (@sec-q-bledy);
+- [ ] nagłówek YAML zawiera `embed-resources: true` — raport HTML jest jednym plikiem
+  (@sec-q-render);
+- [ ] każde pytanie badawcze ma sekcję wyników i odpowiedź we wnioskach;
+- [ ] statystyki opisowe w tabeli obejmują miary położenia i zmienności zmiennych
+  ilościowych, obliczone w podziale na grupy;
+- [ ] analiza korelacji zawiera współczynnik z uzasadnieniem wyboru, wynik testu istotności
+  z jego odczytaniem oraz wykres rozrzutu albo korelogram;
+- [ ] raport zawiera co najmniej trzy typy wykresów dobrane do skal pomiarowych zmiennych;
+- [ ] opis danych podaje źródło, liczbę obserwacji, znaczenie i skale pomiarowe zmiennych
+  oraz braki danych;
+- [ ] każda tabela i rycina ma podpis i jest omówiona w tekście, a tekst poprzedza ją
+  i zawiera odsyłacz;
+- [ ] osie rycin są opisane nazwą zmiennej i jednostką;
+- [ ] liczby w tekście są zgodne z tabelami i rycinami;
+- [ ] kod zawiera komentarze opisujące, co robi każdy blok.
+
+## Przykład dokumentu raportu {#sec-r-przyklad}
+
+Poniższy plik `.qmd` jest kompletnym raportem na danych Gapminder, opracowanym na podstawie
+@sec-dl2007 i uzupełnionym o analizę korelacji. Zawiera
+wszystkie elementy opisane w tym rozdziale i w @sec-quarto:
+
+- **nagłówek YAML** — tytuł, autor, język polski, format HTML ze spisem treści,
+  numeracją sekcji, zapisem w jednym pliku (`embed-resources`) i zwiniętym kodem
+  (`code-fold`); ustawienie `execute` ukrywa komunikaty i ostrzeżenia we wszystkich
+  blokach;
+- **sekcje i podsekcje** (`##`, `###`) z etykietami `{#sec-…}`, do których odwołują się
+  pytania badawcze i wnioski;
+- **tabelę zmiennych** zapisaną w składni Markdown;
+- **bloki kodu** z etykietami i podpisami: tabele (`tbl-`, `tbl-cap`), ryciny
+  (`fig-`, `fig-cap`, `fig-width`, `fig-height`) i test istotności;
+- **odsyłacze** w tekście do tabeli, rycin i sekcji.
+
+Plik jest dostępny jako `kod/21_raport.qmd` w paczce `pliki_kursu.zip` (rozdział
+„O skrypcie”). Folder `kod/` z paczki zawiera podfolder `dane/`, dlatego plik renderuje się
+przyciskiem **Render** (@sec-q-render).
+Plik można wykorzystać jako szablon własnego raportu: zmienić dane, pytania badawcze,
+zmienne i wykresy, zachowując układ części.
+
+`````markdown
+---
+title: "Oczekiwana długość życia na świecie w 2007 roku"
+author: "Imię Nazwisko"
+lang: pl
+crossref:
+  fig-title: "Rycina"
+  fig-prefix: "Rycina"
+format:
+  html:
+    toc: true
+    number-sections: true
+    embed-resources: true
+    code-fold: true
+    code-summary: "Kod"
+execute:
+  message: false
+  warning: false
+---
+
+## Wprowadzenie {#sec-wprowadzenie}
+
+Raport opisuje oczekiwaną długość życia w chwili urodzenia w 142 krajach świata
+w 2007 roku: jej poziom na świecie, różnice między kontynentami i wewnątrz nich,
+rozmieszczenie przestrzenne oraz związek z PKB per capita.
+
+Raport odpowiada na pytania badawcze:
+
+1. Jaka była typowa oczekiwana długość życia na świecie w 2007 roku? (@sec-swiat)
+2. Czy oczekiwana długość życia różniła się między kontynentami i jak była zróżnicowana
+   wewnątrz nich? (@sec-kontynenty)
+3. Jak rozmieszczone są przestrzennie kraje o krótkiej i długiej oczekiwanej długości
+   życia? (@sec-mapa)
+4. Czy oczekiwana długość życia była związana z PKB per capita? (@sec-pkb)
+
+## Dane {#sec-dane}
+
+Analiza wykorzystuje dane Gapminder (<https://www.gapminder.org/data/>), dostępne w R
+w pakiecie `gapminder` (licencja CC0). Jednostką obserwacji jest kraj; raport obejmuje
+142 kraje w 2007 roku, czyli 142 obserwacje. Zmienne wykorzystane w raporcie nie zawierają
+braków danych. Granice państw pochodzą z bazy Natural Earth (domena publiczna).
+
+| Kolumna | Znaczenie | Jednostka | Skala pomiarowa |
+|---|---|---|---|
+| `kraj` | nazwa kraju | — | nominalna |
+| `kontynent` | kontynent | — | nominalna |
+| `lifeExp` | oczekiwana długość życia w chwili urodzenia | lata | ilorazowa |
+| `gdpPercap` | PKB per capita | USD | ilorazowa |
+| `Kod` | trzyliterowy kod kraju (ISO 3166-1 alfa-3) | — | nominalna |
+
+```{{r}}
+#| label: dane
+# pakiety i dane: obserwacje z 2007 roku
+library(tidyverse)
+library(sf)
+library(rnaturalearth)
+
+dane <- read.csv("dane/gapminder_regions.csv", encoding = "UTF-8") |>
+  mutate(across(where(is.character), as.factor))
+dane2007 <- dane |>
+  filter(year == 2007)
+```
+
+## Metody {#sec-metody}
+
+Poziom i zróżnicowanie oczekiwanej długości życia opisano miarami położenia (średnia,
+mediana, kwartyle) i zmienności (odchylenie standardowe, współczynnik zmienności), dla
+wszystkich krajów i w podziale na kontynenty. Rozkład w kontynentach przedstawiono na wykresie
+pudełkowym, a rozmieszczenie przestrzenne — na kartogramie z klasami co 10 lat. Związek
+z PKB per capita oceniono na wykresie rozrzutu i współczynnikiem korelacji rang Spearmana
+— zależność widoczna na wykresie jest monotoniczna, ale nieliniowa. Obliczenia wykonano w R
+z pakietami `tidyverse`, `sf` i `rnaturalearth`.
+
+## Wyniki {#sec-wyniki}
+
+### Oczekiwana długość życia na świecie {#sec-swiat}
+
+W 2007 roku oczekiwana długość życia w chwili urodzenia mieściła się w przedziale od 39,6
+do 82,6 roku (@tbl-swiat). Średnia dla 142 krajów wynosiła 67,0 roku. Mediana (71,9 roku)
+wskazuje, że w połowie krajów oczekiwana długość życia przekraczała 71,9 roku. W połowie
+krajów mieściła się w przedziale od 57,2 do 76,4 roku.
+
+```{{r}}
+#| label: tbl-swiat
+#| tbl-cap: "Statystyki opisowe oczekiwanej długości życia, 142 kraje, 2007 [lata]"
+# statystyki dla wszystkich krajów
+dane2007 |>
+  summarise(minimum = min(lifeExp),
+            q1 = quantile(lifeExp, 0.25),
+            mediana = median(lifeExp),
+            srednia = mean(lifeExp),
+            q3 = quantile(lifeExp, 0.75),
+            maksimum = max(lifeExp)) |>
+  knitr::kable(digits = 1,
+               col.names = c("Minimum", "Pierwszy kwartyl", "Mediana", "Średnia",
+                             "Trzeci kwartyl", "Maksimum"))
+```
+
+### Zróżnicowanie między kontynentami {#sec-kontynenty}
+
+Statystyki opisowe w podziale na kontynenty przedstawia @tbl-kontynenty, a rozkład
+w kontynentach — @fig-kontynenty. Najwyższa średnia dotyczy Australii (80,7 roku)
+i Europy (77,9 roku), najniższa — Afryki (54,8 roku). Różnica między średnią dla Europy
+i dla Afryki, obliczona z wartości niezaokrąglonych, wynosi 23,0 roku. Mediana dla Afryki
+(52,9 roku) leży poniżej pierwszego kwartyla wszystkich pozostałych kontynentów.
+
+Największy współczynnik zmienności ma Afryka (17,6%) i Azja (11,1%), najmniejszy — Australia
+(0,9%) i Europa (3,6%). Wartości odstające odnotowano dla dwóch krajów: Afganistanu
+(43,8 roku) i Haiti (60,9 roku). Statystyki grupy „Australia” wyznaczono z dwóch krajów,
+dlatego nie są porównywalne z grupami liczącymi od 25 do 52 krajów.
+
+```{{r}}
+#| label: tbl-kontynenty
+#| tbl-cap: "Statystyki opisowe oczekiwanej długości życia według kontynentu, 2007 [lata; współczynnik zmienności: %]"
+# statystyki w podziale na kontynenty
+dane2007 |>
+  group_by(kontynent) |>
+  summarise(n = n(),
+            srednia = mean(lifeExp),
+            mediana = median(lifeExp),
+            minimum = min(lifeExp),
+            maksimum = max(lifeExp),
+            odch_std = sd(lifeExp),
+            wsp_zmiennosci = sd(lifeExp) / mean(lifeExp) * 100) |>
+  knitr::kable(digits = 1,
+               col.names = c("Kontynent", "Liczba krajów", "Średnia", "Mediana", "Minimum",
+                             "Maksimum", "Odchylenie standardowe", "Współczynnik zmienności"))
+```
+
+```{{r}}
+#| label: fig-kontynenty
+#| fig-cap: "Oczekiwana długość życia według kontynentu, 2007"
+#| fig-width: 7
+#| fig-height: 4
+# wykres pudełkowy; wartości odstające w kolorze czerwonym
+ggplot(dane2007, aes(x = kontynent, y = lifeExp)) +
+  geom_boxplot(outlier.colour = "red") +
+  labs(x = NULL, y = "Oczekiwana długość życia [lata]") +
+  theme_bw(base_size = 12)
+```
+
+### Rozmieszczenie przestrzenne {#sec-mapa}
+
+Kraje o oczekiwanej długości życia poniżej 50 lat leżą — z wyjątkiem Afganistanu — w Afryce
+Wschodniej, Zachodniej, Środkowej i Południowej (@fig-mapa). Większość krajów Afryki Północnej
+należy do klasy 70–80 lat. Do klasy 80 lat i więcej należą m.in. kraje Europy Zachodniej
+i Północnej, Japonia, Australia, Nowa Zelandia i Kanada. Kolorem szarym oznaczono obszary, których
+nie obejmuje zbiór danych, m.in. Rosję, Ukrainę i Kazachstan.
+
+```{{r}}
+#| label: fig-mapa
+#| fig-cap: "Oczekiwana długość życia w 2007 roku; kolor szary — brak danych"
+#| fig-width: 9
+#| fig-height: 5.5
+# granice państw połączone z danymi według kodu kraju
+swiat <- ne_countries(scale = "medium", returnclass = "sf")
+mapa <- swiat |>
+  left_join(dane2007, by = c("iso_a3_eh" = "Kod"))
+
+# kartogram: kolor państwa odpowiada klasie oczekiwanej długości życia
+ggplot(mapa) +
+  geom_sf(aes(fill = lifeExp), colour = "grey40", linewidth = 0.1) +
+  scale_fill_fermenter(breaks = c(50, 60, 70, 80), palette = "YlGnBu",
+                       direction = 1, na.value = "grey85") +
+  labs(fill = "Oczekiwana długość\nżycia [lata]") +
+  theme_void(base_size = 12) +
+  theme(legend.position = "bottom")
+```
+
+### Związek z PKB per capita {#sec-pkb}
+
+Wraz ze wzrostem PKB per capita rosła oczekiwana długość życia, a przyrost był coraz mniejszy
+(@fig-pkb). Współczynnik korelacji rang Spearmana wynosił 0,86 i był istotny statystycznie
+(p < 0,001).
+
+```{{r}}
+#| label: fig-pkb
+#| fig-cap: "Oczekiwana długość życia a PKB per capita, 142 kraje, 2007"
+#| fig-width: 7
+#| fig-height: 4
+# wykres rozrzutu
+ggplot(dane2007, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point() +
+  labs(x = "PKB per capita [USD]", y = "Oczekiwana długość życia [lata]") +
+  theme_bw(base_size = 12)
+```
+
+```{{r}}
+#| label: korelacja
+# test istotności współczynnika korelacji rang Spearmana
+cor.test(dane2007$gdpPercap, dane2007$lifeExp, method = "spearman")
+```
+
+## Wnioski {#sec-wnioski}
+
+1. W 2007 roku oczekiwana długość życia wynosiła od 39,6 do 82,6 roku, przy średniej 67,0 roku
+   i medianie 71,9 roku (@sec-swiat).
+2. Oczekiwana długość życia różniła się między kontynentami: średnia w Afryce była o 23,0 roku
+   niższa niż w Europie. Największy współczynnik zmienności miały Afryka (17,6%) i Azja (11,1%)
+   (@sec-kontynenty). Statystyki dla Australii opisują dwa kraje.
+3. Kraje o oczekiwanej długości życia poniżej 50 lat leżą — z wyjątkiem Afganistanu — w Afryce
+   (@sec-mapa).
+4. Korelacja oczekiwanej długości życia i PKB per capita była dodatnia, bardzo wysoka
+   i istotna statystycznie (ρ = 0,86; @sec-pkb).
+
+## Źródła {#sec-zrodla}
+
+- Gapminder: <https://www.gapminder.org/data/>.
+- Natural Earth: <https://www.naturalearthdata.com/>.
+`````

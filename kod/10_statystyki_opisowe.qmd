@@ -1,0 +1,130 @@
+---
+title: "Statystyki opisowe — obliczenia w R"
+format: html
+---
+
+Kod do rozdziału „Statystyki opisowe” skryptu do ćwiczeń.
+Plik wymaga folderu `dane/` z plikiem `gapminder_regions.csv` w tym samym folderze
+co ten plik `.qmd` oraz pakietu `tidyverse`.
+
+## Obliczenia w R
+
+```{r}
+#| message: false
+# wczytanie pakietów i danych; obserwacje z 2007 roku
+library(tidyverse)
+dane <- read.csv("dane/gapminder_regions.csv", encoding = "UTF-8") |>
+  mutate(across(where(is.character), as.factor))
+dane2007 <- dane |>
+  filter(year == 2007)
+```
+
+### Podsumowanie zmiennej: summary()
+
+```{r}
+# podsumowanie oczekiwanej długości życia w 2007 roku
+summary(dane2007$lifeExp)
+```
+
+### Pojedyncze statystyki
+
+```{r}
+# średnia arytmetyczna
+mean(dane2007$lifeExp)
+
+# mediana
+median(dane2007$lifeExp)
+
+# odchylenie standardowe
+sd(dane2007$lifeExp)
+
+# rozstęp kwartylowy (Q3 − Q1)
+IQR(dane2007$lifeExp)
+
+# wartość najmniejsza i największa
+min(dane2007$lifeExp)
+max(dane2007$lifeExp)
+```
+
+```{r}
+# pierwszy kwartyl
+quantile(dane2007$lifeExp, 0.25)
+
+# pierwszy kwartyl, mediana i trzeci kwartyl
+quantile(dane2007$lifeExp, c(0.25, 0.5, 0.75))
+```
+
+### Braki danych w obliczeniach
+
+```{r}
+# przykładowy wektor: dwie wartości i jeden brak danych
+x <- c(72.5, 81.8, NA)
+
+# bez na.rm: wynik nieznany
+mean(x)
+
+# z na.rm = TRUE: średnia z dwóch znanych wartości
+mean(x, na.rm = TRUE)
+```
+
+```{r}
+summary(x)
+```
+
+### Wiele statystyk w jednej tabeli: summarise()
+
+```{r}
+#| R.options:
+#|   width: 120
+# miary położenia i zmienności oczekiwanej długości życia w 2007 roku
+dane2007 |>
+  summarise(
+    n = n(),                                          # liczba obserwacji
+    srednia = round(mean(lifeExp), 1),                # średnia arytmetyczna
+    mediana = round(median(lifeExp), 1),              # mediana
+    q1 = round(quantile(lifeExp, 0.25), 1),           # pierwszy kwartyl
+    q3 = round(quantile(lifeExp, 0.75), 1),           # trzeci kwartyl
+    minimum = round(min(lifeExp), 1),                 # wartość najmniejsza
+    maksimum = round(max(lifeExp), 1),                # wartość największa
+    rozstep = round(max(lifeExp) - min(lifeExp), 1),  # rozstęp
+    odch_std = round(sd(lifeExp), 1),                 # odchylenie standardowe
+    iqr = round(IQR(lifeExp), 1),                     # rozstęp kwartylowy
+    wsp_zm = round(sd(lifeExp) / mean(lifeExp) * 100, 1)  # współczynnik zmienności [%]
+  )
+```
+
+### Statystyki w grupach
+
+```{r}
+# statystyki oczekiwanej długości życia w 2007 roku w podziale na kontynenty
+dane2007 |>
+  group_by(kontynent) |>
+  summarise(
+    n = n(),
+    srednia = round(mean(lifeExp), 1),
+    mediana = round(median(lifeExp), 1),
+    odch_std = round(sd(lifeExp), 1),
+    wsp_zm = round(sd(lifeExp) / mean(lifeExp) * 100, 1)
+  )
+```
+
+### Cecha jakościowa: liczność i udział
+
+```{r}
+# liczba krajów i udział [%] w grupach dochodowych w 2007 roku
+dane2007 |>
+  group_by(income_grp_pl) |>
+  summarise(n = n()) |>
+  mutate(udzial = round(n / sum(n) * 100, 1))
+```
+
+### Tabela kontyngencji
+
+```{r}
+# liczba krajów według kontynentu i grupy dochodowej w 2007 roku
+dane2007 |>
+  filter(income_grp_pl != "") |>                       # pominięcie krajów bez grupy
+  group_by(kontynent, income_grp_pl) |>
+  summarise(n = n(), .groups = "drop") |>
+  pivot_wider(names_from = income_grp_pl, values_from = n, values_fill = 0)
+```

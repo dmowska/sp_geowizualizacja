@@ -1,0 +1,314 @@
+---
+title: "Dane przestrzenne w R"
+format: html
+---
+
+Kod do rozdziału „Dane przestrzenne w R” skryptu do ćwiczeń.
+Plik wymaga folderu `dane/` z plikami `wojewodztwa.gpkg`, `meteo2020.csv`,
+`gapminder_regions.csv` i `lasy_bld.csv` w tym samym folderze co ten plik `.qmd` oraz pakietów
+`tidyverse`, `sf`, `rnaturalearth`, `rnaturalearthdata`, `geodata`, `patchwork`, `ggrepel`
+i `scatterpie`. Funkcja `gadm()` przy pierwszym uruchomieniu pobiera granice powiatów do folderu
+`granice/` i wymaga połączenia z internetem.
+
+## Obiekt `sf`
+
+```{r}
+#| message: false
+# pakiety: tidyverse (przetwarzanie danych i wykresy), sf (dane przestrzenne)
+library(tidyverse)
+library(sf)
+
+# wczytanie pliku z danymi przestrzennymi
+wojewodztwa <- st_read("dane/wojewodztwa.gpkg", quiet = TRUE)
+
+# nazwa i kod województwa w pierwszych trzech wierszach; kolumna geometrii pozostaje w wyniku
+wojewodztwa |>
+  select(name_pl, iso_3166_2) |>
+  head(3)
+```
+
+## Wczytanie granic
+
+```{r}
+#| message: false
+# pakiety z granicami: państwa świata (Natural Earth) i jednostki administracyjne (GADM)
+library(rnaturalearth)
+library(geodata)
+
+# granice państw świata jako obiekt sf
+swiat <- ne_countries(scale = "medium", returnclass = "sf")
+
+# granice powiatów Polski: zapis w folderze granice/ i zamiana na obiekt sf
+granice_powiatow <- gadm(country = "POL", level = 2, path = "granice/") |>
+  st_as_sf()
+
+nrow(swiat)
+nrow(granice_powiatow)
+```
+
+## Współrzędne w tabeli: zamiana na punkty
+
+```{r}
+# wczytanie danych meteorologicznych
+meteo <- read.csv("dane/meteo2020.csv", encoding = "UTF-8")
+
+# jeden wiersz dla stacji: roczna suma opadu i liczba dni z deszczem i ze śniegiem
+stacje <- meteo |>
+  group_by(stacja, X_dlugosc_geogr, Y_szerokosc_geogr) |>
+  summarise(opad_rok = sum(opad_suma),
+            dni_deszcz_rok = sum(dni_deszcz),
+            dni_snieg_rok = sum(dni_snieg),
+            .groups = "drop")
+
+# zamiana tabeli na obiekt sf: punkty o współrzędnych geograficznych
+stacje_sf <- st_as_sf(stacje,
+                      coords = c("X_dlugosc_geogr", "Y_szerokosc_geogr"),
+                      crs = 4326)
+
+stacje_sf |>
+  select(stacja, opad_rok) |>
+  head(3)
+```
+
+```{r}
+#| label: fig-sf-stacje
+#| fig-cap: "Stacje synoptyczne na tle granic województw"
+#| fig-height: 5
+# dwie warstwy: granice województw i punkty stacji
+ggplot() +
+  geom_sf(data = wojewodztwa, fill = "grey95") +
+  geom_sf(data = stacje_sf, colour = "red", size = 2) +
+  theme_bw(base_size = 13)
+```
+
+## Łączenie granic z tabelą atrybutów
+
+```{r}
+# dane Gapminder z 2007 roku: 142 kraje
+dane <- read.csv("dane/gapminder_regions.csv", encoding = "UTF-8")
+dane2007 <- dane |>
+  filter(year == 2007)
+
+# granice jako pierwsza tabela: wynik pozostaje obiektem sf
+mapa <- swiat |>
+  left_join(dane2007, by = c("iso_a3_eh" = "Kod"))
+
+# liczba wierszy wyniku i liczba wierszy z dołączonymi danymi
+nrow(mapa)
+sum(!is.na(mapa$lifeExp))
+```
+
+## Układ współrzędnych
+
+```{r}
+#| label: fig-sf-crs
+#| fig-cap: "Granice województw w układzie WGS 84 (A) i PUWG 1992 (B)"
+#| fig-width: 9
+#| fig-height: 4.5
+#| message: false
+# pakiet do łączenia wykresów w jedną rycinę
+library(patchwork)
+
+p_4326 <- ggplot(wojewodztwa) +
+  geom_sf(fill = "grey95") +
+  theme_bw(base_size = 11)
+
+p_2180 <- ggplot(wojewodztwa) +
+  geom_sf(fill = "grey95") +
+  coord_sf(crs = 2180, datum = 2180) +  # rysowanie i siatka w układzie PUWG 1992
+  theme_bw(base_size = 11)
+
+p_4326 + p_2180 + plot_annotation(tag_levels = "A")
+```
+
+## Obliczenia na obiektach `sf`
+
+```{r}
+# powierzchnia lasów w powiatach; kod TERYT wczytany jako tekst, aby zachować zero na początku
+lasy <- read.csv("dane/lasy_bld.csv", sep = ";", dec = ",", encoding = "UTF-8",
+                 colClasses = c(Kod = "character")) |>
+  select(Kod, Nazwa, lasy2025)
+
+# granice połączone z danymi, wybór województwa i obliczenie lesistości
+powiaty <- granice_powiatow |>
+  mutate(Kod = paste0(CC_2, "000")) |>  # 7-cyfrowy kod, jak w tabeli lasy
+  left_join(lasy, by = "Kod") |>
+  filter(NAME_1 == "Wielkopolskie") |>
+  st_transform(2180) |>  # układ współrzędnych w metrach
+  mutate(pow_ha = as.numeric(st_area(geometry)) / 10000,   # powierzchnia: m² → ha
+         lesistosc = lasy2025 / pow_ha * 100)              # lesistość [%]
+
+# statystyki opisowe: usunięcie geometrii przed obliczeniami
+powiaty |>
+  st_drop_geometry() |>
+  summarise(liczba = n(), srednia = mean(lesistosc), mediana = median(lesistosc))
+```
+
+## Mapy w `ggplot2`
+
+### Najprostsza mapa
+
+```{r}
+#| label: fig-sf-mapa-prosta
+#| fig-cap: "Państwa świata: warstwa geom_sf() bez dodatkowych opcji"
+#| fig-width: 9
+#| fig-height: 5
+# obiekt sf jako dane i jedna warstwa
+ggplot(mapa) +
+  geom_sf()
+```
+
+### Mapa: kolor obszaru
+
+```{r}
+#| label: fig-sf-mapa-swiat
+#| fig-cap: "Oczekiwana długość życia w 2007 roku"
+#| fig-width: 9
+#| fig-height: 5.5
+# kolor państwa odpowiada klasie oczekiwanej długości życia
+ggplot(mapa) +
+  geom_sf(aes(fill = lifeExp), colour = "grey40", linewidth = 0.1) +
+  scale_fill_fermenter(breaks = c(50, 60, 70, 80),     # granice klas
+                       palette = "YlGnBu",             # paleta sekwencyjna Brewer
+                       direction = 1,  # ciemniejszy kolor = wyższa wartość
+                       na.value = "grey85") +          # kolor obszarów bez danych
+  labs(fill = "Oczekiwana długość\nżycia [lata]") +
+  theme_void(base_size = 13) +                         # motyw bez osi i siatki
+  theme(legend.position = "bottom")
+```
+
+### Kartogram: wartość względna w obszarze
+
+```{r}
+#| label: fig-sf-kartogram
+#| fig-cap: "Lesistość powiatów województwa wielkopolskiego w 2025 roku"
+#| fig-height: 5
+ggplot(powiaty) +
+  geom_sf(aes(fill = lesistosc), colour = "grey40", linewidth = 0.2) +
+  scale_fill_fermenter(breaks = seq(10, 50, by = 10),  # granice klas co 10%
+                       palette = "Greens", direction = 1) +
+  labs(fill = "Lesistość [%]") +
+  theme_void(base_size = 13)
+```
+
+### Mapa: kolor punktu
+
+```{r}
+#| label: fig-sf-punkty
+#| fig-cap: "Średnia temperatura powietrza w styczniu i lipcu 2020 roku"
+#| fig-width: 9
+#| fig-height: 5
+# obserwacje ze stycznia i lipca jako punkty na mapie
+styczen_lipiec <- meteo |>
+  filter(miesiac %in% c(1, 7)) |>
+  st_as_sf(coords = c("X_dlugosc_geogr", "Y_szerokosc_geogr"), crs = 4326)
+
+ggplot() +
+  geom_sf(data = wojewodztwa, fill = "white") +
+  geom_sf(data = styczen_lipiec, aes(fill = temp_sr),
+          shape = 21, colour = "grey30", size = 3) +   # punkt z obwódką
+  facet_wrap(~ miesiac, labeller = as_labeller(c(`1` = "Styczeń", `7` = "Lipiec"))) +
+  scale_fill_fermenter(breaks = seq(0, 18, by = 3),
+                       palette = "RdYlBu", direction = -1,
+                       na.value = "grey60") +          # stacja bez danych
+  labs(fill = "Temperatura powietrza [°C]") +
+  theme_bw(base_size = 13)
+```
+
+### Kartodiagram: wielkość znaku
+
+```{r}
+#| label: fig-sf-kartodiagram
+#| fig-cap: "Roczna liczba dni z deszczem na stacjach synoptycznych w 2020 roku"
+#| fig-height: 5
+ggplot() +
+  geom_sf(data = wojewodztwa, fill = "grey95") +
+  geom_sf(data = stacje_sf, aes(size = dni_deszcz_rok), colour = "steelblue", alpha = 0.6) +
+  scale_size_area(max_size = 8) +  # pole punktu proporcjonalne do wartości
+  labs(size = "Liczba dni") +
+  theme_bw(base_size = 13)
+```
+
+### Etykiety na mapie
+
+```{r}
+#| label: fig-sf-etykiety
+#| fig-cap: "Wybrane stacje synoptyczne z nazwami"
+#| fig-height: 5
+#| warning: false
+# pakiet do rozmieszczania etykiet bez nakładania się
+library(ggrepel)
+
+wybrane <- stacje_sf |>
+  filter(stacja %in% c("HEL", "SUWAŁKI", "SZCZECIN", "WARSZAWA-OKĘCIE", "ZAKOPANE"))
+
+ggplot() +
+  geom_sf(data = wojewodztwa, fill = "grey95") +
+  geom_sf(data = wybrane, colour = "red", size = 2.5) +
+  geom_text_repel(data = wybrane, aes(label = stacja, geometry = geometry),
+                  stat = "sf_coordinates", size = 3.5) +
+  labs(x = NULL, y = NULL) +
+  theme_bw(base_size = 13)
+```
+
+### Kartodiagram strukturalny: wykresy kołowe
+
+```{r}
+#| label: fig-sf-kolowe
+#| fig-cap: "Dni z deszczem, ze śniegiem i bez opadu w 2020 roku"
+#| fig-height: 6
+#| message: false
+library(scatterpie)
+
+# stacje z kompletem danych; liczba dni bez opadu (2020 — rok przestępny, 366 dni)
+struktura <- stacje_sf |>
+  filter(!is.na(dni_snieg_rok)) |>
+  mutate(dni_bez_opadu_rok = 366 - dni_deszcz_rok - dni_snieg_rok)
+
+# współrzędne punktów w układzie PUWG 1992 i zwykła tabela bez geometrii
+xy <- st_coordinates(st_transform(struktura, 2180))
+struktura <- struktura |>
+  st_drop_geometry() |>
+  mutate(x = xy[, 1], y = xy[, 2])
+
+ggplot() +
+  geom_sf(data = st_transform(wojewodztwa, 2180), fill = "grey95") +
+  geom_scatterpie(data = struktura, aes(x = x, y = y),
+                  cols = c("dni_deszcz_rok", "dni_snieg_rok", "dni_bez_opadu_rok"),
+                  pie_scale = 2, colour = NA) +
+  scale_fill_manual(values = c(dni_deszcz_rok = "navy", dni_snieg_rok = "lightskyblue",
+                               dni_bez_opadu_rok = "grey80"),
+                    labels = c("deszcz", "śnieg", "bez opadu")) +
+  labs(fill = "Dni") +
+  coord_sf(crs = 2180) +
+  theme_void(base_size = 13)
+```
+
+### Wycinek mapy i połączone obszary
+
+```{r}
+#| label: fig-sf-europa
+#| fig-cap: "Oczekiwana długość życia w krajach Europy w 2007 roku; czarne linie — granice subregionów, szary kolor — kraje spoza zbioru danych"
+#| fig-height: 6
+# tylko kraje Europy ze zbioru danych
+mapa_europa <- swiat |>
+  inner_join(filter(dane2007, kontynent == "Europa"), by = c("iso_a3_eh" = "Kod"))
+
+# jeden obszar dla każdego subregionu
+subregiony <- mapa_europa |>
+  group_by(subregion_pl) |>
+  summarise(geometry = st_union(geometry))
+
+ggplot() +
+  geom_sf(data = swiat, fill = "grey85", colour = "white", linewidth = 0.2) +
+  geom_sf(data = mapa_europa, aes(fill = lifeExp), colour = "white", linewidth = 0.2) +
+  geom_sf(data = subregiony, fill = NA, colour = "black", linewidth = 0.6) +
+  scale_fill_fermenter(breaks = c(72, 74, 76, 78, 80),
+                       palette = "YlGnBu", direction = 1,
+                       limits = c(70, 82)) +  # zakres skali obejmujący wszystkie klasy
+  coord_sf(crs = 3035,                                 # odwzorowanie dla Europy
+           xlim = c(2500000, 6500000), ylim = c(1400000, 5400000)) +  # zasięg mapy [m]
+  labs(fill = "Oczekiwana długość\nżycia [lata]") +
+  theme_void(base_size = 13) +
+  theme(legend.position = "bottom")
+```

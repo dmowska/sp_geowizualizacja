@@ -1,0 +1,189 @@
+# Pakiety {#sec-pakiety}
+
+Po instalacji R zawiera pakiety podstawowe: funkcje do obliczeń, podstawowych statystyk
+i wczytywania plików. Pozostałe funkcje wykorzystywane w skrypcie pochodzą z **pakietów
+dodatkowych** — zestawów funkcji, dokumentacji i danych udostępnianych niezależnie
+od podstawowej instalacji R. Głównym źródłem pakietów jest repozytorium CRAN
+(<https://cran.r-project.org>), które w listopadzie 2026 roku zawierało ponad 25 tysięcy
+pakietów.
+
+Rozdział opisuje pakiety wykorzystywane w skrypcie. Najdokładniej omawia `dplyr`
+i `ggplot2` — dwa pakiety, z których pochodzi większość kodu w przykładach raportów.
+Tabele w rozdziale wskazują, w których miejscach skryptu użyto poszczególnych funkcji.
+
+## Instalacja i wczytanie pakietu {#sec-pak-instalacja}
+
+- Pakiet **instaluje się** jeden raz, poleceniem `install.packages("nazwa")` albo
+  w zakładce **Packages** (@sec-inst-pakiety). Pakiet zostaje zapisany na dysku.
+- Pakiet **wczytuje się** w każdej sesji pracy, poleceniem `library(nazwa)` — nazwa
+  bez cudzysłowu. Dopiero po wczytaniu funkcje pakietu są dostępne. Dlatego każdy plik
+  `.qmd` w skrypcie zawiera wywołanie `library()` przed pierwszym użyciem pakietu.
+- Zapis `pakiet::funkcja()` wywołuje funkcję pakietu bez wczytywania całego pakietu,
+  np. `knitr::kable()`. Zapis ten wskazuje też jednoznacznie, z którego pakietu pochodzi
+  funkcja.
+
+## tidyverse {#sec-pak-tidyverse}
+
+`tidyverse` (<https://www.tidyverse.org>) jest **pakietem zbiorczym**: instaluje zestaw
+pakietów do wczytywania, przetwarzania i wizualizacji danych, a polecenie
+`library(tidyverse)` wczytuje dziewięć z nich jednocześnie:
+
+| Pakiet | Zastosowanie | Użycie w skrypcie |
+|---|---|---|
+| `dplyr` | przetwarzanie tabel: wybór, porządkowanie, podsumowanie, łączenie | @sec-pak-dplyr |
+| `ggplot2` | wykresy | @sec-pak-ggplot2 |
+| `tidyr` | zmiana postaci tabeli (szeroka ↔ długa) | @sec-pd-pivot, @sec-meteo-dni |
+| `forcats` | zmienne typu factor: kolejność kategorii | @sec-meteo-temp, @sec-eu-przyrost |
+| `stringr` | operacje na tekście | @sec-eu-wybor-subregiony |
+| `tibble` | tibble — odmiana ramki danych wyświetlana z wymiarami i typami kolumn | @sec-pd-grupy |
+| `readr` | wczytywanie plików tekstowych | nieużywany (skrypt wczytuje dane funkcją `read.csv()`) |
+| `purrr` | powtarzanie operacji dla wielu elementów | nieużywany |
+| `lubridate` | daty i czas | `make_date()`, `days_in_month()` — @sec-tr-wybor |
+
+Po wczytaniu `tidyverse` konsola wyświetla listę wczytanych pakietów i ich wersji oraz
+informację o konfliktach nazw:
+
+```
+── Conflicts ──────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+```
+
+Konflikt oznacza, że dwa pakiety zawierają funkcję o tej samej nazwie. Po wczytaniu
+`tidyverse` nazwa `filter()` oznacza funkcję z pakietu `dplyr`, a nie funkcję o tej samej
+nazwie z pakietu podstawowego `stats`. Komunikat ma charakter informacyjny.
+
+Pakiety `tidyverse` stosują wspólne zasady: dane mają postać tabeli, w której wiersz to
+obserwacja, a kolumna — zmienna; funkcje przyjmują tabelę jako pierwszy argument. Dzięki
+temu funkcje różnych pakietów łączy się w jeden potok (@sec-pd-potok).
+
+## dplyr {#sec-pak-dplyr}
+
+`dplyr` (<https://dplyr.tidyverse.org>) to pakiet do przetwarzania danych w tabelach.
+Jego podstawą jest zestaw funkcji nazywanych **czasownikami** (ang. *verbs*): każda
+z nich wykonuje jedną operację na tabeli. Wszystkie czasowniki mają wspólną budowę:
+
+- pierwszy argument to tabela (ramka danych);
+- kolejne argumenty opisują operację; do kolumn tabeli odwołuje się bezpośrednio, nazwą
+  kolumny, bez znaku `$`;
+- wynikiem jest nowa tabela. Tabela wejściowa się nie zmienia — wynik, który ma zostać
+  wykorzystany dalej, przypisuje się do obiektu (@sec-pd-przypisanie).
+
+Dzięki wspólnej budowie czasowniki łączy się w potok: tabela wynikowa jednego kroku jest
+pierwszym argumentem kolejnego kroku.
+
+### Czasowniki wykorzystywane w skrypcie
+
+| Funkcja | Operacja | Użycie w skrypcie |
+|---|---|---|
+| **wiersze** | | |
+| `filter()` | wybór wierszy spełniających warunek | @sec-pd-potok, @sec-pd-wybor |
+| `arrange()` | uporządkowanie wierszy; `desc()` — porządek malejący | @sec-pd-wybor, @sec-eu-europa |
+| `slice_max()`, `slice_min()` | wybór wierszy o największych / najmniejszych wartościach | @sec-eu-przyrost |
+| **kolumny** | | |
+| `select()` | wybór kolumn | @sec-pd-wybor, @sec-meteo-korelacja |
+| `mutate()` | utworzenie nowej kolumny albo zmiana istniejącej | @sec-pd-mutate, @sec-pd-typy |
+| `across()`, `where()` | ta sama operacja na wielu kolumnach (np. wszystkich tekstowych) | @sec-pd-typy |
+| **grupy i podsumowania** | | |
+| `group_by()` | podział tabeli na grupy | @sec-pd-grupy, @sec-2007-kontynenty |
+| `summarise()` | podsumowanie: jeden wiersz dla tabeli albo dla każdej grupy | @sec-pd-wybor, @sec-swiat |
+| `n()` | liczba obserwacji (w `summarise()`) | @sec-pd-wybor |
+| `ungroup()` | usunięcie podziału na grupy | @sec-2007-kontynenty |
+| **łączenie tabel** | | |
+| `left_join()` | dołączenie kolumn drugiej tabeli według wspólnej zmiennej | @sec-pd-join, @sec-2007-mapa |
+| `inner_join()` | połączenie tabel — tylko wiersze obecne w obu tabelach | @sec-eu-europa |
+| `bind_rows()` | dołączenie wierszy jednej tabeli pod drugą | @sec-eu-europa |
+| **funkcje pomocnicze** | | |
+| `min_rank()` | numer miejsca w rankingu | @sec-eu-wybor |
+| `na_if()` | zamiana wskazanej wartości na `NA` | @sec-za-wybor |
+
+## ggplot2 {#sec-pak-ggplot2}
+
+`ggplot2` (<https://ggplot2.tidyverse.org>) to pakiet do tworzenia wykresów oparty
+na gramatyce grafiki: wykres powstaje ze złożenia niezależnych elementów łączonych
+znakiem `+`. Każdemu elementowi odpowiada rodzina funkcji o wspólnym przedrostku:
+
+| Element wykresu | Funkcje | Rola |
+|---|---|---|
+| dane i mapowanie | `ggplot()`, `aes()` | tabela z danymi; przypisanie zmiennych do cech graficznych (osie, kolor, wielkość) |
+| obiekt geometryczny | `geom_...()` | symbol, którym przedstawiane są dane: punkt, słupek, linia |
+| skala | `scale_...()` | sposób odwzorowania wartości na oś, kolor, wielkość |
+| układ współrzędnych | `coord_...()` | rozmieszczenie obiektów na płaszczyźnie wykresu |
+| panele | `facet_...()` | podział wykresu na panele według zmiennej |
+| podpisy | `labs()` | tytuły osi, legendy i wykresu |
+| motyw | `theme_...()`, `theme()` | wygląd elementów, które nie przedstawiają danych |
+
+Budowę wykresu krok po kroku pokazuje @sec-ggplot2. Teorię gramatyki grafiki opisuje
+@sec-gramatyka. Pełny opis pakietu zawiera książka *ggplot2: Elegant
+Graphics for Data Analysis* (<https://ggplot2-book.org>).
+
+### Obiekty geometryczne wykorzystywane w skrypcie
+
+| Funkcja | Wykres | Użycie w skrypcie |
+|---|---|---|
+| `geom_point()` | wykres punktowy, wykres rozrzutu | @sec-gg-kroki, @sec-eu-subregiony |
+| `geom_histogram()` | histogram | @sec-swiat |
+| `geom_density()` | wykres gęstości | @sec-eu-wybor |
+| `geom_boxplot()` | wykres pudełkowy | @sec-gg-modyfikacje, @sec-2007-kontynenty |
+| `geom_violin()` | wykres skrzypcowy | @sec-eu-wybor |
+| `geom_col()` | wykres słupkowy (wysokość słupka z danych) | @sec-za-opad, @sec-eu-przyrost |
+| `geom_line()` | wykres liniowy | @sec-za-temp, @sec-eu-przyrost |
+| `stat_summary()` | wykres wartości obliczonej w grupach, np. średniej | @sec-zmiany |
+| `geom_ribbon()` | wstęga między dwiema wartościami | @sec-za-temp |
+| `geom_tile()` | wykres kafelkowy | @sec-meteo-temp |
+| `geom_segment()` | odcinki | @sec-eu-wybor |
+| `geom_text()`, `geom_label()` | etykiety tekstowe | @sec-eu-wybor, @sec-za-wybor |
+| `geom_sf()` | mapa (obiekt przestrzenny) | @sec-2007-mapa, @sec-meteo-stacje |
+
+### Skale, panele, układ współrzędnych i motywy
+
+| Funkcja | Zastosowanie | Użycie w skrypcie |
+|---|---|---|
+| `scale_x_log10()` | skala logarytmiczna osi x | @sec-gg-kroki |
+| `scale_x_continuous()`, `scale_y_continuous()` | opis osi liczbowej (np. położenie opisów) | @sec-za-temp, @sec-tr-wybor |
+| `scale_y_discrete()`, `scale_y_reverse()` | opis osi jakościowej; odwrócenie osi | @sec-eu-wybor-subregiony, @sec-eu-wybor |
+| `scale_colour_manual()`, `scale_fill_manual()` | kolory podane ręcznie | @sec-zmiany, @sec-meteo-dni |
+| `scale_colour_brewer()`, `scale_fill_brewer()` | palety kolorów ColorBrewer dla zmiennej jakościowej | @sec-tr-dane, @sec-tr-dobowa |
+| `scale_fill_fermenter()` | palety ColorBrewer dla zmiennej ilościowej podzielonej na klasy | @sec-2007-mapa, @sec-meteo-temp |
+| `scale_size()`, `scale_shape_manual()` | wielkość i kształt punktów | @sec-meteo-dni, @sec-eu-subregiony |
+| `facet_wrap()`, `facet_grid()` | podział na panele | @sec-gg-modyfikacje, @sec-eu-wybor-subregiony |
+| `coord_sf()`, `coord_flip()` | układ współrzędnych mapy; zamiana osi | @sec-meteo-dni, @sec-tr-wybor |
+| `theme_bw()`, `theme_void()` | gotowe motywy | @sec-gg-kroki, @sec-2007-mapa |
+| `theme()` | zmiana pojedynczych elementów motywu, np. położenia legendy | @sec-zmiany |
+
+## Pozostałe pakiety {#sec-pak-pozostale}
+
+| Pakiet | Zastosowanie | Funkcje w skrypcie | Użycie w skrypcie |
+|---|---|---|---|
+| **wizualizacja** | | | |
+| `scales` | formatowanie opisów osi i legend, np. procentów | `label_percent()` | @sec-tr-wybor |
+| `GGally` | macierz wykresów rozrzutu ze współczynnikami korelacji | `ggpairs()` | @sec-meteo-korelacja |
+| `corrplot` | korelogram | `corrplot()`, `corrplot.mixed()` | @sec-wz-corrplot |
+| `Hmisc` | współczynniki korelacji z wartościami p | `rcorr()` | @sec-wz-hmisc |
+| `car` | macierz wykresów rozrzutu | `scatterplotMatrix()` | @sec-wz-macierz-pakiety |
+| `PerformanceAnalytics` | macierz wykresów rozrzutu ze współczynnikami korelacji | `chart.Correlation()` | @sec-wz-macierz-pakiety |
+| `psych` | macierz wykresów rozrzutu ze współczynnikami korelacji | `pairs.panels()` | @sec-wz-macierz-pakiety |
+| `ggrepel` | etykiety na wykresie, które na siebie nie nachodzą | `geom_text_repel()` | @sec-meteo-stacje |
+| `scatterpie` | kartodiagram strukturalny: wykresy kołowe na mapie | `geom_scatterpie()` | @sec-meteo-dni |
+| `patchwork` | łączenie kilku wykresów w jedną rycinę | `+` między wykresami, `plot_annotation()` | @sec-za-siec, @sec-eu-wybor |
+| `ggridges` | wykres grzbietowy | `geom_density_ridges()` | @sec-eu-europa |
+| `treemapify` | wykres treemap | `geom_treemap()` | @sec-eu-europa |
+| `waffle` | wykres typu waffle; pakiet opcjonalny, instalowany z serwisu GitHub (@sec-inst-pakiety) | `geom_waffle()` | @sec-a2-wartosc |
+| **dane przestrzenne** | | | |
+| `sf` | dane przestrzenne: wczytywanie warstw, układy współrzędnych, operacje na geometrii | `st_read()`, `st_as_sf()`, `st_transform()`, `st_union()`, `st_area()` | @sec-przestrzenne, @sec-meteo-stacje, @sec-eu-europa, @sec-lw-dane |
+| `rnaturalearth`, `rnaturalearthdata` | granice państw świata z zasobu Natural Earth | `ne_countries()` | @sec-2007-mapa |
+| `geodata` | pobieranie danych geograficznych, m.in. granic jednostek administracyjnych z bazy GADM; wynik w formacie pakietu `terra`, zamieniany na `sf` funkcją `st_as_sf()` | `gadm()` | @sec-lw-dane |
+| **wczytywanie i pobieranie danych** | | | |
+| `readxl` | wczytywanie plików Excel; instalowany razem z `tidyverse` | `read_excel()` | @sec-pd-wlasne |
+| `climate` | pobieranie danych meteorologicznych ze zbioru IMGW-PIB | `meteo_imgw_monthly()` | @sec-za-pobranie, @sec-tr-pobranie |
+| **dokumenty Quarto** | | | |
+| `knitr` | wykonywanie kodu R w dokumentach `.qmd`; tabele w dokumencie | `kable()` | @sec-za-dane, @sec-eu-europa |
+| `rmarkdown` | obsługa dokumentów z kodem R przy tworzeniu dokumentu przez Quarto | — | — |
+
+Pakiety z grupy „wizualizacja” współpracują z `ggplot2`. Pakiety `ggrepel`,
+`scatterpie`, `ggridges`, `treemapify` i `waffle` dodają nowe obiekty geometryczne, które dołącza się
+do wykresu znakiem `+` tak samo jak funkcje `geom_...()` pakietu `ggplot2`. Funkcja
+`ggpairs()` z pakietu `GGally` tworzy cały wykres — macierz wykresów — a pakiet
+`patchwork` łączy gotowe wykresy w jedną rycinę. Funkcje pakietu `scales` podaje się
+jako argumenty skal, np. `scale_y_continuous(labels = scales::label_percent())`. Pakiet `grid`, z którego pochodzi funkcja `unit()` (@sec-meteo-temp), jest
+instalowany razem z R.

@@ -1,0 +1,49 @@
+# Źródła informacji o wizualizacji {#sec-zrodla}
+
+Rozdział zestawia źródła wykorzystane przy opracowaniu kursu: co zawiera każde z nich
+i w jakiej sytuacji warto z niego skorzystać — przy wyborze wykresu albo przy pisaniu kodu
+`ggplot2`.
+
+## Podstawowe źródło: zasady wizualizacji {#sec-zr-podstawowe}
+
+**Wilke C.O., 2019. *Fundamentals of Data Visualization*** — <https://clauswilke.com/dataviz/>
+
+Książka (wersja autorska wydania O'Reilly, licencja CC BY-NC-ND 4.0) w trzech częściach:
+od danych do wizualizacji (estetyki, układy współrzędnych, kolor, wizualizacja ilości,
+rozkładów, proporcji, zależności i niepewności), zasady projektowania rycin (m.in.
+zasada proporcjonalnego atramentu, nakładające się punkty, błędy w użyciu koloru,
+wykresy trójwymiarowe) oraz zagadnienia dodatkowe (formaty plików, wybór oprogramowania,
+opowiadanie danymi). Rozdział „Directory of visualizations” jest katalogiem typów wykresów
+uporządkowanym według tego, co wykres przedstawia. Tekst książki nie zawiera kodu R —
+kod źródłowy rycin znajduje się w repozytorium <https://github.com/clauswilke/dataviz>.
+
+Kiedy korzystać: przy wyborze typu wykresu i ocenie, czy wykres jest czytelny; przy
+doborze kolorów.
+
+## Dobór wykresu i przykłady z kodem {#sec-zr-dobor}
+
+| Źródło | Co zawiera | Kiedy korzystać |
+|---|---|---|
+| Holtz Y., Healy C., 2018. *From Data to Viz* — <https://www.data-to-viz.com/> | drzewo decyzyjne wyboru wykresu według rodzaju danych (liczbowe, kategorie, liczbowe i kategorie, mapy, sieci, szeregi czasowe); opis każdego typu wykresu z typowymi błędami; odnośniki do kodu w R Graph Gallery | gdy wiadomo, jakie są dane, a trzeba wybrać wykres |
+| Holtz Y. *The R Graph Gallery* — <https://r-graph-gallery.com/> | ponad 400 przykładów wykresów w blisko 50 typach, każdy z kodem R (głównie `ggplot2` i `tidyverse`); uporządkowane według klasyfikacji *From Data to Viz* | gdy znany jest typ wykresu, a potrzebny jest kod |
+| Li C., 2022. *Friends Don't Let Friends Make Bad Graphs* — <https://github.com/cxli233/FriendsDontLetFriends> | 16 typowych błędów (m.in. wykres słupkowy do porównania średnich, wykres skrzypcowy przy małej liczbie obserwacji, wykres pudełkowy dla rozkładu z dwoma skupieniami, tęczowe skale kolorów) z poprawnymi alternatywami i kodem R | przy sprawdzaniu, czy wybrany wykres nie ukrywa informacji |
+| Healy K., 2026. *Data Visualization: A Practical Introduction*, wydanie 2 (wersja internetowa) — <https://socviz.co/> | podręcznik wizualizacji w `ggplot2` z kodem: zasady wizualizacji, gramatyka grafiki, panele, przetwarzanie danych, mapy (`sf`), dopracowanie wykresu | przy nauce `ggplot2` na przykładach z omówieniem |
+| Bryan J., 2019. *STAT 545*, rozdział *Do's and don'ts of making effective graphics* — <https://stat545.com/effective-graphs.html> | lista zaleceń i błędów: wykresy kołowe, słupkowe skumulowane i zgrupowane, wspólna skala, proporcje osi, oś od zera, wybór skali, łączenie punktów, przedstawianie grup | przy przeglądzie gotowego wykresu przed umieszczeniem go w raporcie |
+| BBC Visual and Data Journalism, 2019. *BBC Visual and Data Journalism cookbook for R graphics* — <https://bbc.github.io/rcookbook/> | zbiór przepisów na wykresy w R przygotowany przez dział dziennikarstwa danych BBC | przy dopracowaniu wyglądu wykresu |
+| Biecek P., 2016. *Odkrywać! Ujawniać! Objaśniać! Zbiór esejów o sztuce przedstawiania danych* — <http://biecek.pl/Eseje/index.html> | teksty o wizualizacji danych w języku polskim | jako lektura uzupełniająca w języku polskim |
+
+## ggplot2: dokumentacja {#sec-zr-ggplot2}
+
+| Źródło | Co zawiera | Kiedy korzystać |
+|---|---|---|
+| dokumentacja pakietu — <https://ggplot2.tidyverse.org/> | opis każdej funkcji z argumentami i przykładami (zakładka *Reference*), ściąga z najważniejszymi funkcjami | gdy znana jest nazwa funkcji, a potrzebny jest opis argumentów; to samo zawiera pomoc w RStudio (`?geom_point`) |
+| Wickham H., Navarro D., Pedersen T.L. *ggplot2: Elegant Graphics for Data Analysis*, wydanie 3 w przygotowaniu (wersja internetowa) — <https://ggplot2-book.org/> | podręcznik autorów pakietu: warstwy, skale, układy współrzędnych, panele, motywy, gramatyka grafiki | przy zrozumieniu, jak działa pakiet (@sec-gramatyka) |
+
+## Przykłady dobrych i złych wykresów {#sec-zr-przyklady}
+
+| Źródło | Co zawiera |
+|---|---|
+| Dark Horse Analytics, 2013. *Data Looks Better Naked* — <https://www.darkhorseanalytics.com/blog/data-looks-better-naked> | animacje pokazujące stopniowe usuwanie zbędnych elementów z wykresu (@sec-wiz-mniej) |
+| Broman K., 2018. *Creating effective figures and tables* — <https://github.com/kbroman/Talk_Graphs> | prezentacja o złych i dobrych wykresach, z zestawieniem „Top Ten Worst Graphs”; kod R rycin w repozytorium |
+| Kosara R., 2010. *Understanding pie charts* — <https://eagereyes.org/blog/2010/pie-charts> | jak odczytuje się wykres kołowy (kąt, pole), typowe błędy (wykres pierścieniowy, efekt trójwymiarowy, zbyt wiele wycinków) i lista warunków, przy których wykres kołowy jest właściwy |
+| Lima M., 2018. *Why humans love pie charts* — <https://medium.com/@mslima/why-humans-love-pie-charts-9cd346000bdc> | esej o historii i popularności wykresu kołowego |

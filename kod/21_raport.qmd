@@ -1,0 +1,208 @@
+---
+title: "Oczekiwana długość życia na świecie w 2007 roku"
+author: "Imię Nazwisko"
+lang: pl
+crossref:
+  fig-title: "Rycina"
+  fig-prefix: "Rycina"
+format:
+  html:
+    toc: true
+    number-sections: true
+    embed-resources: true
+    code-fold: true
+    code-summary: "Kod"
+execute:
+  message: false
+  warning: false
+---
+
+## Wprowadzenie {#sec-wprowadzenie}
+
+Raport opisuje oczekiwaną długość życia w chwili urodzenia w 142 krajach świata
+w 2007 roku: jej poziom na świecie, różnice między kontynentami i wewnątrz nich,
+rozmieszczenie przestrzenne oraz związek z PKB per capita.
+
+Raport odpowiada na pytania badawcze:
+
+1. Jaka była typowa oczekiwana długość życia na świecie w 2007 roku? (@sec-swiat)
+2. Czy oczekiwana długość życia różniła się między kontynentami i jak była zróżnicowana
+   wewnątrz nich? (@sec-kontynenty)
+3. Jak rozmieszczone są przestrzennie kraje o krótkiej i długiej oczekiwanej długości
+   życia? (@sec-mapa)
+4. Czy oczekiwana długość życia była związana z PKB per capita? (@sec-pkb)
+
+## Dane {#sec-dane}
+
+Analiza wykorzystuje dane Gapminder (<https://www.gapminder.org/data/>), dostępne w R
+w pakiecie `gapminder` (licencja CC0). Jednostką obserwacji jest kraj; raport obejmuje
+142 kraje w 2007 roku, czyli 142 obserwacje. Zmienne wykorzystane w raporcie nie zawierają
+braków danych. Granice państw pochodzą z bazy Natural Earth (domena publiczna).
+
+| Kolumna | Znaczenie | Jednostka | Skala pomiarowa |
+|---|---|---|---|
+| `kraj` | nazwa kraju | — | nominalna |
+| `kontynent` | kontynent | — | nominalna |
+| `lifeExp` | oczekiwana długość życia w chwili urodzenia | lata | ilorazowa |
+| `gdpPercap` | PKB per capita | USD | ilorazowa |
+| `Kod` | trzyliterowy kod kraju (ISO 3166-1 alfa-3) | — | nominalna |
+
+```{r}
+#| label: dane
+# pakiety i dane: obserwacje z 2007 roku
+library(tidyverse)
+library(sf)
+library(rnaturalearth)
+
+dane <- read.csv("dane/gapminder_regions.csv", encoding = "UTF-8") |>
+  mutate(across(where(is.character), as.factor))
+dane2007 <- dane |>
+  filter(year == 2007)
+```
+
+## Metody {#sec-metody}
+
+Poziom i zróżnicowanie oczekiwanej długości życia opisano miarami położenia (średnia,
+mediana, kwartyle) i zmienności (odchylenie standardowe, współczynnik zmienności), dla
+wszystkich krajów i w podziale na kontynenty. Rozkład w kontynentach przedstawiono na wykresie
+pudełkowym, a rozmieszczenie przestrzenne — na kartogramie z klasami co 10 lat. Związek
+z PKB per capita oceniono na wykresie rozrzutu i współczynnikiem korelacji rang Spearmana
+— zależność widoczna na wykresie jest monotoniczna, ale nieliniowa. Obliczenia wykonano w R
+z pakietami `tidyverse`, `sf` i `rnaturalearth`.
+
+## Wyniki {#sec-wyniki}
+
+### Oczekiwana długość życia na świecie {#sec-swiat}
+
+W 2007 roku oczekiwana długość życia w chwili urodzenia mieściła się w przedziale od 39,6
+do 82,6 roku (@tbl-swiat). Średnia dla 142 krajów wynosiła 67,0 roku. Mediana (71,9 roku)
+wskazuje, że w połowie krajów oczekiwana długość życia przekraczała 71,9 roku. W połowie
+krajów mieściła się w przedziale od 57,2 do 76,4 roku.
+
+```{r}
+#| label: tbl-swiat
+#| tbl-cap: "Statystyki opisowe oczekiwanej długości życia, 142 kraje, 2007 [lata]"
+# statystyki dla wszystkich krajów
+dane2007 |>
+  summarise(minimum = min(lifeExp),
+            q1 = quantile(lifeExp, 0.25),
+            mediana = median(lifeExp),
+            srednia = mean(lifeExp),
+            q3 = quantile(lifeExp, 0.75),
+            maksimum = max(lifeExp)) |>
+  knitr::kable(digits = 1,
+               col.names = c("Minimum", "Pierwszy kwartyl", "Mediana", "Średnia",
+                             "Trzeci kwartyl", "Maksimum"))
+```
+
+### Zróżnicowanie między kontynentami {#sec-kontynenty}
+
+Statystyki opisowe w podziale na kontynenty przedstawia @tbl-kontynenty, a rozkład
+w kontynentach — @fig-kontynenty. Najwyższa średnia dotyczy Australii (80,7 roku)
+i Europy (77,9 roku), najniższa — Afryki (54,8 roku). Różnica między średnią dla Europy
+i dla Afryki, obliczona z wartości niezaokrąglonych, wynosi 23,0 roku. Mediana dla Afryki
+(52,9 roku) leży poniżej pierwszego kwartyla wszystkich pozostałych kontynentów.
+
+Największy współczynnik zmienności ma Afryka (17,6%) i Azja (11,1%), najmniejszy — Australia
+(0,9%) i Europa (3,6%). Wartości odstające odnotowano dla dwóch krajów: Afganistanu
+(43,8 roku) i Haiti (60,9 roku). Statystyki grupy „Australia” wyznaczono z dwóch krajów,
+dlatego nie są porównywalne z grupami liczącymi od 25 do 52 krajów.
+
+```{r}
+#| label: tbl-kontynenty
+#| tbl-cap: "Statystyki opisowe oczekiwanej długości życia według kontynentu, 2007 [lata; współczynnik zmienności: %]"
+# statystyki w podziale na kontynenty
+dane2007 |>
+  group_by(kontynent) |>
+  summarise(n = n(),
+            srednia = mean(lifeExp),
+            mediana = median(lifeExp),
+            minimum = min(lifeExp),
+            maksimum = max(lifeExp),
+            odch_std = sd(lifeExp),
+            wsp_zmiennosci = sd(lifeExp) / mean(lifeExp) * 100) |>
+  knitr::kable(digits = 1,
+               col.names = c("Kontynent", "Liczba krajów", "Średnia", "Mediana", "Minimum",
+                             "Maksimum", "Odchylenie standardowe", "Współczynnik zmienności"))
+```
+
+```{r}
+#| label: fig-kontynenty
+#| fig-cap: "Oczekiwana długość życia według kontynentu, 2007"
+#| fig-width: 7
+#| fig-height: 4
+# wykres pudełkowy; wartości odstające w kolorze czerwonym
+ggplot(dane2007, aes(x = kontynent, y = lifeExp)) +
+  geom_boxplot(outlier.colour = "red") +
+  labs(x = NULL, y = "Oczekiwana długość życia [lata]") +
+  theme_bw(base_size = 12)
+```
+
+### Rozmieszczenie przestrzenne {#sec-mapa}
+
+Kraje o oczekiwanej długości życia poniżej 50 lat leżą — z wyjątkiem Afganistanu — w Afryce
+Wschodniej, Zachodniej, Środkowej i Południowej (@fig-mapa). Większość krajów Afryki Północnej
+należy do klasy 70–80 lat. Do klasy 80 lat i więcej należą m.in. kraje Europy Zachodniej
+i Północnej, Japonia, Australia, Nowa Zelandia i Kanada. Kolorem szarym oznaczono obszary, których
+nie obejmuje zbiór danych, m.in. Rosję, Ukrainę i Kazachstan.
+
+```{r}
+#| label: fig-mapa
+#| fig-cap: "Oczekiwana długość życia w 2007 roku; kolor szary — brak danych"
+#| fig-width: 9
+#| fig-height: 5.5
+# granice państw połączone z danymi według kodu kraju
+swiat <- ne_countries(scale = "medium", returnclass = "sf")
+mapa <- swiat |>
+  left_join(dane2007, by = c("iso_a3_eh" = "Kod"))
+
+# kartogram: kolor państwa odpowiada klasie oczekiwanej długości życia
+ggplot(mapa) +
+  geom_sf(aes(fill = lifeExp), colour = "grey40", linewidth = 0.1) +
+  scale_fill_fermenter(breaks = c(50, 60, 70, 80), palette = "YlGnBu",
+                       direction = 1, na.value = "grey85") +
+  labs(fill = "Oczekiwana długość\nżycia [lata]") +
+  theme_void(base_size = 12) +
+  theme(legend.position = "bottom")
+```
+
+### Związek z PKB per capita {#sec-pkb}
+
+Wraz ze wzrostem PKB per capita rosła oczekiwana długość życia, a przyrost był coraz mniejszy
+(@fig-pkb). Współczynnik korelacji rang Spearmana wynosił 0,86 i był istotny statystycznie
+(p < 0,001).
+
+```{r}
+#| label: fig-pkb
+#| fig-cap: "Oczekiwana długość życia a PKB per capita, 142 kraje, 2007"
+#| fig-width: 7
+#| fig-height: 4
+# wykres rozrzutu
+ggplot(dane2007, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point() +
+  labs(x = "PKB per capita [USD]", y = "Oczekiwana długość życia [lata]") +
+  theme_bw(base_size = 12)
+```
+
+```{r}
+#| label: korelacja
+# test istotności współczynnika korelacji rang Spearmana
+cor.test(dane2007$gdpPercap, dane2007$lifeExp, method = "spearman")
+```
+
+## Wnioski {#sec-wnioski}
+
+1. W 2007 roku oczekiwana długość życia wynosiła od 39,6 do 82,6 roku, przy średniej 67,0 roku
+   i medianie 71,9 roku (@sec-swiat).
+2. Oczekiwana długość życia różniła się między kontynentami: średnia w Afryce była o 23,0 roku
+   niższa niż w Europie. Największy współczynnik zmienności miały Afryka (17,6%) i Azja (11,1%)
+   (@sec-kontynenty). Statystyki dla Australii opisują dwa kraje.
+3. Kraje o oczekiwanej długości życia poniżej 50 lat leżą — z wyjątkiem Afganistanu — w Afryce
+   (@sec-mapa).
+4. Korelacja oczekiwanej długości życia i PKB per capita była dodatnia, bardzo wysoka
+   i istotna statystycznie (ρ = 0,86; @sec-pkb).
+
+## Źródła {#sec-zrodla}
+
+- Gapminder: <https://www.gapminder.org/data/>.
+- Natural Earth: <https://www.naturalearthdata.com/>.

@@ -1,0 +1,60 @@
+---
+title: "Przygotowanie danych Banku Światowego"
+format: html
+---
+
+Kod do załącznika „Praca z danymi Banku Światowego” skryptu do ćwiczeń. Plik wymaga folderu `dane/`
+z plikiem pobranym ze strony wskaźnika, w tym samym folderze co ten plik `.qmd`, oraz pakietów
+`tidyverse`, `readxl`, `sf`, `rnaturalearth` i `rnaturalearthdata`.
+
+Aby przygotować inny plik, należy zmienić jego nazwę w obiekcie `plik_wb`. Kod zapisuje w folderze `dane/`
+tabelę krajów do pliku CSV i tabelę połączoną z granicami państw do pliku GeoPackage. Nazwy tych plików
+powstają z kodu wskaźnika.
+
+```{r}
+#| message: false
+# pakiety: tidyverse (przetwarzanie danych), readxl (pliki Excel),
+# sf (dane przestrzenne), rnaturalearth (granice państw)
+library(tidyverse)
+library(readxl)
+library(sf)
+library(rnaturalearth)
+
+# nazwa pobranego pliku: jedyny element do zmiany
+plik_wb <- "dane/API_SP.DYN.LE00.IN_DS2_en_excel_v2_1292.xls"
+
+# arkusz Data z pominięciem trzech pierwszych wierszy
+dane_wb <- read_excel(plik_wb, sheet = "Data", skip = 3)
+
+# kod wskaźnika do nazw plików wynikowych
+kod_wskaznika <- dane_wb$`Indicator Code`[1]
+
+# usunięcie kolumn z nazwą i kodem wskaźnika; nazwy kolumn bez spacji
+dane_wb <- dane_wb |>
+  select(-`Indicator Name`, -`Indicator Code`) |>
+  rename(country_name = `Country Name`, country_code = `Country Code`)
+
+# arkusz z opisem krajów: wybór kolumn i nazwy bez spacji
+kraje_wb <- read_excel(plik_wb, sheet = "Metadata - Countries") |>
+  select(country_code = `Country Code`, region = Region,
+         income_group = IncomeGroup, table_name = TableName)
+
+# połączenie według kodu kraju i pozostawienie wierszy z regionem, czyli bez grup krajów
+kraje <- dane_wb |>
+  left_join(kraje_wb, by = "country_code") |>
+  select(country_name, country_code, region, income_group, table_name, everything()) |>
+  filter(!is.na(region))
+
+# granice państw: tylko kod kraju i geometria
+granice <- ne_countries(scale = "medium", returnclass = "sf") |>
+  select(country_code = iso_a3_eh)
+
+# połączenie tabeli atrybutów z granicami
+kraje_granice <- granice |>
+  left_join(kraje, by = "country_code")
+
+# zapis tabeli do pliku CSV i tabeli z granicami do pliku GeoPackage
+write_csv(kraje, paste0("dane/wb_", kod_wskaznika, ".csv"))
+st_write(kraje_granice, paste0("dane/wb_", kod_wskaznika, ".gpkg"),
+         delete_dsn = TRUE, quiet = TRUE)
+```
