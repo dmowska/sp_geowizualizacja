@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Załącznik B — Wykresy w statystyce regionalnej – Statystyczne i graficzne podstawy geowizualizacji</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./C_zasady_wykresow.html" rel="next">
+<link href="./A_typy_wykresow.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-3708d7fbbef66c9ac9ec4ecfd1afb0ee.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Brak wyników",
+    "search-matching-documents-text": "dopasowane dokumenty",
+    "search-copy-link-title": "Kopiuj link do wyszukiwania",
+    "search-hide-matches-text": "Ukryj dodatkowe dopasowania",
+    "search-more-match-text": "więcej dopasowań w tym dokumencie",
+    "search-more-matches-text": "więcej dopasowań w tym dokumencie",
+    "search-clear-button-title": "Wyczyść",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Anuluj",
+    "search-submit-button-title": "Zatwierdź",
+    "search-label": "Szukaj"
+  }
+}</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./A_typy_wykresow.html">Załączniki</a></li><li class="breadcrumb-item"><a href="./B_wykresy_statystyka_regionalna.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Wykresy w statystyce regionalnej</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Szukaj" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statystyczne i graficzne podstawy geowizualizacji</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Szukaj"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">O skrypcie</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00_dane.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dane</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">PRACA W R</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_instalacja.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Instalacja R i RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_rstudio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Praca w RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_praca_z_danymi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Praca z danymi</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_wykresy_ggplot2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wykresy w ggplot2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_dane_przestrzenne.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dane przestrzenne w R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_pakiety.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pakiety</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">QUARTO</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_raport.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Raport statystyczny</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">PODSTAWY STATYSTYKI</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_pojecia_podstawowe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pojęcia podstawowe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_statystyki_opisowe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Statystyki opisowe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_korelacja.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Analiza korelacji</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">WIZUALIZACJA DANYCH</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_po_co_wizualizujemy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Po co wizualizujemy dane</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_gramatyka_grafiki.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Gramatyka grafiki</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_typy_wykresow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Typy wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_wizualizacja_statystyk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wizualizacja statystyk opisowych</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16_wizualizacja_zaleznosci.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Wizualizacja zależności</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17_dobor_wykresu.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Dobór wykresu do problemu badawczego</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18_formatowanie.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Formatowanie wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19_zrodla.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Źródła informacji o wizualizacji</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">PRZYKŁADY</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20_dlugosc_zycia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Oczekiwana długość życia na kontynentach w latach 1952–2007</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21_dlugosc_zycia_2007.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Oczekiwana długość życia na świecie w 2007 roku</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22_meteo_2020.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Warunki meteorologiczne w Polsce w 2020 roku</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">PRZYKŁADOWE RAPORTY</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23_dlugosc_zycia_europa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Zmienność oczekiwanej długości życia w Europie w latach 1952 i 2007</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./24_meteo_zakopane.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Warunki meteorologiczne wybranej stacji</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./25_meteo_trzy_stacje.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Porównanie warunków meteorologicznych trzech stacji</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26_lasy_wielkopolska.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Lesistość powiatów województwa wielkopolskiego w latach 2000 i 2025</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Załączniki</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./A_typy_wykresow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Katalog typów wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./B_wykresy_statystyka_regionalna.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Wykresy w statystyce regionalnej</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C_zasady_wykresow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Zasady opracowywania wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./D_dobor_wykresu_przyklady.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Dobór wykresu do problemu badawczego: przykłady</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./E_bank_swiatowy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Praca z danymi Banku Światowego</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Spis treści</h2>
+   
+  <ul>
+  <li><a href="#sec-a2-podzial" id="toc-sec-a2-podzial" class="nav-link active" data-scroll-target="#sec-a2-podzial"><span class="header-section-number">B.1</span> Podział wykresów według celu analizy</a></li>
+  <li><a href="#sec-a2-region" id="toc-sec-a2-region" class="nav-link" data-scroll-target="#sec-a2-region"><span class="header-section-number">B.2</span> Wykresy dla danego regionu</a></li>
+  <li><a href="#sec-a2-podzialy" id="toc-sec-a2-podzialy" class="nav-link" data-scroll-target="#sec-a2-podzialy"><span class="header-section-number">B.3</span> Wykresy dla różnych podziałów przestrzeni</a>
+  <ul class="collapse">
+  <li><a href="#sec-a2-ruch" id="toc-sec-a2-ruch" class="nav-link" data-scroll-target="#sec-a2-ruch"><span class="header-section-number">B.3.1</span> Ruch naturalny</a></li>
+  <li><a href="#sec-a2-wiek" id="toc-sec-a2-wiek" class="nav-link" data-scroll-target="#sec-a2-wiek"><span class="header-section-number">B.3.2</span> Struktura wieku ludności miast i wsi</a></li>
+  </ul></li>
+  <li><a href="#sec-a2-tlo" id="toc-sec-a2-tlo" class="nav-link" data-scroll-target="#sec-a2-tlo"><span class="header-section-number">B.4</span> Porównanie regionu na tle kraju</a>
+  <ul class="collapse">
+  <li><a href="#sec-a2-pracujacy" id="toc-sec-a2-pracujacy" class="nav-link" data-scroll-target="#sec-a2-pracujacy"><span class="header-section-number">B.4.1</span> Struktura pracujących</a></li>
+  </ul></li>
+  <li><a href="#sec-a2-pozostale" id="toc-sec-a2-pozostale" class="nav-link" data-scroll-target="#sec-a2-pozostale"><span class="header-section-number">B.5</span> Porównanie regionu z pozostałym terytorium kraju</a></li>
+  <li><a href="#sec-a2-mala" id="toc-sec-a2-mala" class="nav-link" data-scroll-target="#sec-a2-mala"><span class="header-section-number">B.6</span> Porównania międzyregionalne przy małej liczbie jednostek</a>
+  <ul class="collapse">
+  <li><a href="#sec-a2-ekon" id="toc-sec-a2-ekon" class="nav-link" data-scroll-target="#sec-a2-ekon"><span class="header-section-number">B.6.1</span> Struktura ludności według ekonomicznych grup wieku</a></li>
+  <li><a href="#sec-a2-wartosc" id="toc-sec-a2-wartosc" class="nav-link" data-scroll-target="#sec-a2-wartosc"><span class="header-section-number">B.6.2</span> Udział województw w wartości dodanej brutto</a></li>
+  <li><a href="#sec-a2-br" id="toc-sec-a2-br" class="nav-link" data-scroll-target="#sec-a2-br"><span class="header-section-number">B.6.3</span> Działalność badawczo-rozwojowa</a></li>
+  </ul></li>
+  <li><a href="#sec-a2-duza" id="toc-sec-a2-duza" class="nav-link" data-scroll-target="#sec-a2-duza"><span class="header-section-number">B.7</span> Porównania międzyregionalne przy dużej liczbie jednostek</a>
+  <ul class="collapse">
+  <li><a href="#sec-a2-podregiony" id="toc-sec-a2-podregiony" class="nav-link" data-scroll-target="#sec-a2-podregiony"><span class="header-section-number">B.7.1</span> Sytuacja demograficzna w podregionach</a></li>
+  <li><a href="#sec-a2-powiaty" id="toc-sec-a2-powiaty" class="nav-link" data-scroll-target="#sec-a2-powiaty"><span class="header-section-number">B.7.2</span> Wariant dla powiatów</a></li>
+  </ul></li>
+  <li><a href="#sec-a2-srednie" id="toc-sec-a2-srednie" class="nav-link" data-scroll-target="#sec-a2-srednie"><span class="header-section-number">B.8</span> Wartości średnie i różnice od średniej</a>
+  <ul class="collapse">
+  <li><a href="#sec-a2-br-polska" id="toc-sec-a2-br-polska" class="nav-link" data-scroll-target="#sec-a2-br-polska"><span class="header-section-number">B.8.1</span> Działalność badawczo-rozwojowa na tle Polski</a></li>
+  </ul></li>
+  <li><a href="#sec-a2-piramida" id="toc-sec-a2-piramida" class="nav-link" data-scroll-target="#sec-a2-piramida"><span class="header-section-number">B.9</span> Wykres uzupełniający: piramida wieku</a></li>
+  <li><a href="#sec-a2-spis" id="toc-sec-a2-spis" class="nav-link" data-scroll-target="#sec-a2-spis"><span class="header-section-number">B.10</span> Dane pobrane z BDL</a>
+  <ul class="collapse">
+  <li><a href="#sec-a2-d-ruch" id="toc-sec-a2-d-ruch" class="nav-link" data-scroll-target="#sec-a2-d-ruch"><span class="header-section-number">B.10.1</span> Ruch naturalny</a></li>
+  <li><a href="#sec-a2-d-wiek" id="toc-sec-a2-d-wiek" class="nav-link" data-scroll-target="#sec-a2-d-wiek"><span class="header-section-number">B.10.2</span> Struktura wieku ludności miast i wsi</a></li>
+  <li><a href="#sec-a2-d-pracujacy" id="toc-sec-a2-d-pracujacy" class="nav-link" data-scroll-target="#sec-a2-d-pracujacy"><span class="header-section-number">B.10.3</span> Struktura pracujących</a></li>
+  <li><a href="#sec-a2-d-ekon" id="toc-sec-a2-d-ekon" class="nav-link" data-scroll-target="#sec-a2-d-ekon"><span class="header-section-number">B.10.4</span> Struktura ludności według ekonomicznych grup wieku</a></li>
+  <li><a href="#sec-a2-d-wartosc" id="toc-sec-a2-d-wartosc" class="nav-link" data-scroll-target="#sec-a2-d-wartosc"><span class="header-section-number">B.10.5</span> Udział województw w wartości dodanej brutto</a></li>
+  <li><a href="#sec-a2-d-br" id="toc-sec-a2-d-br" class="nav-link" data-scroll-target="#sec-a2-d-br"><span class="header-section-number">B.10.6</span> Działalność badawczo-rozwojowa</a></li>
+  <li><a href="#sec-a2-d-podregiony" id="toc-sec-a2-d-podregiony" class="nav-link" data-scroll-target="#sec-a2-d-podregiony"><span class="header-section-number">B.10.7</span> Sytuacja demograficzna w podregionach</a></li>
+  <li><a href="#sec-a2-d-powiaty" id="toc-sec-a2-d-powiaty" class="nav-link" data-scroll-target="#sec-a2-d-powiaty"><span class="header-section-number">B.10.8</span> Wariant dla powiatów</a></li>
+  <li><a href="#sec-a2-d-piramida" id="toc-sec-a2-d-piramida" class="nav-link" data-scroll-target="#sec-a2-d-piramida"><span class="header-section-number">B.10.9</span> Piramida wieku</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./A_typy_wykresow.html">Załączniki</a></li><li class="breadcrumb-item"><a href="./B_wykresy_statystyka_regionalna.html"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Wykresy w statystyce regionalnej</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-a2" class="quarto-section-identifier">Załącznik B — Wykresy w statystyce regionalnej</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Załącznik powstał na podstawie opracowania Głównego Urzędu Statystycznego <em>Graficzna prezentacja danych statystycznych. Wykresy, mapy, GIS</em> (Warszawa 2014, licencja CC BY 3.0 PL), podrozdział 2.3 „Typy wykresów w statystyce regionalnej”. Wykresy w publikacji wykonano w programie MS Excel na danych do 2013 roku. Poniższe przykłady wykonano w R, a dane pochodzą z Banku Danych Lokalnych GUS (BDL, <a href="https://bdl.stat.gov.pl/" class="uri">https://bdl.stat.gov.pl/</a>, licencja CC BY 4.0), według stanu z listopada 2026 roku.</p>
+<p>Przy każdym wykresie podano plik danych i zwinięty kod; przycisk „Kod” nad wykresem rozwija go. Gotowe pliki do wykonania wykresów znajdują się w folderze <code>dane/gus/</code>, a opis danych pobranych z BDL zawiera <a href="#sec-a2-spis" class="quarto-xref"><span>Sekcja B.10</span></a>. Pakiet <code>waffle</code> instaluje się z serwisu GitHub (<a href="01_instalacja.html#sec-inst-pakiety" class="quarto-xref"><span>Sekcja 1.5</span></a>). Przed kodem wykresu należy uruchomić poniższy kod.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod: pakiety i kolory</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(treemapify)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(waffle)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>kolory_grup <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"przedprodukcyjny"</span> <span class="ot">=</span> <span class="st">"#009E73"</span>, <span class="st">"produkcyjny"</span> <span class="ot">=</span> <span class="st">"#D55E00"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"poprodukcyjny"</span> <span class="ot">=</span> <span class="st">"#0072B2"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>kolory_wieku <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"0-15"</span> <span class="ot">=</span> <span class="st">"#009E73"</span>, <span class="st">"16-19"</span> <span class="ot">=</span> <span class="st">"#E69F00"</span>, <span class="st">"20-64"</span> <span class="ot">=</span> <span class="st">"#D55E00"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"65 i więcej"</span> <span class="ot">=</span> <span class="st">"#0072B2"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>kolory_kierunku <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"spadek"</span> <span class="ot">=</span> <span class="st">"#0072B2"</span>, <span class="st">"wzrost"</span> <span class="ot">=</span> <span class="st">"#D55E00"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="sec-a2-podzial" class="level2" data-number="B.1">
+<h2 data-number="B.1" class="anchored" data-anchor-id="sec-a2-podzial"><span class="header-section-number">B.1</span> Podział wykresów według celu analizy</h2>
+<p>Publikacja dzieli wykresy stosowane w badaniach regionalnych według przedmiotu analizy. Podział ten opracowano na podstawie doświadczeń polskiej statystyki publicznej i ma on charakter umowny. Obejmuje sześć rodzajów wykresów z odniesieniem przestrzennym; osobno publikacja omawia wykresy wartości średnich i różnic od średniej.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Rodzaj wykresów</th>
+<th>Cecha</th>
+<th>Przykłady</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>dla danego regionu</td>
+<td>różne cechy regionu jako odrębnej jednostki</td>
+<td><a href="#sec-a2-region" class="quarto-xref"><span>Sekcja B.2</span></a></td>
+</tr>
+<tr class="even">
+<td>dla różnych podziałów przestrzeni</td>
+<td>agregaty dla typów jednostek, np. miasto i wieś</td>
+<td><a href="#sec-a2-podzialy" class="quarto-xref"><span>Sekcja B.3</span></a></td>
+</tr>
+<tr class="odd">
+<td>porównanie regionu na tle kraju</td>
+<td>region a wartość odniesienia dla kraju</td>
+<td><a href="#sec-a2-tlo" class="quarto-xref"><span>Sekcja B.4</span></a></td>
+</tr>
+<tr class="even">
+<td>porównanie regionu z pozostałym terytorium kraju</td>
+<td>region a kraj z wyłączeniem tego regionu</td>
+<td><a href="#sec-a2-pozostale" class="quarto-xref"><span>Sekcja B.5</span></a></td>
+</tr>
+<tr class="odd">
+<td>porównania międzyregionalne, mała liczba jednostek</td>
+<td>do około 30 jednostek, identyfikacja każdej z nich</td>
+<td><a href="#sec-a2-mala" class="quarto-xref"><span>Sekcja B.6</span></a></td>
+</tr>
+<tr class="even">
+<td>porównania międzyregionalne, duża liczba jednostek</td>
+<td>powyżej około 30 jednostek, ogólny rozkład zjawiska</td>
+<td><a href="#sec-a2-duza" class="quarto-xref"><span>Sekcja B.7</span></a></td>
+</tr>
+<tr class="odd">
+<td>wartości średnie i różnice od średniej</td>
+<td>rozproszenie wartości względem wartości przeciętnej</td>
+<td><a href="#sec-a2-srednie" class="quarto-xref"><span>Sekcja B.8</span></a></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sec-a2-region" class="level2" data-number="B.2">
+<h2 data-number="B.2" class="anchored" data-anchor-id="sec-a2-region"><span class="header-section-number">B.2</span> Wykresy dla danego regionu</h2>
+<p>Celem analizy jest zbadanie różnych cech regionu traktowanego jako odrębna jednostka administracyjna lub społeczno-gospodarcza. Wykresy te stosuje się na różnych poziomach agregacji przestrzennej, często do stworzenia portretu większej jednostki (w Polsce województwa). Publikacja nie podaje przykładów, ponieważ dla jednego regionu stosuje się te same typy wykresów co dla kraju ogółem.</p>
+</section>
+<section id="sec-a2-podzialy" class="level2" data-number="B.3">
+<h2 data-number="B.3" class="anchored" data-anchor-id="sec-a2-podzialy"><span class="header-section-number">B.3</span> Wykresy dla różnych podziałów przestrzeni</h2>
+<p>Wykresy te stosuje się przede wszystkim dla danych, których brak na niższych poziomach agregacji przestrzennej, a które są dostępne jako agregaty dla całego kraju w podziale na typy jednostek. W Polsce jest to podział na miasto i wieś.</p>
+<section id="sec-a2-ruch" class="level3" data-number="B.3.1">
+<h3 data-number="B.3.1" class="anchored" data-anchor-id="sec-a2-ruch"><span class="header-section-number">B.3.1</span> Ruch naturalny</h3>
+<p>Wykres liniowy z zaznaczonym saldem opisuje zmiany zjawiska o charakterze przepływów. Pole między liniami urodzeń i zgonów przedstawia przyrost naturalny, a jego kolor oznacza znak przyrostu.</p>
+<p><strong>Plik danych:</strong> <code>dane/gus/ruch_naturalny_polska.csv</code> (opis: <a href="#sec-a2-d-ruch" class="quarto-xref"><span>Sekcja B.10.1</span></a>).</p>
+<p>Linie mogą się przecinać między dwoma latami, dlatego wartości roczne zastępuje gęstsza siatka punktów na osi czasu. Dzięki temu oba pola kończą się dokładnie w punkcie przecięcia.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ruch_mw <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"dane/gus/ruch_naturalny_polska.csv"</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(miejsce <span class="sc">!=</span> <span class="st">"ogółem"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># approx() wyznacza wartości pośrednie na odcinkach między kolejnymi latami</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>siatka <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(ruch_mw<span class="sc">$</span>rok), <span class="fu">max</span>(ruch_mw<span class="sc">$</span>rok), <span class="at">by =</span> <span class="fl">0.02</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>pola <span class="ot">&lt;-</span> ruch_mw <span class="sc">|&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(miejsce) <span class="sc">|&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="at">rok_siatka =</span> siatka,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">urodzenia =</span> <span class="fu">approx</span>(rok, urodzenia, <span class="at">xout =</span> siatka)<span class="sc">$</span>y,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">zgony =</span> <span class="fu">approx</span>(rok, zgony, <span class="at">xout =</span> siatka)<span class="sc">$</span>y)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Do linii potrzebna jest tabela w układzie długim: jeden wiersz = jedna wartość</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>linie <span class="ot">&lt;-</span> ruch_mw <span class="sc">|&gt;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(rok, miejsce, urodzenia, zgony) <span class="sc">|&gt;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(urodzenia, zgony), <span class="at">names_to =</span> <span class="st">"zmienna"</span>, <span class="at">values_to =</span> <span class="st">"liczba_osob"</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># pmax() i pmin() ograniczają każde pole do lat z przyrostem o danym znaku</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> pola, <span class="fu">aes</span>(<span class="at">x =</span> rok_siatka, <span class="at">ymin =</span> zgony <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                               <span class="at">ymax =</span> <span class="fu">pmax</span>(urodzenia, zgony) <span class="sc">/</span> <span class="dv">1000</span>, <span class="at">fill =</span> <span class="st">"dodatni"</span>)) <span class="sc">+</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> pola, <span class="fu">aes</span>(<span class="at">x =</span> rok_siatka, <span class="at">ymin =</span> <span class="fu">pmin</span>(urodzenia, zgony) <span class="sc">/</span> <span class="dv">1000</span>,</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>                               <span class="at">ymax =</span> zgony <span class="sc">/</span> <span class="dv">1000</span>, <span class="at">fill =</span> <span class="st">"ujemny"</span>)) <span class="sc">+</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> linie, <span class="fu">aes</span>(<span class="at">x =</span> rok, <span class="at">y =</span> liczba_osob <span class="sc">/</span> <span class="dv">1000</span>, <span class="at">linetype =</span> zmienna),</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> miejsce) <span class="sc">+</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"dodatni"</span> <span class="ot">=</span> <span class="st">"#F0B37E"</span>, <span class="st">"ujemny"</span> <span class="ot">=</span> <span class="st">"#8FBFDD"</span>)) <span class="sc">+</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2025</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Rok"</span>, <span class="at">y =</span> <span class="st">"Tysiące osób"</span>, <span class="at">fill =</span> <span class="st">"Przyrost naturalny"</span>, <span class="at">linetype =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-a2-ruch" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-a2-ruch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="B_wykresy_statystyka_regionalna_files/figure-html/fig-a2-ruch-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-a2-ruch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;B.1: Urodzenia żywe, zgony i przyrost naturalny w latach 1999–2025
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-a2-wiek" class="level3" data-number="B.3.2">
+<h3 data-number="B.3.2" class="anchored" data-anchor-id="sec-a2-wiek"><span class="header-section-number">B.3.2</span> Struktura wieku ludności miast i wsi</h3>
+<p>Wykres jest przykładem wykresu słupkowego skumulowanego. Dwa takie wykresy leżą obok siebie, a ich słupki rozchodzą się od wspólnej osi lat. Każdy wykres tworzy się osobno, a pakiet <code>patchwork</code> łączy je w jedną rycinę. Lewy wykres ma odwróconą oś wartości (<code>scale_x_reverse()</code>) i oś lat po prawej stronie. Szerokości wykresów są proporcjonalne do zakresów osi, więc ta sama długość słupka oznacza na obu wykresach tę samą liczbę osób.</p>
+<p><strong>Plik danych:</strong> <code>dane/gus/ludnosc_grupy_wieku_polska.csv</code> (opis: <a href="#sec-a2-d-wiek" class="quarto-xref"><span>Sekcja B.10.2</span></a>).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>grupy_wieku <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"dane/gus/ludnosc_grupy_wieku_polska.csv"</span>,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">encoding =</span> <span class="st">"UTF-8"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(plec <span class="sc">==</span> <span class="st">"ogółem"</span>, miejsce <span class="sc">!=</span> <span class="st">"ogółem"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grupa_wieku =</span> <span class="fu">factor</span>(grupa_wieku, <span class="at">levels =</span> <span class="fu">names</span>(kolory_wieku)),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">rok =</span> <span class="fu">factor</span>(rok),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">ludnosc_mln =</span> ludnosc <span class="sc">/</span> <span class="dv">1000000</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Elementy wspólne obu wykresów zapisuje się na liście i dodaje znakiem +</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>wspolne <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># reverse = TRUE: najmłodsza grupa znajduje się najbliżej osi lat</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>), <span class="at">width =</span> <span class="fl">0.85</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">linewidth =</span> <span class="fl">0.15</span>),</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2019 to 17. rok szeregu, więc linia między 2019 a 2020 leży w pozycji 17,5</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">17.5</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>),</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> kolory_wieku),</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ludność [mln osób]"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">fill =</span> <span class="st">"Grupa wieku:"</span>),</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>wykres_wies <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">filter</span>(grupy_wieku, miejsce <span class="sc">==</span> <span class="st">"wieś"</span>),</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">aes</span>(<span class="at">x =</span> ludnosc_mln, <span class="at">y =</span> rok, <span class="at">fill =</span> grupa_wieku)) <span class="sc">+</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  wspolne <span class="sc">+</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_reverse</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">16</span>, <span class="dv">0</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">15</span>, <span class="dv">5</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(<span class="at">position =</span> <span class="st">"right"</span>) <span class="sc">+</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Wieś"</span>)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>wykres_miasto <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">filter</span>(grupy_wieku, miejsce <span class="sc">==</span> <span class="st">"miasto"</span>),</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">aes</span>(<span class="at">x =</span> ludnosc_mln, <span class="at">y =</span> rok, <span class="at">fill =</span> grupa_wieku)) <span class="sc">+</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  wspolne <span class="sc">+</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">24</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">20</span>, <span class="dv">5</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Miasto"</span>) <span class="sc">+</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># etykiety lat pokazuje wyłącznie lewy wykres</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(), <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="co"># widths: stosunek szerokości wykresów równy stosunkowi zakresów osi (16 i 24)</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>wykres_wies <span class="sc">+</span> wykres_miasto <span class="sc">+</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">widths =</span> <span class="fu">c</span>(<span class="dv">16</span>, <span class="dv">24</span>), <span class="at">guides =</span> <span class="st">"collect"</span>) <span class="sc">&amp;</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-a2-wiek" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-a2-wiek-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="B_wykresy_statystyka_regionalna_files/figure-html/fig-a2-wiek-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-a2-wiek-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;B.2: Ludność według grup wieku na wsi i w miastach w latach 2003–2025. Linia przerywana oddziela lata sprzed przeliczenia bilansu na bazie NSP 2021
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-a2-tlo" class="level2" data-number="B.4">
+<h2 data-number="B.4" class="anchored" data-anchor-id="sec-a2-tlo"><span class="header-section-number">B.4</span> Porównanie regionu na tle kraju</h2>
+<p>Wykresy te dotyczą zjawisk w regionie w stosunku do wartości krajowej, a w przypadku jednostek niższego rzędu także regionalnej, oraz skali odchyleń od tej wartości. Publikacja wskazuje jako użyteczne szeregi dynamiczne i strukturalne, na których region i jednostka odniesienia mają odrębne kolory. Przykłady przedstawiają województwo wielkopolskie na tle Polski.</p>
+<section id="sec-a2-pracujacy" class="level3" data-number="B.4.1">
+<h3 data-number="B.4.1" class="anchored" data-anchor-id="sec-a2-pracujacy"><span class="header-section-number">B.4.1</span> Struktura pracujących</h3>
+<p>Słupki skumulowane do 100% porównują strukturę pracujących w kraju i w województwie, a panele oddzielają pracujących ogółem od kobiet.</p>
+<p><strong>Plik danych:</strong> <code>dane/gus/pracujacy_grupy_sekcji.csv</code> (opis: <a href="#sec-a2-d-pracujacy" class="quarto-xref"><span>Sekcja B.10.3</span></a>).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>kolory_grup_sekcji <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#009E73"</span>, <span class="st">"#D55E00"</span>, <span class="st">"#0072B2"</span>, <span class="st">"#E69F00"</span>, <span class="st">"#CC79A7"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>pracujacy <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"dane/gus/pracujacy_grupy_sekcji.csv"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">encoding =</span> <span class="st">"UTF-8"</span>, <span class="at">colClasses =</span> <span class="fu">c</span>(<span class="at">kod_woj =</span> <span class="st">"character"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(kod_woj <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"00"</span>, <span class="st">"30"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plik zawiera grupy w kolejności sekcji; fct_inorder() zachowuje tę kolejność</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">grupa_sekcji =</span> <span class="fu">fct_inorder</span>(<span class="fu">str_wrap</span>(grupa_sekcji, <span class="at">width =</span> <span class="dv">30</span>)),</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">jednostka =</span> <span class="fu">if_else</span>(kod_woj <span class="sc">==</span> <span class="st">"00"</span>, <span class="st">"Polska"</span>, <span class="st">"wielkopolskie"</span>),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">plec =</span> <span class="fu">if_else</span>(plec <span class="sc">==</span> <span class="st">"ogółem"</span>, <span class="st">"Pracujący ogółem"</span>, <span class="st">"W tym kobiety"</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pracujacy, <span class="fu">aes</span>(<span class="at">x =</span> jednostka, <span class="at">y =</span> pracujacy, <span class="at">fill =</span> grupa_sekcji)) <span class="sc">+</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># reverse = TRUE: pierwsza grupa znajduje się na dole słupka</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="fu">position_fill</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>), <span class="at">width =</span> <span class="fl">0.7</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">linewidth =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> plec) <span class="sc">+</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>()) <span class="sc">+</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> kolory_grup_sekcji) <span class="sc">+</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># odwrócona legenda: ta sama kolejność co w słupkach, od góry do dołu</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Udział w liczbie pracujących"</span>, <span class="at">fill =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.key.spacing.y =</span> <span class="fu">unit</span>(<span class="dv">4</span>, <span class="st">"pt"</span>))</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-a2-pracujacy" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-a2-pracujacy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="B_wykresy_statystyka_regionalna_files/figure-html/fig-a2-pracujacy-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-a2-pracujacy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;B.3: Struktura pracujących według grup sekcji PKD na koniec grudnia 2025 roku
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-a2-pozostale" class="level2" data-number="B.5">
+<h2 data-number="B.5" class="anchored" data-anchor-id="sec-a2-pozostale"><span class="header-section-number">B.5</span> Porównanie regionu z pozostałym terytorium kraju</h2>
+<p>Wykresy te stosuje się, gdy punktem odniesienia jest kraj z wyłączeniem danego regionu, a nie średnia krajowa, np. stolica i pozostała część kraju albo główne miasto województwa i pozostałe jednostki administracyjne w województwie. Publikacja nie podaje osobnej ryciny: pod względem typów wykresów są one zbliżone do wykresów dla różnych podziałów przestrzeni (<a href="#sec-a2-podzialy" class="quarto-xref"><span>Sekcja B.3</span></a>).</p>
+</section>
+<section id="sec-a2-mala" class="level2" data-number="B.6">
+<h2 data-number="B.6" class="anchored" data-anchor-id="sec-a2-mala"><span class="header-section-number">B.6</span> Porównania międzyregionalne przy małej liczbie jednostek</h2>
+<p>Wykresy te stosuje się dla jednostek o większej powierzchni, w liczbie nieprzekraczającej zazwyczaj 30, co wynika z konieczności zachowania przejrzystości wykresu. Służą analizie zróżnicowania wewnętrznego przestrzeni kraju (w Polsce na poziomie regionów, województw lub powiatów w ramach województwa) i rankingowaniu regionów. Publikacja przedstawia tu wykresy słupkowe, powierzchniowe i bąbelkowe.</p>
+<section id="sec-a2-ekon" class="level3" data-number="B.6.1">
+<h3 data-number="B.6.1" class="anchored" data-anchor-id="sec-a2-ekon"><span class="header-section-number">B.6.1</span> Struktura ludności według ekonomicznych grup wieku</h3>
+<p>BDL definiuje wiek przedprodukcyjny jako do 17 lat, produkcyjny jako 18–64 lata dla mężczyzn i 18–59 lat dla kobiet, a poprodukcyjny jako 65 lat i więcej dla mężczyzn i 60 lat i więcej dla kobiet. Publikacja dopuszcza porządkowanie elementów według jednego z szeregów: województwa ułożono według udziału ludności w wieku poprodukcyjnym w 2025 roku.</p>
+<p><strong>Plik danych:</strong> <code>dane/gus/ludnosc_ekonomiczne_grupy_woj.csv</code> (opis: <a href="#sec-a2-d-ekon" class="quarto-xref"><span>Sekcja B.10.4</span></a>).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod: wczytanie danych</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ekon <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"dane/gus/ludnosc_ekonomiczne_grupy_woj.csv"</span>,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">encoding =</span> <span class="st">"UTF-8"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(plec <span class="sc">==</span> <span class="st">"ogółem"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grupa =</span> <span class="fu">factor</span>(grupa, <span class="at">levels =</span> <span class="fu">names</span>(kolory_grup)))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Kolejność województw wyznaczona z 2025 roku obowiązuje na obu wykresach</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>kolejnosc_woj <span class="ot">&lt;-</span> ekon <span class="sc">|&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rok <span class="sc">==</span> <span class="dv">2025</span>, grupa <span class="sc">==</span> <span class="st">"poprodukcyjny"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(udzial_proc) <span class="sc">|&gt;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(wojewodztwo)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>ekon <span class="ot">&lt;-</span> ekon <span class="sc">|&gt;</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wojewodztwo =</span> <span class="fu">factor</span>(wojewodztwo, <span class="at">levels =</span> kolejnosc_woj))</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><strong>Układ statyczny.</strong></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">filter</span>(ekon, rok <span class="sc">==</span> <span class="dv">2025</span>), <span class="fu">aes</span>(<span class="at">x =</span> ludnosc, <span class="at">y =</span> wojewodztwo, <span class="at">fill =</span> grupa)) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># position_fill() przelicza każdy słupek na udziały sumujące się do 100%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="fu">position_fill</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>), <span class="at">width =</span> <span class="fl">0.8</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">linewidth =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>()) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> kolory_grup) <span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Udział w ludności ogółem"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">fill =</span> <span class="st">"Ludność w wieku:"</span>) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-a2-ekon-a" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-a2-ekon-a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="B_wykresy_statystyka_regionalna_files/figure-html/fig-a2-ekon-a-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-a2-ekon-a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;B.4: Struktura ludności według ekonomicznych grup wieku w województwach w 2025 roku
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Układ dynamiczny.</strong> Oryginał umieszcza w słupku wąski słupek z wcześniejszego roku. Efekt ten daje druga warstwa <code>geom_col()</code> o mniejszej szerokości i czarnym obrysie.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> ludnosc, <span class="at">y =</span> wojewodztwo, <span class="at">fill =</span> grupa)) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">data =</span> <span class="fu">filter</span>(ekon, rok <span class="sc">==</span> <span class="dv">2025</span>), <span class="at">position =</span> <span class="fu">position_fill</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">width =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">data =</span> <span class="fu">filter</span>(ekon, rok <span class="sc">==</span> <span class="dv">2010</span>), <span class="at">position =</span> <span class="fu">position_fill</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">width =</span> <span class="fl">0.3</span>, <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.3</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>()) <span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> kolory_grup) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Udział w ludności ogółem"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">fill =</span> <span class="st">"Ludność w wieku:"</span>) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-a2-ekon-b" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-a2-ekon-b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="B_wykresy_statystyka_regionalna_files/figure-html/fig-a2-ekon-b-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-a2-ekon-b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;B.5: Struktura ludności według ekonomicznych grup wieku w województwach: 2025 rok (szerokie słupki) i 2010 rok (wąskie słupki z obrysem)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-a2-wartosc" class="level3" data-number="B.6.2">
+<h3 data-number="B.6.2" class="anchored" data-anchor-id="sec-a2-wartosc"><span class="header-section-number">B.6.2</span> Udział województw w wartości dodanej brutto</h3>
+<p>Wykres służy określeniu roli poszczególnych regionów w kształtowaniu zjawiska, czyli porównaniu struktur powstałych na bazie szeregów geograficznych. Panele odpowiadają układowi oryginału: wartość dodana brutto ogółem i w przetwórstwie przemysłowym (sekcja C). Jak w oryginale, każde województwo ma własny kolor, ten sam w obu panelach i na obu wykresach. Przy 16 kategoriach kolor nie wystarcza do jednoznacznego odczytania, dlatego treemap ma podpisy na polach, a wykres typu waffle legendę z pełnymi nazwami.</p>
+<p><strong>Plik danych:</strong> <code>dane/gus/wartosc_dodana_woj.csv</code> (opis: <a href="#sec-a2-d-wartosc" class="quarto-xref"><span>Sekcja B.10.5</span></a>).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod: wczytanie danych i kolory województw</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>wdb <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"dane/gus/wartosc_dodana_woj.csv"</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">encoding =</span> <span class="st">"UTF-8"</span>, <span class="at">colClasses =</span> <span class="fu">c</span>(<span class="at">kod_woj =</span> <span class="st">"character"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rok <span class="sc">==</span> <span class="dv">2023</span>, sekcja <span class="sc">!=</span> <span class="st">"przemysł (B-E)"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Kolor każdego województwa, ten sam na obu wykresach</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>kolory_woj <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>kod_woj, <span class="sc">~</span>kolor,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"14"</span>, <span class="st">"#1F78B4"</span>, <span class="st">"24"</span>, <span class="st">"#E31A1C"</span>, <span class="st">"30"</span>, <span class="st">"#33A02C"</span>, <span class="st">"12"</span>, <span class="st">"#FF7F00"</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"02"</span>, <span class="st">"#6A3D9A"</span>, <span class="st">"10"</span>, <span class="st">"#B15928"</span>, <span class="st">"22"</span>, <span class="st">"#A6CEE3"</span>, <span class="st">"04"</span>, <span class="st">"#FB9A99"</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"18"</span>, <span class="st">"#B2DF8A"</span>, <span class="st">"06"</span>, <span class="st">"#FDBF6F"</span>, <span class="st">"32"</span>, <span class="st">"#CAB2D6"</span>, <span class="st">"28"</span>, <span class="st">"#FFFF99"</span>,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"08"</span>, <span class="st">"#17BECF"</span>, <span class="st">"20"</span>, <span class="st">"#BCBD22"</span>, <span class="st">"26"</span>, <span class="st">"#999999"</span>, <span class="st">"16"</span>, <span class="st">"#F781BF"</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># kolor podpisu: biały na ciemnym tle, czarny na jasnym (jasność obliczona z RGB)</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">jasnosc =</span> <span class="fu">colSums</span>(<span class="fu">col2rgb</span>(kolor) <span class="sc">*</span> <span class="fu">c</span>(<span class="fl">0.299</span>, <span class="fl">0.587</span>, <span class="fl">0.114</span>)),</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">kolor_tekstu =</span> <span class="fu">if_else</span>(jasnosc <span class="sc">&lt;</span> <span class="dv">130</span>, <span class="st">"white"</span>, <span class="st">"black"</span>))</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>wdb <span class="ot">&lt;-</span> <span class="fu">left_join</span>(wdb, kolory_woj, <span class="at">by =</span> <span class="st">"kod_woj"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><strong>Treemap.</strong> Powierzchnia pola jest proporcjonalna do udziału województwa.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>wdb <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># podpis pola: nazwa województwa i udział z przecinkiem dziesiętnym</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">podpis =</span> <span class="fu">str_c</span>(wojewodztwo, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">format</span>(<span class="fu">round</span>(udzial_proc, <span class="dv">1</span>), <span class="at">decimal.mark =</span> <span class="st">","</span>, <span class="at">trim =</span> <span class="cn">TRUE</span>), <span class="st">"%"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">area =</span> wdb_mln_zl, <span class="at">fill =</span> kolor, <span class="at">label =</span> podpis, <span class="at">colour =</span> kolor_tekstu)) <span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_treemap</span>(<span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># reflow = TRUE zawija tekst, a size i min.size wyznaczają zakres wielkości podpisu</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_treemap_text</span>(<span class="at">place =</span> <span class="st">"centre"</span>, <span class="at">reflow =</span> <span class="cn">TRUE</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">min.size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> sekcja) <span class="sc">+</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scale_*_identity(): kolumna zawiera gotowe kolory, które wykres stosuje bez zmian</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_identity</span>() <span class="sc">+</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_identity</span>() <span class="sc">+</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-a2-wartosc" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-a2-wartosc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="B_wykresy_statystyka_regionalna_files/figure-html/fig-a2-wartosc-1.png" class="img-fluid figure-img" width="960">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-a2-wartosc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;B.6: Udział województw w tworzeniu wartości dodanej brutto w 2023 roku
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Wykres typu waffle.</strong> Wariant dodatkowy, spoza publikacji, wymagający opcjonalnego pakietu <code>waffle</code> (<a href="01_instalacja.html#sec-inst-pakiety" class="quarto-xref"><span>Sekcja 1.5</span></a>), wykonany według przykładów z R Graph Gallery (<a href="https://r-graph-gallery.com/waffle.html" class="uri">https://r-graph-gallery.com/waffle.html</a>). Wykres typu waffle (<em>waffle chart</em>) przedstawia całość jako siatkę 100 kwadratów, w której jeden kwadrat odpowiada 1% wartości dodanej brutto. Liczba kwadratów musi być całkowita i sumować się do 100, dlatego udziały zaokrąglono metodą największych reszt: każde województwo otrzymuje część całkowitą udziału, a pozostałe kwadraty trafiają do województw o największej części ułamkowej. Kolejność województw w legendzie i na siatce wyznacza udział w wartości dodanej ogółem. Ta sama kolejność w obu panelach ułatwia porównanie, ale w panelu przetwórstwa przemysłowego nie odpowiada ona malejącym udziałom.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>kwadraty <span class="ot">&lt;-</span> wdb <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sekcja) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">czesc_calkowita =</span> <span class="fu">floor</span>(udzial_proc),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">reszta =</span> udzial_proc <span class="sc">-</span> czesc_calkowita,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">do_rozdzialu =</span> <span class="dv">100</span> <span class="sc">-</span> <span class="fu">sum</span>(czesc_calkowita),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># dodatkowy kwadrat dla województw o największej reszcie</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">liczba_kwadratow =</span> czesc_calkowita <span class="sc">+</span> (<span class="fu">rank</span>(<span class="sc">-</span>reszta, <span class="at">ties.method =</span> <span class="st">"first"</span>) <span class="sc">&lt;=</span> do_rozdzialu)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Kolejność województw według udziału w wartości dodanej ogółem</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>kolejnosc_woj_wdb <span class="ot">&lt;-</span> wdb <span class="sc">|&gt;</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sekcja <span class="sc">==</span> <span class="st">"ogółem"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(udzial_proc))</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># geom_waffle() wypełnia siatkę w kolejności wierszy tabeli, dlatego tabelę się sortuje</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>kwadraty <span class="ot">&lt;-</span> kwadraty <span class="sc">|&gt;</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wojewodztwo =</span> <span class="fu">factor</span>(wojewodztwo, <span class="at">levels =</span> kolejnosc_woj_wdb<span class="sc">$</span>wojewodztwo)) <span class="sc">|&gt;</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(sekcja, wojewodztwo)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(kwadraty, <span class="fu">aes</span>(<span class="at">fill =</span> wojewodztwo, <span class="at">values =</span> liczba_kwadratow)) <span class="sc">+</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># values: liczba kwadratów kategorii, n_rows: liczba wierszy siatki</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_waffle</span>(<span class="at">n_rows =</span> <span class="dv">10</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> sekcja) <span class="sc">+</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># setNames(): wektor nazwany, który przypisuje kolor do nazwy województwa</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">setNames</span>(kolejnosc_woj_wdb<span class="sc">$</span>kolor, kolejnosc_woj_wdb<span class="sc">$</span>wojewodztwo)) <span class="sc">+</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># coord_equal(): kwadraty mają równe boki</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># margines po prawej stronie: pełne nazwy w legendzie</span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="dv">5</span>, <span class="dv">12</span>, <span class="dv">5</span>, <span class="dv">5</span>))</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-a2-wartosc-waffle" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-a2-wartosc-waffle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="B_wykresy_statystyka_regionalna_files/figure-html/fig-a2-wartosc-waffle-1.png" class="img-fluid figure-img" width="960">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-a2-wartosc-waffle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;B.7: Udział województw w tworzeniu wartości dodanej brutto w 2023 roku; jeden kwadrat odpowiada 1%
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-a2-br" class="level3" data-number="B.6.3">
+<h3 data-number="B.6.3" class="anchored" data-anchor-id="sec-a2-br"><span class="header-section-number">B.6.3</span> Działalność badawczo-rozwojowa</h3>
+<p>Wykres bąbelkowy przedstawia trzy wymiary jednego zjawiska: nakłady na 1 mieszkańca, personel na 1000 osób aktywnych zawodowo i nakłady ogółem. Oryginał wykorzystuje wskaźnik „zatrudnieni w B+R na 1000 osób aktywnych zawodowo”, który BDL podaje do 2015 roku. Od 2016 roku BDL podaje „personel wewnętrzny B+R na 1000 osób aktywnych zawodowo”, w ekwiwalentach pełnego czasu pracy (EPC). Jeden EPC oznacza jeden osobo-rok poświęcony wyłącznie działalności B+R.</p>
+<p><strong>Plik danych:</strong> <code>dane/gus/dzialalnosc_br_woj.csv</code> (opis: <a href="#sec-a2-d-br" class="quarto-xref"><span>Sekcja B.10.6</span></a>).</p>
+<p>Wielkość znaku wyznacza funkcja <code>scale_size_area()</code>: powierzchnia bąbelka jest proporcjonalna do wartości. Etykiety umieszcza funkcja <code>geom_text_repel()</code> tak, aby nie nachodziły na siebie.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>br <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"dane/gus/dzialalnosc_br_woj.csv"</span>,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">encoding =</span> <span class="st">"UTF-8"</span>, <span class="at">colClasses =</span> <span class="fu">c</span>(<span class="at">kod_woj =</span> <span class="st">"character"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rok <span class="sc">==</span> <span class="dv">2024</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>br_woj <span class="ot">&lt;-</span> <span class="fu">filter</span>(br, kod_woj <span class="sc">!=</span> <span class="st">"00"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>br_polska <span class="ot">&lt;-</span> <span class="fu">filter</span>(br, kod_woj <span class="sc">==</span> <span class="st">"00"</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>wykres_br <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(br_woj, <span class="fu">aes</span>(<span class="at">x =</span> naklady_na_1_mieszkanca_zl, <span class="at">y =</span> personel_na_1000_aktywnych)) <span class="sc">+</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> naklady_mln_zl), <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"#0072B2"</span>, <span class="at">colour =</span> <span class="st">"white"</span>,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># seed: stałe położenie etykiet przy każdym uruchomieniu kodu</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label =</span> jednostka_terytorialna), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">seed =</span> <span class="dv">1</span>, <span class="at">max.overlaps =</span> <span class="cn">Inf</span>) <span class="sc">+</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_area</span>(<span class="at">max_size =</span> <span class="dv">18</span>, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1000</span>, <span class="dv">5000</span>, <span class="dv">15000</span>)) <span class="sc">+</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># zakres osi obejmuje także największy bąbelek</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3900</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">22</span>)) <span class="sc">+</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Nakłady wewnętrzne na B+R na 1 mieszkańca [zł]"</span>,</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Personel wewnętrzny B+R</span><span class="sc">\n</span><span class="st">na 1000 osób aktywnych zawodowo [EPC]"</span>,</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">size =</span> <span class="st">"Nakłady na B+R</span><span class="sc">\n</span><span class="st">ogółem [mln zł]"</span>) <span class="sc">+</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>wykres_br</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-a2-br" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-a2-br-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="B_wykresy_statystyka_regionalna_files/figure-html/fig-a2-br-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-a2-br-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;B.8: Działalność badawczo-rozwojowa w województwach w 2024 roku
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-a2-duza" class="level2" data-number="B.7">
+<h2 data-number="B.7" class="anchored" data-anchor-id="sec-a2-duza"><span class="header-section-number">B.7</span> Porównania międzyregionalne przy dużej liczbie jednostek</h2>
+<p>Wykresy te stosuje się dla jednostek o mniejszej powierzchni, w liczbie przekraczającej około 30 (w Polsce podregiony, powiaty i gminy w całym kraju). Pokazują zróżnicowanie przestrzeni kraju bez identyfikacji poszczególnych jednostek, a ich celem jest obraz ogólnego rozkładu zjawiska i wyodrębnienie prawidłowości. Publikacja wskazuje, że mogą być pomocne w samej analizie danych regionalnych i nie muszą służyć celom publikacyjnym.</p>
+<section id="sec-a2-podregiony" class="level3" data-number="B.7.1">
+<h3 data-number="B.7.1" class="anchored" data-anchor-id="sec-a2-podregiony"><span class="header-section-number">B.7.1</span> Sytuacja demograficzna w podregionach</h3>
+<p>Wykres bąbelkowy przedstawia cztery zmienne: położenie na osiach, kolor i wielkość znaku. Klasy współczynnika dzietności wyznaczono kwartylami, ponieważ klasy z oryginału (poniżej 1,2; 1,2–1,3; 1,3–1,4; 1,4 i więcej) obejmują w 2025 roku odpowiednio 59, 10, 4 i 0 podregionów. Zamiast prognozowanej zmiany liczby ludności wykres przedstawia zmianę w latach 2015–2025, która obejmuje przeliczenie bilansu na bazie NSP 2021.</p>
+<p><strong>Plik danych:</strong> <code>dane/gus/wskazniki_demograficzne_podregiony.csv</code> (opis: <a href="#sec-a2-d-podregiony" class="quarto-xref"><span>Sekcja B.10.7</span></a>).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>podregiony <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"dane/gus/wskazniki_demograficzne_podregiony.csv"</span>,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">encoding =</span> <span class="st">"UTF-8"</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">colClasses =</span> <span class="fu">c</span>(<span class="at">Kod =</span> <span class="st">"character"</span>))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Granice klas: kwartyle dzietności zaokrąglone do dwóch miejsc po przecinku</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>granice <span class="ot">&lt;-</span> <span class="fu">quantile</span>(podregiony<span class="sc">$</span>dzietnosc, <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="dv">1</span>))</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>etykiety <span class="ot">&lt;-</span> granice <span class="sc">|&gt;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">2</span>) <span class="sc">|&gt;</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">format</span>(<span class="at">decimal.mark =</span> <span class="st">","</span>, <span class="at">nsmall =</span> <span class="dv">2</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>podregiony <span class="ot">&lt;-</span> podregiony <span class="sc">|&gt;</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">klasa_dzietnosci =</span> <span class="fu">cut</span>(dzietnosc, <span class="at">breaks =</span> granice, <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>                                <span class="at">labels =</span> <span class="fu">str_c</span>(etykiety[<span class="sc">-</span><span class="dv">5</span>], <span class="st">"–"</span>, etykiety[<span class="sc">-</span><span class="dv">1</span>]))) <span class="sc">|&gt;</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># duże znaki rysuje się jako pierwsze, aby nie zasłaniały małych</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(dzietnosc))</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(podregiony, <span class="fu">aes</span>(<span class="at">x =</span> przyrost_1000, <span class="at">y =</span> poprodukcyjni_na_100_produkcyjnych,</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>                       <span class="at">size =</span> klasa_dzietnosci, <span class="at">fill =</span> kierunek_zmiany)) <span class="sc">+</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># shape = 21: punkt z wypełnieniem (fill) i obrysem (colour)</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">stroke =</span> <span class="fl">0.4</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="fl">3.5</span>, <span class="fl">5.5</span>, <span class="dv">8</span>)) <span class="sc">+</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> kolory_kierunku) <span class="sc">+</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># podziałki całkowite: etykiety osi bez separatora dziesiętnego</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># override.aes zmienia wygląd znaku w legendzie: znaki wielkości otrzymują</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># wypełnienie szare, a znaki koloru większy rozmiar</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">size =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">fill =</span> <span class="st">"grey50"</span>)),</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>         <span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">5</span>))) <span class="sc">+</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Przyrost naturalny na 1000 ludności"</span>,</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Ludność w wieku poprodukcyjnym</span><span class="sc">\n</span><span class="st">na 100 osób w wieku produkcyjnym"</span>,</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>       <span class="at">size =</span> <span class="st">"Współczynnik dzietności</span><span class="sc">\n</span><span class="st">(klasy kwartylowe)"</span>,</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Zmiana liczby ludności</span><span class="sc">\n</span><span class="st">w latach 2015–2025"</span>) <span class="sc">+</span></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-a2-podregiony" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-a2-podregiony-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="B_wykresy_statystyka_regionalna_files/figure-html/fig-a2-podregiony-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-a2-podregiony-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;B.9: Przyrost naturalny, obciążenie demograficzne, współczynnik dzietności i zmiana liczby ludności w 73 podregionach w 2025 roku
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-a2-powiaty" class="level3" data-number="B.7.2">
+<h3 data-number="B.7.2" class="anchored" data-anchor-id="sec-a2-powiaty"><span class="header-section-number">B.7.2</span> Wariant dla powiatów</h3>
+<p>Współczynnik dzietności BDL podaje do poziomu podregionów, dlatego wykres dla powiatów przedstawia trzy zmienne. Panele oddzielają miasta na prawach powiatu od powiatów ziemskich.</p>
+<p><strong>Plik danych:</strong> <code>dane/gus/wskazniki_demograficzne_powiaty.csv</code> (opis: <a href="#sec-a2-d-powiaty" class="quarto-xref"><span>Sekcja B.10.8</span></a>).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>powiaty <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"dane/gus/wskazniki_demograficzne_powiaty.csv"</span>,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">encoding =</span> <span class="st">"UTF-8"</span>, <span class="at">colClasses =</span> <span class="fu">c</span>(<span class="at">Kod =</span> <span class="st">"character"</span>))</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(powiaty, <span class="fu">aes</span>(<span class="at">x =</span> przyrost_1000, <span class="at">y =</span> poprodukcyjni_na_100_produkcyjnych,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fill =</span> kierunek_zmiany)) <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">stroke =</span> <span class="fl">0.3</span>, <span class="at">size =</span> <span class="fl">2.2</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> typ) <span class="sc">+</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> kolory_kierunku) <span class="sc">+</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">4</span>))) <span class="sc">+</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Przyrost naturalny na 1000 ludności"</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Ludność w wieku poprodukcyjnym</span><span class="sc">\n</span><span class="st">na 100 osób w wieku produkcyjnym"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Zmiana liczby ludności</span><span class="sc">\n</span><span class="st">w latach 2015–2025"</span>) <span class="sc">+</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-a2-powiaty" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-a2-powiaty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="B_wykresy_statystyka_regionalna_files/figure-html/fig-a2-powiaty-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-a2-powiaty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;B.10: Przyrost naturalny, obciążenie demograficzne i zmiana liczby ludności w 380 powiatach w 2025 roku
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-a2-srednie" class="level2" data-number="B.8">
+<h2 data-number="B.8" class="anchored" data-anchor-id="sec-a2-srednie"><span class="header-section-number">B.8</span> Wartości średnie i różnice od średniej</h2>
+<p>Wartości średnie mogą stanowić dodatkowy element wykresów słupkowych skumulowanych, liniowych i punktowych. Wartość przeciętna zaznaczona linią przecinającą wykres daje obraz rozproszenia wielkości i pokazuje, które z nich są niższe, a które wyższe od średniej. Wykresy tego typu mogą też przedstawiać różnice między wartościami indywidualnymi a wartością przeciętną, a ich uzupełnieniem jest mapa statystyczna.</p>
+<section id="sec-a2-br-polska" class="level3" data-number="B.8.1">
+<h3 data-number="B.8.1" class="anchored" data-anchor-id="sec-a2-br-polska"><span class="header-section-number">B.8.1</span> Działalność badawczo-rozwojowa na tle Polski</h3>
+<p>Oryginał nazywa linię średnią dla Polski. Plik zawiera wartości BDL dla Polski, dlatego linie przedstawiają te wartości, a nie średnią arytmetyczną z województw. Wykres powstaje z wykresu działalności badawczo-rozwojowej (<a href="#sec-a2-br" class="quarto-xref"><span>Sekcja B.6.3</span></a>, te same dane) przez dodanie warstw do zapisanego obiektu <code>wykres_br</code>.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>wykres_br <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">data =</span> br_polska, <span class="fu">aes</span>(<span class="at">xintercept =</span> naklady_na_1_mieszkanca_zl), <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">data =</span> br_polska, <span class="fu">aes</span>(<span class="at">yintercept =</span> personel_na_1000_aktywnych), <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Inf: etykieta przy krawędzi wykresu, niezależnie od zakresu osi</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> br_polska, <span class="fu">aes</span>(<span class="at">x =</span> <span class="cn">Inf</span>, <span class="at">label =</span> <span class="st">"Polska"</span>), <span class="at">hjust =</span> <span class="fl">1.1</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> br_polska, <span class="fu">aes</span>(<span class="at">y =</span> <span class="cn">Inf</span>, <span class="at">label =</span> <span class="st">"Polska"</span>), <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.2</span>, <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">size =</span> <span class="dv">3</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-a2-br-polska" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-a2-br-polska-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="B_wykresy_statystyka_regionalna_files/figure-html/fig-a2-br-polska-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-a2-br-polska-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;B.11: Działalność badawczo-rozwojowa w województwach w 2024 roku na tle wartości dla Polski (linie przerywane)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-a2-piramida" class="level2" data-number="B.9">
+<h2 data-number="B.9" class="anchored" data-anchor-id="sec-a2-piramida"><span class="header-section-number">B.9</span> Wykres uzupełniający: piramida wieku</h2>
+<p>Piramida wieku nie występuje w podrozdziale 2.3 publikacji. Jest dwustronnym wykresem słupkowym opisującym strukturę ludności jednej jednostki: mężczyźni znajdują się po lewej stronie osi, a kobiety po prawej. Stronę lewą uzyskuje się przez nadanie mężczyznom wartości ujemnych; funkcja <code>abs()</code> przywraca na osi wartości bezwzględne. Wartości wyrażono jako udział w ludności ogółem.</p>
+<p><strong>Plik danych:</strong> <code>dane/gus/piramida_wieku_polska.csv</code> (opis: <a href="#sec-a2-d-piramida" class="quarto-xref"><span>Sekcja B.10.9</span></a>).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>piramida <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"dane/gus/piramida_wieku_polska.csv"</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rok <span class="sc">==</span> <span class="dv">2025</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># plik zawiera grupy w kolejności wieku; fct_inorder() zachowuje tę kolejność</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grupa_wieku =</span> <span class="fu">fct_inorder</span>(grupa_wieku),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">udzial_wykres =</span> <span class="fu">if_else</span>(plec <span class="sc">==</span> <span class="st">"mężczyźni"</span>, <span class="sc">-</span>udzial_proc, udzial_proc))</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(piramida, <span class="fu">aes</span>(<span class="at">x =</span> udzial_wykres, <span class="at">y =</span> grupa_wieku, <span class="at">fill =</span> plec)) <span class="sc">+</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> abs, <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"mężczyźni"</span> <span class="ot">=</span> <span class="st">"#0072B2"</span>, <span class="st">"kobiety"</span> <span class="ot">=</span> <span class="st">"#D55E00"</span>),</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"mężczyźni"</span>, <span class="st">"kobiety"</span>)) <span class="sc">+</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"mężczyźni ←   udział w ludności ogółem [%]   → kobiety"</span>, <span class="at">y =</span> <span class="st">"Grupa wieku"</span>,</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-a2-piramida" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-a2-piramida-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="B_wykresy_statystyka_regionalna_files/figure-html/fig-a2-piramida-1.png" class="img-fluid figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-a2-piramida-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;B.12: Piramida wieku ludności Polski w 2025 roku
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-a2-spis" class="level2" data-number="B.10">
+<h2 data-number="B.10" class="anchored" data-anchor-id="sec-a2-spis"><span class="header-section-number">B.10</span> Dane pobrane z BDL</h2>
+<p>Skrypt zawiera gotowe pliki w folderze <code>dane/gus/</code>, dlatego uruchomienie kodu wykresów nie wymaga pobierania danych. Poniższe opisy wskazują dane potrzebne do odtworzenia lub aktualizacji tych plików.</p>
+<p>Każdy zbiór opisano tak, jak w BDL: kategoria, grupa, podgrupa i jej cechy. Zmienne można odnaleźć w witrynie BDL (<a href="https://bdl.stat.gov.pl/" class="uri">https://bdl.stat.gov.pl/</a>) w drzewie „Dane” → „Dane wg dziedzin”, przechodząc kolejno przez kategorię, grupę i podgrupę, a następnie zaznaczając wartości cech i lata. Identyfikatory kategorii, grup, podgrup i zmiennych służą do sprawdzenia wyboru, także w zakładce „Metadane”.</p>
+<p>Od 2020 roku bilans ludności opiera się na wynikach Narodowego Spisu Powszechnego 2021, a dane od tego roku zostały przeliczone (opis podgrupy w BDL). Porównania lat sprzed i po 2020 roku obejmują więc także tę zmianę podstawy bilansu.</p>
+<section id="sec-a2-d-ruch" class="level3" data-number="B.10.1">
+<h3 data-number="B.10.1" class="anchored" data-anchor-id="sec-a2-d-ruch"><span class="header-section-number">B.10.1</span> Ruch naturalny</h3>
+<p>Gotowy plik do wykonania wykresu: <code>dane/gus/ruch_naturalny_polska.csv</code>. Wykres: <a href="#sec-a2-ruch" class="quarto-xref"><span>Sekcja B.3.1</span></a>.</p>
+<p>Układ długi: wiersz odpowiada rokowi i miejscu zamieszkania, a kolumny <code>urodzenia</code> i <code>zgony</code> zawierają liczbę osób. Wykres wykorzystuje wiersze dla miast i wsi.</p>
+<p>Dane pobrane z BDL:</p>
+<ul>
+<li><strong>Kategoria:</strong> K3 LUDNOŚĆ
+<ul>
+<li><strong>Grupa:</strong> G534 URODZENIA I ZGONY</li>
+<li><strong>Podgrupa:</strong> Ruch naturalny w podziale na miasto i wieś (id: P3992)</li>
+<li><strong>Cechy:</strong> Ruch naturalny; Lokalizacje; Rok</li>
+<li><strong>Zmienne:</strong> identyfikatory w nawiasach; urodzenia żywe ogółem: ogółem (1616435), w miastach (1616436), na wsi (1616437); urodzenia żywe na 1000 ludności: ogółem (1616438), w miastach (1616439), na wsi (1616440); zgony ogółem: ogółem (1616441), w miastach (1616442), na wsi (1616443); zgony na 1000 ludności: ogółem (1616444), w miastach (1616445), na wsi (1616446); przyrost naturalny ogółem: ogółem (1616453), w miastach (1616454), na wsi (1616455); przyrost naturalny na 1000 ludności: ogółem (1616456), w miastach (1616457), na wsi (1616458)</li>
+<li><strong>Jednostki i lata:</strong> Polska; 1999–2025</li>
+<li><strong>Do wykresu wykorzystano:</strong> urodzenia żywe ogółem i zgony ogółem, w miastach i na wsi</li>
+</ul></li>
+</ul>
+</section>
+<section id="sec-a2-d-wiek" class="level3" data-number="B.10.2">
+<h3 data-number="B.10.2" class="anchored" data-anchor-id="sec-a2-d-wiek"><span class="header-section-number">B.10.2</span> Struktura wieku ludności miast i wsi</h3>
+<p>Gotowy plik do wykonania wykresu: <code>dane/gus/ludnosc_grupy_wieku_polska.csv</code>. Wykres: <a href="#sec-a2-wiek" class="quarto-xref"><span>Sekcja B.3.2</span></a>.</p>
+<p>BDL podaje grupy wieku częściowo pokrywające się. Grupa 0–15 jest sumą grup 0–2, 3–6, 7–12 i 13–15, a grupa 20–64 sumą grup 20–24, 25–34, 35–44, 45–54 i 55–64. Grupy 16–19 i 65 lat i więcej pochodzą wprost z BDL. Grupy 0–15 i 16–19 zastępują grupy 0–14 i 15–19 z oryginału, ponieważ BDL podaje je w całym okresie 2003–2025.</p>
+<p>Dane pobrane z BDL:</p>
+<ul>
+<li><strong>Kategoria:</strong> K3 LUDNOŚĆ
+<ul>
+<li><strong>Grupa:</strong> G7 STAN LUDNOŚCI</li>
+<li><strong>Podgrupa:</strong> Ludność wg funkcjonalnych grup wieku i płci w podziale na miasto i wieś (id: P3447)</li>
+<li><strong>Cechy:</strong> Funkcjonalne grupy wieku; Płeć; Lokalizacje; Rok</li>
+<li><strong>Zmienne:</strong> Funkcjonalne grupy wieku: ogółem, 0-2, 0-14, 3-6, 7-12, 13-15, 15-64, 16-18, 16-19, 19-24, 20-24, 25-34, 35-44, 45-54, 55-64, 65 i więcej; Płeć: ogółem, mężczyźni, kobiety; Lokalizacje: ogółem, w miastach, na wsi (wszystkie 144 zmienne podgrupy)</li>
+<li><strong>Jednostki i lata:</strong> Polska; 2003–2025</li>
+<li><strong>Do wykresu wykorzystano:</strong> grupy 0-2, 3-6, 7-12, 13-15, 16-19, 20-24, 25-34, 35-44, 45-54, 55-64, 65 i więcej; płeć ogółem; w miastach, na wsi</li>
+</ul></li>
+</ul>
+</section>
+<section id="sec-a2-d-pracujacy" class="level3" data-number="B.10.3">
+<h3 data-number="B.10.3" class="anchored" data-anchor-id="sec-a2-d-pracujacy"><span class="header-section-number">B.10.3</span> Struktura pracujących</h3>
+<p>Gotowy plik do wykonania wykresu: <code>dane/gus/pracujacy_grupy_sekcji.csv</code>. Wykres: <a href="#sec-a2-pracujacy" class="quarto-xref"><span>Sekcja B.4.1</span></a>.</p>
+<p>Z pliku wybrano stan na koniec grudnia 2025 roku oraz wiersze dla ogółem i kobiet. Sekcje PKD połączono w grupy jak w oryginale. Eksport BDL nie zawiera wiersza dla Polski, dlatego słupek Polski przedstawia sumę województw. Opis podgrupy wskazuje, że dane nie obejmują pracujących zamieszkałych za granicą.</p>
+<p>Dane pobrane z BDL:</p>
+<ul>
+<li><strong>Kategoria:</strong> K4 RYNEK PRACY
+<ul>
+<li><strong>Grupa:</strong> G479 PRACUJĄCY, ZATRUDNIENI I PRZECIĘTNE ZATRUDNIENIE WEDŁUG PKD</li>
+<li><strong>Podgrupa:</strong> Pracujący w gospodarce narodowej wg sekcji PKD, płci i miejsca zamieszkania (dane miesięczne) (id: P4283)</li>
+<li><strong>Cechy:</strong> Miesiące; Sekcje PKD; Płeć; Rok</li>
+<li><strong>Zmienne:</strong> Miesiące: styczeń, luty, marzec, kwiecień, maj, czerwiec, lipiec, sierpień, wrzesień, październik, listopad, grudzień; Sekcje PKD: ogółem, rolnictwo, leśnictwo, łowiectwo i rybactwo (A), przemysł razem (B, C, D, E), górnictwo i wydobywanie (B), przemysł - przetwórstwo przemysłowe (C), wytwarzanie i zaopatrywanie w energię elektryczną, gaz, parę wodną i gorącą wodę (D), dostawa wody; gospodarowanie ściekami i odpadami; rekultywacja (E), budownictwo (F), handel; naprawa pojazdów samochodowych (G), transport i gospodarka magazynowa (H), zakwaterowanie i gastronomia (I), informacja i komunikacja (J), działalność finansowa i ubezpieczeniowa (K), obsługa rynku nieruchomości (L), działalność profesjonalna, naukowa i techniczna (M), administrowanie i działalność wspierająca (N), administracja publiczna i obrona narodowa; obowiązkowe zabezpieczenia społeczne (O), edukacja (P), opieka zdrowotna i pomoc społeczna (Q), działalność związana z kulturą, rozrywką i rekreacją (R), pozostała działalność usługowa (S); Płeć: ogółem, mężczyźni, kobiety (wszystkie 756 zmiennych podgrupy)</li>
+<li><strong>Jednostki i lata:</strong> województwa; 2025</li>
+<li><strong>Do wykresu wykorzystano:</strong> grudzień; wszystkie sekcje poza „ogółem” i „przemysł razem”; płeć ogółem i kobiety</li>
+</ul></li>
+</ul>
+</section>
+<section id="sec-a2-d-ekon" class="level3" data-number="B.10.4">
+<h3 data-number="B.10.4" class="anchored" data-anchor-id="sec-a2-d-ekon"><span class="header-section-number">B.10.4</span> Struktura ludności według ekonomicznych grup wieku</h3>
+<p>Gotowy plik do wykonania wykresu: <code>dane/gus/ludnosc_ekonomiczne_grupy_woj.csv</code>. Wykres: <a href="#sec-a2-ekon" class="quarto-xref"><span>Sekcja B.6.1</span></a>.</p>
+<p>Układ długi: wiersz odpowiada województwu, rokowi, płci i grupie wieku. Kolumna <code>udzial_proc</code> zawiera udział grupy w ludności województwa.</p>
+<p>Dane pobrane z BDL:</p>
+<ul>
+<li><strong>Kategoria:</strong> K3 LUDNOŚĆ
+<ul>
+<li><strong>Grupa:</strong> G7 STAN LUDNOŚCI</li>
+<li><strong>Podgrupa:</strong> Ludność w wieku przedprodukcyjnym (17 lat i mniej), produkcyjnym i poprodukcyjnym wg płci (id: P1342)</li>
+<li><strong>Cechy:</strong> Wiek; Płeć; Rok</li>
+<li><strong>Zmienne:</strong> identyfikatory w nawiasach; ogółem: ogółem (34038), mężczyźni (34039), kobiety (34040); w wieku przedprodukcyjnym: ogółem (149), mężczyźni (150), kobiety (151); w wieku produkcyjnym: ogółem (152), mężczyźni (153), kobiety (154); w wieku poprodukcyjnym: ogółem (155), mężczyźni (156), kobiety (157)</li>
+<li><strong>Jednostki i lata:</strong> województwa; 1995–2025</li>
+<li><strong>Do wykresu wykorzystano:</strong> płeć ogółem; lata 2010 i 2025</li>
+</ul></li>
+</ul>
+</section>
+<section id="sec-a2-d-wartosc" class="level3" data-number="B.10.5">
+<h3 data-number="B.10.5" class="anchored" data-anchor-id="sec-a2-d-wartosc"><span class="header-section-number">B.10.5</span> Udział województw w wartości dodanej brutto</h3>
+<p>Gotowy plik do wykonania wykresu: <code>dane/gus/wartosc_dodana_woj.csv</code>. Wykres: <a href="#sec-a2-wartosc" class="quarto-xref"><span>Sekcja B.6.2</span></a>.</p>
+<p>W eksporcie grupy sekcji mają w 2024 roku wartość 0, a wartość liczbową ma tylko „ogółem”, dlatego zestawienie obejmuje lata 2010–2023. Kolumna <code>udzial_proc</code> zawiera udział województwa w sumie województw dla danej sekcji i roku.</p>
+<p>Dane pobrane z BDL:</p>
+<ul>
+<li><strong>Kategoria:</strong> K29 RACHUNKI REGIONALNE
+<ul>
+<li><strong>Grupa:</strong> G544 WARTOŚĆ DODANA BRUTTO (CENY BIEŻĄCE) NUTS 2</li>
+<li><strong>Podgrupa:</strong> Wartość dodana brutto według grup sekcji PKD (id: P3506)</li>
+<li><strong>Cechy:</strong> Grupy sekcji; Rok</li>
+<li><strong>Zmienne:</strong> ogółem (id: 1727746); rolnictwo, leśnictwo, łowiectwo i rybactwo (sekcja A) (id: 458316); przemysł i budownictwo (sekcje B,C,D,E,F) (id: 458315); przemysł (sekcje B,C,D,E) (id: 458317); przetwórstwo przemysłowe (sekcja C) (id: 458318); budownictwo (sekcja F) (id: 458319); handel; naprawa pojazdów samochodowych; transport i gospodarka magazynowa; zakwaterowanie i gastronomia; informacja i komunikacja; działalność finansowa i ubezpieczeniowa; obsługa rynku nieruchomości; pozostałe usługi (sekcje G-T) (id: 458314); handel; naprawa pojazdów samochodowych; transport i gospodarka magazynowa; zakwaterowanie i gastronomia; informacja i komunikacja (sekcje G,H,I,J) (id: 458320); działalność finansowa i ubezpieczeniowa; obsługa rynku nieruchomości (sekcje K,L) (id: 458321); pozostałe usługi (sekcje M,N,O,P,Q,R,S,T) (id: 458322)</li>
+<li><strong>Jednostki i lata:</strong> województwa; 2010–2024</li>
+<li><strong>Do wykresu wykorzystano:</strong> rok 2023; ogółem i przetwórstwo przemysłowe (sekcja C)</li>
+</ul></li>
+</ul>
+</section>
+<section id="sec-a2-d-br" class="level3" data-number="B.10.6">
+<h3 data-number="B.10.6" class="anchored" data-anchor-id="sec-a2-d-br"><span class="header-section-number">B.10.6</span> Działalność badawczo-rozwojowa</h3>
+<p>Gotowy plik do wykonania wykresu: <code>dane/gus/dzialalnosc_br_woj.csv</code>. Wykres: <a href="#sec-a2-br" class="quarto-xref"><span>Sekcja B.6.3</span></a>.</p>
+<p>Pliki połączono według jednostki i roku. Wskaźniki zatrudnionych i personelu pozostają w osobnych kolumnach. Wykres wykorzystuje rok 2024.</p>
+<p>Dane pobrane z BDL:</p>
+<ul>
+<li><strong>Kategoria:</strong> K10 NAUKA I TECHNIKA. SPOŁECZEŃSTWO INFORMACYJNE
+<ul>
+<li><strong>Grupa:</strong> G184 DZIAŁALNOŚĆ BADAWCZA I ROZWOJOWA</li>
+<li><strong>Podgrupa:</strong> Nakłady wewnętrzne na działalność B+R (id: P2401)</li>
+<li><strong>Cechy:</strong> Wyszczególnienie; Rok</li>
+<li><strong>Zmienne:</strong> ogółem (mln zł) (id: 60318); na 1 mieszkańca (id: 60320)</li>
+<li><strong>Jednostki i lata:</strong> województwa; 2002–2025 (rok 2025 bez wartości)</li>
+<li><strong>Do wykresu wykorzystano:</strong> rok 2024</li>
+</ul></li>
+<li><strong>Kategoria:</strong> K10 NAUKA I TECHNIKA. SPOŁECZEŃSTWO INFORMACYJNE
+<ul>
+<li><strong>Grupa:</strong> G184 DZIAŁALNOŚĆ BADAWCZA I ROZWOJOWA</li>
+<li><strong>Podgrupa:</strong> Nakłady wewnętrzne na działalność B+R (id: P2401)</li>
+<li><strong>Cechy:</strong> Wyszczególnienie; Rok</li>
+<li><strong>Zmienne:</strong> ogółem (mln zł) (id: 60318); na 1 mieszkańca (id: 60320)</li>
+<li><strong>Jednostki i lata:</strong> Polska; 2002–2024</li>
+<li><strong>Do wykresu wykorzystano:</strong> rok 2024</li>
+</ul></li>
+<li><strong>Kategoria:</strong> K10 NAUKA I TECHNIKA. SPOŁECZEŃSTWO INFORMACYJNE
+<ul>
+<li><strong>Grupa:</strong> G184 DZIAŁALNOŚĆ BADAWCZA I ROZWOJOWA</li>
+<li><strong>Podgrupa:</strong> Personel wewnętrzny B+R - wskaźniki (id: P3740)</li>
+<li><strong>Cechy:</strong> Wyszczególnienie; Rok</li>
+<li><strong>Zmienne:</strong> personel wewnętrzny B+R na 1000 osób aktywnych zawodowo (id: 565318)</li>
+<li><strong>Jednostki i lata:</strong> Polska, województwa; 2016–2024</li>
+<li><strong>Do wykresu wykorzystano:</strong> rok 2024</li>
+</ul></li>
+</ul>
+</section>
+<section id="sec-a2-d-podregiony" class="level3" data-number="B.10.7">
+<h3 data-number="B.10.7" class="anchored" data-anchor-id="sec-a2-d-podregiony"><span class="header-section-number">B.10.7</span> Sytuacja demograficzna w podregionach</h3>
+<p>Gotowy plik do wykonania wykresu: <code>dane/gus/wskazniki_demograficzne_podregiony.csv</code>. Wykres: <a href="#sec-a2-podregiony" class="quarto-xref"><span>Sekcja B.7.1</span></a>.</p>
+<p>Pliki połączono według kodu podregionu. Obliczono liczbę osób w wieku poprodukcyjnym na 100 osób w wieku produkcyjnym oraz względną zmianę liczby ludności w latach 2015–2025 i jej kierunek. Wartości pozostałych zmiennych dotyczą 2025 roku.</p>
+<p>Dane pobrane z BDL:</p>
+<ul>
+<li><strong>Kategoria:</strong> K3 LUDNOŚĆ
+<ul>
+<li><strong>Grupa:</strong> G7 STAN LUDNOŚCI</li>
+<li><strong>Podgrupa:</strong> Ludność w wieku przedprodukcyjnym (17 lat i mniej), produkcyjnym i poprodukcyjnym wg płci (id: P1342)</li>
+<li><strong>Cechy:</strong> Wiek; Płeć; Rok</li>
+<li><strong>Zmienne:</strong> ogółem: ogółem (34038); w wieku przedprodukcyjnym: ogółem (149); w wieku produkcyjnym: ogółem (152); w wieku poprodukcyjnym: ogółem (155)</li>
+<li><strong>Jednostki i lata:</strong> podregiony; 2002–2025</li>
+<li><strong>Do wykresu wykorzystano:</strong> lata 2015 i 2025</li>
+</ul></li>
+<li><strong>Kategoria:</strong> K3 LUDNOŚĆ
+<ul>
+<li><strong>Grupa:</strong> G534 URODZENIA I ZGONY</li>
+<li><strong>Podgrupa:</strong> Ruch naturalny w podziale na miasto i wieś (id: P3992)</li>
+<li><strong>Cechy:</strong> Ruch naturalny; Lokalizacje; Rok</li>
+<li><strong>Zmienne:</strong> przyrost naturalny na 1000 ludności – ogółem (id: 1616456)</li>
+<li><strong>Jednostki i lata:</strong> podregiony; 2002–2025</li>
+<li><strong>Do wykresu wykorzystano:</strong> rok 2025</li>
+</ul></li>
+<li><strong>Kategoria:</strong> K3 LUDNOŚĆ
+<ul>
+<li><strong>Grupa:</strong> G534 URODZENIA I ZGONY</li>
+<li><strong>Podgrupa:</strong> Współczynnik dzietności i reprodukcji brutto (id: P2346)</li>
+<li><strong>Cechy:</strong> Współczynniki; Rok</li>
+<li><strong>Zmienne:</strong> dzietność (id: 59049)</li>
+<li><strong>Jednostki i lata:</strong> podregiony; 2002–2025</li>
+<li><strong>Do wykresu wykorzystano:</strong> rok 2025</li>
+</ul></li>
+</ul>
+</section>
+<section id="sec-a2-d-powiaty" class="level3" data-number="B.10.8">
+<h3 data-number="B.10.8" class="anchored" data-anchor-id="sec-a2-d-powiaty"><span class="header-section-number">B.10.8</span> Wariant dla powiatów</h3>
+<p>Gotowy plik do wykonania wykresu: <code>dane/gus/wskazniki_demograficzne_powiaty.csv</code>. Wykres: <a href="#sec-a2-powiaty" class="quarto-xref"><span>Sekcja B.7.2</span></a>.</p>
+<p>Eksport zawiera 382 wiersze, także jednostki nieistniejące w latach 2015–2025. Zestawienie obejmuje 380 powiatów z kompletem danych, a wskaźniki obliczono jak dla podregionów.</p>
+<p>Dane pobrane z BDL:</p>
+<ul>
+<li><strong>Kategoria:</strong> K3 LUDNOŚĆ
+<ul>
+<li><strong>Grupa:</strong> G7 STAN LUDNOŚCI</li>
+<li><strong>Podgrupa:</strong> Ludność w wieku przedprodukcyjnym (17 lat i mniej), produkcyjnym i poprodukcyjnym wg płci (id: P1342)</li>
+<li><strong>Cechy:</strong> Wiek; Płeć; Rok</li>
+<li><strong>Zmienne:</strong> ogółem: ogółem (34038); w wieku przedprodukcyjnym: ogółem (149); w wieku produkcyjnym: ogółem (152); w wieku poprodukcyjnym: ogółem (155)</li>
+<li><strong>Jednostki i lata:</strong> powiaty; 1999–2025</li>
+<li><strong>Do wykresu wykorzystano:</strong> lata 2015 i 2025</li>
+</ul></li>
+<li><strong>Kategoria:</strong> K3 LUDNOŚĆ
+<ul>
+<li><strong>Grupa:</strong> G534 URODZENIA I ZGONY</li>
+<li><strong>Podgrupa:</strong> Ruch naturalny w podziale na miasto i wieś (id: P3992)</li>
+<li><strong>Cechy:</strong> Ruch naturalny; Lokalizacje; Rok</li>
+<li><strong>Zmienne:</strong> przyrost naturalny na 1000 ludności – ogółem (id: 1616456)</li>
+<li><strong>Jednostki i lata:</strong> powiaty; 1999–2025</li>
+<li><strong>Do wykresu wykorzystano:</strong> rok 2025</li>
+</ul></li>
+</ul>
+</section>
+<section id="sec-a2-d-piramida" class="level3" data-number="B.10.9">
+<h3 data-number="B.10.9" class="anchored" data-anchor-id="sec-a2-d-piramida"><span class="header-section-number">B.10.9</span> Piramida wieku</h3>
+<p>Gotowy plik do wykonania wykresu: <code>dane/gus/piramida_wieku_polska.csv</code>. Wykres: <a href="#sec-a2-piramida" class="quarto-xref"><span>Sekcja B.9</span></a>.</p>
+<p>BDL podaje grupy 70–74, 75–79, 80–84 oraz 85 lat i więcej od 2002 roku, dlatego zestawienie obejmuje lata 2002–2025. Pominięto grupy 0–14 oraz 70 lat i więcej, które pokrywają się z grupami 5-letnimi. Kolumna <code>udzial_proc</code> zawiera udział grupy i płci w ludności ogółem. Wykres wykorzystuje rok 2025.</p>
+<p>Dane pobrane z BDL:</p>
+<ul>
+<li><strong>Kategoria:</strong> K3 LUDNOŚĆ
+<ul>
+<li><strong>Grupa:</strong> G7 STAN LUDNOŚCI</li>
+<li><strong>Podgrupa:</strong> Ludność wg grup wieku i płci (id: P2137)</li>
+<li><strong>Cechy:</strong> Wiek; Płeć; Rok</li>
+<li><strong>Zmienne:</strong> Wiek: ogółem, 0-4, 5-9, 10-14, 15-19, 20-24, 25-29, 30-34, 35-39, 40-44, 45-49, 50-54, 55-59, 60-64, 65-69, 70-74, 75-79, 80-84, 85 i więcej; Płeć: ogółem, mężczyźni, kobiety</li>
+<li><strong>Jednostki i lata:</strong> Polska; 1995–2025</li>
+<li><strong>Do wykresu wykorzystano:</strong> rok 2025; mężczyźni i kobiety, grupy 5-letnie</li>
+</ul></li>
+</ul>
+
+
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+WyJkYW5lL3diX2RsdWdvc2NfenljaWEuY3N2IiwiZGFuZS9sYXN5X2JsZC5jc3YiLCJkYW5lL2dhcG1pbmRlcl9yZWdpb25zLmNzdiIsImRhbmUvbWV0ZW8yMDIwLmNzdiIsImRhbmUvd29qZXdvZHp0d2EuZ3BrZyIsImRhbmUvQVBJX1NQLkRZTi5MRTAwLklOX0RTMl9lbl9leGNlbF92Ml8xMjkyLnhscyIsImRhbmUvd2JfZGx1Z29zY196eWNpYS5ncGtnIiwiZGFuZS9ndXMvd2FydG9zY19kb2RhbmFfd29qLmNzdiIsImRhbmUvZ3VzL3dza2F6bmlraV9kZW1vZ3JhZmljem5lX3Bvd2lhdHkuY3N2IiwiZGFuZS9ndXMvcGlyYW1pZGFfd2lla3VfcG9sc2thLmNzdiIsImRhbmUvZ3VzL3J1Y2hfbmF0dXJhbG55X3BvbHNrYS5jc3YiLCJkYW5lL2d1cy9wcmFjdWphY3lfZ3J1cHlfc2VrY2ppLmNzdiIsImRhbmUvZ3VzL2x1ZG5vc2NfZWtvbm9taWN6bmVfZ3J1cHlfd29qLmNzdiIsImRhbmUvZ3VzL3dza2F6bmlraV9kZW1vZ3JhZmljem5lX3BvZHJlZ2lvbnkuY3N2IiwiZGFuZS9ndXMvbHVkbm9zY19ncnVweV93aWVrdV9wb2xza2EuY3N2IiwiZGFuZS9ndXMvZHppYWxhbG5vc2NfYnJfd29qLmNzdiIsInBsaWtpX2t1cnN1LnppcCJd
+</script>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Skopiowano!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Skopiowano!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./A_typy_wykresow.html" class="pagination-link" aria-label="Katalog typów wykresów">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Katalog typów wykresów</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./C_zasady_wykresow.html" class="pagination-link" aria-label="Zasady opracowywania wykresów">
+        <span class="nav-page-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Zasady opracowywania wykresów</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

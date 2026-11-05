@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>26&nbsp; Lesistość powiatów województwa wielkopolskiego w latach 2000 i 2025 – Statystyczne i graficzne podstawy geowizualizacji</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./A_typy_wykresow.html" rel="next">
+<link href="./25_meteo_trzy_stacje.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-3708d7fbbef66c9ac9ec4ecfd1afb0ee.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Brak wyników",
+    "search-matching-documents-text": "dopasowane dokumenty",
+    "search-copy-link-title": "Kopiuj link do wyszukiwania",
+    "search-hide-matches-text": "Ukryj dodatkowe dopasowania",
+    "search-more-match-text": "więcej dopasowań w tym dokumencie",
+    "search-more-matches-text": "więcej dopasowań w tym dokumencie",
+    "search-clear-button-title": "Wyczyść",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Anuluj",
+    "search-submit-button-title": "Zatwierdź",
+    "search-label": "Szukaj"
+  }
+}</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./23_dlugosc_zycia_europa.html">PRZYKŁADOWE RAPORTY</a></li><li class="breadcrumb-item"><a href="./26_lasy_wielkopolska.html"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Lesistość powiatów województwa wielkopolskiego w latach 2000 i 2025</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Szukaj" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statystyczne i graficzne podstawy geowizualizacji</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Szukaj"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">O skrypcie</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00_dane.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dane</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">PRACA W R</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_instalacja.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Instalacja R i RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_rstudio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Praca w RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_praca_z_danymi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Praca z danymi</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_wykresy_ggplot2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wykresy w ggplot2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_dane_przestrzenne.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dane przestrzenne w R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_pakiety.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pakiety</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">QUARTO</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_raport.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Raport statystyczny</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">PODSTAWY STATYSTYKI</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_pojecia_podstawowe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pojęcia podstawowe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_statystyki_opisowe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Statystyki opisowe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_korelacja.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Analiza korelacji</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">WIZUALIZACJA DANYCH</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_po_co_wizualizujemy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Po co wizualizujemy dane</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_gramatyka_grafiki.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Gramatyka grafiki</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_typy_wykresow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Typy wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_wizualizacja_statystyk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wizualizacja statystyk opisowych</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16_wizualizacja_zaleznosci.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Wizualizacja zależności</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17_dobor_wykresu.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Dobór wykresu do problemu badawczego</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18_formatowanie.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Formatowanie wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19_zrodla.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Źródła informacji o wizualizacji</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">PRZYKŁADY</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20_dlugosc_zycia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Oczekiwana długość życia na kontynentach w latach 1952–2007</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21_dlugosc_zycia_2007.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Oczekiwana długość życia na świecie w 2007 roku</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22_meteo_2020.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Warunki meteorologiczne w Polsce w 2020 roku</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">PRZYKŁADOWE RAPORTY</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23_dlugosc_zycia_europa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Zmienność oczekiwanej długości życia w Europie w latach 1952 i 2007</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./24_meteo_zakopane.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Warunki meteorologiczne wybranej stacji</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./25_meteo_trzy_stacje.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Porównanie warunków meteorologicznych trzech stacji</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26_lasy_wielkopolska.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Lesistość powiatów województwa wielkopolskiego w latach 2000 i 2025</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Załączniki</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./A_typy_wykresow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Katalog typów wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./B_wykresy_statystyka_regionalna.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Wykresy w statystyce regionalnej</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C_zasady_wykresow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Zasady opracowywania wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./D_dobor_wykresu_przyklady.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Dobór wykresu do problemu badawczego: przykłady</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./E_bank_swiatowy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Praca z danymi Banku Światowego</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Spis treści</h2>
+   
+  <ul>
+  <li><a href="#wprowadzenie" id="toc-wprowadzenie" class="nav-link active" data-scroll-target="#wprowadzenie"><span class="header-section-number">26.1</span> Wprowadzenie</a></li>
+  <li><a href="#sec-lw-dane" id="toc-sec-lw-dane" class="nav-link" data-scroll-target="#sec-lw-dane"><span class="header-section-number">26.2</span> Dane</a></li>
+  <li><a href="#sec-lw-metody" id="toc-sec-lw-metody" class="nav-link" data-scroll-target="#sec-lw-metody"><span class="header-section-number">26.3</span> Metody</a></li>
+  <li><a href="#wyniki" id="toc-wyniki" class="nav-link" data-scroll-target="#wyniki"><span class="header-section-number">26.4</span> Wyniki</a>
+  <ul class="collapse">
+  <li><a href="#sec-lw-poziom" id="toc-sec-lw-poziom" class="nav-link" data-scroll-target="#sec-lw-poziom"><span class="header-section-number">26.4.1</span> Lesistość powiatów w 2000 i 2025 roku</a></li>
+  <li><a href="#sec-lw-zmiana" id="toc-sec-lw-zmiana" class="nav-link" data-scroll-target="#sec-lw-zmiana"><span class="header-section-number">26.4.2</span> Zmiana lesistości w latach 2000–2025</a></li>
+  </ul></li>
+  <li><a href="#sec-lw-wnioski" id="toc-sec-lw-wnioski" class="nav-link" data-scroll-target="#sec-lw-wnioski"><span class="header-section-number">26.5</span> Wnioski</a></li>
+  <li><a href="#sec-lw-wybor" id="toc-sec-lw-wybor" class="nav-link" data-scroll-target="#sec-lw-wybor"><span class="header-section-number">26.6</span> Wybór sposobu prezentacji wyników</a>
+  <ul class="collapse">
+  <li><a href="#sec-lw-wybor-rozklad" id="toc-sec-lw-wybor-rozklad" class="nav-link" data-scroll-target="#sec-lw-wybor-rozklad"><span class="header-section-number">26.6.1</span> Rozkład lesistości</a></li>
+  <li><a href="#sec-lw-wybor-zmiana" id="toc-sec-lw-wybor-zmiana" class="nav-link" data-scroll-target="#sec-lw-wybor-zmiana"><span class="header-section-number">26.6.2</span> Zmiana lesistości</a></li>
+  </ul></li>
+  <li><a href="#sec-lw-obliczenia" id="toc-sec-lw-obliczenia" class="nav-link" data-scroll-target="#sec-lw-obliczenia"><span class="header-section-number">26.7</span> Obliczenia w R</a>
+  <ul class="collapse">
+  <li><a href="#sec-lw-obl-dane" id="toc-sec-lw-obl-dane" class="nav-link" data-scroll-target="#sec-lw-obl-dane"><span class="header-section-number">26.7.1</span> Wczytanie danych</a></li>
+  <li><a href="#granice-powiatów" id="toc-granice-powiatów" class="nav-link" data-scroll-target="#granice-powiatów"><span class="header-section-number">26.7.2</span> Granice powiatów</a></li>
+  <li><a href="#łączenie-danych-z-granicami-i-obliczenie-lesistości" id="toc-łączenie-danych-z-granicami-i-obliczenie-lesistości" class="nav-link" data-scroll-target="#łączenie-danych-z-granicami-i-obliczenie-lesistości"><span class="header-section-number">26.7.3</span> Łączenie danych z granicami i obliczenie lesistości</a></li>
+  <li><a href="#statystyki-i-kartogram-lesistości" id="toc-statystyki-i-kartogram-lesistości" class="nav-link" data-scroll-target="#statystyki-i-kartogram-lesistości"><span class="header-section-number">26.7.4</span> Statystyki i kartogram lesistości</a></li>
+  <li><a href="#mapa-i-wykres-zmiany-lesistości" id="toc-mapa-i-wykres-zmiany-lesistości" class="nav-link" data-scroll-target="#mapa-i-wykres-zmiany-lesistości"><span class="header-section-number">26.7.5</span> Mapa i wykres zmiany lesistości</a></li>
+  <li><a href="#wybór-sposobu-prezentacji-wyników" id="toc-wybór-sposobu-prezentacji-wyników" class="nav-link" data-scroll-target="#wybór-sposobu-prezentacji-wyników"><span class="header-section-number">26.7.6</span> Wybór sposobu prezentacji wyników</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./23_dlugosc_zycia_europa.html">PRZYKŁADOWE RAPORTY</a></li><li class="breadcrumb-item"><a href="./26_lasy_wielkopolska.html"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Lesistość powiatów województwa wielkopolskiego w latach 2000 i 2025</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-lasy" class="quarto-section-identifier"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Lesistość powiatów województwa wielkopolskiego w latach 2000 i 2025</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Jak czytać ten rozdział
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Rozdział ma postać raportu (Wprowadzenie – Wnioski), po którym następują dwie sekcje dydaktyczne: <strong>Wybór sposobu prezentacji wyników</strong> (<a href="#sec-lw-wybor" class="quarto-xref"><span>Sekcja 26.6</span></a>) przedstawia te same wyniki na innych typach wykresów, a <strong>Obliczenia w R</strong> (<a href="#sec-lw-obliczenia" class="quarto-xref"><span>Sekcja 26.7</span></a>) wyjaśniają kod wszystkich sekcji. Kod R jest w raporcie domyślnie ukryty — rozwija się go przyciskiem <strong>Kod</strong> nad wynikiem.</p>
+</div>
+</div>
+<section id="wprowadzenie" class="level2" data-number="26.1">
+<h2 data-number="26.1" class="anchored" data-anchor-id="wprowadzenie"><span class="header-section-number">26.1</span> Wprowadzenie</h2>
+<p><strong>Lesistość</strong> to udział powierzchni lasów w powierzchni jednostki terytorialnej, wyrażony w procentach:</p>
+<p><span class="math display">\[
+\text{lesistość} = \frac{\text{powierzchnia lasów}}{\text{powierzchnia jednostki}} \cdot 100\%
+\]</span></p>
+<p>Raport opisuje lesistość 35 powiatów województwa wielkopolskiego w latach 2000 i 2025 i odpowiada na pytania badawcze:</p>
+<ol type="1">
+<li>Jaka była lesistość powiatów w 2000 i 2025 roku i jak różniła się między powiatami? (<a href="#sec-lw-poziom" class="quarto-xref"><span>Sekcja 26.4.1</span></a>)</li>
+<li>Jak zmieniła się lesistość powiatów w latach 2000–2025? (<a href="#sec-lw-zmiana" class="quarto-xref"><span>Sekcja 26.4.2</span></a>)</li>
+</ol>
+<p>Plik z danymi zawiera powierzchnię lasów, ale nie zawiera powierzchni powiatów. Raport łączy więc dane tabelaryczne z granicami powiatów, oblicza powierzchnię powiatów z ich granic, a wyniki przedstawia na kartogramie, mapie zmiany i wykresach.</p>
+</section>
+<section id="sec-lw-dane" class="level2" data-number="26.2">
+<h2 data-number="26.2" class="anchored" data-anchor-id="sec-lw-dane"><span class="header-section-number">26.2</span> Dane</h2>
+<p><strong>Powierzchnia lasów.</strong> Plik <code>lasy_bld.csv</code> zawiera powierzchnię lasów w powiatach Polski w latach 2000 i 2025. Źródło danych: Bank Danych Lokalnych GUS (<a href="https://bdl.stat.gov.pl/" class="uri">https://bdl.stat.gov.pl/</a>), dziedzina „Leśnictwo i łowiectwo” → „Leśnictwo wszystkich form własności” → „Powierzchnia lasów”, zmienna „lasy ogółem” (identyfikator zmiennej 217916). Dane BDL są udostępniane na licencji Creative Commons Uznanie autorstwa 4.0 (CC BY 4.0). Jednostką obserwacji jest powiat; miasta na prawach powiatu są osobnymi jednostkami.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Kolumna</th>
+<th>Znaczenie</th>
+<th>Jednostka</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Kod</code></td>
+<td>kod jednostki terytorialnej powiatu (TERYT), 7 cyfr</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td><code>Nazwa</code></td>
+<td>nazwa powiatu</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td><code>lasy2000</code></td>
+<td>powierzchnia lasów w 2000 roku</td>
+<td>ha</td>
+</tr>
+<tr class="even">
+<td><code>lasy2025</code></td>
+<td>powierzchnia lasów w 2025 roku</td>
+<td>ha</td>
+</tr>
+</tbody>
+</table>
+<p>Plik ma trzy cechy, które wymagają ustawienia argumentów przy wczytaniu (<a href="#sec-lw-obl-dane" class="quarto-xref"><span>Sekcja 26.7.1</span></a>): kolumny są rozdzielone średnikiem, liczby zapisano z przecinkiem dziesiętnym, a kody powiatów z województw o numerach 02–08 zaczynają się od zera (np. <code>0201000</code>). Plik liczy 381 wierszy. W 11 z nich brakuje wartości z jednego roku (9 braków dla 2000 roku, 2 dla 2025 roku). Wiersze te odpowiadają zmianom podziału na powiaty — np. miasto Wałbrzych opisują dwa wiersze: „Powiat m. Wałbrzych do 2002” i „Powiat m. Wałbrzych od 2013”. Wszystkie te wiersze dotyczą powiatów spoza województwa wielkopolskiego.</p>
+<p><strong>Granice powiatów.</strong> Granice pochodzą z bazy GADM w wersji 4.1 (<a href="https://gadm.org/" class="uri">https://gadm.org/</a>); poziom 2 tej bazy to w Polsce powiaty. Funkcja <code>gadm()</code> z pakietu <code>geodata</code> przy pierwszym uruchomieniu kodu pobiera je z serwera (plik ok. 22 MB; wymaga połączenia z internetem) i zapisuje w folderze <code>granice/</code> obok pliku <code>.qmd</code>; przy kolejnych uruchomieniach wczytuje zapisany plik. Dane GADM są dostępne bezpłatnie do zastosowań akademickich i niekomercyjnych; ich redystrybucja wymaga zgody, dlatego granice nie są dołączone do folderu <code>dane/</code>, a pobranego pliku nie należy udostępniać innym osobom. W raporcie wykorzystano kolumny:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Kolumna</th>
+<th>Znaczenie</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>NAME_1</code></td>
+<td>nazwa województwa</td>
+</tr>
+<tr class="even">
+<td><code>CC_2</code></td>
+<td>kod powiatu (TERYT), 4 cyfry — początek kodu z kolumny <code>Kod</code></td>
+</tr>
+<tr class="odd">
+<td><code>geometry</code></td>
+<td>granice powiatu</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pakiety: tidyverse (przetwarzanie danych i wykresy), sf (dane przestrzenne),</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># geodata (pobieranie granic jednostek administracyjnych)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geodata)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># powierzchnia lasów w powiatach: kolumny rozdzielone średnikiem, przecinek dziesiętny,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># kod TERYT wczytany jako tekst, aby zachować zero na początku</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>lasy <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"dane/lasy_bld.csv"</span>, <span class="at">sep =</span> <span class="st">";"</span>, <span class="at">dec =</span> <span class="st">","</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colClasses =</span> <span class="fu">c</span>(<span class="at">Kod =</span> <span class="st">"character"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Kod, Nazwa, lasy2000, lasy2025)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># granice powiatów Polski (GADM, poziom 2) zapisane w folderze granice/</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># (pobierane tylko przy pierwszym uruchomieniu) i zamienione na obiekt sf</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>granice_powiatow <span class="ot">&lt;-</span> <span class="fu">gadm</span>(<span class="at">country =</span> <span class="st">"POL"</span>, <span class="at">level =</span> <span class="dv">2</span>, <span class="at">path =</span> <span class="st">"granice/"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>()</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dołączenie danych o lasach do granic, wybór województwa i obliczenie lesistości</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>powiaty <span class="ot">&lt;-</span> granice_powiatow <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Kod =</span> <span class="fu">paste0</span>(CC_2, <span class="st">"000"</span>)) <span class="sc">|&gt;</span>                 <span class="co"># 7-cyfrowy kod, jak w kolumnie Kod</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(lasy, <span class="at">by =</span> <span class="st">"Kod"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(NAME_1 <span class="sc">==</span> <span class="st">"Wielkopolskie"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">2180</span>) <span class="sc">|&gt;</span>                                 <span class="co"># układ współrzędnych PUWG 1992</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nazwa =</span> <span class="fu">str_remove</span>(Nazwa, <span class="st">"Powiat "</span>),          <span class="co"># krótka nazwa do wykresów</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">pow_ha =</span> <span class="fu">as.numeric</span>(<span class="fu">st_area</span>(geometry)) <span class="sc">/</span> <span class="dv">10000</span>,  <span class="co"># powierzchnia: m² → ha</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">les2000 =</span> lasy2000 <span class="sc">/</span> pow_ha <span class="sc">*</span> <span class="dv">100</span>,             <span class="co"># lesistość w 2000 roku [%]</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">les2025 =</span> lasy2025 <span class="sc">/</span> pow_ha <span class="sc">*</span> <span class="dv">100</span>,             <span class="co"># lesistość w 2025 roku [%]</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">zmiana =</span> les2025 <span class="sc">-</span> les2000)                    <span class="co"># zmiana lesistości [p.p.]</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Obiekt <code>powiaty</code> zawiera 35 powiatów województwa wielkopolskiego: 31 powiatów i 4 miasta na prawach powiatu (Kalisz, Konin, Leszno, Poznań). Kod każdego z nich znalazł swój odpowiednik w pliku <code>lasy_bld.csv</code>, a kolumny <code>lasy2000</code> i <code>lasy2025</code> nie zawierają braków danych. Kolumny obliczone w raporcie:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Kolumna</th>
+<th>Znaczenie</th>
+<th>Jednostka</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>nazwa</code></td>
+<td>nazwa powiatu bez słowa „Powiat”</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td><code>pow_ha</code></td>
+<td>powierzchnia powiatu obliczona z granic</td>
+<td>ha</td>
+</tr>
+<tr class="odd">
+<td><code>les2000</code>, <code>les2025</code></td>
+<td>lesistość w 2000 i 2025 roku</td>
+<td>%</td>
+</tr>
+<tr class="even">
+<td><code>zmiana</code></td>
+<td>zmiana lesistości: <code>les2025 − les2000</code></td>
+<td>punkty procentowe</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sec-lw-metody" class="level2" data-number="26.3">
+<h2 data-number="26.3" class="anchored" data-anchor-id="sec-lw-metody"><span class="header-section-number">26.3</span> Metody</h2>
+<p>Powierzchnię powiatu obliczono z jego granic po przekształceniu współrzędnych do układu PUWG 1992 (kod EPSG 2180) — układu współrzędnych płaskich prostokątnych obejmującego obszar Polski, ze współrzędnymi w metrach. Lesistość obliczono ze wzoru podanego we wprowadzeniu. Dla obu lat przyjęto te same granice (GADM 4.1). Powierzchnia obliczona z granic GADM może różnić się od powierzchni powiatów publikowanej przez GUS, dlatego lesistość obliczona w raporcie może różnić się od lesistości publikowanej w BDL.</p>
+<p>Poziom i zróżnicowanie lesistości powiatów w każdym roku opisano miarami położenia (średnia, mediana, kwartyle) i zmienności (odchylenie standardowe, wartość najmniejsza i największa). Obok nich podano lesistość całego województwa, obliczoną jako suma powierzchni lasów podzielona przez sumę powierzchni powiatów. Ta wartość różni się od średniej lesistości powiatów: średnia przypisuje każdemu powiatowi tę samą wagę, niezależnie od jego powierzchni.</p>
+<p>Zmianę lesistości wyrażono jako różnicę lesistości w 2025 i w 2000 roku. Różnica dwóch wartości wyrażonych w procentach jest wyrażona w <strong>punktach procentowych</strong> (p.p.): wzrost lesistości z 20% do 21% to wzrost o 1 p.p.</p>
+<p>Na kartogramie lesistości wartości podzielono na klasy co 10%, z tymi samymi granicami klas dla obu lat, co pozwala porównać panele bezpośrednio. Na mapie zmiany lesistości granicą klas jest 0: spadek i wzrost lesistości mają różne barwy, a nasycenie barwy rośnie z wielkością zmiany (skala rozbieżna, <a href="18_formatowanie.html#sec-fo-kolor" class="quarto-xref"><span>Sekcja 18.5</span></a>).</p>
+</section>
+<section id="wyniki" class="level2" data-number="26.4">
+<h2 data-number="26.4" class="anchored" data-anchor-id="wyniki"><span class="header-section-number">26.4</span> Wyniki</h2>
+<section id="sec-lw-poziom" class="level3" data-number="26.4.1">
+<h3 data-number="26.4.1" class="anchored" data-anchor-id="sec-lw-poziom"><span class="header-section-number">26.4.1</span> Lesistość powiatów w 2000 i 2025 roku</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tabela w postaci długiej: jeden wiersz = powiat w danym roku</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>powiaty_dlugie <span class="ot">&lt;-</span> powiaty <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(nazwa, les2000, les2025) <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(les2000, les2025), <span class="at">names_to =</span> <span class="st">"rok"</span>, <span class="at">names_prefix =</span> <span class="st">"les"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"lesistosc"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># lesistość województwa: suma powierzchni lasów / suma powierzchni powiatów</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>lesistosc_woj <span class="ot">&lt;-</span> powiaty <span class="sc">|&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">`</span><span class="at">2000</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(lasy2000) <span class="sc">/</span> <span class="fu">sum</span>(pow_ha) <span class="sc">*</span> <span class="dv">100</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">`</span><span class="at">2025</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(lasy2025) <span class="sc">/</span> <span class="fu">sum</span>(pow_ha) <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"rok"</span>, <span class="at">values_to =</span> <span class="st">"wojewodztwo"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># statystyki opisowe lesistości powiatów w każdym roku i lesistość województwa</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>powiaty_dlugie <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(rok) <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">srednia =</span> <span class="fu">mean</span>(lesistosc),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">mediana =</span> <span class="fu">median</span>(lesistosc),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">odch_std =</span> <span class="fu">sd</span>(lesistosc),</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">min =</span> <span class="fu">min</span>(lesistosc),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">q1 =</span> <span class="fu">quantile</span>(lesistosc, <span class="fl">0.25</span>),</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">q3 =</span> <span class="fu">quantile</span>(lesistosc, <span class="fl">0.75</span>),</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">max =</span> <span class="fu">max</span>(lesistosc)) <span class="sc">|&gt;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(lesistosc_woj, <span class="at">by =</span> <span class="st">"rok"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">1</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Rok"</span>, <span class="st">"Liczba powiatów"</span>, <span class="st">"Średnia"</span>, <span class="st">"Mediana"</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"Odchylenie standardowe"</span>, <span class="st">"Minimum"</span>, <span class="st">"Pierwszy kwartyl"</span>,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"Trzeci kwartyl"</span>, <span class="st">"Maksimum"</span>, <span class="st">"Województwo"</span>),</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>               <span class="at">format.args =</span> <span class="fu">list</span>(<span class="at">decimal.mark =</span> <span class="st">","</span>))</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-lw-statystyki" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-lw-statystyki-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;26.1: Statystyki opisowe lesistości 35 powiatów województwa wielkopolskiego oraz lesistość województwa, 2000 i 2025 [%]
+</figcaption>
+<div aria-describedby="tbl-lw-statystyki-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 13%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 19%">
+<col style="width: 6%">
+<col style="width: 14%">
+<col style="width: 12%">
+<col style="width: 7%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Rok</th>
+<th style="text-align: right;">Liczba powiatów</th>
+<th style="text-align: right;">Średnia</th>
+<th style="text-align: right;">Mediana</th>
+<th style="text-align: right;">Odchylenie standardowe</th>
+<th style="text-align: right;">Minimum</th>
+<th style="text-align: right;">Pierwszy kwartyl</th>
+<th style="text-align: right;">Trzeci kwartyl</th>
+<th style="text-align: right;">Maksimum</th>
+<th style="text-align: right;">Województwo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2000</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">22,2</td>
+<td style="text-align: right;">19,4</td>
+<td style="text-align: right;">11,0</td>
+<td style="text-align: right;">2,5</td>
+<td style="text-align: right;">14,7</td>
+<td style="text-align: right;">29,1</td>
+<td style="text-align: right;">50,1</td>
+<td style="text-align: right;">25,2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2025</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">22,8</td>
+<td style="text-align: right;">19,8</td>
+<td style="text-align: right;">11,3</td>
+<td style="text-align: right;">3,3</td>
+<td style="text-align: right;">15,1</td>
+<td style="text-align: right;">29,7</td>
+<td style="text-align: right;">51,2</td>
+<td style="text-align: right;">25,9</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Lesistość powiatów w obu latach mieściła się w szerokim przedziale (<a href="#tbl-lw-statystyki" class="quarto-xref">Tabela&nbsp;<span>26.1</span></a>): od 2,5% w 2000 roku i 3,3% w 2025 roku w mieście Koninie do 50,1% i 51,2% w powiecie czarnkowsko-trzcianeckim. Połowa powiatów miała lesistość od 14,7% do 29,1% w 2000 roku i od 15,1% do 29,7% w 2025 roku. Średnia lesistość powiatów (22,2% i 22,8%) była wyższa od mediany (19,4% i 19,8%). Lesistość województwa (25,2% w 2000 roku i 25,9% w 2025 roku) była wyższa od średniej lesistości powiatów.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wykres pudełkowy z punktami powiatów rozsuniętymi w poziomie</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(powiaty_dlugie, <span class="fu">aes</span>(<span class="at">x =</span> rok, <span class="at">y =</span> lesistosc)) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>, <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span>       <span class="co"># punkty odstające rysuje geom_jitter</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="dv">0</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Lesistość [%]"</span>) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-lw-rozklad" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lw-rozklad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26_lasy_wielkopolska_files/figure-html/fig-lw-rozklad-1.png" class="img-fluid figure-img" width="576">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lw-rozklad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;26.1: Lesistość 35 powiatów województwa wielkopolskiego, 2000 i 2025; punkty — powiaty
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Rozkłady lesistości w obu latach mają podobny kształt (<a href="#fig-lw-rozklad" class="quarto-xref">Rycina&nbsp;<span>26.1</span></a>). Pudełka obejmują wartości od około 15% do około 30%; powyżej trzeciego kwartyla wartości są rozproszone do około 50%, a poniżej pierwszego kwartyla — skupione między 2,5% a 15%. Ten układ jest zgodny z wyższą średnią niż mediana w <a href="#tbl-lw-statystyki" class="quarto-xref">Tabela&nbsp;<span>26.1</span></a> (asymetria prawostronna).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># kartogram w dwóch panelach według roku, wspólne klasy co 10%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(powiaty_dlugie) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> lesistosc), <span class="at">colour =</span> <span class="st">"grey40"</span>, <span class="at">linewidth =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>rok) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_fermenter</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">10</span>, <span class="dv">50</span>, <span class="at">by =</span> <span class="dv">10</span>),   <span class="co"># granice klas co 10%</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">"Greens"</span>, <span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Lesistość [%]"</span>) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-lw-mapy" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lw-mapy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26_lasy_wielkopolska_files/figure-html/fig-lw-mapy-1.png" class="img-fluid figure-img" width="960">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lw-mapy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;26.2: Kartogram lesistości powiatów województwa wielkopolskiego, 2000 i 2025
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Rozmieszczenie lesistości w obu latach jest takie samo (<a href="#fig-lw-mapy" class="quarto-xref">Rycina&nbsp;<span>26.2</span></a>). Lesistość powyżej 30% miało w obu latach 9 powiatów; osiem z nich leży w północnej i zachodniej części województwa, dziewiąty — powiat ostrzeszowski — na południu. Największą lesistość — powyżej 40% — miały powiaty czarnkowsko-trzcianecki, złotowski i międzychodzki. Lesistość poniżej 10% miały trzy miasta na prawach powiatu: Konin, Kalisz i Leszno. W 2025 roku tylko jeden powiat — kaliski — znalazł się w innej klasie niż w 2000 roku (wzrost z 19,7% do 20,3%).</p>
+</section>
+<section id="sec-lw-zmiana" class="level3" data-number="26.4.2">
+<h3 data-number="26.4.2" class="anchored" data-anchor-id="sec-lw-zmiana"><span class="header-section-number">26.4.2</span> Zmiana lesistości w latach 2000–2025</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># klasy zmiany lesistości z granicą w 0 i kolory: brązowy — spadek, zielone — wzrost</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>powiaty <span class="ot">&lt;-</span> powiaty <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">klasa_zmiany =</span> <span class="fu">cut</span>(zmiana,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">0</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="cn">Inf</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"spadek"</span>, <span class="st">"0–0,25"</span>, <span class="st">"0,25–0,5"</span>, <span class="st">"0,5–1"</span>, <span class="st">"powyżej 1"</span>)))</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>kolory_zmiany <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"spadek"</span> <span class="ot">=</span> <span class="st">"#BF812D"</span>, <span class="st">"0–0,25"</span> <span class="ot">=</span> <span class="st">"#C7EAE5"</span>, <span class="st">"0,25–0,5"</span> <span class="ot">=</span> <span class="st">"#80CDC1"</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"0,5–1"</span> <span class="ot">=</span> <span class="st">"#35978F"</span>, <span class="st">"powyżej 1"</span> <span class="ot">=</span> <span class="st">"#01665E"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mapa zmiany lesistości: kolor według klasy zmiany</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(powiaty) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> klasa_zmiany), <span class="at">colour =</span> <span class="st">"grey40"</span>, <span class="at">linewidth =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> kolory_zmiany) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Zmiana lesistości</span><span class="sc">\n</span><span class="st">[p.p.]"</span>) <span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-lw-mapa-zmiany" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lw-mapa-zmiany-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26_lasy_wielkopolska_files/figure-html/fig-lw-mapa-zmiany-1.png" class="img-fluid figure-img" width="576">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lw-mapa-zmiany-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;26.3: Zmiana lesistości powiatów województwa wielkopolskiego w latach 2000–2025 [p.p.]
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wykres słupkowy: powiaty uporządkowane według zmiany lesistości</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(powiaty, <span class="fu">aes</span>(<span class="at">x =</span> zmiana, <span class="at">y =</span> <span class="fu">fct_reorder</span>(nazwa, zmiana), <span class="at">fill =</span> klasa_zmiany)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> kolory_zmiany) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Zmiana lesistości [p.p.]"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">fill =</span> <span class="st">"Zmiana lesistości</span><span class="sc">\n</span><span class="st">[p.p.]"</span>) <span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-lw-zmiana-slupki" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lw-zmiana-slupki-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26_lasy_wielkopolska_files/figure-html/fig-lw-zmiana-slupki-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lw-zmiana-slupki-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;26.4: Zmiana lesistości powiatów województwa wielkopolskiego w latach 2000–2025 [p.p.]; kolory klas jak na rycinie <a href="#fig-lw-mapa-zmiany" class="quarto-xref"><span>26.3</span></a>
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>W latach 2000–2025 lesistość wzrosła w 34 z 35 powiatów (<a href="#fig-lw-mapa-zmiany" class="quarto-xref">Rycina&nbsp;<span>26.3</span></a>, <a href="#fig-lw-zmiana-slupki" class="quarto-xref">Rycina&nbsp;<span>26.4</span></a>). W większości powiatów wzrost był niewielki: mediana zmiany wynosiła 0,47 p.p., a w 24 powiatach zmiana mieściła się w przedziale 0,25–1 p.p. Wzrost powyżej 1 p.p. dotyczył trzech powiatów: złotowskiego (3,16 p.p.), miasta Poznania (2,32 p.p.) i czarnkowsko-trzcianeckiego (1,07 p.p.). Spadek lesistości wystąpił w jednym powiecie — kościańskim (−0,14 p.p.). Lesistość województwa wzrosła o 0,68 p.p., a łączna powierzchnia lasów — z 750 241 ha do 770 430 ha.</p>
+</section>
+</section>
+<section id="sec-lw-wnioski" class="level2" data-number="26.5">
+<h2 data-number="26.5" class="anchored" data-anchor-id="sec-lw-wnioski"><span class="header-section-number">26.5</span> Wnioski</h2>
+<ol type="1">
+<li>Lesistość powiatów województwa wielkopolskiego była silnie zróżnicowana: w 2025 roku od 3,3% (miasto Konin) do 51,2% (powiat czarnkowsko-trzcianecki), przy medianie 19,8%. Najbardziej lesiste powiaty leżą w północnej i zachodniej części województwa, najmniej lesiste są miasta na prawach powiatu (<a href="#sec-lw-poziom" class="quarto-xref"><span>Sekcja 26.4.1</span></a>).</li>
+<li>W latach 2000–2025 lesistość wzrosła w 34 z 35 powiatów, w większości o mniej niż 1 p.p. (mediana 0,47 p.p.). Największy wzrost wystąpił w powiecie złotowskim (3,16 p.p.), spadek — tylko w powiecie kościańskim (−0,14 p.p.). Lesistość województwa wzrosła z 25,2% do 25,9% (<a href="#sec-lw-zmiana" class="quarto-xref"><span>Sekcja 26.4.2</span></a>).</li>
+</ol>
+</section>
+<section id="sec-lw-wybor" class="level2" data-number="26.6">
+<h2 data-number="26.6" class="anchored" data-anchor-id="sec-lw-wybor"><span class="header-section-number">26.6</span> Wybór sposobu prezentacji wyników</h2>
+<p>Sekcja przedstawia te same dane w innych formach niż w wynikach i porównuje, co pokazuje każda z nich: najpierw rozkład lesistości powiatów w obu latach, potem zmianę lesistości.</p>
+<section id="sec-lw-wybor-rozklad" class="level3" data-number="26.6.1">
+<h3 data-number="26.6.1" class="anchored" data-anchor-id="sec-lw-wybor-rozklad"><span class="header-section-number">26.6.1</span> Rozkład lesistości</h3>
+<p>Rozkład lesistości przedstawiono w wynikach na wykresie pudełkowym z punktami powiatów (<a href="#fig-lw-rozklad" class="quarto-xref">Rycina&nbsp;<span>26.1</span></a>). Poniżej ten sam rozkład przedstawiono na histogramach w dwóch panelach i na wykresie grzbietowym.</p>
+<p><strong>Histogramy w dwóch panelach</strong> (<a href="#fig-lw-wybor-hist" class="quarto-xref">Rycina&nbsp;<span>26.5</span></a>) przedstawiają liczbę powiatów w klasach lesistości o szerokości 5 punktów procentowych. Panele ustawiono jeden pod drugim, ze wspólną osią x, co pozwala porównać położenie słupków w obu latach.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># histogram w osobnym panelu dla każdego roku, panele jeden pod drugim</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(powiaty_dlugie, <span class="fu">aes</span>(<span class="at">x =</span> lesistosc, <span class="at">fill =</span> rok)) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>, <span class="at">boundary =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span>  <span class="co"># klasy co 5%, od 0</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>rok, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"2000"</span> <span class="ot">=</span> <span class="st">"#BF812D"</span>, <span class="st">"2025"</span> <span class="ot">=</span> <span class="st">"#01665E"</span>)) <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Lesistość [%]"</span>, <span class="at">y =</span> <span class="st">"Liczba powiatów"</span>) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)                    <span class="co"># rok podany w nagłówku panelu</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-lw-wybor-hist" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lw-wybor-hist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26_lasy_wielkopolska_files/figure-html/fig-lw-wybor-hist-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lw-wybor-hist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;26.5: Lesistość 35 powiatów województwa wielkopolskiego, 2000 i 2025 — histogramy, klasy co 5%
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Histogramy pokazują kształt rozkładu, którego nie przedstawia wykres pudełkowy: w obu latach najliczniejsza jest klasa 15–20% (10 powiatów w 2000 roku, 12 w 2025 roku), a druga, mniejsza grupa powiatów ma lesistość 30–35% (5 i 4 powiaty). Różnice między panelami wynikają z przejścia powiatów między klasami. Klasę zmieniło sześć powiatów: rawicki (14,7% → 15,0%), słupecki (14,7% → 15,0%) i miasto Poznań (12,9% → 15,2%) przeszły z klasy 10–15% do klasy 15–20%, kaliski (19,7% → 20,3%) — do klasy 20–25%, chodzieski (34,7% → 35,3%) — do klasy 35–40%, a złotowski (43,9% → 47,0%) — do klasy 45–50%. Wzrost o około 0,35 p.p. zmienił więc liczność klas tak samo jak wzrost o 2,32 p.p. Liczność klas histogramu zależy od położenia granic klas, dlatego porównanie histogramów pokazuje zmianę rozkładu tylko wtedy, gdy zmiana wartości jest duża w stosunku do szerokości klasy.</p>
+<p><strong>Wykres grzbietowy</strong> (<a href="#fig-lw-wybor-grzbietowy" class="quarto-xref">Rycina&nbsp;<span>26.6</span></a>) przedstawia rozkład w każdym roku jako krzywą gęstości — funkcję ciągłą, bez podziału na klasy. Krzywe obu lat umieszczono jedna nad drugą na wspólnej osi x; pionowa linia oznacza medianę, a kreski pod krzywą — lesistość poszczególnych powiatów.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pakiet z wykresem grzbietowym</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggridges)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># krzywa gęstości dla każdego roku, mediana i powiaty pod krzywą</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(powiaty_dlugie, <span class="fu">aes</span>(<span class="at">x =</span> lesistosc, <span class="at">y =</span> rok, <span class="at">fill =</span> rok)) <span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density_ridges</span>(</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.7</span>,                                    <span class="co"># przezroczystość wypełnienia</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">quantile_lines =</span> <span class="cn">TRUE</span>, <span class="at">quantiles =</span> <span class="dv">2</span>,           <span class="co"># linia mediany</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">jittered_points =</span> <span class="cn">TRUE</span>,                         <span class="co"># obserwacje pod krzywą</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_points_jitter</span>(<span class="at">height =</span> <span class="dv">0</span>),  <span class="co"># punkty bez przesunięcia</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">point_shape =</span> <span class="st">"|"</span>, <span class="at">point_size =</span> <span class="dv">3</span>               <span class="co"># punkty w kształcie kreski</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"2000"</span> <span class="ot">=</span> <span class="st">"#BF812D"</span>, <span class="st">"2025"</span> <span class="ot">=</span> <span class="st">"#01665E"</span>)) <span class="sc">+</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Lesistość [%]"</span>, <span class="at">y =</span> <span class="st">"Rok"</span>) <span class="sc">+</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-lw-wybor-grzbietowy" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lw-wybor-grzbietowy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26_lasy_wielkopolska_files/figure-html/fig-lw-wybor-grzbietowy-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lw-wybor-grzbietowy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;26.6: Lesistość 35 powiatów województwa wielkopolskiego, 2000 i 2025 — wykres grzbietowy; linia pionowa: mediana, kreski: powiaty
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Krzywe gęstości obu lat mają niemal ten sam kształt: maksimum przy lesistości około 18%, dłuższy ogon po stronie wysokich wartości (asymetria prawostronna) i medianę bliską 20%. Grupa powiatów o lesistości 30–35%, widoczna na histogramach jako osobny słupek, na krzywej gęstości tworzy jedynie załamanie krzywej. Krzywa gęstości jest określona także poza zakresem danych — sięga wartości poniżej 0% i powyżej 60%, których lesistość nie może przyjmować. Jest to skutek wygładzenia: krzywa gęstości powstaje przez zsumowanie funkcji jądrowych umieszczonych w położeniu każdej obserwacji; odchylenie standardowe funkcji jądrowej jest równe szerokości pasma (tu dobranej automatycznie: 4,78 p.p.), dlatego krzywa sięga poza najmniejszą i największą wartość.</p>
+<p>Wszystkie trzy formy — wykres pudełkowy, histogramy i wykres grzbietowy — prowadzą do tego samego wniosku: rozkład lesistości powiatów w 2025 roku niemal nie różni się od rozkładu w 2000 roku. Wykres pudełkowy przedstawia miary położenia i zakres w najbardziej zwartej formie; histogram pokazuje liczbę powiatów w klasach i grupy wartości, ale jego wygląd zależy od granic klas; wykres grzbietowy pokazuje kształt rozkładu bez podziału na klasy, ale wygładza nieliczne grupy wartości i wykracza poza zakres możliwych wartości. Żadna z tych form nie pokazuje, jak zmieniła się lesistość poszczególnych powiatów.</p>
+</section>
+<section id="sec-lw-wybor-zmiana" class="level3" data-number="26.6.2">
+<h3 data-number="26.6.2" class="anchored" data-anchor-id="sec-lw-wybor-zmiana"><span class="header-section-number">26.6.2</span> Zmiana lesistości</h3>
+<p>Zmianę lesistości przedstawiono w wynikach za pomocą zmiennej <code>zmiana</code>: na mapie (<a href="#fig-lw-mapa-zmiany" class="quarto-xref">Rycina&nbsp;<span>26.3</span></a>) i na wykresie słupkowym (<a href="#fig-lw-zmiana-slupki" class="quarto-xref">Rycina&nbsp;<span>26.4</span></a>). Te same dane można przedstawić bez obliczania różnicy — zestawiając lesistość z obu lat na jednym wykresie. Poniżej pokazano dwie takie formy: wykres hantlowy i wykres rozrzutu.</p>
+<p><strong>Wykres hantlowy</strong> (<a href="#fig-lw-hantle" class="quarto-xref">Rycina&nbsp;<span>26.7</span></a>) przedstawia dla każdego powiatu dwa punkty — lesistość w 2000 i w 2025 roku — połączone odcinkiem. Długość odcinka jest równa zmianie lesistości.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># kolejność powiatów na osi y: według lesistości w 2025 roku</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>kolejnosc <span class="ot">&lt;-</span> powiaty <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(les2025) <span class="sc">|&gt;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(nazwa)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># odcinek od lesistości w 2000 do lesistości w 2025 roku i punkty dla obu lat</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> powiaty,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> les2000, <span class="at">xend =</span> les2025, <span class="at">y =</span> nazwa, <span class="at">yend =</span> nazwa),</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> powiaty_dlugie,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> lesistosc, <span class="at">y =</span> nazwa, <span class="at">colour =</span> rok),</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(<span class="at">limits =</span> kolejnosc) <span class="sc">+</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"2000"</span> <span class="ot">=</span> <span class="st">"#BF812D"</span>, <span class="st">"2025"</span> <span class="ot">=</span> <span class="st">"#01665E"</span>)) <span class="sc">+</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Lesistość [%]"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">colour =</span> <span class="st">"Rok"</span>) <span class="sc">+</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-lw-hantle" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lw-hantle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26_lasy_wielkopolska_files/figure-html/fig-lw-hantle-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lw-hantle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;26.7: Lesistość powiatów województwa wielkopolskiego w 2000 i 2025 roku — wykres hantlowy
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Wykres rozrzutu</strong> (<a href="#fig-lw-rozrzut" class="quarto-xref">Rycina&nbsp;<span>26.8</span></a>) przedstawia lesistość w 2025 roku względem lesistości w 2000 roku. Linia przerywana to linia y = x: punkt powyżej niej oznacza wzrost lesistości, punkt poniżej — spadek, a odległość od linii w pionie jest równa zmianie lesistości.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wykres rozrzutu z linią y = x i jednakową skalą obu osi</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(powiaty, <span class="fu">aes</span>(<span class="at">x =</span> les2000, <span class="at">y =</span> les2025)) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Lesistość w 2000 roku [%]"</span>, <span class="at">y =</span> <span class="st">"Lesistość w 2025 roku [%]"</span>) <span class="sc">+</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-lw-rozrzut" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lw-rozrzut-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26_lasy_wielkopolska_files/figure-html/fig-lw-rozrzut-1.png" class="img-fluid figure-img" width="576">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lw-rozrzut-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;26.8: Lesistość powiatów województwa wielkopolskiego w 2025 roku względem lesistości w 2000 roku; linia przerywana: y = x
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Na obu wykresach widoczny jest przede wszystkim poziom lesistości i kolejność powiatów. Zmiana lesistości, wynosząca w większości powiatów mniej niż 1 p.p., zajmuje na osi o zakresie 0–50% odcinek krótszy od średnicy punktu: na wykresie hantlowym punkty z obu lat częściowo się nakładają, a na wykresie rozrzutu punkty leżą na linii y = x. Wyraźnie widoczne są tylko dwa największe wzrosty — w powiecie złotowskim i w mieście Poznaniu. Spadku lesistości w powiecie kościańskim (−0,14 p.p.) nie można odczytać z żadnego z tych wykresów.</p>
+<p>Wykres hantlowy i wykres rozrzutu są właściwe, gdy zmiana jest duża w stosunku do zakresu wartości. Gdy zmiana jest mała w stosunku do poziomu — jak w tym raporcie — zmianę trzeba obliczyć jako osobną zmienną i przedstawić na osobnej rycinie, ze skalą dobraną do zakresu zmiany (<a href="#fig-lw-mapa-zmiany" class="quarto-xref">Rycina&nbsp;<span>26.3</span></a>, <a href="#fig-lw-zmiana-slupki" class="quarto-xref">Rycina&nbsp;<span>26.4</span></a>).</p>
+</section>
+</section>
+<section id="sec-lw-obliczenia" class="level2" data-number="26.7">
+<h2 data-number="26.7" class="anchored" data-anchor-id="sec-lw-obliczenia"><span class="header-section-number">26.7</span> Obliczenia w R</h2>
+<p>Sekcja wyjaśnia kod w kolejności jego użycia w raporcie. Elementy omówione we wcześniejszych rozdziałach są opisane krótko, z odesłaniem.</p>
+<section id="sec-lw-obl-dane" class="level3" data-number="26.7.1">
+<h3 data-number="26.7.1" class="anchored" data-anchor-id="sec-lw-obl-dane"><span class="header-section-number">26.7.1</span> Wczytanie danych</h3>
+<ul>
+<li><code>read.csv()</code> wczytuje plik z argumentami dopasowanymi do jego zapisu:
+<ul>
+<li><code>sep = ";"</code> — kolumny rozdzielone średnikiem (domyślnie przecinkiem);</li>
+<li><code>dec = ","</code> — przecinek dziesiętny (domyślnie kropka); bez tego argumentu kolumny <code>lasy2000</code> i <code>lasy2025</code> zostałyby wczytane jako tekst;</li>
+<li><code>encoding = "UTF-8"</code> — kodowanie znaków pliku, potrzebne do poprawnego odczytu polskich liter w nazwach powiatów;</li>
+<li><code>colClasses = c(Kod = "character")</code> — kolumna <code>Kod</code> wczytana jako tekst. Wczytana jako liczba utraciłaby zero na początku (<code>0201000</code> → <code>201000</code>) i nie dałaby się połączyć z kodem z granic powiatów.</li>
+</ul></li>
+<li>Każdy wiersz pliku kończy się średnikiem, dlatego <code>read.csv()</code> tworzy dodatkową, pustą kolumnę <code>X</code>. <code>select()</code> pozostawia tylko cztery potrzebne kolumny.</li>
+</ul>
+</section>
+<section id="granice-powiatów" class="level3" data-number="26.7.2">
+<h3 data-number="26.7.2" class="anchored" data-anchor-id="granice-powiatów"><span class="header-section-number">26.7.2</span> Granice powiatów</h3>
+<ul>
+<li><code>gadm()</code> pobiera granice jednostek administracyjnych z bazy GADM: <code>country = "POL"</code> — kod kraju (ISO 3166 alfa-3), <code>level = 2</code> — poziom podziału administracyjnego (w Polsce: 0 — państwo, 1 — województwa, 2 — powiaty), <code>path</code> — folder, w którym zapisywany jest pobrany plik (ścieżka względna, jak przy <code>read.csv()</code>). <code>gadm()</code> tworzy w nim podfolder <code>gadm/</code> i zapisuje plik <code>gadm41_POL_2_pk.rds</code>. Jeżeli plik już tam jest, <code>gadm()</code> wczytuje go bez ponownego pobierania — dlatego tylko pierwsze uruchomienie kodu trwa dłużej i wymaga połączenia z internetem. Usunięcie folderu <code>granice/</code> powoduje ponowne pobranie pliku.</li>
+<li><code>gadm()</code> zwraca obiekt klasy <code>SpatVector</code> z pakietu <code>terra</code>. <code>st_as_sf()</code> zamienia go na obiekt <code>sf</code> — tabelę, w której kolumna <code>geometry</code> zawiera granice (<a href="06_pakiety.html#sec-pak-pozostale" class="quarto-xref"><span>Sekcja 6.5</span></a>), co pozwala przetwarzać go funkcjami <code>dplyr</code> i rysować <code>geom_sf()</code> (<a href="05_dane_przestrzenne.html#sec-sf-wczytanie" class="quarto-xref"><span>Sekcja 5.2</span></a>).</li>
+</ul>
+</section>
+<section id="łączenie-danych-z-granicami-i-obliczenie-lesistości" class="level3" data-number="26.7.3">
+<h3 data-number="26.7.3" class="anchored" data-anchor-id="łączenie-danych-z-granicami-i-obliczenie-lesistości"><span class="header-section-number">26.7.3</span> Łączenie danych z granicami i obliczenie lesistości</h3>
+<ul>
+<li>Kod powiatu w granicach (<code>CC_2</code>, np. <code>3001</code>) ma 4 cyfry, a w pliku z danymi (<code>Kod</code>, np. <code>3001000</code>) — 7 cyfr. <code>paste0(CC_2, "000")</code> dopisuje na końcu trzy zera i tworzy kolumnę <code>Kod</code> w tej samej postaci co w pliku <code>lasy_bld.csv</code>.</li>
+<li><code>left_join()</code> dołącza kolumny tabeli <code>lasy</code> do granic według wspólnej kolumny <code>Kod</code> (<a href="03_praca_z_danymi.html#sec-pd-join" class="quarto-xref"><span>Sekcja 3.10</span></a>). Obiekt z granicami jest pierwszym argumentem, dlatego wynik pozostaje obiektem <code>sf</code>. Przy odwrotnej kolejności (<code>left_join(lasy, granice_powiatow)</code>) wynik jest zwykłą ramką danych, a <code>geom_sf()</code> wymaga wtedy wskazania kolumny geometrii w mapowaniu: <code>aes(geometry = geometry)</code>.</li>
+<li><code>filter(NAME_1 == "Wielkopolskie")</code> wybiera powiaty jednego województwa.</li>
+<li><code>st_transform(2180)</code> przelicza współrzędne granic z układu geograficznego WGS 84 (stopnie) do układu PUWG 1992 o kodzie EPSG 2180 (metry).</li>
+<li><code>st_area()</code> oblicza powierzchnię każdego obiektu w układzie współrzędnych obiektu; w układzie PUWG 1992 — na płaszczyźnie, w metrach kwadratowych. Wynik ma przypisaną jednostkę (<code>[m^2]</code>); <code>as.numeric()</code> usuwa ją, a dzielenie przez 10 000 zamienia m² na hektary (1 ha = 10 000 m²) (<a href="05_dane_przestrzenne.html#sec-sf-obliczenia" class="quarto-xref"><span>Sekcja 5.6</span></a>).</li>
+<li><code>str_remove(Nazwa, "Powiat ")</code> usuwa z nazwy słowo „Powiat ” i skraca opisy osi na wykresach.</li>
+</ul>
+</section>
+<section id="statystyki-i-kartogram-lesistości" class="level3" data-number="26.7.4">
+<h3 data-number="26.7.4" class="anchored" data-anchor-id="statystyki-i-kartogram-lesistości"><span class="header-section-number">26.7.4</span> Statystyki i kartogram lesistości</h3>
+<ul>
+<li><code>pivot_longer()</code> (<a href="03_praca_z_danymi.html#sec-pd-pivot" class="quarto-xref"><span>Sekcja 3.9</span></a>) zamienia kolumny <code>les2000</code> i <code>les2025</code> na dwie kolumny: <code>rok</code> i <code>lesistosc</code>. <code>names_prefix = "les"</code> usuwa z nazw kolumn przedrostek, dlatego kolumna <code>rok</code> zawiera wartości <code>"2000"</code> i <code>"2025"</code>. Wynik pozostaje obiektem <code>sf</code> — każdy powiat występuje w nim dwa razy, z tą samą geometrią.</li>
+<li><code>st_drop_geometry()</code> usuwa kolumnę z geometrią przed obliczeniem statystyk. Funkcja <code>summarise()</code> zastosowana do obiektu <code>sf</code> łączy także geometrie obiektów w grupie; statystyki opisowe tego nie wymagają.</li>
+<li>W tabeli lesistości województwa nazwy kolumn <code>`2000`</code> i <code>`2025`</code> zapisano w odwrotnych apostrofach, ponieważ nazwa kolumny zaczynająca się od cyfry wymaga takiego zapisu. <code>pivot_longer(everything(), ...)</code> zamienia je na kolumnę <code>rok</code>, według której <code>left_join()</code> łączy lesistość województwa ze statystykami powiatów.</li>
+<li>Kartogram lesistości to jeden wykres podzielony na panele przez <code>facet_wrap(~rok)</code>; panele mają wspólną skalę kolorów. <code>scale_fill_fermenter()</code> dzieli wartości na klasy o granicach <code>breaks</code> (<a href="18_formatowanie.html#sec-fo-kolor" class="quarto-xref"><span>Sekcja 18.5</span></a>); <code>palette = "Greens"</code> i <code>direction = 1</code> — paleta zieleni, od jasnej dla najmniejszych wartości do ciemnej dla największych.</li>
+</ul>
+</section>
+<section id="mapa-i-wykres-zmiany-lesistości" class="level3" data-number="26.7.5">
+<h3 data-number="26.7.5" class="anchored" data-anchor-id="mapa-i-wykres-zmiany-lesistości"><span class="header-section-number">26.7.5</span> Mapa i wykres zmiany lesistości</h3>
+<ul>
+<li><code>cut()</code> dzieli wartości liczbowe na klasy: <code>breaks</code> to granice klas (<code>-Inf</code> i <code>Inf</code> oznaczają brak dolnej i górnej granicy), <code>labels</code> — nazwy klas. Wynikiem jest zmienna typu factor. Klasy wyznaczono przed narysowaniem mapy, ponieważ ten sam podział i te same kolory wykorzystuje także wykres słupkowy.</li>
+<li><code>kolory_zmiany</code> to wektor kolorów z nazwami klas (kolory z palety rozbieżnej Brewer „BrBG”: brązowy dla spadku, odcienie zieleni dla wzrostu). <code>scale_fill_manual(values =   kolory_zmiany)</code> przypisuje każdej klasie jej kolor.</li>
+<li><code>fct_reorder(nazwa, zmiana)</code> porządkuje powiaty na osi według wartości zmiany.</li>
+</ul>
+</section>
+<section id="wybór-sposobu-prezentacji-wyników" class="level3" data-number="26.7.6">
+<h3 data-number="26.7.6" class="anchored" data-anchor-id="wybór-sposobu-prezentacji-wyników"><span class="header-section-number">26.7.6</span> Wybór sposobu prezentacji wyników</h3>
+<ul>
+<li>Histogramy w dwóch panelach to jeden wykres <code>geom_histogram()</code> podzielony przez <code>facet_wrap(~rok, ncol = 1)</code> — panele w jednej kolumnie, ze wspólną osią x. <code>binwidth = 5</code> ustala szerokość klasy (5 p.p.), a <code>boundary = 0</code> — położenie granic klas (0, 5, 10, …). <code>theme(legend.position = "none")</code> usuwa legendę, ponieważ rok podany jest w nagłówku panelu.</li>
+<li>Wykres grzbietowy tworzy <code>geom_density_ridges()</code> z pakietu <code>ggridges</code>; argumenty są takie same jak w rozdziale o Europie (<a href="23_dlugosc_zycia_europa.html#sec-eu-obliczenia" class="quarto-xref"><span>Sekcja 23.7</span></a>). Szerokość pasma wygładzenia funkcja dobiera automatycznie i podaje w komunikacie <em>Picking joint bandwidth of 4.78</em>, ukrytym opcją <code>#| message: false</code>.</li>
+<li>Wykres hantlowy łączy dwie warstwy z różnych tabel: <code>geom_segment()</code> rysuje odcinek od <code>x</code> do <code>xend</code> dla każdego powiatu z tabeli <code>powiaty</code> (jeden wiersz na powiat), a <code>geom_point()</code> — punkty z tabeli <code>powiaty_dlugie</code> (dwa wiersze na powiat), z kolorem według roku. Tabela jest podana w każdej warstwie argumentem <code>data =</code>, dlatego wywołanie <code>ggplot()</code> nie zawiera danych.</li>
+<li>Kolejność powiatów na osi y wyznacza wektor <code>kolejnosc</code>: <code>arrange(les2025)</code> porządkuje powiaty według lesistości w 2025 roku, a <code>pull(nazwa)</code> zwraca kolumnę <code>nazwa</code> jako wektor. <code>scale_y_discrete(limits = kolejnosc)</code> ustawia tę kolejność na osi — wspólną dla obu warstw.</li>
+<li><code>geom_abline(slope = 1, intercept = 0)</code> rysuje linię y = x. <code>coord_equal()</code> nadaje jednostce na obu osiach tę samą długość (<a href="18_formatowanie.html#sec-fo-osie" class="quarto-xref"><span>Sekcja 18.2</span></a>).</li>
+</ul>
+
+
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+WyJkYW5lL3diX2RsdWdvc2NfenljaWEuY3N2IiwiZGFuZS9sYXN5X2JsZC5jc3YiLCJkYW5lL2dhcG1pbmRlcl9yZWdpb25zLmNzdiIsImRhbmUvbWV0ZW8yMDIwLmNzdiIsImRhbmUvd29qZXdvZHp0d2EuZ3BrZyIsImRhbmUvQVBJX1NQLkRZTi5MRTAwLklOX0RTMl9lbl9leGNlbF92Ml8xMjkyLnhscyIsImRhbmUvd2JfZGx1Z29zY196eWNpYS5ncGtnIiwiZGFuZS9ndXMvd2FydG9zY19kb2RhbmFfd29qLmNzdiIsImRhbmUvZ3VzL3dza2F6bmlraV9kZW1vZ3JhZmljem5lX3Bvd2lhdHkuY3N2IiwiZGFuZS9ndXMvcGlyYW1pZGFfd2lla3VfcG9sc2thLmNzdiIsImRhbmUvZ3VzL3J1Y2hfbmF0dXJhbG55X3BvbHNrYS5jc3YiLCJkYW5lL2d1cy9wcmFjdWphY3lfZ3J1cHlfc2VrY2ppLmNzdiIsImRhbmUvZ3VzL2x1ZG5vc2NfZWtvbm9taWN6bmVfZ3J1cHlfd29qLmNzdiIsImRhbmUvZ3VzL3dza2F6bmlraV9kZW1vZ3JhZmljem5lX3BvZHJlZ2lvbnkuY3N2IiwiZGFuZS9ndXMvbHVkbm9zY19ncnVweV93aWVrdV9wb2xza2EuY3N2IiwiZGFuZS9ndXMvZHppYWxhbG5vc2NfYnJfd29qLmNzdiIsInBsaWtpX2t1cnN1LnppcCJd
+</script>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Skopiowano!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Skopiowano!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./25_meteo_trzy_stacje.html" class="pagination-link" aria-label="Porównanie warunków meteorologicznych trzech stacji">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Porównanie warunków meteorologicznych trzech stacji</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./A_typy_wykresow.html" class="pagination-link" aria-label="Katalog typów wykresów">
+        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Katalog typów wykresów</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Dane przestrzenne w R – Statystyczne i graficzne podstawy geowizualizacji</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./06_pakiety.html" rel="next">
+<link href="./04_wykresy_ggplot2.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-3708d7fbbef66c9ac9ec4ecfd1afb0ee.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Brak wyników",
+    "search-matching-documents-text": "dopasowane dokumenty",
+    "search-copy-link-title": "Kopiuj link do wyszukiwania",
+    "search-hide-matches-text": "Ukryj dodatkowe dopasowania",
+    "search-more-match-text": "więcej dopasowań w tym dokumencie",
+    "search-more-matches-text": "więcej dopasowań w tym dokumencie",
+    "search-clear-button-title": "Wyczyść",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Anuluj",
+    "search-submit-button-title": "Zatwierdź",
+    "search-label": "Szukaj"
+  }
+}</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_instalacja.html">PRACA W R</a></li><li class="breadcrumb-item"><a href="./05_dane_przestrzenne.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dane przestrzenne w R</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Szukaj" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statystyczne i graficzne podstawy geowizualizacji</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Szukaj"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">O skrypcie</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00_dane.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dane</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">PRACA W R</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_instalacja.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Instalacja R i RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_rstudio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Praca w RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_praca_z_danymi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Praca z danymi</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_wykresy_ggplot2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wykresy w ggplot2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_dane_przestrzenne.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dane przestrzenne w R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_pakiety.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pakiety</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">QUARTO</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_raport.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Raport statystyczny</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">PODSTAWY STATYSTYKI</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_pojecia_podstawowe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pojęcia podstawowe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_statystyki_opisowe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Statystyki opisowe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_korelacja.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Analiza korelacji</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">WIZUALIZACJA DANYCH</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_po_co_wizualizujemy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Po co wizualizujemy dane</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_gramatyka_grafiki.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Gramatyka grafiki</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_typy_wykresow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Typy wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_wizualizacja_statystyk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wizualizacja statystyk opisowych</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16_wizualizacja_zaleznosci.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Wizualizacja zależności</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17_dobor_wykresu.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Dobór wykresu do problemu badawczego</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18_formatowanie.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Formatowanie wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19_zrodla.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Źródła informacji o wizualizacji</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">PRZYKŁADY</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20_dlugosc_zycia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Oczekiwana długość życia na kontynentach w latach 1952–2007</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21_dlugosc_zycia_2007.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Oczekiwana długość życia na świecie w 2007 roku</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22_meteo_2020.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Warunki meteorologiczne w Polsce w 2020 roku</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">PRZYKŁADOWE RAPORTY</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23_dlugosc_zycia_europa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Zmienność oczekiwanej długości życia w Europie w latach 1952 i 2007</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./24_meteo_zakopane.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Warunki meteorologiczne wybranej stacji</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./25_meteo_trzy_stacje.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Porównanie warunków meteorologicznych trzech stacji</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26_lasy_wielkopolska.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Lesistość powiatów województwa wielkopolskiego w latach 2000 i 2025</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Załączniki</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./A_typy_wykresow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Katalog typów wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./B_wykresy_statystyka_regionalna.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Wykresy w statystyce regionalnej</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C_zasady_wykresow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Zasady opracowywania wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./D_dobor_wykresu_przyklady.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Dobór wykresu do problemu badawczego: przykłady</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./E_bank_swiatowy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Praca z danymi Banku Światowego</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Spis treści</h2>
+   
+  <ul>
+  <li><a href="#sec-sf-obiekt" id="toc-sec-sf-obiekt" class="nav-link active" data-scroll-target="#sec-sf-obiekt"><span class="header-section-number">5.1</span> Obiekt <code>sf</code></a></li>
+  <li><a href="#sec-sf-wczytanie" id="toc-sec-sf-wczytanie" class="nav-link" data-scroll-target="#sec-sf-wczytanie"><span class="header-section-number">5.2</span> Wczytanie granic</a></li>
+  <li><a href="#sec-sf-punkty" id="toc-sec-sf-punkty" class="nav-link" data-scroll-target="#sec-sf-punkty"><span class="header-section-number">5.3</span> Współrzędne w tabeli: zamiana na punkty</a></li>
+  <li><a href="#sec-sf-join" id="toc-sec-sf-join" class="nav-link" data-scroll-target="#sec-sf-join"><span class="header-section-number">5.4</span> Łączenie granic z tabelą atrybutów</a></li>
+  <li><a href="#sec-sf-crs" id="toc-sec-sf-crs" class="nav-link" data-scroll-target="#sec-sf-crs"><span class="header-section-number">5.5</span> Układ współrzędnych</a></li>
+  <li><a href="#sec-sf-obliczenia" id="toc-sec-sf-obliczenia" class="nav-link" data-scroll-target="#sec-sf-obliczenia"><span class="header-section-number">5.6</span> Obliczenia na obiektach <code>sf</code></a></li>
+  <li><a href="#sec-sf-mapy" id="toc-sec-sf-mapy" class="nav-link" data-scroll-target="#sec-sf-mapy"><span class="header-section-number">5.7</span> Mapy w <code>ggplot2</code></a>
+  <ul class="collapse">
+  <li><a href="#sec-sf-mapa-prosta" id="toc-sec-sf-mapa-prosta" class="nav-link" data-scroll-target="#sec-sf-mapa-prosta"><span class="header-section-number">5.7.1</span> Najprostsza mapa</a></li>
+  <li><a href="#sec-sf-mapa-obszar" id="toc-sec-sf-mapa-obszar" class="nav-link" data-scroll-target="#sec-sf-mapa-obszar"><span class="header-section-number">5.7.2</span> Mapa: kolor obszaru</a></li>
+  <li><a href="#sec-sf-kartogram" id="toc-sec-sf-kartogram" class="nav-link" data-scroll-target="#sec-sf-kartogram"><span class="header-section-number">5.7.3</span> Kartogram: wartość względna w obszarze</a></li>
+  <li><a href="#sec-sf-mapa-punkt" id="toc-sec-sf-mapa-punkt" class="nav-link" data-scroll-target="#sec-sf-mapa-punkt"><span class="header-section-number">5.7.4</span> Mapa: kolor punktu</a></li>
+  <li><a href="#sec-sf-kartodiagram" id="toc-sec-sf-kartodiagram" class="nav-link" data-scroll-target="#sec-sf-kartodiagram"><span class="header-section-number">5.7.5</span> Kartodiagram: wielkość znaku</a></li>
+  <li><a href="#sec-sf-etykiety" id="toc-sec-sf-etykiety" class="nav-link" data-scroll-target="#sec-sf-etykiety"><span class="header-section-number">5.7.6</span> Etykiety na mapie</a></li>
+  <li><a href="#sec-sf-kolowe" id="toc-sec-sf-kolowe" class="nav-link" data-scroll-target="#sec-sf-kolowe"><span class="header-section-number">5.7.7</span> Kartodiagram strukturalny: wykresy kołowe</a></li>
+  <li><a href="#sec-sf-wycinek" id="toc-sec-sf-wycinek" class="nav-link" data-scroll-target="#sec-sf-wycinek"><span class="header-section-number">5.7.8</span> Wycinek mapy i połączone obszary</a></li>
+  </ul></li>
+  <li><a href="#sec-sf-zestawienie" id="toc-sec-sf-zestawienie" class="nav-link" data-scroll-target="#sec-sf-zestawienie"><span class="header-section-number">5.8</span> Zestawienie map w skrypcie</a></li>
+  <li><a href="#sec-sf-bledy" id="toc-sec-sf-bledy" class="nav-link" data-scroll-target="#sec-sf-bledy"><span class="header-section-number">5.9</span> Najczęstsze błędy</a></li>
+  <li><a href="#sec-sf-zadania" id="toc-sec-sf-zadania" class="nav-link" data-scroll-target="#sec-sf-zadania"><span class="header-section-number">5.10</span> Zadania do samodzielnego wykonania</a></li>
+  <li><a href="#sec-sf-zrodla" id="toc-sec-sf-zrodla" class="nav-link" data-scroll-target="#sec-sf-zrodla"><span class="header-section-number">5.11</span> Źródła</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_instalacja.html">PRACA W R</a></li><li class="breadcrumb-item"><a href="./05_dane_przestrzenne.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dane przestrzenne w R</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-przestrzenne" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dane przestrzenne w R</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-setup="true" data-exercise="[&quot;sf_1&quot;,&quot;sf_2&quot;,&quot;sf_3&quot;,&quot;sf_4&quot;]">
+<script type="exercise-setup-sf_1-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbInNmXzEiLCJzZl8yIiwic2ZfMyIsInNmXzQiXSwic2V0dXAiOnRydWV9LCJjb2RlIjoibGlicmFyeShkcGx5cilcbmxpYnJhcnkoZ2dwbG90MilcbmxpYnJhcnkoc2YpXG53b2pld29kenR3YSA8LSBzdF9yZWFkKFwiZGFuZS93b2pld29kenR3YS5ncGtnXCIsIHF1aWV0ID0gVFJVRSlcbm1ldGVvIDwtIHJlYWQuY3N2KFwiZGFuZS9tZXRlbzIwMjAuY3N2XCIsIGVuY29kaW5nID0gXCJVVEYtOFwiKVxuc3RhY2plIDwtIG1ldGVvIHw+XG4gIGdyb3VwX2J5KHN0YWNqYSwgWF9kbHVnb3NjX2dlb2dyLCBZX3N6ZXJva29zY19nZW9ncikgfD5cbiAgc3VtbWFyaXNlKG9wYWRfcm9rID0gc3VtKG9wYWRfc3VtYSksXG4gICAgICAgICAgICBkbmlfZGVzemN6X3JvayA9IHN1bShkbmlfZGVzemN6KSxcbiAgICAgICAgICAgIGRuaV9zbmllZ19yb2sgPSBzdW0oZG5pX3NuaWVnKSxcbiAgICAgICAgICAgIC5ncm91cHMgPSBcImRyb3BcIilcbnN0YWNqZV9zZiA8LSBzdF9hc19zZihzdGFjamUsXG4gICAgICAgICAgICAgICAgICAgICAgY29vcmRzID0gYyhcIlhfZGx1Z29zY19nZW9nclwiLCBcIllfc3plcm9rb3NjX2dlb2dyXCIpLFxuICAgICAgICAgICAgICAgICAgICAgIGNycyA9IDQzMjYpIn0=
+</script>
+<script type="exercise-setup-sf_2-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbInNmXzEiLCJzZl8yIiwic2ZfMyIsInNmXzQiXSwic2V0dXAiOnRydWV9LCJjb2RlIjoibGlicmFyeShkcGx5cilcbmxpYnJhcnkoZ2dwbG90MilcbmxpYnJhcnkoc2YpXG53b2pld29kenR3YSA8LSBzdF9yZWFkKFwiZGFuZS93b2pld29kenR3YS5ncGtnXCIsIHF1aWV0ID0gVFJVRSlcbm1ldGVvIDwtIHJlYWQuY3N2KFwiZGFuZS9tZXRlbzIwMjAuY3N2XCIsIGVuY29kaW5nID0gXCJVVEYtOFwiKVxuc3RhY2plIDwtIG1ldGVvIHw+XG4gIGdyb3VwX2J5KHN0YWNqYSwgWF9kbHVnb3NjX2dlb2dyLCBZX3N6ZXJva29zY19nZW9ncikgfD5cbiAgc3VtbWFyaXNlKG9wYWRfcm9rID0gc3VtKG9wYWRfc3VtYSksXG4gICAgICAgICAgICBkbmlfZGVzemN6X3JvayA9IHN1bShkbmlfZGVzemN6KSxcbiAgICAgICAgICAgIGRuaV9zbmllZ19yb2sgPSBzdW0oZG5pX3NuaWVnKSxcbiAgICAgICAgICAgIC5ncm91cHMgPSBcImRyb3BcIilcbnN0YWNqZV9zZiA8LSBzdF9hc19zZihzdGFjamUsXG4gICAgICAgICAgICAgICAgICAgICAgY29vcmRzID0gYyhcIlhfZGx1Z29zY19nZW9nclwiLCBcIllfc3plcm9rb3NjX2dlb2dyXCIpLFxuICAgICAgICAgICAgICAgICAgICAgIGNycyA9IDQzMjYpIn0=
+</script>
+<script type="exercise-setup-sf_3-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbInNmXzEiLCJzZl8yIiwic2ZfMyIsInNmXzQiXSwic2V0dXAiOnRydWV9LCJjb2RlIjoibGlicmFyeShkcGx5cilcbmxpYnJhcnkoZ2dwbG90MilcbmxpYnJhcnkoc2YpXG53b2pld29kenR3YSA8LSBzdF9yZWFkKFwiZGFuZS93b2pld29kenR3YS5ncGtnXCIsIHF1aWV0ID0gVFJVRSlcbm1ldGVvIDwtIHJlYWQuY3N2KFwiZGFuZS9tZXRlbzIwMjAuY3N2XCIsIGVuY29kaW5nID0gXCJVVEYtOFwiKVxuc3RhY2plIDwtIG1ldGVvIHw+XG4gIGdyb3VwX2J5KHN0YWNqYSwgWF9kbHVnb3NjX2dlb2dyLCBZX3N6ZXJva29zY19nZW9ncikgfD5cbiAgc3VtbWFyaXNlKG9wYWRfcm9rID0gc3VtKG9wYWRfc3VtYSksXG4gICAgICAgICAgICBkbmlfZGVzemN6X3JvayA9IHN1bShkbmlfZGVzemN6KSxcbiAgICAgICAgICAgIGRuaV9zbmllZ19yb2sgPSBzdW0oZG5pX3NuaWVnKSxcbiAgICAgICAgICAgIC5ncm91cHMgPSBcImRyb3BcIilcbnN0YWNqZV9zZiA8LSBzdF9hc19zZihzdGFjamUsXG4gICAgICAgICAgICAgICAgICAgICAgY29vcmRzID0gYyhcIlhfZGx1Z29zY19nZW9nclwiLCBcIllfc3plcm9rb3NjX2dlb2dyXCIpLFxuICAgICAgICAgICAgICAgICAgICAgIGNycyA9IDQzMjYpIn0=
+</script>
+<script type="exercise-setup-sf_4-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjpbInNmXzEiLCJzZl8yIiwic2ZfMyIsInNmXzQiXSwic2V0dXAiOnRydWV9LCJjb2RlIjoibGlicmFyeShkcGx5cilcbmxpYnJhcnkoZ2dwbG90MilcbmxpYnJhcnkoc2YpXG53b2pld29kenR3YSA8LSBzdF9yZWFkKFwiZGFuZS93b2pld29kenR3YS5ncGtnXCIsIHF1aWV0ID0gVFJVRSlcbm1ldGVvIDwtIHJlYWQuY3N2KFwiZGFuZS9tZXRlbzIwMjAuY3N2XCIsIGVuY29kaW5nID0gXCJVVEYtOFwiKVxuc3RhY2plIDwtIG1ldGVvIHw+XG4gIGdyb3VwX2J5KHN0YWNqYSwgWF9kbHVnb3NjX2dlb2dyLCBZX3N6ZXJva29zY19nZW9ncikgfD5cbiAgc3VtbWFyaXNlKG9wYWRfcm9rID0gc3VtKG9wYWRfc3VtYSksXG4gICAgICAgICAgICBkbmlfZGVzemN6X3JvayA9IHN1bShkbmlfZGVzemN6KSxcbiAgICAgICAgICAgIGRuaV9zbmllZ19yb2sgPSBzdW0oZG5pX3NuaWVnKSxcbiAgICAgICAgICAgIC5ncm91cHMgPSBcImRyb3BcIilcbnN0YWNqZV9zZiA8LSBzdF9hc19zZihzdGFjamUsXG4gICAgICAgICAgICAgICAgICAgICAgY29vcmRzID0gYyhcIlhfZGx1Z29zY19nZW9nclwiLCBcIllfc3plcm9rb3NjX2dlb2dyXCIpLFxuICAgICAgICAgICAgICAgICAgICAgIGNycyA9IDQzMjYpIn0=
+</script>
+</div>
+<p>Dane przestrzenne opisują obiekty wraz z ich położeniem, np. państwa z granicami albo stacje meteorologiczne ze współrzędnymi. Rozdział przedstawia operacje wykorzystywane w skrypcie: wczytanie granic, zamianę tabeli ze współrzędnymi na punkty, połączenie granic z tabelą atrybutów i przeliczenie układu współrzędnych. Następnie pokazuje, jak z tych obiektów tworzyć mapy w <code>ggplot2</code> (<a href="04_wykresy_ggplot2.html" class="quarto-xref"><span>Rozdział 4</span></a>). Nazwy typów map wyjaśnia <a href="14_typy_wykresow.html#sec-ty-przestrzenne" class="quarto-xref"><span>Sekcja 14.7</span></a>.</p>
+<p>Kod rozdziału jest dostępny w pliku <code>kod/05_dane_przestrzenne.qmd</code>.</p>
+<section id="sec-sf-obiekt" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="sec-sf-obiekt"><span class="header-section-number">5.1</span> Obiekt <code>sf</code></h2>
+<p>Pakiet <code>sf</code> przechowuje dane przestrzenne w postaci tabeli, w której każdy wiersz to jeden obiekt, a dodatkowa kolumna zawiera jego geometrię. Przykładem są granice 16 województw z pliku <code>dane/wojewodztwa.gpkg</code> (Natural Earth, domena publiczna).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pakiety: tidyverse (przetwarzanie danych i wykresy), sf (dane przestrzenne)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># wczytanie pliku z danymi przestrzennymi</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>wojewodztwa <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"dane/wojewodztwa.gpkg"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># nazwa i kod województwa w pierwszych trzech wierszach; kolumna geometrii pozostaje w wyniku</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>wojewodztwa <span class="sc">|&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name_pl, iso_3166_2) <span class="sc">|&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 3 features and 2 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 18.01907 ymin: 48.99401 xmax: 23.65868 ymax: 51.03712
+Geodetic CRS:  WGS 84
+                   name_pl iso_3166_2                           geom
+1      województwo śląskie      PL-SL MULTIPOLYGON (((19.44887 49...
+2  województwo małopolskie      PL-MA MULTIPOLYGON (((19.86829 49...
+3 województwo podkarpackie      PL-PK MULTIPOLYGON (((22.53964 49...</code></pre>
+</div>
+</div>
+<ul>
+<li><code>st_read()</code> wczytuje plik z danymi przestrzennymi, tu w formacie GeoPackage (<code>.gpkg</code>). Argument <code>quiet = TRUE</code> wyłącza komunikat o wczytanym pliku.</li>
+<li>Nagłówek wyniku podaje liczbę obiektów i kolumn (<em>features</em>, <em>fields</em>), typ geometrii (<em>Geometry type</em>), zasięg przestrzenny (<em>Bounding box</em>) i układ współrzędnych (<em>Geodetic CRS</em>, <a href="#sec-sf-crs" class="quarto-xref"><span>Sekcja 5.5</span></a>).</li>
+<li>Typ geometrii w skrypcie to <code>POINT</code> (punkt, np. stacja), <code>MULTIPOLYGON</code> (obszar złożony z jednego lub wielu wielokątów, np. państwo z wyspami) albo <code>GEOMETRY</code> (różne typy w jednej warstwie, np. <code>POLYGON</code> i <code>MULTIPOLYGON</code> w granicach powiatów).</li>
+<li>Kolumna geometrii ma tu nazwę <code>geom</code>; w obiektach z pakietów <code>rnaturalearth</code> i <code>geodata</code> nazywa się <code>geometry</code>. Funkcja <code>select()</code> pozostawia ją w wyniku także wtedy, gdy nie ma jej na liście kolumn.</li>
+<li>Obiekt <code>sf</code> przetwarza się tymi samymi funkcjami co zwykłą tabelę, np. <code>filter()</code>, <code>select()</code>, <code>mutate()</code> (<a href="03_praca_z_danymi.html" class="quarto-xref"><span>Rozdział 3</span></a>). Wynik pozostaje obiektem <code>sf</code>.</li>
+</ul>
+</section>
+<section id="sec-sf-wczytanie" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="sec-sf-wczytanie"><span class="header-section-number">5.2</span> Wczytanie granic</h2>
+<p>Skrypt korzysta z trzech źródeł granic:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Granice</th>
+<th>Źródło</th>
+<th>Funkcja</th>
+<th>Przykład w skrypcie</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>województwa</td>
+<td>plik <code>dane/wojewodztwa.gpkg</code></td>
+<td><code>st_read()</code></td>
+<td><a href="22_meteo_2020.html#sec-meteo-stacje" class="quarto-xref"><span>Sekcja 22.3</span></a></td>
+</tr>
+<tr class="even">
+<td>państwa świata</td>
+<td>pakiet <code>rnaturalearth</code></td>
+<td><code>ne_countries()</code></td>
+<td><a href="21_dlugosc_zycia_2007.html#sec-2007-mapa" class="quarto-xref"><span>Sekcja 21.5</span></a></td>
+</tr>
+<tr class="odd">
+<td>powiaty</td>
+<td>baza GADM, pakiet <code>geodata</code></td>
+<td><code>gadm()</code> + <code>st_as_sf()</code></td>
+<td><a href="26_lasy_wielkopolska.html#sec-lw-dane" class="quarto-xref"><span>Sekcja 26.2</span></a></td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pakiety z granicami: państwa świata (Natural Earth) i jednostki administracyjne (GADM)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rnaturalearth)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geodata)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># granice państw świata jako obiekt sf</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>swiat <span class="ot">&lt;-</span> <span class="fu">ne_countries</span>(<span class="at">scale =</span> <span class="st">"medium"</span>, <span class="at">returnclass =</span> <span class="st">"sf"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># granice powiatów Polski: zapis w folderze granice/ i zamiana na obiekt sf</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>granice_powiatow <span class="ot">&lt;-</span> <span class="fu">gadm</span>(<span class="at">country =</span> <span class="st">"POL"</span>, <span class="at">level =</span> <span class="dv">2</span>, <span class="at">path =</span> <span class="st">"granice/"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>()</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(swiat)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 242</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(granice_powiatow)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 380</code></pre>
+</div>
+</div>
+<ul>
+<li><code>ne_countries()</code> zwraca granice państw jako obiekt <code>sf</code> (<code>returnclass = "sf"</code>). Szczegółowość <code>scale = "medium"</code> wymaga pakietu <code>rnaturalearthdata</code>.</li>
+<li><code>gadm()</code> przy pierwszym uruchomieniu pobiera plik z serwera i zapisuje go w folderze podanym w <code>path</code>; warunki korzystania z bazy GADM opisuje <a href="26_lasy_wielkopolska.html#sec-lw-dane" class="quarto-xref"><span>Sekcja 26.2</span></a>. Argument <code>level</code> określa poziom podziału administracyjnego: dla Polski <code>2</code> oznacza powiaty.</li>
+<li><code>gadm()</code> zwraca obiekt klasy <code>SpatVector</code> z pakietu <code>terra</code>. <code>st_as_sf()</code> zamienia go na obiekt <code>sf</code>.</li>
+</ul>
+</section>
+<section id="sec-sf-punkty" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="sec-sf-punkty"><span class="header-section-number">5.3</span> Współrzędne w tabeli: zamiana na punkty</h2>
+<p>Plik <code>dane/meteo2020.csv</code> (źródło: IMGW-PIB, opis: <a href="22_meteo_2020.html#sec-meteo-dane" class="quarto-xref"><span>Sekcja 22.2</span></a>) jest zwykłą tabelą: kolumny <code>X_dlugosc_geogr</code> i <code>Y_szerokosc_geogr</code> zawierają współrzędne geograficzne stacji. Tabela ma 708 wierszy, po 12 dla każdej z 59 stacji, dlatego potok najpierw oblicza wartości roczne.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wczytanie danych meteorologicznych</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>meteo <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"dane/meteo2020.csv"</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># jeden wiersz dla stacji: roczna suma opadu i liczba dni z deszczem i ze śniegiem</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>stacje <span class="ot">&lt;-</span> meteo <span class="sc">|&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(stacja, X_dlugosc_geogr, Y_szerokosc_geogr) <span class="sc">|&gt;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">opad_rok =</span> <span class="fu">sum</span>(opad_suma),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">dni_deszcz_rok =</span> <span class="fu">sum</span>(dni_deszcz),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">dni_snieg_rok =</span> <span class="fu">sum</span>(dni_snieg),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># zamiana tabeli na obiekt sf: punkty o współrzędnych geograficznych</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>stacje_sf <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(stacje,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"X_dlugosc_geogr"</span>, <span class="st">"Y_szerokosc_geogr"</span>),</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>                      <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>stacje_sf <span class="sc">|&gt;</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(stacja, opad_rok) <span class="sc">|&gt;</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 3 features and 2 fields
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: 17.53263 ymin: 49.80671 xmax: 23.16228 ymax: 53.7152
+Geodetic CRS:  WGS 84
+# A tibble: 3 × 3
+  stacja        opad_rok            geometry
+  &lt;chr&gt;            &lt;dbl&gt;         &lt;POINT [°]&gt;
+1 BIAŁYSTOK         640. (23.16228 53.10726)
+2 BIELSKO-BIAŁA    1182. (19.00234 49.80671)
+3 CHOJNICE          574.  (17.53263 53.7152)</code></pre>
+</div>
+</div>
+<ul>
+<li><code>st_as_sf()</code> tworzy obiekt <code>sf</code> ze zwykłej tabeli. Argument <code>coords</code> wskazuje kolumny ze współrzędnymi w kolejności: najpierw długość geograficzna (x), potem szerokość geograficzna (y).</li>
+<li><code>crs = 4326</code> podaje układ współrzędnych, w którym zapisano wartości w tabeli (<a href="#sec-sf-crs" class="quarto-xref"><span>Sekcja 5.5</span></a>).</li>
+<li>Kolumny ze współrzędnymi zostają zastąpione kolumną <code>geometry</code> z punktami.</li>
+<li><code>.groups = "drop"</code> w <code>summarise()</code> usuwa podział na grupy po obliczeniach.</li>
+</ul>
+<p><code>geom_sf()</code> rysuje obiekt <code>sf</code>, a mapa powstaje z warstw, z których każda ma własne dane (<a href="#fig-sf-stacje" class="quarto-xref">Rycina&nbsp;<span>5.1</span></a>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dwie warstwy: granice województw i punkty stacji</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> wojewodztwa, <span class="at">fill =</span> <span class="st">"grey95"</span>) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> stacje_sf, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-sf-stacje" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sf-stacje-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="05_dane_przestrzenne_files/figure-html/fig-sf-stacje-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sf-stacje-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;5.1: Stacje synoptyczne na tle granic województw
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-sf-join" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="sec-sf-join"><span class="header-section-number">5.4</span> Łączenie granic z tabelą atrybutów</h2>
+<p>Granice i wartości zmiennych znajdują się zwykle w osobnych tabelach. Łączy je klucz: kolumna z tym samym identyfikatorem w obu tabelach (<a href="03_praca_z_danymi.html#sec-pd-join" class="quarto-xref"><span>Sekcja 3.10</span></a>), np. kod kraju ISO 3166 alfa-3.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dane Gapminder z 2007 roku: 142 kraje</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>dane <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"dane/gapminder_regions.csv"</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>dane2007 <span class="ot">&lt;-</span> dane <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2007</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># granice jako pierwsza tabela: wynik pozostaje obiektem sf</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>mapa <span class="ot">&lt;-</span> swiat <span class="sc">|&gt;</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(dane2007, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"iso_a3_eh"</span> <span class="ot">=</span> <span class="st">"Kod"</span>))</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># liczba wierszy wyniku i liczba wierszy z dołączonymi danymi</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(mapa)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 242</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(mapa<span class="sc">$</span>lifeExp))</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 143</code></pre>
+</div>
+</div>
+<ul>
+<li><code>sum(!is.na(mapa$lifeExp))</code> zlicza wiersze z dołączonymi danymi: <code>is.na()</code> sprawdza, czy wartość jest brakiem danych, <code>!</code> oznacza zaprzeczenie, a <code>sum()</code> zlicza wartości <code>TRUE</code>.</li>
+<li><code>by = c("iso_a3_eh" = "Kod")</code> wskazuje klucz: kolumna <code>iso_a3_eh</code> tabeli granic odpowiada kolumnie <code>Kod</code> tabeli danych.</li>
+<li><strong>Kolejność tabel decyduje o typie wyniku.</strong> Jeżeli pierwszą tabelą jest obiekt <code>sf</code>, wynik jest obiektem <code>sf</code>. Jeżeli pierwszą tabelą jest zwykła tabela, wynik jest zwykłą tabelą i <code>geom_sf()</code> zgłasza błąd (<a href="#sec-sf-bledy" class="quarto-xref"><span>Sekcja 5.9</span></a>).</li>
+<li><code>left_join()</code> zachowuje wszystkie wiersze tabeli granic: wynik ma 242 wiersze, tyle co <code>swiat</code>, a obszary bez odpowiednika w danych mają w dołączonych kolumnach brak wartości (<code>NA</code>). Na mapie mają one kolor podany w <code>na.value</code> (<a href="#sec-sf-mapa-obszar" class="quarto-xref"><span>Sekcja 5.7.2</span></a>).</li>
+<li><code>inner_join()</code> pozostawia tylko wiersze obecne w obu tabelach. Stosuje się go, gdy mapa ma obejmować wyłącznie obiekty ze zbioru danych (<a href="23_dlugosc_zycia_europa.html#sec-eu-europa" class="quarto-xref"><span>Sekcja 23.4.1</span></a>).</li>
+<li>Liczbę dopasowanych wierszy warto porównać z liczbą obserwacji w tabeli danych. Tu 143 wiersze mają dane, chociaż tabela zawiera 142 kraje: kod <code>AUS</code> występuje w tabeli granic w trzech wierszach (Australia i dwa terytoria zależne), a kodu Reunionu tabela granic nie zawiera.</li>
+<li>Klucze muszą mieć tę samą postać. Kod powiatu w granicach GADM ma 4 cyfry, a w danych GUS 7 cyfr, dlatego przed połączeniem trzeba go przekształcić (<a href="#sec-sf-obliczenia" class="quarto-xref"><span>Sekcja 5.6</span></a>).</li>
+<li>Gdy tabela danych ma kilka wierszy dla jednego obiektu, np. dwa lata dla kraju, wynik ma tyle samo wierszy dla tego obiektu. Rok można wtedy wykorzystać do podziału na panele (<a href="23_dlugosc_zycia_europa.html#sec-eu-europa" class="quarto-xref"><span>Sekcja 23.4.1</span></a>).</li>
+</ul>
+</section>
+<section id="sec-sf-crs" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="sec-sf-crs"><span class="header-section-number">5.5</span> Układ współrzędnych</h2>
+<p>Układ współrzędnych (ang. <em>coordinate reference system</em>, CRS) określa, co oznaczają liczby opisujące położenie. Układy oznacza się kodami EPSG. Skrypt wykorzystuje trzy układy:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Kod EPSG</th>
+<th>Układ</th>
+<th>Jednostka</th>
+<th>Zastosowanie w skrypcie</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>4326</td>
+<td>współrzędne geograficzne WGS 84</td>
+<td>stopnie</td>
+<td>współrzędne w tabeli, granice ze wszystkich trzech źródeł</td>
+</tr>
+<tr class="even">
+<td>2180</td>
+<td>PUWG 1992</td>
+<td>metry</td>
+<td>Polska: kartodiagram strukturalny (<a href="22_meteo_2020.html#sec-meteo-dni" class="quarto-xref"><span>Sekcja 22.5.3</span></a>), powierzchnia powiatów (<a href="26_lasy_wielkopolska.html#sec-lw-dane" class="quarto-xref"><span>Sekcja 26.2</span></a>)</td>
+</tr>
+<tr class="odd">
+<td>3035</td>
+<td>odwzorowanie azymutalne równopolowe Lamberta dla Europy</td>
+<td>metry</td>
+<td>mapy Europy (<a href="23_dlugosc_zycia_europa.html#sec-eu-europa" class="quarto-xref"><span>Sekcja 23.4.1</span></a>)</td>
+</tr>
+</tbody>
+</table>
+<p>Układ współrzędnych można zmienić na dwa sposoby:</p>
+<ul>
+<li><code>st_transform()</code> przelicza współrzędne obiektu do innego układu. Stosuje się go, gdy obliczenia wymagają współrzędnych w metrach (<a href="#sec-sf-obliczenia" class="quarto-xref"><span>Sekcja 5.6</span></a>).</li>
+<li><code>coord_sf(crs = )</code> ustala układ, w którym rysowana jest mapa, bez zmiany obiektu. Bez tego argumentu <code>ggplot2</code> stosuje układ pierwszej warstwy <code>sf</code>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pakiet do łączenia wykresów w jedną rycinę</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>p_4326 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(wojewodztwa) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="st">"grey95"</span>) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>p_2180 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(wojewodztwa) <span class="sc">+</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">fill =</span> <span class="st">"grey95"</span>) <span class="sc">+</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="dv">2180</span>, <span class="at">datum =</span> <span class="dv">2180</span>) <span class="sc">+</span>  <span class="co"># rysowanie i siatka w układzie PUWG 1992</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>p_4326 <span class="sc">+</span> p_2180 <span class="sc">+</span> <span class="fu">plot_annotation</span>(<span class="at">tag_levels =</span> <span class="st">"A"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-sf-crs" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sf-crs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="05_dane_przestrzenne_files/figure-html/fig-sf-crs-1.png" class="img-fluid figure-img" width="864">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sf-crs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;5.2: Granice województw w układzie WGS 84 (A) i PUWG 1992 (B)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Układ rysowania zmienia kształt mapy (<a href="#fig-sf-crs" class="quarto-xref">Rycina&nbsp;<span>5.2</span></a>). <code>ggplot2</code> domyślnie opisuje siatkę we współrzędnych geograficznych (<code>datum = st_crs(4326)</code>), dlatego argument <code>datum = 2180</code> jest potrzebny, aby siatka i opisy osi na rycinie B podawały metry układu PUWG 1992.</p>
+</section>
+<section id="sec-sf-obliczenia" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="sec-sf-obliczenia"><span class="header-section-number">5.6</span> Obliczenia na obiektach <code>sf</code></h2>
+<p>Lesistość powiatów (<a href="26_lasy_wielkopolska.html#sec-lw-dane" class="quarto-xref"><span>Sekcja 26.2</span></a>) wymaga połączenia granic z danymi i obliczenia powierzchni powiatu, dlatego potok łączy kilka opisanych wyżej operacji.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># powierzchnia lasów w powiatach; kod TERYT wczytany jako tekst, aby zachować zero na początku</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>lasy <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"dane/lasy_bld.csv"</span>, <span class="at">sep =</span> <span class="st">";"</span>, <span class="at">dec =</span> <span class="st">","</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colClasses =</span> <span class="fu">c</span>(<span class="at">Kod =</span> <span class="st">"character"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Kod, Nazwa, lasy2025)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># granice połączone z danymi, wybór województwa i obliczenie lesistości</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>powiaty <span class="ot">&lt;-</span> granice_powiatow <span class="sc">|&gt;</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Kod =</span> <span class="fu">paste0</span>(CC_2, <span class="st">"000"</span>)) <span class="sc">|&gt;</span>  <span class="co"># 7-cyfrowy kod, jak w tabeli lasy</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(lasy, <span class="at">by =</span> <span class="st">"Kod"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(NAME_1 <span class="sc">==</span> <span class="st">"Wielkopolskie"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">2180</span>) <span class="sc">|&gt;</span>  <span class="co"># układ współrzędnych w metrach</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pow_ha =</span> <span class="fu">as.numeric</span>(<span class="fu">st_area</span>(geometry)) <span class="sc">/</span> <span class="dv">10000</span>,   <span class="co"># powierzchnia: m² → ha</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">lesistosc =</span> lasy2025 <span class="sc">/</span> pow_ha <span class="sc">*</span> <span class="dv">100</span>)              <span class="co"># lesistość [%]</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co"># statystyki opisowe: usunięcie geometrii przed obliczeniami</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>powiaty <span class="sc">|&gt;</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">liczba =</span> <span class="fu">n</span>(), <span class="at">srednia =</span> <span class="fu">mean</span>(lesistosc), <span class="at">mediana =</span> <span class="fu">median</span>(lesistosc))</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  liczba  srednia  mediana
+1     35 22.80963 19.80417</code></pre>
+</div>
+</div>
+<ul>
+<li>Argumenty <code>sep</code>, <code>dec</code>, <code>encoding</code> i <code>colClasses</code> opisuje <a href="03_praca_z_danymi.html#sec-pd-wlasne" class="quarto-xref"><span>Sekcja 3.12</span></a>.</li>
+<li><code>paste0(CC_2, "000")</code> dopisuje trzy zera do kodu powiatu i tworzy klucz w tej samej postaci co w tabeli <code>lasy</code>.</li>
+<li><code>st_area()</code> oblicza powierzchnię każdego obiektu. Wynik ma przypisaną jednostkę (<code>[m^2]</code>), którą usuwa <code>as.numeric()</code>; dzielenie przez 10 000 zamienia m² na hektary.</li>
+<li><code>st_drop_geometry()</code> usuwa kolumnę geometrii i zwraca zwykłą tabelę. <code>summarise()</code> zastosowana do obiektu <code>sf</code> łączy także geometrie obiektów, a statystyki opisowe tego nie wymagają.</li>
+</ul>
+</section>
+<section id="sec-sf-mapy" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="sec-sf-mapy"><span class="header-section-number">5.7</span> Mapy w <code>ggplot2</code></h2>
+<p><code>geom_sf()</code> pobiera położenie z kolumny geometrii, dlatego mapowanie nie zawiera <code>x</code> ani <code>y</code>. Pozostałe cechy graficzne (estetyki) działają jak na wykresie: <code>fill</code> — wypełnienie obszaru, <code>colour</code> — kolor linii albo punktu, <code>size</code> — wielkość punktu. Kolejność warstw decyduje o tym, co jest widoczne: późniejsza warstwa leży nad wcześniejszą. Kolory i skale opisuje <a href="18_formatowanie.html" class="quarto-xref"><span>Rozdział 18</span></a>.</p>
+<section id="sec-sf-mapa-prosta" class="level3" data-number="5.7.1">
+<h3 data-number="5.7.1" class="anchored" data-anchor-id="sec-sf-mapa-prosta"><span class="header-section-number">5.7.1</span> Najprostsza mapa</h3>
+<p>Najprostsza mapa składa się z funkcji <code>ggplot()</code> z obiektem <code>sf</code> i warstwy <code>geom_sf()</code>, bez dodatkowych opcji (<a href="#fig-sf-mapa-prosta" class="quarto-xref">Rycina&nbsp;<span>5.3</span></a>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># obiekt sf jako dane i jedna warstwa</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mapa) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>()</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-sf-mapa-prosta" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sf-mapa-prosta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="05_dane_przestrzenne_files/figure-html/fig-sf-mapa-prosta-1.png" class="img-fluid figure-img" width="864">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sf-mapa-prosta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;5.3: Państwa świata: warstwa geom_sf() bez dodatkowych opcji
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><code>ggplot(mapa)</code> wskazuje obiekt <code>sf</code> jako dane, a <code>geom_sf()</code> rysuje jego geometrię.</li>
+<li>Kolor wypełnienia, kolor granic, osie i siatkę współrzędnych określają tu ustawienia domyślne <code>ggplot2</code>. Kolejne sekcje zmieniają je za pomocą mapowań, skal i motywów.</li>
+</ul>
+</section>
+<section id="sec-sf-mapa-obszar" class="level3" data-number="5.7.2">
+<h3 data-number="5.7.2" class="anchored" data-anchor-id="sec-sf-mapa-obszar"><span class="header-section-number">5.7.2</span> Mapa: kolor obszaru</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># kolor państwa odpowiada klasie oczekiwanej długości życia</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mapa) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> lifeExp), <span class="at">colour =</span> <span class="st">"grey40"</span>, <span class="at">linewidth =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_fermenter</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>),     <span class="co"># granice klas</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">"YlGnBu"</span>,             <span class="co"># paleta sekwencyjna Brewer</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">direction =</span> <span class="dv">1</span>,  <span class="co"># ciemniejszy kolor = wyższa wartość</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">na.value =</span> <span class="st">"grey85"</span>) <span class="sc">+</span>          <span class="co"># kolor obszarów bez danych</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Oczekiwana długość</span><span class="sc">\n</span><span class="st">życia [lata]"</span>) <span class="sc">+</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span>                         <span class="co"># motyw bez osi i siatki</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-sf-mapa-swiat" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sf-mapa-swiat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="05_dane_przestrzenne_files/figure-html/fig-sf-mapa-swiat-1.png" class="img-fluid figure-img" width="864">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sf-mapa-swiat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;5.4: Oczekiwana długość życia w 2007 roku
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><code>scale_fill_fermenter()</code> dzieli wartości na klasy podczas rysowania mapy. Wartości w <code>breaks</code> to granice klas.</li>
+<li><code>colour</code> i <code>linewidth</code> ustalają kolor i grubość linii granic. Znak <code>\n</code> w tytule legendy oznacza nowy wiersz.</li>
+<li>Zastosowanie: <a href="21_dlugosc_zycia_2007.html#sec-2007-mapa" class="quarto-xref"><span>Sekcja 21.5</span></a>.</li>
+</ul>
+</section>
+<section id="sec-sf-kartogram" class="level3" data-number="5.7.3">
+<h3 data-number="5.7.3" class="anchored" data-anchor-id="sec-sf-kartogram"><span class="header-section-number">5.7.3</span> Kartogram: wartość względna w obszarze</h3>
+<p>Lesistość jest wartością względną: odnosi powierzchnię lasów do powierzchni powiatu. Mapę z taką wartością nazywa się <strong>kartogramem</strong> (<a href="14_typy_wykresow.html#sec-ty-przestrzenne" class="quarto-xref"><span>Sekcja 14.7</span></a>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(powiaty) <span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> lesistosc), <span class="at">colour =</span> <span class="st">"grey40"</span>, <span class="at">linewidth =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_fermenter</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">10</span>, <span class="dv">50</span>, <span class="at">by =</span> <span class="dv">10</span>),  <span class="co"># granice klas co 10%</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">"Greens"</span>, <span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Lesistość [%]"</span>) <span class="sc">+</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-sf-kartogram" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sf-kartogram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="05_dane_przestrzenne_files/figure-html/fig-sf-kartogram-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sf-kartogram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;5.5: Lesistość powiatów województwa wielkopolskiego w 2025 roku
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><code>seq(10, 50, by = 10)</code> tworzy ciąg granic klas od 10 do 50 co 10. Zastosowanie: <a href="26_lasy_wielkopolska.html#sec-lw-poziom" class="quarto-xref"><span>Sekcja 26.4.1</span></a>.</p>
+</section>
+<section id="sec-sf-mapa-punkt" class="level3" data-number="5.7.4">
+<h3 data-number="5.7.4" class="anchored" data-anchor-id="sec-sf-mapa-punkt"><span class="header-section-number">5.7.4</span> Mapa: kolor punktu</h3>
+<p>Wartość przypisana do punktu może określać jego kolor, a <code>facet_wrap()</code> dzieli mapę na panele.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># obserwacje ze stycznia i lipca jako punkty na mapie</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>styczen_lipiec <span class="ot">&lt;-</span> meteo <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(miesiac <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">7</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"X_dlugosc_geogr"</span>, <span class="st">"Y_szerokosc_geogr"</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> wojewodztwa, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> styczen_lipiec, <span class="fu">aes</span>(<span class="at">fill =</span> temp_sr),</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">colour =</span> <span class="st">"grey30"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span>   <span class="co"># punkt z obwódką</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> miesiac, <span class="at">labeller =</span> <span class="fu">as_labeller</span>(<span class="fu">c</span>(<span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Styczeń"</span>, <span class="st">`</span><span class="at">7</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Lipiec"</span>))) <span class="sc">+</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_fermenter</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">18</span>, <span class="at">by =</span> <span class="dv">3</span>),</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">"RdYlBu"</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>,</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>                       <span class="at">na.value =</span> <span class="st">"grey60"</span>) <span class="sc">+</span>          <span class="co"># stacja bez danych</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Temperatura powietrza [°C]"</span>) <span class="sc">+</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-sf-punkty" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sf-punkty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="05_dane_przestrzenne_files/figure-html/fig-sf-punkty-1.png" class="img-fluid figure-img" width="864">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sf-punkty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;5.6: Średnia temperatura powietrza w styczniu i lipcu 2020 roku
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><code>shape = 21</code> to punkt z wypełnieniem i obwódką: wypełnienie określa <code>fill</code>, a obwódkę <code>colour</code>.</li>
+<li><code>as_labeller()</code> w argumencie <code>labeller</code> zastępuje wartości <code>1</code> i <code>7</code> w nagłówkach paneli nazwami miesięcy.</li>
+<li>Warstwa <code>wojewodztwa</code> nie ma kolumny <code>miesiac</code>, dlatego powtarza się w obu panelach.</li>
+<li>Zastosowanie: <a href="22_meteo_2020.html#sec-meteo-temp" class="quarto-xref"><span>Sekcja 22.4</span></a>, <a href="22_meteo_2020.html#sec-meteo-opad" class="quarto-xref"><span>Sekcja 22.5</span></a>.</li>
+</ul>
+</section>
+<section id="sec-sf-kartodiagram" class="level3" data-number="5.7.5">
+<h3 data-number="5.7.5" class="anchored" data-anchor-id="sec-sf-kartodiagram"><span class="header-section-number">5.7.5</span> Kartodiagram: wielkość znaku</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> wojewodztwa, <span class="at">fill =</span> <span class="st">"grey95"</span>) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> stacje_sf, <span class="fu">aes</span>(<span class="at">size =</span> dni_deszcz_rok), <span class="at">colour =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_area</span>(<span class="at">max_size =</span> <span class="dv">8</span>) <span class="sc">+</span>  <span class="co"># pole punktu proporcjonalne do wartości</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">size =</span> <span class="st">"Liczba dni"</span>) <span class="sc">+</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-sf-kartodiagram" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sf-kartodiagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="05_dane_przestrzenne_files/figure-html/fig-sf-kartodiagram-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sf-kartodiagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;5.7: Roczna liczba dni z deszczem na stacjach synoptycznych w 2020 roku
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Mapowanie <code>size</code> nadaje punktom wielkość zależną od wartości. <code>scale_size_area(max_size = )</code> ustala pole punktu proporcjonalne do wartości (wartość 0 ma wielkość 0) i największą wielkość punktu, a <code>alpha</code> — przezroczystość nachodzących punktów.</li>
+<li>Zastosowanie: <a href="22_meteo_2020.html#sec-meteo-dni" class="quarto-xref"><span>Sekcja 22.5.3</span></a>.</li>
+</ul>
+</section>
+<section id="sec-sf-etykiety" class="level3" data-number="5.7.6">
+<h3 data-number="5.7.6" class="anchored" data-anchor-id="sec-sf-etykiety"><span class="header-section-number">5.7.6</span> Etykiety na mapie</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pakiet do rozmieszczania etykiet bez nakładania się</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>wybrane <span class="ot">&lt;-</span> stacje_sf <span class="sc">|&gt;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(stacja <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"HEL"</span>, <span class="st">"SUWAŁKI"</span>, <span class="st">"SZCZECIN"</span>, <span class="st">"WARSZAWA-OKĘCIE"</span>, <span class="st">"ZAKOPANE"</span>))</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> wojewodztwa, <span class="at">fill =</span> <span class="st">"grey95"</span>) <span class="sc">+</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> wybrane, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="at">data =</span> wybrane, <span class="fu">aes</span>(<span class="at">label =</span> stacja, <span class="at">geometry =</span> geometry),</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>                  <span class="at">stat =</span> <span class="st">"sf_coordinates"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-sf-etykiety" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sf-etykiety-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="05_dane_przestrzenne_files/figure-html/fig-sf-etykiety-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sf-etykiety-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;5.8: Wybrane stacje synoptyczne z nazwami
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><code>geom_text_repel()</code> z pakietu <code>ggrepel</code> przesuwa etykiety tak, aby nie nachodziły na siebie ani na punkty.</li>
+<li><code>labs(x = NULL, y = NULL)</code> usuwa opisy osi.</li>
+<li><code>stat = "sf_coordinates"</code> pobiera położenie etykiet z kolumny geometrii, wskazanej w mapowaniu <code>geometry</code>.</li>
+<li>Zastosowanie: <a href="22_meteo_2020.html#sec-meteo-stacje" class="quarto-xref"><span>Sekcja 22.3</span></a>, <a href="25_meteo_trzy_stacje.html#sec-tr-wybrane" class="quarto-xref"><span>Sekcja 25.2.3</span></a>.</li>
+</ul>
+</section>
+<section id="sec-sf-kolowe" class="level3" data-number="5.7.7">
+<h3 data-number="5.7.7" class="anchored" data-anchor-id="sec-sf-kolowe"><span class="header-section-number">5.7.7</span> Kartodiagram strukturalny: wykresy kołowe</h3>
+<p>Kartodiagram strukturalny przedstawia strukturę zjawiska w położeniu obiektu, tu: podział roku na dni z deszczem, ze śniegiem i bez opadu (GUS, 2014, <em>Graficzna prezentacja danych statystycznych</em>, podrozdz. 4.2.9). <code>geom_scatterpie()</code> z pakietu <code>scatterpie</code> rysuje koła we współrzędnych danych. We współrzędnych geograficznych koła byłyby spłaszczone, dlatego punkty przelicza się do układu metrycznego, a ich współrzędne zapisuje w zwykłych kolumnach.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scatterpie)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># stacje z kompletem danych; liczba dni bez opadu (2020 — rok przestępny, 366 dni)</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>struktura <span class="ot">&lt;-</span> stacje_sf <span class="sc">|&gt;</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(dni_snieg_rok)) <span class="sc">|&gt;</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dni_bez_opadu_rok =</span> <span class="dv">366</span> <span class="sc">-</span> dni_deszcz_rok <span class="sc">-</span> dni_snieg_rok)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co"># współrzędne punktów w układzie PUWG 1992 i zwykła tabela bez geometrii</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>xy <span class="ot">&lt;-</span> <span class="fu">st_coordinates</span>(<span class="fu">st_transform</span>(struktura, <span class="dv">2180</span>))</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>struktura <span class="ot">&lt;-</span> struktura <span class="sc">|&gt;</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> xy[, <span class="dv">1</span>], <span class="at">y =</span> xy[, <span class="dv">2</span>])</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">st_transform</span>(wojewodztwa, <span class="dv">2180</span>), <span class="at">fill =</span> <span class="st">"grey95"</span>) <span class="sc">+</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_scatterpie</span>(<span class="at">data =</span> struktura, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y),</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>                  <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"dni_deszcz_rok"</span>, <span class="st">"dni_snieg_rok"</span>, <span class="st">"dni_bez_opadu_rok"</span>),</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pie_scale =</span> <span class="dv">2</span>, <span class="at">colour =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="at">dni_deszcz_rok =</span> <span class="st">"navy"</span>, <span class="at">dni_snieg_rok =</span> <span class="st">"lightskyblue"</span>,</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>                               <span class="at">dni_bez_opadu_rok =</span> <span class="st">"grey80"</span>),</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"deszcz"</span>, <span class="st">"śnieg"</span>, <span class="st">"bez opadu"</span>)) <span class="sc">+</span></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Dni"</span>) <span class="sc">+</span></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="dv">2180</span>) <span class="sc">+</span></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-sf-kolowe" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sf-kolowe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="05_dane_przestrzenne_files/figure-html/fig-sf-kolowe-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sf-kolowe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;5.9: Dni z deszczem, ze śniegiem i bez opadu w 2020 roku
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><code>st_coordinates()</code> zwraca współrzędne punktów w postaci macierzy: pierwsza kolumna to x, druga to y. <code>xy[, 1]</code> wybiera pierwszą kolumnę.</li>
+<li><code>cols</code> wskazuje kolumny z wartościami, a <code>pie_scale</code> wielkość kół.</li>
+<li>Zastosowanie: <a href="22_meteo_2020.html#sec-meteo-dni" class="quarto-xref"><span>Sekcja 22.5.3</span></a>.</li>
+</ul>
+</section>
+<section id="sec-sf-wycinek" class="level3" data-number="5.7.8">
+<h3 data-number="5.7.8" class="anchored" data-anchor-id="sec-sf-wycinek"><span class="header-section-number">5.7.8</span> Wycinek mapy i połączone obszary</h3>
+<p>Mapa Europy (<a href="#fig-sf-europa" class="quarto-xref">Rycina&nbsp;<span>5.10</span></a>) ma trzy warstwy: wszystkie państwa w tle, kraje ze zbioru danych i obrysy subregionów. Zasięg mapy ogranicza <code>coord_sf()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tylko kraje Europy ze zbioru danych</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>mapa_europa <span class="ot">&lt;-</span> swiat <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(<span class="fu">filter</span>(dane2007, kontynent <span class="sc">==</span> <span class="st">"Europa"</span>), <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"iso_a3_eh"</span> <span class="ot">=</span> <span class="st">"Kod"</span>))</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># jeden obszar dla każdego subregionu</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>subregiony <span class="ot">&lt;-</span> mapa_europa <span class="sc">|&gt;</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(subregion_pl) <span class="sc">|&gt;</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">geometry =</span> <span class="fu">st_union</span>(geometry))</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> swiat, <span class="at">fill =</span> <span class="st">"grey85"</span>, <span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">linewidth =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> mapa_europa, <span class="fu">aes</span>(<span class="at">fill =</span> lifeExp), <span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">linewidth =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> subregiony, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_fermenter</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">72</span>, <span class="dv">74</span>, <span class="dv">76</span>, <span class="dv">78</span>, <span class="dv">80</span>),</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">"YlGnBu"</span>, <span class="at">direction =</span> <span class="dv">1</span>,</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>                       <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">70</span>, <span class="dv">82</span>)) <span class="sc">+</span>  <span class="co"># zakres skali obejmujący wszystkie klasy</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="dv">3035</span>,                                 <span class="co"># odwzorowanie dla Europy</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>           <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">2500000</span>, <span class="dv">6500000</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">1400000</span>, <span class="dv">5400000</span>)) <span class="sc">+</span>  <span class="co"># zasięg mapy [m]</span></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Oczekiwana długość</span><span class="sc">\n</span><span class="st">życia [lata]"</span>) <span class="sc">+</span></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-sf-europa" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sf-europa-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="05_dane_przestrzenne_files/figure-html/fig-sf-europa-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sf-europa-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;5.10: Oczekiwana długość życia w krajach Europy w 2007 roku; czarne linie — granice subregionów, szary kolor — kraje spoza zbioru danych
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><code>st_union()</code> scala geometrie w jeden obiekt: granice między krajami znikają i zostaje obrys. Razem z <code>group_by()</code> i <code>summarise()</code> tworzy jeden obiekt <code>sf</code> z obszarem dla każdego subregionu.</li>
+<li><code>fill = NA</code> oznacza brak wypełnienia, dzięki czemu kolory krajów pozostają widoczne.</li>
+<li><code>xlim</code> i <code>ylim</code> są podane w jednostkach układu z argumentu <code>crs</code>, tu w metrach.</li>
+<li><code>limits</code> ustala zakres skali. Bez niego zakres wynika z danych, a granica klasy leżąca poza tym zakresem nie jest uwzględniana w legendzie.</li>
+<li>Zastosowanie: <a href="23_dlugosc_zycia_europa.html#sec-eu-europa" class="quarto-xref"><span>Sekcja 23.4.1</span></a>.</li>
+</ul>
+</section>
+</section>
+<section id="sec-sf-zestawienie" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="sec-sf-zestawienie"><span class="header-section-number">5.8</span> Zestawienie map w skrypcie</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Mapa</th>
+<th>Dane i układ współrzędnych</th>
+<th>Najważniejsze elementy kodu</th>
+<th>Przykład w skrypcie</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>kolor obszaru</td>
+<td><code>ne_countries()</code>, WGS 84</td>
+<td><code>left_join()</code>, <code>geom_sf(aes(fill = ))</code></td>
+<td><a href="21_dlugosc_zycia_2007.html#sec-2007-mapa" class="quarto-xref"><span>Sekcja 21.5</span></a></td>
+</tr>
+<tr class="even">
+<td>kolor obszaru, wycinek, panele</td>
+<td><code>ne_countries()</code>, EPSG 3035</td>
+<td><code>inner_join()</code>, <code>st_union()</code>, <code>coord_sf(crs, xlim, ylim)</code>, <code>facet_wrap()</code></td>
+<td><a href="23_dlugosc_zycia_europa.html#sec-eu-europa" class="quarto-xref"><span>Sekcja 23.4.1</span></a></td>
+</tr>
+<tr class="odd">
+<td>kartogram</td>
+<td>GADM, EPSG 2180</td>
+<td><code>left_join()</code>, <code>st_transform()</code>, <code>st_area()</code>, <code>geom_sf(aes(fill = ))</code></td>
+<td><a href="26_lasy_wielkopolska.html#sec-lw-poziom" class="quarto-xref"><span>Sekcja 26.4.1</span></a></td>
+</tr>
+<tr class="even">
+<td>położenie stacji z etykietami</td>
+<td>tabela ze współrzędnymi, plik <code>.gpkg</code></td>
+<td><code>st_as_sf()</code>, <code>st_read()</code>, <code>geom_text_repel()</code></td>
+<td><a href="22_meteo_2020.html#sec-meteo-stacje" class="quarto-xref"><span>Sekcja 22.3</span></a></td>
+</tr>
+<tr class="odd">
+<td>kolor punktu</td>
+<td>tabela ze współrzędnymi, plik <code>.gpkg</code></td>
+<td><code>geom_sf(aes(fill = ), shape = 21)</code></td>
+<td><a href="22_meteo_2020.html#sec-meteo-temp" class="quarto-xref"><span>Sekcja 22.4</span></a>, <a href="22_meteo_2020.html#sec-meteo-opad" class="quarto-xref"><span>Sekcja 22.5</span></a></td>
+</tr>
+<tr class="even">
+<td>kartodiagram: wielkość znaku</td>
+<td>tabela ze współrzędnymi, plik <code>.gpkg</code></td>
+<td><code>geom_sf(aes(size = ))</code></td>
+<td><a href="22_meteo_2020.html#sec-meteo-dni" class="quarto-xref"><span>Sekcja 22.5.3</span></a></td>
+</tr>
+<tr class="odd">
+<td>kartodiagram strukturalny: wykresy kołowe</td>
+<td>tabela ze współrzędnymi, EPSG 2180</td>
+<td><code>st_transform()</code>, <code>st_coordinates()</code>, <code>geom_scatterpie()</code></td>
+<td><a href="22_meteo_2020.html#sec-meteo-dni" class="quarto-xref"><span>Sekcja 22.5.3</span></a></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sec-sf-bledy" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="sec-sf-bledy"><span class="header-section-number">5.9</span> Najczęstsze błędy</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Komunikat albo objaw</th>
+<th>Przyczyna</th>
+<th>Przykład błędnego zapisu</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>`stat_sf()` requires the following missing aesthetics: geometry</code></td>
+<td><code>geom_sf()</code> otrzymał zwykłą tabelę, np. wynik połączenia z tabelą danych na pierwszym miejscu</td>
+<td><code>left_join(dane2007, swiat, …)</code> zamiast <code>left_join(swiat, dane2007, …)</code></td>
+</tr>
+<tr class="even">
+<td><code>missing values in coordinates not allowed</code></td>
+<td>brak wartości w kolumnie ze współrzędnymi</td>
+<td><code>st_as_sf()</code> na tabeli z <code>NA</code> w kolumnie współrzędnych</td>
+</tr>
+<tr class="odd">
+<td><code>Can't subset columns that don't exist</code></td>
+<td>błąd w nazwie kolumny ze współrzędnymi</td>
+<td><code>coords = c("X", "Y")</code> przy innych nazwach kolumn</td>
+</tr>
+<tr class="even">
+<td><code>cannot transform sfc object with missing crs</code></td>
+<td>obiekt bez układu współrzędnych</td>
+<td><code>st_as_sf()</code> bez argumentu <code>crs</code>, a potem <code>st_transform()</code></td>
+</tr>
+<tr class="odd">
+<td>punkty poza obszarem mapy</td>
+<td>zamieniona kolejność długości i szerokości geograficznej</td>
+<td><code>coords = c("Y_szerokosc_geogr", "X_dlugosc_geogr")</code></td>
+</tr>
+<tr class="even">
+<td>wszystkie obszary w kolorze braku danych</td>
+<td>klucze w obu tabelach mają inną postać</td>
+<td>kod 4-cyfrowy w jednej tabeli i 7-cyfrowy w drugiej</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sec-sf-zadania" class="level2" data-number="5.10">
+<h2 data-number="5.10" class="anchored" data-anchor-id="sec-sf-zadania"><span class="header-section-number">5.10</span> Zadania do samodzielnego wykonania</h2>
+<p>Zadania polegają na modyfikacji kodu z rozdziału i wykonuje się je w przeglądarce, bez instalowania R. Kod w polu można zmienić i uruchomić przyciskiem <strong>Run Code</strong>. Pierwsze uruchomienie pobiera środowisko R i pakiety, dlatego trwa dłużej i wymaga połączenia z internetem; jeżeli po kliknięciu wynik się nie pojawia, należy odczekać i kliknąć przycisk ponownie. Rozwiązanie wyświetla przycisk <strong>Show Solution</strong>.</p>
+<p><strong>Zadanie 1. Inny układ współrzędnych.</strong> Narysuj mapę w układzie PUWG 1992 z siatką opisaną w metrach (<a href="#sec-sf-crs" class="quarto-xref"><span>Sekcja 5.5</span></a>): dodaj warstwę <code>coord_sf()</code> z argumentami <code>crs</code> i <code>datum</code>.</p>
+<div class="cell" data-exercise="sf_1">
+<div>
+<div id="webr-2" class="exercise-cell">
+
+</div>
+<script type="webr-2-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoic2ZfMSJ9LCJjb2RlIjoiZ2dwbG90KCkgK1xuICBnZW9tX3NmKGRhdGEgPSB3b2pld29kenR3YSwgZmlsbCA9IFwiZ3JleTk1XCIpICtcbiAgZ2VvbV9zZihkYXRhID0gc3RhY2plX3NmLCBjb2xvdXIgPSBcInJlZFwiLCBzaXplID0gMikgK1xuICB0aGVtZV9idyhiYXNlX3NpemUgPSAxMykifQ==
+</script>
+</div>
+</div>
+<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="sf_1">
+<div class="callout callout-style-default callout-tip callout-titled" title="Rozwiązanie">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Rozwiązanie
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> wojewodztwa, <span class="at">fill =</span> <span class="st">"grey95"</span>) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> stacje_sf, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="dv">2180</span>, <span class="at">datum =</span> <span class="dv">2180</span>) <span class="sc">+</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Zadanie 2. Inne miesiące.</strong> Wykonaj mapę średniej temperatury dla kwietnia i października. Zmień numery miesięcy w <code>filter()</code> i nazwy paneli w <code>as_labeller()</code>.</p>
+<div class="cell" data-exercise="sf_2">
+<div>
+<div id="webr-3" class="exercise-cell">
+
+</div>
+<script type="webr-3-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoic2ZfMiJ9LCJjb2RlIjoic3R5Y3plbl9saXBpZWMgPC0gbWV0ZW8gfD5cbiAgZmlsdGVyKG1pZXNpYWMgJWluJSBjKDEsIDcpKSB8PlxuICBzdF9hc19zZihjb29yZHMgPSBjKFwiWF9kbHVnb3NjX2dlb2dyXCIsIFwiWV9zemVyb2tvc2NfZ2VvZ3JcIiksIGNycyA9IDQzMjYpXG5cbmdncGxvdCgpICtcbiAgZ2VvbV9zZihkYXRhID0gd29qZXdvZHp0d2EsIGZpbGwgPSBcIndoaXRlXCIpICtcbiAgZ2VvbV9zZihkYXRhID0gc3R5Y3plbl9saXBpZWMsIGFlcyhmaWxsID0gdGVtcF9zciksXG4gICAgICAgICAgc2hhcGUgPSAyMSwgY29sb3VyID0gXCJncmV5MzBcIiwgc2l6ZSA9IDMpICtcbiAgZmFjZXRfd3JhcCh+IG1pZXNpYWMsIGxhYmVsbGVyID0gYXNfbGFiZWxsZXIoYyhgMWAgPSBcIlN0eWN6ZcWEXCIsIGA3YCA9IFwiTGlwaWVjXCIpKSkgK1xuICBzY2FsZV9maWxsX2Zlcm1lbnRlcihicmVha3MgPSBzZXEoMCwgMTgsIGJ5ID0gMyksXG4gICAgICAgICAgICAgICAgICAgICAgIHBhbGV0dGUgPSBcIlJkWWxCdVwiLCBkaXJlY3Rpb24gPSAtMSxcbiAgICAgICAgICAgICAgICAgICAgICAgbmEudmFsdWUgPSBcImdyZXk2MFwiKSArXG4gIGxhYnMoZmlsbCA9IFwiVGVtcGVyYXR1cmEgcG93aWV0cnphIFvCsENdXCIpICtcbiAgdGhlbWVfYncoYmFzZV9zaXplID0gMTMpIn0=
+</script>
+</div>
+</div>
+<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="sf_2">
+<div class="callout callout-style-default callout-tip callout-titled" title="Rozwiązanie">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Rozwiązanie
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>kwiecien_pazdziernik <span class="ot">&lt;-</span> meteo <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(miesiac <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">10</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"X_dlugosc_geogr"</span>, <span class="st">"Y_szerokosc_geogr"</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> wojewodztwa, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> kwiecien_pazdziernik, <span class="fu">aes</span>(<span class="at">fill =</span> temp_sr),</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">colour =</span> <span class="st">"grey30"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> miesiac, <span class="at">labeller =</span> <span class="fu">as_labeller</span>(<span class="fu">c</span>(<span class="st">`</span><span class="at">4</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Kwiecień"</span>, <span class="st">`</span><span class="at">10</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Październik"</span>))) <span class="sc">+</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_fermenter</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">18</span>, <span class="at">by =</span> <span class="dv">3</span>),</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">"RdYlBu"</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>,</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>                       <span class="at">na.value =</span> <span class="st">"grey60"</span>) <span class="sc">+</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Temperatura powietrza [°C]"</span>) <span class="sc">+</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Zadanie 3. Inna zmienna na mapie.</strong> Przedstaw kolorem punktu roczną sumę opadu (<code>opad_rok</code>) zamiast rocznej liczby dni z deszczem. Dobierz granice klas do zakresu nowej zmiennej, np. <code>seq(500, 1000, by = 100)</code>, i zmień tytuł legendy.</p>
+<div class="cell" data-exercise="sf_3">
+<div>
+<div id="webr-4" class="exercise-cell">
+
+</div>
+<script type="webr-4-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoic2ZfMyJ9LCJjb2RlIjoiZ2dwbG90KCkgK1xuICBnZW9tX3NmKGRhdGEgPSB3b2pld29kenR3YSwgZmlsbCA9IFwid2hpdGVcIikgK1xuICBnZW9tX3NmKGRhdGEgPSBzdGFjamVfc2YsIGFlcyhmaWxsID0gZG5pX2Rlc3pjel9yb2spLFxuICAgICAgICAgIHNoYXBlID0gMjEsIGNvbG91ciA9IFwiZ3JleTMwXCIsIHNpemUgPSAzKSArXG4gIHNjYWxlX2ZpbGxfZmVybWVudGVyKGJyZWFrcyA9IHNlcSgxMDAsIDIyMCwgYnkgPSAzMCksXG4gICAgICAgICAgICAgICAgICAgICAgIHBhbGV0dGUgPSBcIkJsdWVzXCIsIGRpcmVjdGlvbiA9IDEpICtcbiAgbGFicyhmaWxsID0gXCJMaWN6YmEgZG5pXCIpICtcbiAgdGhlbWVfYncoYmFzZV9zaXplID0gMTMpIn0=
+</script>
+</div>
+</div>
+<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="sf_3">
+<div class="callout callout-style-default callout-tip callout-titled" title="Rozwiązanie">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Rozwiązanie
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> wojewodztwa, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> stacje_sf, <span class="fu">aes</span>(<span class="at">fill =</span> opad_rok),</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">colour =</span> <span class="st">"grey30"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_fermenter</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">500</span>, <span class="dv">1000</span>, <span class="at">by =</span> <span class="dv">100</span>),</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">"Blues"</span>, <span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Suma opadu [mm]"</span>) <span class="sc">+</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Zadanie 4. Kartodiagram innej zmiennej.</strong> Wykonaj kartodiagram rocznej liczby dni ze śniegiem (<code>dni_snieg_rok</code>) zamiast dni z deszczem. Stacje bez danych pomiń, zastępując <code>stacje_sf</code> zapisem <code>filter(stacje_sf, !is.na(dni_snieg_rok))</code>.</p>
+<div class="cell" data-exercise="sf_4">
+<div>
+<div id="webr-5" class="exercise-cell">
+
+</div>
+<script type="webr-5-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoic2ZfNCJ9LCJjb2RlIjoiZ2dwbG90KCkgK1xuICBnZW9tX3NmKGRhdGEgPSB3b2pld29kenR3YSwgZmlsbCA9IFwiZ3JleTk1XCIpICtcbiAgZ2VvbV9zZihkYXRhID0gc3RhY2plX3NmLCBhZXMoc2l6ZSA9IGRuaV9kZXN6Y3pfcm9rKSwgY29sb3VyID0gXCJzdGVlbGJsdWVcIiwgYWxwaGEgPSAwLjYpICtcbiAgc2NhbGVfc2l6ZV9hcmVhKG1heF9zaXplID0gOCkgK1xuICBsYWJzKHNpemUgPSBcIkxpY3piYSBkbmlcIikgK1xuICB0aGVtZV9idyhiYXNlX3NpemUgPSAxMykifQ==
+</script>
+</div>
+</div>
+<div class="webr-ojs-exercise exercise-solution d-none" data-exercise="sf_4">
+<div class="callout callout-style-default callout-tip callout-titled" title="Rozwiązanie">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Rozwiązanie
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> wojewodztwa, <span class="at">fill =</span> <span class="st">"grey95"</span>) <span class="sc">+</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> <span class="fu">filter</span>(stacje_sf, <span class="sc">!</span><span class="fu">is.na</span>(dni_snieg_rok)),</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>          <span class="fu">aes</span>(<span class="at">size =</span> dni_snieg_rok), <span class="at">colour =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_area</span>(<span class="at">max_size =</span> <span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">size =</span> <span class="st">"Liczba dni"</span>) <span class="sc">+</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-sf-zrodla" class="level2" data-number="5.11">
+<h2 data-number="5.11" class="anchored" data-anchor-id="sec-sf-zrodla"><span class="header-section-number">5.11</span> Źródła</h2>
+<ul>
+<li>Dokumentacja pakietu <code>sf</code>: <a href="https://r-spatial.github.io/sf/" class="uri">https://r-spatial.github.io/sf/</a>.</li>
+<li>Dokumentacja <code>geom_sf()</code> i <code>coord_sf()</code>: <a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="uri">https://ggplot2.tidyverse.org/reference/ggsf.html</a>.</li>
+<li>Natural Earth (domena publiczna): <a href="https://www.naturalearthdata.com/" class="uri">https://www.naturalearthdata.com/</a>.</li>
+<li>GADM: <a href="https://gadm.org/" class="uri">https://gadm.org/</a>.</li>
+<li>Główny Urząd Statystyczny (GUS), 2014. <em>Graficzna prezentacja danych statystycznych. Wykresy, mapy, GIS</em>. Warszawa, podrozdział 4.2.9: metoda kartodiagramu.</li>
+</ul>
+
+
+<script type="webr-data">
+eyJvcHRpb25zIjp7ImJhc2VVcmwiOiJodHRwczovL3dlYnIuci13YXNtLm9yZy92MC41LjQvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsiZXZhbHVhdGUiLCJrbml0ciIsImh0bWx0b29scyIsImRwbHlyIiwiZ2dwbG90MiIsInNmIl0sInJlcG9zIjpbXX0sInJlbmRlcl9kZiI6ImRlZmF1bHQifQ==
+</script>
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC01IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV81O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItNSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzUgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici01LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBleGVyY2lzZSBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKFxuICAgIHtcbiAgICAgIGlkOiBcIndlYnItNS1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzUgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzUsIHt9KTtcbl93ZWJyX2ZlZWRiYWNrXzUgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzUuZXZhbHVhdG9yKTtcbiAgY29uc3QgZmVlZGJhY2sgPSBhd2FpdCBncmFkZXIuZ3JhZGVFeGVyY2lzZSgpO1xuICBpZiAoIWZlZWRiYWNrKSByZXR1cm4gZW1wdHlGZWVkYmFjaztcbiAgcmV0dXJuIGZlZWRiYWNrO1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTQiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzQ7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici00IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfNCA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTQtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici00LWNvbnRlbnRzXCIsXG4gICAgICBlbnZpcjogYGV4ZXJjaXNlLWVudi0ke2Jsb2NrLmF0dHIuZXhlcmNpc2V9YCxcbiAgICAgIGVycm9yOiBmYWxzZSxcbiAgICAgIGNhcHRpb246ICdFeGVyY2lzZScsXG4gICAgfSxcbiAgICBibG9jay5hdHRyXG4gICk7XG5cbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG52aWV3b2YgX3dlYnJfdmFsdWVfNCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfNCwge30pO1xuX3dlYnJfZmVlZGJhY2tfNCA9IHtcbiAgY29uc3QgeyBXZWJSR3JhZGVyIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBlbXB0eUZlZWRiYWNrID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7XG5cbiAgY29uc3QgZ3JhZGVyID0gbmV3IFdlYlJHcmFkZXIoX3dlYnJfdmFsdWVfNC5ldmFsdWF0b3IpO1xuICBjb25zdCBmZWVkYmFjayA9IGF3YWl0IGdyYWRlci5ncmFkZUV4ZXJjaXNlKCk7XG4gIGlmICghZmVlZGJhY2spIHJldHVybiBlbXB0eUZlZWRiYWNrO1xuICByZXR1cm4gZmVlZGJhY2s7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMztcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTMiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl8zID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMy1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIC8vIERlZmF1bHQgZXhlcmNpc2UgY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbihcbiAgICB7XG4gICAgICBpZDogXCJ3ZWJyLTMtY29udGVudHNcIixcbiAgICAgIGVudmlyOiBgZXhlcmNpc2UtZW52LSR7YmxvY2suYXR0ci5leGVyY2lzZX1gLFxuICAgICAgZXJyb3I6IGZhbHNlLFxuICAgICAgY2FwdGlvbjogJ0V4ZXJjaXNlJyxcbiAgICB9LFxuICAgIGJsb2NrLmF0dHJcbiAgKTtcblxuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbnZpZXdvZiBfd2Vicl92YWx1ZV8zID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8zLCB7fSk7XG5fd2Vicl9mZWVkYmFja18zID0ge1xuICBjb25zdCB7IFdlYlJHcmFkZXIgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IGVtcHR5RmVlZGJhY2sgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTtcblxuICBjb25zdCBncmFkZXIgPSBuZXcgV2ViUkdyYWRlcihfd2Vicl92YWx1ZV8zLmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8yO1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzIgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0yLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBleGVyY2lzZSBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKFxuICAgIHtcbiAgICAgIGlkOiBcIndlYnItMi1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzIgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzIsIHt9KTtcbl93ZWJyX2ZlZWRiYWNrXzIgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzIuZXZhbHVhdG9yKTtcbiAgY29uc3QgZmVlZGJhY2sgPSBhd2FpdCBncmFkZXIuZ3JhZGVFeGVyY2lzZSgpO1xuICBpZiAoIWZlZWRiYWNrKSByZXR1cm4gZW1wdHlGZWVkYmFjaztcbiAgcmV0dXJuIGZlZWRiYWNrO1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItcHJlbHVkZSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IndlYlJPanMgPSB7XG4gIGNvbnN0IHsgV2ViUiwgQ2hhbm5lbFR5cGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWUuV2ViUjtcbiAgY29uc3Qge1xuICAgIFdlYlJFdmFsdWF0b3IsXG4gICAgV2ViUkVudmlyb25tZW50TWFuYWdlcixcbiAgICBzZXR1cFIsXG4gICAgYjY0RGVjb2RlLFxuICAgIGNvbGxhcHNlUGF0aFxuICB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcblxuICBjb25zdCBzdGF0dXNDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctc3RhdHVzXCIpO1xuICBjb25zdCBpbmRpY2F0b3JDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctaW5kaWNhdG9yXCIpO1xuICBpbmRpY2F0b3JDb250YWluZXIuY2xhc3NMaXN0LnJlbW92ZShcImQtbm9uZVwiKTtcblxuICBsZXQgc3RhdHVzVGV4dCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIilcbiAgc3RhdHVzVGV4dC5jbGFzc0xpc3QgPSBcImV4ZXJjaXNlLWxvYWRpbmctZGV0YWlsc1wiO1xuICBzdGF0dXNUZXh0ID0gc3RhdHVzQ29udGFpbmVyLmFwcGVuZENoaWxkKHN0YXR1c1RleHQpO1xuICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYEluaXRpYWxpc2VgO1xuXG4gIC8vIEhvaXN0IGluZGljYXRvciBvdXQgZnJvbSBmaW5hbCBzbGlkZSB3aGVuIHJ1bm5pbmcgdW5kZXIgcmV2ZWFsXG4gIGNvbnN0IHJldmVhbFN0YXR1cyA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoXCIucmV2ZWFsIC5leGVyY2lzZS1sb2FkaW5nLWluZGljYXRvclwiKTtcbiAgaWYgKHJldmVhbFN0YXR1cykge1xuICAgIHJldmVhbFN0YXR1cy5yZW1vdmUoKTtcbiAgICBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiLnJldmVhbCA+IC5zbGlkZXNcIikuYXBwZW5kQ2hpbGQocmV2ZWFsU3RhdHVzKTtcbiAgfVxuXG4gIC8vIE1ha2UgYW55IHJldmVhbCBzbGlkZXMgd2l0aCBsaXZlIGNlbGxzIHNjcm9sbGFibGVcbiAgZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbChcIi5yZXZlYWwgLmV4ZXJjaXNlLWNlbGxcIikuZm9yRWFjaCgoZWwpID0+IHtcbiAgICBlbC5jbG9zZXN0KCdzZWN0aW9uLnNsaWRlJykuY2xhc3NMaXN0LmFkZChcInNjcm9sbGFibGVcIik7XG4gIH0pXG5cbiAgLy8gd2ViUiBzdXBwbGVtZW50YWwgZGF0YSBhbmQgb3B0aW9uc1xuICBjb25zdCBkYXRhQ29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLWRhdGFcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBkYXRhID0gSlNPTi5wYXJzZShiNjREZWNvZGUoZGF0YUNvbnRlbnQpKTtcblxuICAvLyBHcmFiIGxpc3Qgb2YgcmVzb3VyY2VzIHRvIGJlIGRvd25sb2FkZWRcbiAgY29uc3QgZmlsZXNDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcInZmcy1maWxlXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgZmlsZXMgPSBKU09OLnBhcnNlKGI2NERlY29kZShmaWxlc0NvbnRlbnQpKTtcblxuICAvLyBVc2UgUG9zdE1lc3NhZ2UgY2hhbm5lbCBmb3IgYXN5bmMgY29tbXVuaWNhdGlvblxuICAvLyBXZSBkbyBub3QgZXhwZWN0IHRvIHRha2UgbmVzdGVkIHByb21wdCBpbnB1dCBpbiBRdWFydG8gTGl2ZSBjZWxsc1xuICBkYXRhLm9wdGlvbnMuY2hhbm5lbFR5cGUgPSBDaGFubmVsVHlwZS5Qb3N0TWVzc2FnZTtcblxuICAvLyBJbml0aWFsaXNlIHdlYlIgYW5kIHNldHVwIGZvciBSIGNvZGUgZXZhbHVhdGlvblxuICBsZXQgd2ViUlByb21pc2UgPSAoYXN5bmMgKHdlYlIpID0+IHtcbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHdlYlJgO1xuICAgIGF3YWl0IHdlYlIuaW5pdCgpO1xuXG4gICAgLy8gSW5zdGFsbCBwcm92aWRlZCBsaXN0IG9mIHBhY2thZ2VzXG4gICAgLy8gRW5zdXJlIHdlYlIgZGVmYXVsdCByZXBvIGlzIGluY2x1ZGVkXG4gICAgZGF0YS5wYWNrYWdlcy5yZXBvcy5wdXNoKFwiaHR0cHM6Ly9yZXBvLnItd2FzbS5vcmdcIilcbiAgICBhd2FpdCBkYXRhLnBhY2thZ2VzLnBrZ3MubWFwKChwa2cpID0+ICgpID0+IHtcbiAgICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgcGFja2FnZTogJHtwa2d9YDtcbiAgICAgIHJldHVybiB3ZWJSLmV2YWxSVm9pZChgXG4gICAgICAgIHdlYnI6Omluc3RhbGwocGtnLCByZXBvcyA9IHJlcG9zKVxuICAgICAgICBsaWJyYXJ5KHBrZywgY2hhcmFjdGVyLm9ubHkgPSBUUlVFKVxuICAgICAgYCwgeyBlbnY6IHtcbiAgICAgICAgcGtnOiBwa2csXG4gICAgICAgIHJlcG9zOiBkYXRhLnBhY2thZ2VzLnJlcG9zLFxuICAgICAgfX0pO1xuICAgIH0pLnJlZHVjZSgoY3VyLCBuZXh0KSA9PiBjdXIudGhlbihuZXh0KSwgUHJvbWlzZS5yZXNvbHZlKCkpO1xuXG4gICAgLy8gRG93bmxvYWQgYW5kIGluc3RhbGwgcmVzb3VyY2VzXG4gICAgYXdhaXQgZmlsZXMubWFwKChmaWxlKSA9PiBhc3luYyAoKSA9PiB7XG4gICAgICBjb25zdCBuYW1lID0gZmlsZS5zdWJzdHJpbmcoZmlsZS5sYXN0SW5kZXhPZignLycpICsgMSk7XG4gICAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHJlc291cmNlOiAke25hbWV9YDtcbiAgICAgIGNvbnN0IHJlc3BvbnNlID0gYXdhaXQgZmV0Y2goZmlsZSk7XG4gICAgICBpZiAoIXJlc3BvbnNlLm9rKSB7XG4gICAgICAgIHRocm93IG5ldyBFcnJvcihgQ2FuJ3QgZG93bmxvYWQgXFxgJHtmaWxlfVxcYC4gRXJyb3IgJHtyZXNwb25zZS5zdGF0dXN9OiBcIiR7cmVzcG9uc2Uuc3RhdHVzVGV4dH1cIi5gKTtcbiAgICAgIH1cbiAgICAgIGNvbnN0IGRhdGEgPSBhd2FpdCByZXNwb25zZS5hcnJheUJ1ZmZlcigpO1xuXG4gICAgICAvLyBTdG9yZSBVUkxzIGluIHRoZSBjd2Qgd2l0aG91dCBhbnkgc3ViZGlyZWN0b3J5IHN0cnVjdHVyZVxuICAgICAgaWYgKGZpbGUuaW5jbHVkZXMoXCI6Ly9cIikpIHtcbiAgICAgICAgZmlsZSA9IG5hbWU7XG4gICAgICB9XG5cbiAgICAgIC8vIENvbGxhcHNlIGhpZ2hlciBkaXJlY3Rvcnkgc3RydWN0dXJlXG4gICAgICBmaWxlID0gY29sbGFwc2VQYXRoKGZpbGUpO1xuXG4gICAgICAvLyBDcmVhdGUgZGlyZWN0b3J5IHRyZWUsIGlnbm9yaW5nIFwiZGlyZWN0b3J5IGV4aXN0c1wiIFZGUyBlcnJvcnNcbiAgICAgIGNvbnN0IHBhcnRzID0gZmlsZS5zcGxpdCgnLycpLnNsaWNlKDAsIC0xKTtcbiAgICAgIGxldCBwYXRoID0gJyc7XG4gICAgICB3aGlsZSAocGFydHMubGVuZ3RoID4gMCkge1xuICAgICAgICBwYXRoICs9IHBhcnRzLnNoaWZ0KCkgKyAnLyc7XG4gICAgICAgIGNvbnN0IGFuYWx5c2lzID0gYXdhaXQgd2ViUi5GUy5hbmFseXplUGF0aChwYXRoKTtcbiAgICAgICAgaWYgKCFhbmFseXNpcy5leGlzdHMpIHtcbiAgICAgICAgICB0cnkge1xuICAgICAgICAgICAgYXdhaXQgd2ViUi5GUy5ta2RpcihwYXRoKTtcbiAgICAgICAgICB9IGNhdGNoIChlKSB7XG4gICAgICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYEZpbGVzeXN0ZW0gRXJyb3I6IFwiJHtlLm1lc3NhZ2V9XCIuYCk7XG4gICAgICAgICAgfVxuICAgICAgICB9XG4gICAgICB9XG5cbiAgICAgIC8vIFdyaXRlIHRoaXMgZmlsZSB0byB0aGUgVkZTXG4gICAgICByZXR1cm4gYXdhaXQgd2ViUi5GUy53cml0ZUZpbGUoZmlsZSwgbmV3IFVpbnQ4QXJyYXkoZGF0YSkpO1xuICAgIH0pLnJlZHVjZSgoY3VyLCBuZXh0KSA9PiBjdXIudGhlbihuZXh0KSwgUHJvbWlzZS5yZXNvbHZlKCkpO1xuXG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBJbnN0YWxsaW5nIHdlYlIgc2hpbXNgO1xuICAgIGF3YWl0IHdlYlIuZXZhbFJWb2lkKGB3ZWJyOjpzaGltX2luc3RhbGwoKWApO1xuXG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBXZWJSIGVudmlyb25tZW50IHNldHVwYDtcbiAgICBhd2FpdCBzZXR1cFIod2ViUiwgZGF0YSk7XG5cbiAgICBzdGF0dXNUZXh0LnJlbW92ZSgpO1xuICAgIGlmIChzdGF0dXNDb250YWluZXIuY2hpbGRyZW4ubGVuZ3RoID09IDApIHtcbiAgICAgIHN0YXR1c0NvbnRhaW5lci5wYXJlbnROb2RlLnJlbW92ZSgpO1xuICAgIH1cbiAgICByZXR1cm4gd2ViUjtcbiAgfSkobmV3IFdlYlIoZGF0YS5vcHRpb25zKSk7XG5cbiAgLy8gS2VlcCB0cmFjayBvZiBpbml0aWFsIE9KUyBibG9jayByZW5kZXJcbiAgY29uc3QgcmVuZGVyZWRPanMgPSB7fTtcblxuICBjb25zdCBwcm9jZXNzID0gYXN5bmMgKGNvbnRleHQsIGlucHV0cykgPT4ge1xuICAgIGNvbnN0IHdlYlIgPSBhd2FpdCB3ZWJSUHJvbWlzZTtcbiAgICBjb25zdCBldmFsdWF0b3IgPSBuZXcgV2ViUkV2YWx1YXRvcih3ZWJSLCBjb250ZXh0KVxuICAgIGF3YWl0IGV2YWx1YXRvci5wcm9jZXNzKGlucHV0cyk7XG4gICAgcmV0dXJuIGV2YWx1YXRvci5jb250YWluZXI7XG4gIH1cblxuICByZXR1cm4ge1xuICAgIHByb2Nlc3MsXG4gICAgd2ViUlByb21pc2UsXG4gICAgcmVuZGVyZWRPanMsXG4gIH07XG59XG4ifV19
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+WyJkYW5lL3dvamV3b2R6dHdhLmdwa2ciLCJkYW5lL21ldGVvMjAyMC5jc3YiXQ==
+</script>
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Skopiowano!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Skopiowano!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./04_wykresy_ggplot2.html" class="pagination-link" aria-label="Wykresy w ggplot2">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wykresy w ggplot2</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./06_pakiety.html" class="pagination-link" aria-label="Pakiety">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pakiety</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

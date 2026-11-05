@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>24&nbsp; Warunki meteorologiczne wybranej stacji – Statystyczne i graficzne podstawy geowizualizacji</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./25_meteo_trzy_stacje.html" rel="next">
+<link href="./23_dlugosc_zycia_europa.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-3708d7fbbef66c9ac9ec4ecfd1afb0ee.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Brak wyników",
+    "search-matching-documents-text": "dopasowane dokumenty",
+    "search-copy-link-title": "Kopiuj link do wyszukiwania",
+    "search-hide-matches-text": "Ukryj dodatkowe dopasowania",
+    "search-more-match-text": "więcej dopasowań w tym dokumencie",
+    "search-more-matches-text": "więcej dopasowań w tym dokumencie",
+    "search-clear-button-title": "Wyczyść",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Anuluj",
+    "search-submit-button-title": "Zatwierdź",
+    "search-label": "Szukaj"
+  }
+}</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./23_dlugosc_zycia_europa.html">PRZYKŁADOWE RAPORTY</a></li><li class="breadcrumb-item"><a href="./24_meteo_zakopane.html"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Warunki meteorologiczne wybranej stacji</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Szukaj" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statystyczne i graficzne podstawy geowizualizacji</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Szukaj"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">O skrypcie</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00_dane.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dane</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">PRACA W R</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_instalacja.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Instalacja R i RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_rstudio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Praca w RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_praca_z_danymi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Praca z danymi</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_wykresy_ggplot2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wykresy w ggplot2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_dane_przestrzenne.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dane przestrzenne w R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_pakiety.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pakiety</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">QUARTO</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_raport.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Raport statystyczny</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">PODSTAWY STATYSTYKI</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_pojecia_podstawowe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pojęcia podstawowe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_statystyki_opisowe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Statystyki opisowe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_korelacja.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Analiza korelacji</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">WIZUALIZACJA DANYCH</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_po_co_wizualizujemy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Po co wizualizujemy dane</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_gramatyka_grafiki.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Gramatyka grafiki</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_typy_wykresow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Typy wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_wizualizacja_statystyk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wizualizacja statystyk opisowych</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16_wizualizacja_zaleznosci.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Wizualizacja zależności</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17_dobor_wykresu.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Dobór wykresu do problemu badawczego</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18_formatowanie.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Formatowanie wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19_zrodla.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Źródła informacji o wizualizacji</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">PRZYKŁADY</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20_dlugosc_zycia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Oczekiwana długość życia na kontynentach w latach 1952–2007</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21_dlugosc_zycia_2007.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Oczekiwana długość życia na świecie w 2007 roku</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22_meteo_2020.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Warunki meteorologiczne w Polsce w 2020 roku</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">PRZYKŁADOWE RAPORTY</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23_dlugosc_zycia_europa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Zmienność oczekiwanej długości życia w Europie w latach 1952 i 2007</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./24_meteo_zakopane.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Warunki meteorologiczne wybranej stacji</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./25_meteo_trzy_stacje.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Porównanie warunków meteorologicznych trzech stacji</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26_lasy_wielkopolska.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Lesistość powiatów województwa wielkopolskiego w latach 2000 i 2025</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Załączniki</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./A_typy_wykresow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Katalog typów wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./B_wykresy_statystyka_regionalna.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Wykresy w statystyce regionalnej</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C_zasady_wykresow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Zasady opracowywania wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./D_dobor_wykresu_przyklady.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Dobór wykresu do problemu badawczego: przykłady</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./E_bank_swiatowy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Praca z danymi Banku Światowego</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Spis treści</h2>
+   
+  <ul>
+  <li><a href="#wprowadzenie" id="toc-wprowadzenie" class="nav-link active" data-scroll-target="#wprowadzenie"><span class="header-section-number">24.1</span> Wprowadzenie</a></li>
+  <li><a href="#sec-za-dane" id="toc-sec-za-dane" class="nav-link" data-scroll-target="#sec-za-dane"><span class="header-section-number">24.2</span> Dane</a>
+  <ul class="collapse">
+  <li><a href="#sec-za-pobranie" id="toc-sec-za-pobranie" class="nav-link" data-scroll-target="#sec-za-pobranie"><span class="header-section-number">24.2.1</span> Pobranie danych</a></li>
+  <li><a href="#sec-za-przygotowanie" id="toc-sec-za-przygotowanie" class="nav-link" data-scroll-target="#sec-za-przygotowanie"><span class="header-section-number">24.2.2</span> Przygotowanie danych</a></li>
+  <li><a href="#sec-za-wybrana" id="toc-sec-za-wybrana" class="nav-link" data-scroll-target="#sec-za-wybrana"><span class="header-section-number">24.2.3</span> Wartości miesięczne dla wybranej stacji</a></li>
+  </ul></li>
+  <li><a href="#sec-za-metody" id="toc-sec-za-metody" class="nav-link" data-scroll-target="#sec-za-metody"><span class="header-section-number">24.3</span> Metody</a></li>
+  <li><a href="#wyniki" id="toc-wyniki" class="nav-link" data-scroll-target="#wyniki"><span class="header-section-number">24.4</span> Wyniki</a>
+  <ul class="collapse">
+  <li><a href="#sec-za-temp" id="toc-sec-za-temp" class="nav-link" data-scroll-target="#sec-za-temp"><span class="header-section-number">24.4.1</span> Przebieg temperatury powietrza w ciągu roku</a></li>
+  <li><a href="#sec-za-opad" id="toc-sec-za-opad" class="nav-link" data-scroll-target="#sec-za-opad"><span class="header-section-number">24.4.2</span> Zmienność miesięcznych sum opadu w ciągu roku</a></li>
+  <li><a href="#sec-za-siec" id="toc-sec-za-siec" class="nav-link" data-scroll-target="#sec-za-siec"><span class="header-section-number">24.4.3</span> Temperatura i opad na tle sieci stacji synoptycznych</a></li>
+  <li><a href="#sec-za-dni" id="toc-sec-za-dni" class="nav-link" data-scroll-target="#sec-za-dni"><span class="header-section-number">24.4.4</span> Dni z opadem deszczu i śniegu w ciągu roku</a></li>
+  </ul></li>
+  <li><a href="#sec-za-wnioski" id="toc-sec-za-wnioski" class="nav-link" data-scroll-target="#sec-za-wnioski"><span class="header-section-number">24.5</span> Wnioski</a></li>
+  <li><a href="#sec-za-literatura" id="toc-sec-za-literatura" class="nav-link" data-scroll-target="#sec-za-literatura"><span class="header-section-number">24.6</span> Literatura</a></li>
+  <li><a href="#sec-za-wybor" id="toc-sec-za-wybor" class="nav-link" data-scroll-target="#sec-za-wybor"><span class="header-section-number">24.7</span> Wybór sposobu prezentacji wyników</a></li>
+  <li><a href="#sec-za-obliczenia" id="toc-sec-za-obliczenia" class="nav-link" data-scroll-target="#sec-za-obliczenia"><span class="header-section-number">24.8</span> Obliczenia w R</a>
+  <ul class="collapse">
+  <li><a href="#dane" id="toc-dane" class="nav-link" data-scroll-target="#dane"><span class="header-section-number">24.8.1</span> Dane</a></li>
+  <li><a href="#przebieg-temperatury-powietrza" id="toc-przebieg-temperatury-powietrza" class="nav-link" data-scroll-target="#przebieg-temperatury-powietrza"><span class="header-section-number">24.8.2</span> Przebieg temperatury powietrza</a></li>
+  <li><a href="#suma-opadu" id="toc-suma-opadu" class="nav-link" data-scroll-target="#suma-opadu"><span class="header-section-number">24.8.3</span> Suma opadu</a></li>
+  <li><a href="#porównanie-z-siecią-stacji" id="toc-porównanie-z-siecią-stacji" class="nav-link" data-scroll-target="#porównanie-z-siecią-stacji"><span class="header-section-number">24.8.4</span> Porównanie z siecią stacji</a></li>
+  <li><a href="#dni-z-deszczem-i-ze-śniegiem" id="toc-dni-z-deszczem-i-ze-śniegiem" class="nav-link" data-scroll-target="#dni-z-deszczem-i-ze-śniegiem"><span class="header-section-number">24.8.5</span> Dni z deszczem i ze śniegiem</a></li>
+  <li><a href="#wybór-sposobu-prezentacji-wyników" id="toc-wybór-sposobu-prezentacji-wyników" class="nav-link" data-scroll-target="#wybór-sposobu-prezentacji-wyników"><span class="header-section-number">24.8.6</span> Wybór sposobu prezentacji wyników</a></li>
+  </ul></li>
+  <li><a href="#zadania-do-samodzielnego-wykonania" id="toc-zadania-do-samodzielnego-wykonania" class="nav-link" data-scroll-target="#zadania-do-samodzielnego-wykonania"><span class="header-section-number">24.9</span> Zadania do samodzielnego wykonania</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./23_dlugosc_zycia_europa.html">PRZYKŁADOWE RAPORTY</a></li><li class="breadcrumb-item"><a href="./24_meteo_zakopane.html"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Warunki meteorologiczne wybranej stacji</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-zakopane" class="quarto-section-identifier"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Warunki meteorologiczne wybranej stacji</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Jak czytać ten rozdział
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Rozdział ma postać raportu (Wprowadzenie – Literatura), po którym następują sekcje dydaktyczne: <strong>Wybór sposobu prezentacji wyników</strong> (<a href="#sec-za-wybor" class="quarto-xref"><span>Sekcja 24.7</span></a>) przedstawia te same wyniki na innych typach wykresów, <strong>Obliczenia w R</strong> (<a href="#sec-za-obliczenia" class="quarto-xref"><span>Sekcja 24.8</span></a>) wyjaśniają kod wszystkich sekcji, a na końcu znajdują się zadania. Kod R jest w raporcie domyślnie ukryty — rozwija się go przyciskiem <strong>Kod</strong> nad wynikiem. Stację i rok wybiera się w jednym miejscu kodu, dlatego ten sam raport można wykonać dla innej stacji synoptycznej i innego roku.</p>
+</div>
+</div>
+<section id="wprowadzenie" class="level2" data-number="24.1">
+<h2 data-number="24.1" class="anchored" data-anchor-id="wprowadzenie"><span class="header-section-number">24.1</span> Wprowadzenie</h2>
+<p>Raport opisuje warunki meteorologiczne na jednej stacji synoptycznej — w Zakopanem — w 2023 roku: przebieg temperatury powietrza i opadu atmosferycznego w ciągu roku, liczbę dni z deszczem i ze śniegiem oraz położenie wartości ze stacji na tle całej sieci stacji synoptycznych. Dane są pobierane bezpośrednio ze zbioru IMGW-PIB za pomocą pakietu <code>climate</code> i przygotowywane do wizualizacji w kodzie raportu.</p>
+<p>Raport odpowiada na pytania badawcze:</p>
+<ul>
+<li>Jak zmieniała się temperatura powietrza w ciągu 2023 roku — w ujęciu wartości średnich i ekstremalnych? (<a href="#sec-za-temp" class="quarto-xref"><span>Sekcja 24.4.1</span></a>)</li>
+<li>Jak zmieniały się miesięczne sumy opadu? (<a href="#sec-za-opad" class="quarto-xref"><span>Sekcja 24.4.2</span></a>)</li>
+<li>Jak temperatura i opad na stacji kształtowały się na tle 59 stacji synoptycznych? (<a href="#sec-za-siec" class="quarto-xref"><span>Sekcja 24.4.3</span></a>)</li>
+<li>W których miesiącach występowały dni z deszczem i dni ze śniegiem? (<a href="#sec-za-dni" class="quarto-xref"><span>Sekcja 24.4.4</span></a>)</li>
+</ul>
+</section>
+<section id="sec-za-dane" class="level2" data-number="24.2">
+<h2 data-number="24.2" class="anchored" data-anchor-id="sec-za-dane"><span class="header-section-number">24.2</span> Dane</h2>
+<p>Raport wykorzystuje miesięczne wartości charakterystyk meteorologicznych ze stacji synoptycznych w 2023 roku, udostępniane w publicznym zbiorze danych Instytutu Meteorologii i Gospodarki Wodnej – Państwowego Instytutu Badawczego (IMGW-PIB, <a href="https://danepubliczne.imgw.pl" class="uri">https://danepubliczne.imgw.pl</a>). Dane pobiera z tego zbioru pakiet <code>climate</code> (Czernecki, Głogowski i Nowosad, 2020). Jednostką obserwacji jest stacja w danym miesiącu — dla 2023 roku zbiór obejmuje 59 stacji i liczy 707 obserwacji: 58 stacji ma po 12 obserwacji, a stacja Resko-Smólsko — 11 (brak lutego).</p>
+<p>Warunki korzystania z danych określa <a href="https://danepubliczne.imgw.pl/docs/regulamin_udostepniania_danych.pdf">regulamin udostępniania danych IMGW-PIB</a>, który wymaga wskazania źródła danych, a w przypadku ich przetworzenia — także informacji o przetworzeniu: Źródłem pochodzenia danych jest Instytut Meteorologii i Gospodarki Wodnej – Państwowy Instytut Badawczy. Dane Instytutu Meteorologii i Gospodarki Wodnej – Państwowego Instytutu Badawczego zostały przetworzone.</p>
+<section id="sec-za-pobranie" class="level3" data-number="24.2.1">
+<h3 data-number="24.2.1" class="anchored" data-anchor-id="sec-za-pobranie"><span class="header-section-number">24.2.1</span> Pobranie danych</h3>
+<p>Stację i rok określają dwa obiekty na początku kodu. Funkcja <code>meteo_imgw_monthly()</code> pobiera dane wszystkich stacji synoptycznych z wybranego roku: są one potrzebne do porównania z siecią stacji (<a href="#sec-za-siec" class="quarto-xref"><span>Sekcja 24.4.3</span></a>), a wybraną stację wskazuje się w dalszym kroku (<a href="#sec-za-wybrana" class="quarto-xref"><span>Sekcja 24.2.3</span></a>). Pobranie danych wymaga połączenia z internetem.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pakiety: tidyverse (przetwarzanie danych i wykresy), climate (pobieranie danych IMGW-PIB)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(climate)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># wybrana stacja (nazwa zapisana wielkimi literami) i rok</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>wybrana_stacja <span class="ot">&lt;-</span> <span class="st">"ZAKOPANE"</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>wybrany_rok <span class="ot">&lt;-</span> <span class="dv">2023</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># dane miesięczne wszystkich stacji synoptycznych z wybranego roku;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># status = TRUE pozostawia kolumny ze statusem pomiaru</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>meteo_imgw <span class="ot">&lt;-</span> <span class="fu">meteo_imgw_monthly</span>(<span class="at">rank =</span> <span class="st">"synop"</span>, <span class="at">year =</span> wybrany_rok, <span class="at">status =</span> <span class="cn">TRUE</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Tabela <code>meteo_imgw</code> zawiera dla 2023 roku 707 wierszy i 78 kolumn. Nazwy kolumn pochodzą ze zbioru IMGW-PIB, np. <code>POST</code>, <code>MC</code>, <code>TMAX</code>; kolumny statusu pomiaru mają nazwy z przedrostkiem <code>W</code>, np. <code>WTMAX</code>.</p>
+</section>
+<section id="sec-za-przygotowanie" class="level3" data-number="24.2.2">
+<h3 data-number="24.2.2" class="anchored" data-anchor-id="sec-za-przygotowanie"><span class="header-section-number">24.2.2</span> Przygotowanie danych</h3>
+<p>Przygotowanie danych do wizualizacji obejmuje zastąpienie wartości oznaczających brak pomiaru brakiem danych (<code>NA</code>) i wybór kolumn. W raporcie wykorzystano kolumny:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Kolumna</th>
+<th>Znaczenie</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>POST</code></td>
+<td>nazwa stacji</td>
+</tr>
+<tr class="even">
+<td><code>MC</code></td>
+<td>miesiąc (1–12)</td>
+</tr>
+<tr class="odd">
+<td><code>TMAX</code>, <code>TMIN</code></td>
+<td>absolutna maksymalna i absolutna minimalna temperatura powietrza [°C]</td>
+</tr>
+<tr class="even">
+<td><code>TMXS</code>, <code>TMNS</code></td>
+<td>średnia maksymalna i średnia minimalna temperatura powietrza [°C]</td>
+</tr>
+<tr class="odd">
+<td><code>STM</code></td>
+<td>średnia miesięczna temperatura powietrza [°C]</td>
+</tr>
+<tr class="even">
+<td><code>SUMM</code></td>
+<td>miesięczna suma opadu [mm]</td>
+</tr>
+<tr class="odd">
+<td><code>DESD</code>, <code>SNID</code></td>
+<td>liczba dni z opadem deszczu i z opadem śniegu</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Charakterystyki temperatury powietrza.</strong> Zbiór zawiera pięć charakterystyk temperatury, które opisują miesiąc w różny sposób (nazwy według opisu danych IMGW-PIB):</p>
+<ul>
+<li><strong>absolutna maksymalna i absolutna minimalna temperatura</strong> (<code>TMAX</code>, <code>TMIN</code>) — najwyższa i najniższa temperatura zanotowana w ciągu miesiąca. Każda z nich jest jedną wartością skrajną, która wystąpiła w jednym dniu miesiąca;</li>
+<li><strong>średnia maksymalna i średnia minimalna temperatura</strong> (<code>TMXS</code>, <code>TMNS</code>) — średnia z temperatur maksymalnych i średnia z temperatur minimalnych poszczególnych dób miesiąca. Opisują przeciętną najwyższą i przeciętną najniższą temperaturę w ciągu doby w danym miesiącu;</li>
+<li><strong>średnia miesięczna temperatura</strong> (<code>STM</code>) — przeciętna temperatura powietrza w miesiącu.</li>
+</ul>
+<p>Wartości są uporządkowane: absolutna minimalna ≤ średnia minimalna ≤ średnia miesięczna ≤ średnia maksymalna ≤ absolutna maksymalna. Na przykład w kwietniu 2023 roku w Zakopanem najwyższa zanotowana temperatura wyniosła 17,5°C, a średnia z dobowych temperatur maksymalnych — 8,5°C.</p>
+<p><strong>Braki danych.</strong> W zbiorze IMGW-PIB brakujący pomiar ma zazwyczaj wartość 0, a informację o braku zawiera kolumna statusu. Według opisu formatu danych IMGW-PIB status 8 oznacza brak pomiaru, a w kolumnach z liczbą dni status 9 oznacza brak pomiaru zjawisk na stacji. Status 9 w kolumnie sumy opadu oznacza brak zjawiska, dlatego wartość 0 pozostaje w niej wynikiem obserwacji. Bez zamiany na <code>NA</code> pozostałe wartości 0 byłyby traktowane jak wyniki pomiaru, np. temperatura 0°C. W 2023 roku status 8 mają temperatury maksymalne i minimalne w 13 obserwacjach, średnia miesięczna temperatura w 12 obserwacjach i suma opadu w 5 obserwacjach; w tych samych 5 obserwacjach kolumny z liczbą dni mają status 9. Raport zamienia na <code>NA</code> wszystkie wartości z takim statusem, także wartości różne od 0: na stacji Resko-Smólsko w marcu <code>TMAX</code> (13,6°C), <code>TMIN</code> (5,2°C) i <code>SUMM</code> (12,9 mm).</p>
+<p>Na 4 stacjach (Koło, Lębork, Płock, Resko-Smólsko) kolumna <code>SNID</code> zawiera we wszystkich miesiącach 2023 roku wartość 0, a status braku pomiaru występuje co najwyżej w pojedynczych miesiącach. Wartości te również potraktowano jako brak danych: raport zamienia na <code>NA</code> zerową liczbę dni ze śniegiem na stacji, na której wynosi ona 0 we wszystkich miesiącach roku.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wartości oznaczone statusem braku pomiaru zamieniane na NA</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>meteo <span class="ot">&lt;-</span> meteo_imgw <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">POST =</span> <span class="fu">as.factor</span>(POST),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">TMAX =</span> <span class="fu">replace</span>(TMAX, WTMAX <span class="sc">%in%</span> <span class="dv">8</span>, <span class="cn">NA</span>),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">TMXS =</span> <span class="fu">replace</span>(TMXS, WTMXS <span class="sc">%in%</span> <span class="dv">8</span>, <span class="cn">NA</span>),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">TMIN =</span> <span class="fu">replace</span>(TMIN, WTMIN <span class="sc">%in%</span> <span class="dv">8</span>, <span class="cn">NA</span>),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">TMNS =</span> <span class="fu">replace</span>(TMNS, WWTMNS <span class="sc">%in%</span> <span class="dv">8</span>, <span class="cn">NA</span>),</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">STM =</span> <span class="fu">replace</span>(STM, WSTM <span class="sc">%in%</span> <span class="dv">8</span>, <span class="cn">NA</span>),</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">SUMM =</span> <span class="fu">replace</span>(SUMM, WSUMM <span class="sc">%in%</span> <span class="dv">8</span>, <span class="cn">NA</span>),</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">DESD =</span> <span class="fu">replace</span>(DESD, WDESD <span class="sc">%in%</span> <span class="dv">9</span>, <span class="cn">NA</span>),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">SNID =</span> <span class="fu">replace</span>(SNID, WSNID <span class="sc">%in%</span> <span class="dv">9</span>, <span class="cn">NA</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># stacja z zerową liczbą dni ze śniegiem we wszystkich miesiącach: brak danych</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(POST) <span class="sc">|&gt;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SNID =</span> <span class="fu">replace</span>(SNID, <span class="fu">all</span>(SNID <span class="sc">==</span> <span class="dv">0</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="cn">NA</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># kolumny wykorzystywane w raporcie</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(POST, MC, TMAX, TMXS, TMIN, TMNS, STM, SUMM, DESD, SNID)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="sec-za-wybrana" class="level3" data-number="24.2.3">
+<h3 data-number="24.2.3" class="anchored" data-anchor-id="sec-za-wybrana"><span class="header-section-number">24.2.3</span> Wartości miesięczne dla wybranej stacji</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># obserwacje z wybranej stacji: 12 wierszy, po jednym dla każdego miesiąca</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>stacja_dane <span class="ot">&lt;-</span> meteo <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(POST <span class="sc">==</span> wybrana_stacja)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wartości miesięczne wykorzystane w raporcie, sformatowane jako tabela</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>stacja_dane <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(MC, TMAX, TMXS, STM, TMNS, TMIN,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>         SUMM, DESD, SNID) <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Miesiąc"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Temp. maks. absolutna [°C]"</span>, <span class="st">"Temp. maks. średnia [°C]"</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Temp. średnia [°C]"</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Temp. min. średnia [°C]"</span>, <span class="st">"Temp. min. absolutna [°C]"</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Suma opadu [mm]"</span>, <span class="st">"Dni z deszczem"</span>, <span class="st">"Dni ze śniegiem"</span>),</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="dv">1</span>,                                     <span class="co"># jedna cyfra po przecinku</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">format.args =</span> <span class="fu">list</span>(<span class="at">decimal.mark =</span> <span class="st">","</span>)          <span class="co"># przecinek dziesiętny</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="tbl-za-dane" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-za-dane-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;24.1: Wartości miesięczne charakterystyk temperatury powietrza i opadu w Zakopanem, 2023
+</figcaption>
+<div aria-describedby="tbl-za-dane-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 15%">
+<col style="width: 14%">
+<col style="width: 10%">
+<col style="width: 13%">
+<col style="width: 14%">
+<col style="width: 9%">
+<col style="width: 8%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Miesiąc</th>
+<th style="text-align: right;">Temp. maks. absolutna [°C]</th>
+<th style="text-align: right;">Temp. maks. średnia [°C]</th>
+<th style="text-align: right;">Temp. średnia [°C]</th>
+<th style="text-align: right;">Temp. min. średnia [°C]</th>
+<th style="text-align: right;">Temp. min. absolutna [°C]</th>
+<th style="text-align: right;">Suma opadu [mm]</th>
+<th style="text-align: right;">Dni z deszczem</th>
+<th style="text-align: right;">Dni ze śniegiem</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">16,7</td>
+<td style="text-align: right;">2,9</td>
+<td style="text-align: right;">-0,4</td>
+<td style="text-align: right;">-3,3</td>
+<td style="text-align: right;">-9,9</td>
+<td style="text-align: right;">110,2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">9,5</td>
+<td style="text-align: right;">2,4</td>
+<td style="text-align: right;">-2,1</td>
+<td style="text-align: right;">-5,8</td>
+<td style="text-align: right;">-17,7</td>
+<td style="text-align: right;">57,3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">16,3</td>
+<td style="text-align: right;">7,9</td>
+<td style="text-align: right;">2,5</td>
+<td style="text-align: right;">-2,2</td>
+<td style="text-align: right;">-11,8</td>
+<td style="text-align: right;">37,1</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">17,5</td>
+<td style="text-align: right;">8,5</td>
+<td style="text-align: right;">4,1</td>
+<td style="text-align: right;">0,4</td>
+<td style="text-align: right;">-7,5</td>
+<td style="text-align: right;">80,1</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">21,5</td>
+<td style="text-align: right;">15,7</td>
+<td style="text-align: right;">10,0</td>
+<td style="text-align: right;">4,6</td>
+<td style="text-align: right;">-2,6</td>
+<td style="text-align: right;">113,7</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">26,3</td>
+<td style="text-align: right;">19,4</td>
+<td style="text-align: right;">14,2</td>
+<td style="text-align: right;">9,2</td>
+<td style="text-align: right;">2,3</td>
+<td style="text-align: right;">147,9</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">29,0</td>
+<td style="text-align: right;">22,8</td>
+<td style="text-align: right;">16,9</td>
+<td style="text-align: right;">11,7</td>
+<td style="text-align: right;">6,5</td>
+<td style="text-align: right;">172,5</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">29,1</td>
+<td style="text-align: right;">23,3</td>
+<td style="text-align: right;">17,4</td>
+<td style="text-align: right;">12,7</td>
+<td style="text-align: right;">6,6</td>
+<td style="text-align: right;">188,3</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">25,7</td>
+<td style="text-align: right;">21,0</td>
+<td style="text-align: right;">14,9</td>
+<td style="text-align: right;">9,8</td>
+<td style="text-align: right;">6,0</td>
+<td style="text-align: right;">129,7</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">23,0</td>
+<td style="text-align: right;">15,6</td>
+<td style="text-align: right;">9,6</td>
+<td style="text-align: right;">4,7</td>
+<td style="text-align: right;">-3,1</td>
+<td style="text-align: right;">112,4</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">14,5</td>
+<td style="text-align: right;">5,6</td>
+<td style="text-align: right;">2,0</td>
+<td style="text-align: right;">-1,4</td>
+<td style="text-align: right;">-12,3</td>
+<td style="text-align: right;">113,2</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">12,1</td>
+<td style="text-align: right;">3,7</td>
+<td style="text-align: right;">0,1</td>
+<td style="text-align: right;">-3,3</td>
+<td style="text-align: right;">-13,3</td>
+<td style="text-align: right;">34,5</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">14</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Tabela (<a href="#tbl-za-dane" class="quarto-xref">Tabela&nbsp;<span>24.1</span></a>) zawiera 12 obserwacji — po jednej dla każdego miesiąca 2023 roku. Dla Zakopanego wszystkie wykorzystane kolumny są kompletne (brak wartości <code>NA</code>).</p>
+</section>
+</section>
+<section id="sec-za-metody" class="level2" data-number="24.3">
+<h2 data-number="24.3" class="anchored" data-anchor-id="sec-za-metody"><span class="header-section-number">24.3</span> Metody</h2>
+<p>Po przygotowaniu danych (<a href="#sec-za-przygotowanie" class="quarto-xref"><span>Sekcja 24.2.2</span></a>) raport przedstawia wartości miesięczne z jednej stacji, bez dalszego przekształcania, z wyjątkiem sum rocznych podanych w tekście. Dobór wykresów:</p>
+<ul>
+<li><strong>Temperatura powietrza</strong> — wykres wstęgowy: dwie wstęgi i linia. Jaśniejsza wstęga obejmuje zakres od absolutnej minimalnej do absolutnej maksymalnej temperatury (<code>TMIN</code>–<code>TMAX</code>), ciemniejsza — od średniej minimalnej do średniej maksymalnej temperatury (<code>TMNS</code>–<code>TMXS</code>), a linia przedstawia średnią miesięczną temperaturę (<code>STM</code>). Wykres pokazuje jednocześnie przebieg roczny i zakres wartości w każdym miesiącu.</li>
+<li><strong>Suma opadu</strong> — wykres słupkowy: wysokość słupka odpowiada miesięcznej sumie opadu.</li>
+<li><strong>Porównanie z siecią stacji</strong> — wykresy pudełkowe według miesięcy dla 59 stacji z dodanym punktem przedstawiającym wartość z wybranej stacji. Liczba stacji z danymi wynosi w poszczególnych miesiącach od 56 do 59 dla średniej miesięcznej temperatury powietrza (<code>STM</code>) i od 57 do 59 dla miesięcznej sumy opadu (<code>SUMM</code>).</li>
+<li><strong>Dni z deszczem i ze śniegiem</strong> — wykres słupkowy skumulowany. Kategorie są rozłączne: dzień jest liczony jako dzień z deszczem albo jako dzień ze śniegiem. Wysokość słupka jest więc liczbą dni z opadem w miesiącu, a podział słupka pokazuje, ile z nich stanowiły dni z deszczem i dni ze śniegiem. Wybór tej formy uzasadnia <a href="#sec-za-wybor" class="quarto-xref"><span>Sekcja 24.7</span></a>.</li>
+</ul>
+</section>
+<section id="wyniki" class="level2" data-number="24.4">
+<h2 data-number="24.4" class="anchored" data-anchor-id="wyniki"><span class="header-section-number">24.4</span> Wyniki</h2>
+<section id="sec-za-temp" class="level3" data-number="24.4.1">
+<h3 data-number="24.4.1" class="anchored" data-anchor-id="sec-za-temp"><span class="header-section-number">24.4.1</span> Przebieg temperatury powietrza w ciągu roku</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wstęgi i linia: kolejne warstwy rysowane jedna na drugiej</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(stacja_dane, <span class="fu">aes</span>(<span class="at">x =</span> MC)) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> TMIN, <span class="at">ymax =</span> TMAX),   <span class="co"># zakres ekstremów</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill =</span> <span class="st">"grey80"</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> TMNS, <span class="at">ymax =</span> TMXS),     <span class="co"># zakres średnich</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill =</span> <span class="st">"salmon"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> STM), <span class="at">colour =</span> <span class="st">"darkred"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span>   <span class="co"># średnia</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>) <span class="sc">+</span>               <span class="co"># podziałka osi x co 1 miesiąc</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Miesiąc"</span>, <span class="at">y =</span> <span class="st">"Temperatura powietrza [°C]"</span>) <span class="sc">+</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-za-temp" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-za-temp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="24_meteo_zakopane_files/figure-html/fig-za-temp-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-za-temp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;24.1: Temperatura powietrza w Zakopanem w 2023 roku. Jaśniejsza wstęga: od absolutnej minimalnej do absolutnej maksymalnej temperatury (<code>TMIN</code>–<code>TMAX</code>); ciemniejsza wstęga: od średniej minimalnej do średniej maksymalnej temperatury (<code>TMNS</code>–<code>TMXS</code>); linia: średnia miesięczna temperatura (<code>STM</code>)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Średnia miesięczna temperatura powietrza (<code>STM</code>) w Zakopanem (<a href="#fig-za-temp" class="quarto-xref">Rycina&nbsp;<span>24.1</span></a>) wynosiła od −2,1°C w lutym do 17,4°C w sierpniu; wartości ujemne odnotowano w styczniu (−0,4°C) i w lutym, a w grudniu wynosiła ona 0,1°C. Absolutna maksymalna temperatura (<code>TMAX</code>) była najwyższa w sierpniu (29,1°C), a absolutna minimalna temperatura (<code>TMIN</code>) — najniższa w lutym (−17,7°C). Różnica między średnią maksymalną a średnią minimalną temperaturą (<code>TMXS</code> − <code>TMNS</code>) była największa we wrześniu (11,2°C), a najmniejsza w styczniu (6,2°C). Różnica między absolutną maksymalną a absolutną minimalną temperaturą (<code>TMAX</code> − <code>TMIN</code>) była najmniejsza we wrześniu (19,7°C), a w pozostałych miesiącach wynosiła od 22,5 do 28,1°C.</p>
+</section>
+<section id="sec-za-opad" class="level3" data-number="24.4.2">
+<h3 data-number="24.4.2" class="anchored" data-anchor-id="sec-za-opad"><span class="header-section-number">24.4.2</span> Zmienność miesięcznych sum opadu w ciągu roku</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wykres słupkowy: wysokość słupka = suma opadu w miesiącu</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(stacja_dane, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(MC), <span class="at">y =</span> SUMM)) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Miesiąc"</span>, <span class="at">y =</span> <span class="st">"Suma opadu [mm]"</span>) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-za-opad" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-za-opad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="24_meteo_zakopane_files/figure-html/fig-za-opad-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-za-opad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;24.2: Miesięczna suma opadu w Zakopanem w 2023 roku
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Roczna suma opadu w Zakopanem wyniosła 1296,9 mm. Miesięczne sumy (<a href="#fig-za-opad" class="quarto-xref">Rycina&nbsp;<span>24.2</span></a>) były najwyższe w sierpniu (188,3 mm), lipcu (172,5 mm) i czerwcu (147,9 mm), a najniższe w grudniu (34,5 mm), marcu (37,1 mm) i lutym (57,3 mm). Od maja do listopada miesięczna suma opadu przekraczała 110 mm; podobną sumę odnotowano w styczniu (110,2 mm).</p>
+</section>
+<section id="sec-za-siec" class="level3" data-number="24.4.3">
+<h3 data-number="24.4.3" class="anchored" data-anchor-id="sec-za-siec"><span class="header-section-number">24.4.3</span> Temperatura i opad na tle sieci stacji synoptycznych</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pakiet do łączenia kilku wykresów w jedną rycinę</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># wykres pudełkowy dla wszystkich stacji i punkty z wybranej stacji</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>wykres_temp <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(meteo, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(MC), <span class="at">y =</span> STM)) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> stacja_dane, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span>   <span class="co"># warstwa z innej tabeli</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Miesiąc"</span>, <span class="at">y =</span> <span class="st">"Średnia temperatura powietrza [°C]"</span>) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>wykres_opad <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(meteo, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(MC), <span class="at">y =</span> SUMM)) <span class="sc">+</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> stacja_dane, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Miesiąc"</span>, <span class="at">y =</span> <span class="st">"Suma opadu [mm]"</span>) <span class="sc">+</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co"># dwa wykresy obok siebie, oznaczone literami A i B</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>wykres_temp <span class="sc">+</span> wykres_opad <span class="sc">+</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">tag_levels =</span> <span class="st">"A"</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-za-siec" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-za-siec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="24_meteo_zakopane_files/figure-html/fig-za-siec-1.png" class="img-fluid figure-img" width="1152">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-za-siec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;24.3: Średnia miesięczna temperatura powietrza (A) i miesięczna suma opadu (B) na 59 stacjach (wykresy pudełkowe) i w Zakopanem (czerwone punkty), 2023
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Średnia miesięczna temperatura w Zakopanem (<a href="#fig-za-siec" class="quarto-xref">Rycina&nbsp;<span>24.3</span></a> A) była we wszystkich miesiącach niższa od pierwszego kwartyla wartości z 59 stacji. W 10 miesiącach Zakopane było czwartą najzimniejszą stacją — po Kasprowym Wierchu, Śnieżce i Hali Gąsienicowej; w listopadzie — piątą (chłodniejsze były także Suwałki), a w październiku — dwunastą. W styczniu, lutym, kwietniu, maju, czerwcu i wrześniu wartość z Zakopanego jest wartością odstającą (punkt poniżej wąsa).</p>
+<p>Miesięczna suma opadu w Zakopanem (<a href="#fig-za-siec" class="quarto-xref">Rycina&nbsp;<span>24.3</span></a> B) była wyższa od trzeciego kwartyla wartości z 59 stacji w 10 miesiącach; w marcu mieściła się w zakresie pudełka, a w grudniu była niższa od pierwszego kwartyla. W styczniu, maju, czerwcu, lipcu i wrześniu suma opadu z Zakopanego jest wartością odstającą. Roczna suma opadu (1296,9 mm) była trzecią najwyższą wśród 55 stacji z kompletnymi danymi o opadzie — po Hali Gąsienicowej i Kasprowym Wierchu — przy medianie dla tych stacji 674,8 mm.</p>
+</section>
+<section id="sec-za-dni" class="level3" data-number="24.4.4">
+<h3 data-number="24.4.4" class="anchored" data-anchor-id="sec-za-dni"><span class="header-section-number">24.4.4</span> Dni z opadem deszczu i śniegu w ciągu roku</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># zamiana tabeli z postaci szerokiej na długą: jedna kolumna z rodzajem opadu</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>stacja_dni <span class="ot">&lt;-</span> stacja_dane <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(DESD, SNID),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"rodzaj"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"dni"</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wykres słupkowy skumulowany: słupki rodzajów opadu ułożone jeden na drugim</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(stacja_dni, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(MC), <span class="at">y =</span> dni, <span class="at">fill =</span> rodzaj)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"stack"</span>) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="at">DESD =</span> <span class="st">"navy"</span>, <span class="at">SNID =</span> <span class="st">"lightskyblue"</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"deszcz"</span>, <span class="st">"śnieg"</span>)) <span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Miesiąc"</span>, <span class="at">y =</span> <span class="st">"Liczba dni"</span>, <span class="at">fill =</span> <span class="st">"Rodzaj opadu"</span>) <span class="sc">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-za-dni" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-za-dni-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="24_meteo_zakopane_files/figure-html/fig-za-dni-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-za-dni-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;24.4: Liczba dni z deszczem i ze śniegiem w Zakopanem w 2023 roku
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>W 2023 roku w Zakopanem odnotowano 194 dni z opadem: 124 dni z deszczem i 70 dni ze śniegiem (<a href="#fig-za-dni" class="quarto-xref">Rycina&nbsp;<span>24.4</span></a>). Najwięcej dni z opadem było w listopadzie (23) i kwietniu (20), najmniej — we wrześniu (11). Dni ze śniegiem występowały w 7 miesiącach: od stycznia do kwietnia i od października do grudnia; najwięcej w styczniu (16) i grudniu (14). W styczniu, lutym, listopadzie i grudniu dni ze śniegiem było więcej niż dni z deszczem. Od maja do września odnotowano wyłącznie dni z deszczem — najwięcej w lipcu i sierpniu (po 17).</p>
+</section>
+</section>
+<section id="sec-za-wnioski" class="level2" data-number="24.5">
+<h2 data-number="24.5" class="anchored" data-anchor-id="sec-za-wnioski"><span class="header-section-number">24.5</span> Wnioski</h2>
+<ul>
+<li><strong>Temperatura powietrza</strong> (<a href="#sec-za-temp" class="quarto-xref"><span>Sekcja 24.4.1</span></a>). Średnia miesięczna temperatura wynosiła od −2,1°C (luty) do 17,4°C (sierpień). Absolutna minimalna temperatura była najniższa w lutym (−17,7°C), a absolutna maksymalna — najwyższa w sierpniu (29,1°C). Różnica między średnią maksymalną a średnią minimalną temperaturą była największa we wrześniu (11,2°C).</li>
+<li><strong>Opady atmosferyczne</strong> (<a href="#sec-za-opad" class="quarto-xref"><span>Sekcja 24.4.2</span></a>). Roczna suma opadu wyniosła 1296,9 mm; najwyższa suma miesięczna przypadła na sierpień (188,3 mm), najniższa — na grudzień (34,5 mm).</li>
+<li><strong>Na tle sieci stacji</strong> (<a href="#sec-za-siec" class="quarto-xref"><span>Sekcja 24.4.3</span></a>). Średnia miesięczna temperatura w Zakopanem była we wszystkich miesiącach niższa od pierwszego kwartyla wartości z 59 stacji; w 10 miesiącach chłodniejsze były wyłącznie stacje górskie: Kasprowy Wierch, Śnieżka i Hala Gąsienicowa. Zakopane należało też do stacji o najwyższych sumach opadu (trzecia roczna suma wśród 55 stacji z kompletnymi danymi o opadzie).</li>
+<li><strong>Dni z opadem</strong> (<a href="#sec-za-dni" class="quarto-xref"><span>Sekcja 24.4.4</span></a>). Opad wystąpił w 194 dniach: 124 dni z deszczem i 70 dni ze śniegiem. Dni ze śniegiem występowały w 7 miesiącach i przeważały nad dniami z deszczem w styczniu, lutym, listopadzie i grudniu; od maja do września występowały wyłącznie dni z deszczem.</li>
+</ul>
+</section>
+<section id="sec-za-literatura" class="level2" data-number="24.6">
+<h2 data-number="24.6" class="anchored" data-anchor-id="sec-za-literatura"><span class="header-section-number">24.6</span> Literatura</h2>
+<p>Czernecki B., Głogowski A., Nowosad J. (2020). Climate: An R Package to Access Free In-Situ Meteorological and Hydrological Datasets For Environmental Assessment. <em>Sustainability</em>, 12, 394. <a href="https://doi.org/10.3390/su12010394" class="uri">https://doi.org/10.3390/su12010394</a></p>
+</section>
+<section id="sec-za-wybor" class="level2" data-number="24.7">
+<h2 data-number="24.7" class="anchored" data-anchor-id="sec-za-wybor"><span class="header-section-number">24.7</span> Wybór sposobu prezentacji wyników</h2>
+<p>Liczbę dni z deszczem i ze śniegiem w kolejnych miesiącach można przedstawić w kilku formach. Poniżej te same dane przedstawiono na wykresie słupkowym zgrupowanym (<a href="#fig-za-dni-zgrupowany" class="quarto-xref">Rycina&nbsp;<span>24.5</span></a>) i na wykresie kafelkowym (<a href="#fig-za-dni-kafelkowy" class="quarto-xref">Rycina&nbsp;<span>24.6</span></a>); wykres skumulowany zawiera <a href="#fig-za-dni" class="quarto-xref">Rycina&nbsp;<span>24.4</span></a>.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wykres słupkowy zgrupowany: słupki rodzajów opadu ustawione obok siebie</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(stacja_dni, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(MC), <span class="at">y =</span> dni, <span class="at">fill =</span> rodzaj)) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="at">DESD =</span> <span class="st">"navy"</span>, <span class="at">SNID =</span> <span class="st">"lightskyblue"</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"deszcz"</span>, <span class="st">"śnieg"</span>)) <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Miesiąc"</span>, <span class="at">y =</span> <span class="st">"Liczba dni"</span>, <span class="at">fill =</span> <span class="st">"Rodzaj opadu"</span>) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-za-dni-zgrupowany" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-za-dni-zgrupowany-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="24_meteo_zakopane_files/figure-html/fig-za-dni-zgrupowany-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-za-dni-zgrupowany-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;24.5: Liczba dni z deszczem i ze śniegiem w Zakopanem w 2023 roku — wykres słupkowy zgrupowany
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Kod</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wykres kafelkowy: miesiące na osi x, rodzaj opadu na osi y, kolor = liczba dni</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(stacja_dni, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(MC), <span class="at">y =</span> rodzaj,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">fill =</span> <span class="fu">na_if</span>(dni, <span class="dv">0</span>))) <span class="sc">+</span>   <span class="co"># 0 dni jako brak wartości koloru</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">label =</span> dni), <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span>     <span class="co"># liczba dni w środku kafelka</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_fermenter</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>), <span class="at">palette =</span> <span class="st">"Blues"</span>, <span class="at">direction =</span> <span class="dv">1</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">na.value =</span> <span class="st">"grey85"</span>) <span class="sc">+</span>      <span class="co"># kolor kafelków z 0 dni</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="at">DESD =</span> <span class="st">"deszcz"</span>, <span class="at">SNID =</span> <span class="st">"śnieg"</span>)) <span class="sc">+</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Miesiąc"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">fill =</span> <span class="st">"Liczba dni"</span>) <span class="sc">+</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-za-dni-kafelkowy" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-za-dni-kafelkowy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="24_meteo_zakopane_files/figure-html/fig-za-dni-kafelkowy-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-za-dni-kafelkowy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;24.6: Liczba dni z deszczem i ze śniegiem w Zakopanem w 2023 roku — wykres kafelkowy; szary kafelek — brak dni z danym rodzajem opadu (0)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Porównanie trzech form:</p>
+<ul>
+<li><strong>Wykres słupkowy skumulowany</strong> (<a href="#fig-za-dni" class="quarto-xref">Rycina&nbsp;<span>24.4</span></a>) — wysokość słupka przedstawia liczbę dni z opadem w miesiącu, a jego podział — udział dni z deszczem i ze śniegiem. Forma ta jest poprawna, ponieważ kategorie są rozłączne i ich suma ma znaczenie. Liczbę dni ze śniegiem — dolną część słupka — odczytuje się bezpośrednio z osi; liczbę dni z deszczem — jako różnicę między wysokością słupka a górną granicą jego dolnej części.</li>
+<li><strong>Wykres słupkowy zgrupowany</strong> (<a href="#fig-za-dni-zgrupowany" class="quarto-xref">Rycina&nbsp;<span>24.5</span></a>) — każdy rodzaj opadu ma słupek rozpoczynający się od zera, dlatego obie liczby odczytuje się bezpośrednio z osi i łatwo porównuje się je w obrębie miesiąca. Łącznej liczby dni z opadem wykres nie przedstawia.</li>
+<li><strong>Wykres kafelkowy</strong> (<a href="#fig-za-dni-kafelkowy" class="quarto-xref">Rycina&nbsp;<span>24.6</span></a>) — liczby dni podane są w kafelkach, a kolor pokazuje klasę wartości. Wykres zajmuje mało miejsca, ale różnice między miesiącami wymagają porównania kolorów albo odczytania liczb; łącznej liczby dni z opadem wykres nie przedstawia.</li>
+</ul>
+<p>W raporcie wykorzystano wykres słupkowy skumulowany, ponieważ w jednej formie przedstawia liczbę dni z opadem i jej podział na rodzaje opadu. Gdy celem jest porównanie liczby dni z deszczem i ze śniegiem w poszczególnych miesiącach, właściwszy jest wykres zgrupowany.</p>
+</section>
+<section id="sec-za-obliczenia" class="level2" data-number="24.8">
+<h2 data-number="24.8" class="anchored" data-anchor-id="sec-za-obliczenia"><span class="header-section-number">24.8</span> Obliczenia w R</h2>
+<p>Sekcja wyjaśnia kod w kolejności jego użycia w raporcie. Elementy omówione we wcześniejszych rozdziałach są opisane krótko, z odesłaniem.</p>
+<section id="dane" class="level3" data-number="24.8.1">
+<h3 data-number="24.8.1" class="anchored" data-anchor-id="dane"><span class="header-section-number">24.8.1</span> Dane</h3>
+<ul>
+<li>Nazwy kolumn pochodzą ze zbioru IMGW-PIB. Rozdział „Warunki meteorologiczne w Polsce w 2020 roku” korzysta z pliku <code>meteo2020.csv</code>, w którym te same charakterystyki mają nazwy opisowe, np. <code>temp_sr</code> zamiast <code>STM</code>.</li>
+<li><code>wybrana_stacja &lt;- "ZAKOPANE"</code> i <code>wybrany_rok &lt;- 2023</code> zapisują stację i rok w obiektach. Nazwa stacji musi mieć postać taką jak w kolumnie <code>POST</code>, w tym wielkie litery. Zmiana tych wartości wystarcza, aby wykonać raport dla innej stacji lub innego roku — dalszy kod odwołuje się do obiektów, a nie do nazwy stacji i roku.</li>
+<li><strong>Pakiet <code>climate</code></strong> pobiera dane meteorologiczne i hydrologiczne, m.in. ze zbioru IMGW-PIB. <strong><code>meteo_imgw_monthly()</code></strong> pobiera dane miesięczne: <code>rank = "synop"</code> wskazuje stacje synoptyczne (pozostałe wartości to <code>"climate"</code> i <code>"precip"</code>), <code>year</code> — rok, a <code>status = TRUE</code> pozostawia kolumny statusu pomiaru, które domyślnie są usuwane. Argument <code>station</code> pozwala ograniczyć pobrane dane do wskazanych stacji; w raporcie nie został użyty, ponieważ tabela <code>meteo</code> zawiera dane wszystkich stacji potrzebne do wykresów pudełkowych w <a href="#sec-za-siec" class="quarto-xref"><span>Sekcja 24.4.3</span></a>. Podczas pobierania konsola wyświetla adresy plików IMGW-PIB; opcja bloku <code>output: false</code> pomija je w dokumencie.</li>
+<li>Gdy dane nie mogą zostać pobrane (brak połączenia z internetem, brak danych dla podanego roku), funkcja wyświetla komunikat <code>Problems with downloading data</code> i zwraca wartość <code>NULL</code>, a kolejny blok kodu kończy się błędem <code>no applicable method for 'mutate'</code>. Należy wówczas sprawdzić połączenie i wartość <code>wybrany_rok</code>.</li>
+<li><code>mutate()</code> zmienia istniejące kolumny (<a href="03_praca_z_danymi.html#sec-pd-mutate" class="quarto-xref"><span>Sekcja 3.8</span></a>): zapis <code>TMAX = replace(TMAX, …)</code> zastępuje kolumnę <code>TMAX</code> wynikiem funkcji. <code>as.factor(POST)</code> zamienia nazwy stacji na zmienną typu factor.</li>
+<li><strong><code>replace(wektor, warunek, NA)</code></strong> zwraca kopię wektora, w której wartości spełniające warunek zastąpiono wartością <code>NA</code>; pozostałe wartości się nie zmieniają. Na przykład <code>replace(TMAX, WTMAX %in% 8, NA)</code> wstawia <code>NA</code> w wierszach, w których status <code>TMAX</code> wynosi 8. Kolumna statusu jest pusta (<code>NA</code>), gdy pomiar nie ma oznaczonego statusu, dlatego warunek zapisano z <code>%in%</code>: dla pustego statusu daje on <code>FALSE</code>, a porównanie <code>==</code> dałoby <code>NA</code>.</li>
+<li><code>group_by(POST)</code> powoduje, że warunek <code>all(SNID == 0, na.rm = TRUE)</code> jest sprawdzany osobno dla każdej stacji. <strong><code>all()</code></strong> daje <code>TRUE</code>, gdy warunek jest spełniony we wszystkich wierszach grupy, czyli na stacji z zerową liczbą dni ze śniegiem przez cały rok; <code>replace()</code> wstawia wtedy <code>NA</code> w całej kolumnie tej stacji. <code>na.rm = TRUE</code> pomija wcześniej wstawione <code>NA</code>. <code>ungroup()</code> usuwa podział na grupy (<a href="21_dlugosc_zycia_2007.html#sec-2007-kontynenty" class="quarto-xref"><span>Sekcja 21.4</span></a>).</li>
+<li><code>select()</code> pozostawia w tabeli <code>meteo</code> kolumny wykorzystywane w raporcie.</li>
+<li><code>filter(POST == wybrana_stacja)</code> pozostawia wiersze wybranej stacji (zastosowanie <code>filter()</code> z <code>==</code> — rozdział „Oczekiwana długość życia na świecie w 2007 roku”, przygotowanie danych). Wynik zapisano w obiekcie <code>stacja_dane</code>.</li>
+<li><code>select()</code> wybiera kolumny do wyświetlenia w podanej kolejności.</li>
+<li><strong><code>knitr::kable()</code></strong> zamienia tabelę danych na tabelę w dokumencie (zamiast wydruku w konsoli). Zapis <code>knitr::</code> wskazuje pakiet, z którego pochodzi funkcja, i wywołuje ją bez wczytywania pakietu poleceniem <code>library()</code> (<a href="06_pakiety.html#sec-pak-instalacja" class="quarto-xref"><span>Sekcja 6.1</span></a>). <code>col.names</code> podaje nagłówki kolumn w kolejności kolumn, <code>digits = 1</code> zaokrągla liczby do jednej cyfry po przecinku, a <code>format.args = list(decimal.mark = ",")</code> ustawia przecinek jako znak dziesiętny.</li>
+<li>Opcje bloku <code>#| label: tbl-…</code> i <code>#| tbl-cap</code> nadają tabeli numer i tytuł; w tekście odwołuje się do niej przez <code>@tbl-…</code> — analogicznie do rycin (<code>fig-…</code>).</li>
+<li>Ukrywanie kodu ustawia nagłówek pliku: <code>code-fold: true</code> zwija kod każdego bloku, a <code>code-summary: "Kod"</code> ustala napis na przycisku, który go rozwija.</li>
+</ul>
+</section>
+<section id="przebieg-temperatury-powietrza" class="level3" data-number="24.8.2">
+<h3 data-number="24.8.2" class="anchored" data-anchor-id="przebieg-temperatury-powietrza"><span class="header-section-number">24.8.2</span> Przebieg temperatury powietrza</h3>
+<ul>
+<li><strong><code>geom_ribbon()</code></strong> rysuje wstęgę: dla każdej wartości <code>x</code> obszar między wartością dolną <code>ymin</code> a górną <code>ymax</code>. Pierwsza wstęga ma granice <code>TMIN</code> i <code>TMAX</code>, druga — <code>TMNS</code> i <code>TMXS</code>.</li>
+<li><strong><code>geom_line()</code></strong> łączy linią kolejne wartości <code>y</code> (tu <code>STM</code>) w kolejności wartości <code>x</code>.</li>
+<li>Warstwy są rysowane w kolejności zapisu w kodzie: każda kolejna przykrywa poprzednią. Dlatego szersza wstęga ekstremów jest pierwsza, węższa wstęga średnich — druga, a linia — ostatnia. Przy odwrotnej kolejności szersza wstęga zasłoniłaby węższą.</li>
+<li>W <code>aes()</code> wewnątrz <code>ggplot()</code> podano tylko <code>x = MC</code> — wspólne dla wszystkich warstw. Wartości na osi y każda warstwa otrzymuje w swoim <code>aes()</code>.</li>
+<li><code>fill</code> i <code>colour</code> poza <code>aes()</code> nadają stały kolor (rozdział „Oczekiwana długość życia na świecie w 2007 roku”, mapa); <code>alpha = 0.7</code> ustala przezroczystość wstęgi (0 — przezroczysta, 1 — nieprzezroczysta); <code>linewidth</code> — grubość linii.</li>
+<li>Wstęga i linia łączą kolejne miesiące, dlatego <code>MC</code> pozostaje zmienną liczbową. <strong><code>scale_x_continuous(breaks = 1:12)</code></strong> ustawia podziałkę osi x w miesiącach 1–12; bez niej <code>ggplot()</code> oznacza oś wartościami 2,5, 5, 7,5, 10. Zapis <code>1:12</code> tworzy ciąg liczb całkowitych od 1 do 12.</li>
+</ul>
+</section>
+<section id="suma-opadu" class="level3" data-number="24.8.3">
+<h3 data-number="24.8.3" class="anchored" data-anchor-id="suma-opadu"><span class="header-section-number">24.8.3</span> Suma opadu</h3>
+<ul>
+<li><strong><code>geom_col()</code></strong> rysuje słupki, których wysokość jest wartością zmiennej <code>y</code> (tu <code>SUMM</code>). Wykres słupkowy przedstawia wartości z tabeli bez dodatkowych obliczeń.</li>
+<li><code>factor(MC)</code> traktuje miesiąc jako kategorię, jak w wykresach pudełkowych (<a href="22_meteo_2020.html#sec-meteo-temp" class="quarto-xref"><span>Sekcja 22.4</span></a>).</li>
+</ul>
+</section>
+<section id="porównanie-z-siecią-stacji" class="level3" data-number="24.8.4">
+<h3 data-number="24.8.4" class="anchored" data-anchor-id="porównanie-z-siecią-stacji"><span class="header-section-number">24.8.4</span> Porównanie z siecią stacji</h3>
+<ul>
+<li>Wykres pudełkowy według miesięcy powtarza kod z <a href="22_meteo_2020.html#sec-meteo-temp" class="quarto-xref"><span>Sekcja 22.4</span></a> i <a href="22_meteo_2020.html#sec-meteo-opad" class="quarto-xref"><span>Sekcja 22.5</span></a>. Wartości odstające mają kolor domyślny (czarny), aby odróżniały się od punktów wybranej stacji.</li>
+<li><strong><code>geom_point(data = stacja_dane)</code></strong> dodaje warstwę z innej tabeli niż podana w <code>ggplot()</code>. Warstwa korzysta z tego samego mapowania (<code>x = factor(MC)</code>, <code>y = STM</code>), więc tabela <code>stacja_dane</code> musi zawierać kolumny o tych nazwach. Punkty wybranej stacji są rysowane na wykresach pudełkowych wszystkich stacji.</li>
+<li>Każdy wykres zapisano w obiekcie (<code>wykres_temp</code>, <code>wykres_opad</code>) zamiast wyświetlać go od razu. Obiekt zawiera kompletny wykres, który można wyświetlić albo połączyć z innym.</li>
+<li><strong>Pakiet <code>patchwork</code></strong> łączy wykresy <code>ggplot2</code> w jedną rycinę. Znak <code>+</code> między obiektami wykresów ustawia je obok siebie (znak <code>/</code> — jeden pod drugim). <strong><code>plot_annotation(tag_levels = "A")</code></strong> oznacza kolejne wykresy literami A, B, …; w tekście raportu można wtedy odwołać się do części ryciny.</li>
+<li><code>fig-width: 12</code> i <code>fig-height: 5</code> w opcjach bloku ustalają wymiary ryciny (w calach), tak aby dwa wykresy obok siebie miały czytelną szerokość.</li>
+</ul>
+</section>
+<section id="dni-z-deszczem-i-ze-śniegiem" class="level3" data-number="24.8.5">
+<h3 data-number="24.8.5" class="anchored" data-anchor-id="dni-z-deszczem-i-ze-śniegiem"><span class="header-section-number">24.8.5</span> Dni z deszczem i ze śniegiem</h3>
+<ul>
+<li><code>pivot_longer()</code> zamienia tabelę z postaci szerokiej na długą (<a href="22_meteo_2020.html#sec-meteo-dni" class="quarto-xref"><span>Sekcja 22.5.3</span></a>): każdy miesiąc ma dwa wiersze, kolumna <code>rodzaj</code> zawiera nazwę kolumny źródłowej (<code>DESD</code> albo <code>SNID</code>), a kolumna <code>dni</code> — liczbę dni.</li>
+<li><code>fill = rodzaj</code> w <code>aes()</code> nadaje słupkom kolor według rodzaju opadu, a <code>scale_fill_manual()</code> przypisuje kolory i podpisy legendy (<a href="22_meteo_2020.html#sec-meteo-dni" class="quarto-xref"><span>Sekcja 22.5.3</span></a>).</li>
+<li><strong>Argument <code>position</code></strong> w <code>geom_col()</code> określa położenie słupków o tej samej wartości <code>x</code>: <code>"stack"</code> — jeden na drugim (wykres skumulowany; wartość domyślna), <code>"dodge"</code> — obok siebie (wykres zgrupowany).</li>
+</ul>
+</section>
+<section id="wybór-sposobu-prezentacji-wyników" class="level3" data-number="24.8.6">
+<h3 data-number="24.8.6" class="anchored" data-anchor-id="wybór-sposobu-prezentacji-wyników"><span class="header-section-number">24.8.6</span> Wybór sposobu prezentacji wyników</h3>
+<ul>
+<li>Wykres kafelkowy powtarza kod z <a href="22_meteo_2020.html#sec-meteo-temp" class="quarto-xref"><span>Sekcja 22.4</span></a>: <code>geom_tile()</code> rysuje kafelek dla każdej pary miesiąc–rodzaj opadu, a <code>scale_fill_fermenter()</code> przypisuje kolor klasie wartości (granice klas: 5, 10, 15 i 20 dni; paleta sekwencyjna <code>"Blues"</code>).</li>
+<li><strong><code>na_if(dni, 0)</code></strong> (pakiet <code>dplyr</code>) zamienia w mapowaniu koloru wartość 0 na <code>NA</code>. Kafelki z zerową liczbą dni otrzymują wtedy kolor <code>na.value = "grey85"</code> — szary, spoza palety — i odróżniają się od kafelków z małą liczbą dni. Dane w tabeli <code>stacja_dni</code> się nie zmieniają, a etykiety (<code>label = dni</code>) nadal pokazują 0.</li>
+<li><strong><code>geom_label(aes(label = dni))</code></strong> umieszcza w położeniu każdego kafelka etykietę z tekstem — wartością zmiennej podanej w <code>label</code>. <code>fill = "white"</code> nadaje etykiecie białe tło, dzięki czemu liczba jest czytelna zarówno na jasnych, jak i na ciemnych kafelkach.</li>
+<li><strong><code>scale_y_discrete(labels = …)</code></strong> zmienia podpisy kategorii na osi y: nazwy kolumn <code>DESD</code> i <code>SNID</code> zastępuje słowami „deszcz” i „śnieg”.</li>
+<li><code>fig-height: 3</code> w opcjach bloku zmniejsza wysokość ryciny, ponieważ wykres ma tylko dwa wiersze kafelków.</li>
+</ul>
+</section>
+</section>
+<section id="zadania-do-samodzielnego-wykonania" class="level2" data-number="24.9">
+<h2 data-number="24.9" class="anchored" data-anchor-id="zadania-do-samodzielnego-wykonania"><span class="header-section-number">24.9</span> Zadania do samodzielnego wykonania</h2>
+<p><strong>Zadanie 1. Raport dla innej stacji lub innego roku.</strong> Otwórz plik <code>kod/24_meteo_zakopane.qmd</code>, zmień wartość obiektu <code>wybrana_stacja</code> na nazwę innej stacji (np. <code>"HEL"</code>, <code>"ŚNIEŻKA"</code>, <code>"WARSZAWA-OKĘCIE"</code>) i wyrenderuj dokument przyciskiem <strong>Render</strong> (<a href="07_quarto.html#sec-q-render" class="quarto-xref"><span>Sekcja 7.6</span></a>). Ta jedna zmiana tworzy od nowa wszystkie tabele i ryciny dla wybranej stacji. Porównaj przebieg temperatury, sumy opadu i liczbę dni ze śniegiem z wynikami dla Zakopanego. Podpisy rycin (<code>fig-cap</code>) i tekst opisujący wyniki są zapisane w pliku na stałe, dlatego w nowym raporcie należy je zmienić samodzielnie. Nazwy wszystkich stacji wyświetla <code>levels(meteo$POST)</code>. Następnie zmień wartość obiektu <code>wybrany_rok</code> na inny rok, np. <code>2022</code>, i porównaj wyniki z 2023 rokiem. Liczba stacji w zbiorze zależy od roku, a dane z najnowszych lat mogą być niepełne albo jeszcze niedostępne.</p>
+
+
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+WyJkYW5lL3diX2RsdWdvc2NfenljaWEuY3N2IiwiZGFuZS9sYXN5X2JsZC5jc3YiLCJkYW5lL2dhcG1pbmRlcl9yZWdpb25zLmNzdiIsImRhbmUvbWV0ZW8yMDIwLmNzdiIsImRhbmUvd29qZXdvZHp0d2EuZ3BrZyIsImRhbmUvQVBJX1NQLkRZTi5MRTAwLklOX0RTMl9lbl9leGNlbF92Ml8xMjkyLnhscyIsImRhbmUvd2JfZGx1Z29zY196eWNpYS5ncGtnIiwiZGFuZS9ndXMvd2FydG9zY19kb2RhbmFfd29qLmNzdiIsImRhbmUvZ3VzL3dza2F6bmlraV9kZW1vZ3JhZmljem5lX3Bvd2lhdHkuY3N2IiwiZGFuZS9ndXMvcGlyYW1pZGFfd2lla3VfcG9sc2thLmNzdiIsImRhbmUvZ3VzL3J1Y2hfbmF0dXJhbG55X3BvbHNrYS5jc3YiLCJkYW5lL2d1cy9wcmFjdWphY3lfZ3J1cHlfc2VrY2ppLmNzdiIsImRhbmUvZ3VzL2x1ZG5vc2NfZWtvbm9taWN6bmVfZ3J1cHlfd29qLmNzdiIsImRhbmUvZ3VzL3dza2F6bmlraV9kZW1vZ3JhZmljem5lX3BvZHJlZ2lvbnkuY3N2IiwiZGFuZS9ndXMvbHVkbm9zY19ncnVweV93aWVrdV9wb2xza2EuY3N2IiwiZGFuZS9ndXMvZHppYWxhbG5vc2NfYnJfd29qLmNzdiIsInBsaWtpX2t1cnN1LnppcCJd
+</script>
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Skopiowano!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Skopiowano!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./23_dlugosc_zycia_europa.html" class="pagination-link" aria-label="Zmienność oczekiwanej długości życia w Europie w latach 1952 i 2007">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Zmienność oczekiwanej długości życia w Europie w latach 1952 i 2007</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./25_meteo_trzy_stacje.html" class="pagination-link" aria-label="Porównanie warunków meteorologicznych trzech stacji">
+        <span class="nav-page-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Porównanie warunków meteorologicznych trzech stacji</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

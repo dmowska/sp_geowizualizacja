@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Dane – Statystyczne i graficzne podstawy geowizualizacji</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./01_instalacja.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-3708d7fbbef66c9ac9ec4ecfd1afb0ee.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Brak wyników",
+    "search-matching-documents-text": "dopasowane dokumenty",
+    "search-copy-link-title": "Kopiuj link do wyszukiwania",
+    "search-hide-matches-text": "Ukryj dodatkowe dopasowania",
+    "search-more-match-text": "więcej dopasowań w tym dokumencie",
+    "search-more-matches-text": "więcej dopasowań w tym dokumencie",
+    "search-clear-button-title": "Wyczyść",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Anuluj",
+    "search-submit-button-title": "Zatwierdź",
+    "search-label": "Szukaj"
+  }
+}</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./00_dane.html">Dane</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Szukaj" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statystyczne i graficzne podstawy geowizualizacji</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Szukaj"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">O skrypcie</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00_dane.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Dane</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">PRACA W R</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_instalacja.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Instalacja R i RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_rstudio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Praca w RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_praca_z_danymi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Praca z danymi</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_wykresy_ggplot2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wykresy w ggplot2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_dane_przestrzenne.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dane przestrzenne w R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_pakiety.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pakiety</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">QUARTO</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_raport.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Raport statystyczny</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">PODSTAWY STATYSTYKI</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_pojecia_podstawowe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pojęcia podstawowe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_statystyki_opisowe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Statystyki opisowe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_korelacja.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Analiza korelacji</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">WIZUALIZACJA DANYCH</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_po_co_wizualizujemy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Po co wizualizujemy dane</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_gramatyka_grafiki.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Gramatyka grafiki</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_typy_wykresow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Typy wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_wizualizacja_statystyk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wizualizacja statystyk opisowych</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16_wizualizacja_zaleznosci.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Wizualizacja zależności</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17_dobor_wykresu.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Dobór wykresu do problemu badawczego</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18_formatowanie.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Formatowanie wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19_zrodla.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Źródła informacji o wizualizacji</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">PRZYKŁADY</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20_dlugosc_zycia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Oczekiwana długość życia na kontynentach w latach 1952–2007</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21_dlugosc_zycia_2007.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Oczekiwana długość życia na świecie w 2007 roku</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22_meteo_2020.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Warunki meteorologiczne w Polsce w 2020 roku</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">PRZYKŁADOWE RAPORTY</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23_dlugosc_zycia_europa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Zmienność oczekiwanej długości życia w Europie w latach 1952 i 2007</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./24_meteo_zakopane.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Warunki meteorologiczne wybranej stacji</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./25_meteo_trzy_stacje.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Porównanie warunków meteorologicznych trzech stacji</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26_lasy_wielkopolska.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Lesistość powiatów województwa wielkopolskiego w latach 2000 i 2025</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Załączniki</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./A_typy_wykresow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Katalog typów wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./B_wykresy_statystyka_regionalna.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Wykresy w statystyce regionalnej</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C_zasady_wykresow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Zasady opracowywania wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./D_dobor_wykresu_przyklady.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Dobór wykresu do problemu badawczego: przykłady</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./E_bank_swiatowy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Praca z danymi Banku Światowego</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Spis treści</h2>
+   
+  <ul>
+  <li><a href="#sec-zd-zestawienie" id="toc-sec-zd-zestawienie" class="nav-link active" data-scroll-target="#sec-zd-zestawienie">Zestawienie zbiorów</a></li>
+  <li><a href="#sec-zd-gapminder" id="toc-sec-zd-gapminder" class="nav-link" data-scroll-target="#sec-zd-gapminder">Gapminder</a></li>
+  <li><a href="#sec-zd-meteo2020" id="toc-sec-zd-meteo2020" class="nav-link" data-scroll-target="#sec-zd-meteo2020">Dane meteorologiczne z 2020 roku</a></li>
+  <li><a href="#sec-zd-climate" id="toc-sec-zd-climate" class="nav-link" data-scroll-target="#sec-zd-climate">Dane meteorologiczne pobierane pakietem <code>climate</code></a></li>
+  <li><a href="#sec-zd-lasy" id="toc-sec-zd-lasy" class="nav-link" data-scroll-target="#sec-zd-lasy">Powierzchnia lasów</a></li>
+  <li><a href="#sec-zd-wb" id="toc-sec-zd-wb" class="nav-link" data-scroll-target="#sec-zd-wb">Dane Banku Światowego</a></li>
+  <li><a href="#sec-zd-ne" id="toc-sec-zd-ne" class="nav-link" data-scroll-target="#sec-zd-ne">Granice państw z bazy Natural Earth</a></li>
+  <li><a href="#sec-zd-woj" id="toc-sec-zd-woj" class="nav-link" data-scroll-target="#sec-zd-woj">Granice województw</a></li>
+  <li><a href="#sec-zd-gadm" id="toc-sec-zd-gadm" class="nav-link" data-scroll-target="#sec-zd-gadm">Granice powiatów z bazy GADM</a></li>
+  <li><a href="#sec-zd-anscombe" id="toc-sec-zd-anscombe" class="nav-link" data-scroll-target="#sec-zd-anscombe">Kwartet Anscombe’a</a></li>
+  <li><a href="#sec-zd-zrodla" id="toc-sec-zd-zrodla" class="nav-link" data-scroll-target="#sec-zd-zrodla">Źródła</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-zbiory-danych" class="quarto-section-identifier">Dane</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Rozdział opisuje wszystkie zbiory danych wykorzystane w skrypcie. Pliki znajdują się w folderze <code>dane/</code>. Plik <code>.qmd</code> wczytuje dane ze ścieżki względnej <code>dane/…</code>, dlatego folder <code>dane/</code> powinien znajdować się obok pliku <code>.qmd</code>. Paczka <code>pliki_kursu.zip</code> zawiera folder <code>kod/</code> z podfolderem <code>dane/</code>.</p>
+<p>Dwa zbiory kod pobiera z internetu: dane IMGW-PIB pakietem <code>climate</code> przy każdym uruchomieniu oraz granice powiatów z bazy GADM przy pierwszym uruchomieniu.</p>
+<section id="sec-zd-zestawienie" class="level2">
+<h2 class="anchored" data-anchor-id="sec-zd-zestawienie">Zestawienie zbiorów</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Zbiór</th>
+<th>Plik albo funkcja</th>
+<th>Zawartość</th>
+<th>Rozdziały i załączniki</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Gapminder</td>
+<td><code>gapminder_regions.csv</code></td>
+<td>142 kraje w latach 1952–2007, co 5 lat</td>
+<td><a href="./03_praca_z_danymi.html">3</a>, <a href="./04_wykresy_ggplot2.html">4</a>, <a href="./05_dane_przestrzenne.html">5</a>, <a href="./07_quarto.html">7</a>, <a href="./08_raport.html">8</a>, <a href="./10_statystyki_opisowe.html">10</a>, <a href="./11_korelacja.html">11</a>, <a href="./12_po_co_wizualizujemy.html">12</a>, <a href="./13_gramatyka_grafiki.html">13</a>, <a href="./15_wizualizacja_statystyk.html">15</a>, <a href="./16_wizualizacja_zaleznosci.html">16</a>, <a href="./17_dobor_wykresu.html">17</a>, <a href="./18_formatowanie.html">18</a>, <a href="./20_dlugosc_zycia.html">20</a>, <a href="./21_dlugosc_zycia_2007.html">21</a>, <a href="./23_dlugosc_zycia_europa.html">23</a>; <a href="./A_typy_wykresow.html">A</a>, <a href="./D_dobor_wykresu_przyklady.html">D</a></td>
+</tr>
+<tr class="even">
+<td>IMGW-PIB, 2020</td>
+<td><code>meteo2020.csv</code></td>
+<td>dane miesięczne z 59 stacji synoptycznych w 2020 roku</td>
+<td><a href="./05_dane_przestrzenne.html">5</a>, <a href="./22_meteo_2020.html">22</a></td>
+</tr>
+<tr class="odd">
+<td>IMGW-PIB, pobierany</td>
+<td><code>meteo_imgw_monthly()</code> z pakietu <code>climate</code></td>
+<td>dane miesięczne ze stacji synoptycznych z wybranego roku; w skrypcie 2023</td>
+<td><a href="./24_meteo_zakopane.html">24</a>, <a href="./25_meteo_trzy_stacje.html">25</a></td>
+</tr>
+<tr class="even">
+<td>BDL GUS, lasy</td>
+<td><code>lasy_bld.csv</code></td>
+<td>powierzchnia lasów w powiatach Polski w latach 2000 i 2025</td>
+<td><a href="./03_praca_z_danymi.html">3</a>, <a href="./05_dane_przestrzenne.html">5</a>, <a href="./26_lasy_wielkopolska.html">26</a></td>
+</tr>
+<tr class="odd">
+<td>BDL GUS, statystyka regionalna</td>
+<td>folder <code>gus/</code></td>
+<td>gotowe pliki do wykonania wykresów w statystyce regionalnej</td>
+<td><a href="./B_wykresy_statystyka_regionalna.html">B</a></td>
+</tr>
+<tr class="even">
+<td>Bank Światowy</td>
+<td><code>API_SP.DYN.LE00.IN_…_1292.xls</code></td>
+<td>oczekiwana długość życia w chwili urodzenia, lata 1960–2025</td>
+<td><a href="./E_bank_swiatowy.html">E</a></td>
+</tr>
+<tr class="odd">
+<td>Bank Światowy, wyniki</td>
+<td><code>wb_dlugosc_zycia.csv</code>, <code>wb_dlugosc_zycia.gpkg</code></td>
+<td>pliki zapisywane przez kod załącznika</td>
+<td><a href="./E_bank_swiatowy.html">E</a></td>
+</tr>
+<tr class="even">
+<td>Natural Earth, państwa</td>
+<td><code>ne_countries()</code> z pakietu <code>rnaturalearth</code></td>
+<td>granice państw świata</td>
+<td><a href="./05_dane_przestrzenne.html">5</a>, <a href="./08_raport.html">8</a>, <a href="./21_dlugosc_zycia_2007.html">21</a>, <a href="./23_dlugosc_zycia_europa.html">23</a>; <a href="./A_typy_wykresow.html">A</a>, <a href="./D_dobor_wykresu_przyklady.html">D</a>, <a href="./E_bank_swiatowy.html">E</a></td>
+</tr>
+<tr class="odd">
+<td>Natural Earth, województwa</td>
+<td><code>wojewodztwa.gpkg</code></td>
+<td>granice 16 województw</td>
+<td><a href="./05_dane_przestrzenne.html">5</a>, <a href="./22_meteo_2020.html">22</a>, <a href="./25_meteo_trzy_stacje.html">25</a></td>
+</tr>
+<tr class="even">
+<td>GADM</td>
+<td><code>gadm()</code> z pakietu <code>geodata</code></td>
+<td>granice powiatów Polski</td>
+<td><a href="./05_dane_przestrzenne.html">5</a>, <a href="./26_lasy_wielkopolska.html">26</a></td>
+</tr>
+<tr class="odd">
+<td>Kwartet Anscombe’a</td>
+<td><code>datasets::anscombe</code> w R</td>
+<td>cztery zbiory po 11 par wartości</td>
+<td><a href="./12_po_co_wizualizujemy.html">12</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sec-zd-gapminder" class="level2">
+<h2 class="anchored" data-anchor-id="sec-zd-gapminder">Gapminder</h2>
+<p>Plik <code>gapminder_regions.csv</code> zawiera dane Gapminder (<a href="https://www.gapminder.org/data/" class="uri">https://www.gapminder.org/data/</a>), dostępne w R w pakiecie <code>gapminder</code> (licencja CC0). Kolumny z podziałem regionalnym, grupami dochodowymi i grupami gospodarczymi oraz nazwy polskie dodano w materiałach kursu. Kolumna <code>Kod</code> pochodzi z bazy World Development Indicators Banku Światowego; dla Reunionu i Tajwanu, nieobecnych w tej bazie, kod uzupełniono według normy ISO 3166. W pakiecie <code>gapminder</code> Turcja należy do Europy; w tym zbiorze przypisano ją do Azji, dlatego Azja obejmuje 34 kraje, a Europa 29 (w pakiecie: 33 i 30). Wartości <code>lifeExp</code>, <code>pop</code> i <code>gdpPercap</code> są takie same jak w pakiecie.</p>
+<ul>
+<li><strong>Zakres:</strong> 142 kraje, 12 lat: od 1952 do 2007 roku, co 5 lat.</li>
+<li><strong>Jednostka obserwacji:</strong> kraj w danym roku; zbiór liczy 142 × 12 = 1704 obserwacje i 14 kolumn.</li>
+<li><strong>Braki danych:</strong> kolumny liczbowe są kompletne. Reunion oraz Zachodni Brzeg i Strefa Gazy (<em>West Bank and Gaza</em>) mają puste pola w kolumnach klasyfikacyjnych.</li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Kolumna</th>
+<th>Znaczenie</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>country</code>, <code>kraj</code></td>
+<td>nazwa kraju po angielsku i po polsku</td>
+</tr>
+<tr class="even">
+<td><code>continent</code>, <code>kontynent</code></td>
+<td>kontynent po angielsku i po polsku, 5 kategorii</td>
+</tr>
+<tr class="odd">
+<td><code>subregion</code>, <code>subregion_pl</code></td>
+<td>subregion świata po angielsku i po polsku, 18 kategorii</td>
+</tr>
+<tr class="even">
+<td><code>year</code></td>
+<td>rok obserwacji</td>
+</tr>
+<tr class="odd">
+<td><code>lifeExp</code></td>
+<td>oczekiwana długość życia w chwili urodzenia, w latach</td>
+</tr>
+<tr class="even">
+<td><code>pop</code></td>
+<td>liczba ludności</td>
+</tr>
+<tr class="odd">
+<td><code>gdpPercap</code></td>
+<td>PKB per capita w dolarach amerykańskich, skorygowany o inflację</td>
+</tr>
+<tr class="even">
+<td><code>income_grp</code></td>
+<td>grupa dochodowa Banku Światowego, 5 kategorii uporządkowanych</td>
+</tr>
+<tr class="odd">
+<td><code>income_grp_pl</code></td>
+<td>grupa dochodowa w 3 kategoriach: niski, średni, wysoki</td>
+</tr>
+<tr class="even">
+<td><code>economy_grp</code></td>
+<td>grupa gospodarcza, 7 kategorii uporządkowanych</td>
+</tr>
+<tr class="odd">
+<td><code>Kod</code></td>
+<td>trzyliterowy kod kraju (ISO 3166-1 alfa-3)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sec-zd-meteo2020" class="level2">
+<h2 class="anchored" data-anchor-id="sec-zd-meteo2020">Dane meteorologiczne z 2020 roku</h2>
+<p>Plik <code>meteo2020.csv</code> zawiera miesięczne wartości charakterystyk meteorologicznych ze stacji synoptycznych. Źródło danych: Instytut Meteorologii i Gospodarki Wodnej – Państwowy Instytut Badawczy (IMGW-PIB, <a href="https://danepubliczne.imgw.pl" class="uri">https://danepubliczne.imgw.pl</a>).</p>
+<ul>
+<li><strong>Zakres:</strong> 59 stacji synoptycznych w Polsce, 12 miesięcy 2020 roku.</li>
+<li><strong>Jednostka obserwacji:</strong> stacja w danym miesiącu; zbiór liczy 59 × 12 = 708 obserwacji i 17 kolumn.</li>
+<li><strong>Warunki korzystania:</strong> <a href="https://danepubliczne.imgw.pl/docs/regulamin_udostepniania_danych.pdf">regulamin udostępniania danych IMGW-PIB</a> wymaga wskazania źródła danych, a w przypadku ich przetworzenia także informacji o przetworzeniu: Źródłem pochodzenia danych jest Instytut Meteorologii i Gospodarki Wodnej – Państwowy Instytut Badawczy. Dane Instytutu Meteorologii i Gospodarki Wodnej – Państwowego Instytutu Badawczego zostały przetworzone.</li>
+<li><strong>Braki danych:</strong> w pliku źródłowym część brakujących pomiarów zapisano jako 0; w materiałach kursu wartości te zastąpiono pustym polem. Liczba braków: <code>temp_max_abs</code>, <code>temp_max_sr</code>, <code>temp_min_abs</code> i <code>temp_min_sr</code> po 7, <code>temp_sr</code> 4, <code>temp_grunt_min</code> 31, <code>dni_snieg</code> 96. Szczegóły podaje <a href="22_meteo_2020.html#sec-meteo-dane" class="quarto-xref"><span>22.2 Dane</span></a>.</li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Kolumna</th>
+<th>Znaczenie</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>id_stacji</code>, <code>stacja</code></td>
+<td>identyfikator i nazwa stacji</td>
+</tr>
+<tr class="even">
+<td><code>X_dlugosc_geogr</code>, <code>Y_szerokosc_geogr</code></td>
+<td>długość i szerokość geograficzna stacji [°]</td>
+</tr>
+<tr class="odd">
+<td><code>wojewodztwo</code>, <code>woj_kod</code></td>
+<td>nazwa i kod TERYT województwa</td>
+</tr>
+<tr class="even">
+<td><code>miesiac</code></td>
+<td>miesiąc (1–12)</td>
+</tr>
+<tr class="odd">
+<td><code>temp_max_abs</code>, <code>temp_min_abs</code></td>
+<td>absolutna maksymalna i absolutna minimalna temperatura powietrza [°C]</td>
+</tr>
+<tr class="even">
+<td><code>temp_max_sr</code>, <code>temp_min_sr</code></td>
+<td>średnia maksymalna i średnia minimalna temperatura powietrza [°C]</td>
+</tr>
+<tr class="odd">
+<td><code>temp_sr</code></td>
+<td>średnia miesięczna temperatura powietrza [°C]</td>
+</tr>
+<tr class="even">
+<td><code>temp_grunt_min</code></td>
+<td>minimalna temperatura przy gruncie [°C]</td>
+</tr>
+<tr class="odd">
+<td><code>opad_suma</code></td>
+<td>miesięczna suma opadu [mm]</td>
+</tr>
+<tr class="even">
+<td><code>opad_max_dobowy</code></td>
+<td>maksymalna dobowa suma opadu w miesiącu [mm]</td>
+</tr>
+<tr class="odd">
+<td><code>dni_deszcz</code>, <code>dni_snieg</code></td>
+<td>liczba dni z opadem deszczu i z opadem śniegu</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sec-zd-climate" class="level2">
+<h2 class="anchored" data-anchor-id="sec-zd-climate">Dane meteorologiczne pobierane pakietem <code>climate</code></h2>
+<p>Funkcja <code>meteo_imgw_monthly()</code> z pakietu <code>climate</code> (Czernecki, Głogowski i Nowosad, 2020) pobiera miesięczne wartości charakterystyk meteorologicznych z publicznego zbioru IMGW-PIB (<a href="https://danepubliczne.imgw.pl" class="uri">https://danepubliczne.imgw.pl</a>). Stacje i rok wybiera się w kodzie, dlatego zbiór nie znajduje się w folderze <code>dane/</code>, a pobranie wymaga połączenia z internetem. Liczby poniżej dotyczą 2023 roku, wykorzystanego w skrypcie.</p>
+<ul>
+<li><strong>Zakres:</strong> 59 stacji synoptycznych w 2023 roku.</li>
+<li><strong>Jednostka obserwacji:</strong> stacja w danym miesiącu; zbiór liczy 707 obserwacji: 58 stacji ma po 12 obserwacji, a stacja Resko-Smólsko 11 (brak lutego).</li>
+<li><strong>Kolumny:</strong> z argumentem <code>status = TRUE</code> tabela ma 78 kolumn, a z dodanymi współrzędnymi stacji 80 (<a href="25_meteo_trzy_stacje.html#sec-tr-pobranie" class="quarto-xref"><span>25.2.1 Pobranie danych</span></a>). Kolumny statusu pomiaru mają nazwy z przedrostkiem <code>W</code>, np. <code>WTMAX</code>.</li>
+<li><strong>Warunki korzystania:</strong> obowiązuje regulamin IMGW-PIB opisany w poprzedniej sekcji.</li>
+<li><strong>Braki danych:</strong> brakujący pomiar ma w zbiorze zazwyczaj wartość 0, a informację o braku zawiera kolumna statusu. Kod raportów zamienia takie wartości na <code>NA</code> (<a href="24_meteo_zakopane.html#sec-za-dane" class="quarto-xref"><span>24.2 Dane</span></a>).</li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Kolumna</th>
+<th>Znaczenie</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>POST</code></td>
+<td>nazwa stacji</td>
+</tr>
+<tr class="even">
+<td><code>MC</code></td>
+<td>miesiąc (1–12)</td>
+</tr>
+<tr class="odd">
+<td><code>TMAX</code>, <code>TMIN</code></td>
+<td>absolutna maksymalna i absolutna minimalna temperatura powietrza [°C]</td>
+</tr>
+<tr class="even">
+<td><code>TMXS</code>, <code>TMNS</code></td>
+<td>średnia maksymalna i średnia minimalna temperatura powietrza [°C]</td>
+</tr>
+<tr class="odd">
+<td><code>STM</code></td>
+<td>średnia miesięczna temperatura powietrza [°C]</td>
+</tr>
+<tr class="even">
+<td><code>SUMM</code></td>
+<td>miesięczna suma opadu [mm]</td>
+</tr>
+<tr class="odd">
+<td><code>DESD</code>, <code>SNID</code></td>
+<td>liczba dni z opadem deszczu i z opadem śniegu</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sec-zd-lasy" class="level2">
+<h2 class="anchored" data-anchor-id="sec-zd-lasy">Powierzchnia lasów</h2>
+<p>Plik <code>lasy_bld.csv</code> pochodzi z Banku Danych Lokalnych GUS (<a href="https://bdl.stat.gov.pl/" class="uri">https://bdl.stat.gov.pl/</a>): dziedzina „Leśnictwo i łowiectwo” → „Leśnictwo wszystkich form własności” → „Powierzchnia lasów”, zmienna „lasy ogółem” (identyfikator zmiennej 217916). Dane BDL są udostępniane na licencji CC BY 4.0.</p>
+<ul>
+<li><strong>Zakres:</strong> powiaty Polski, lata 2000 i 2025.</li>
+<li><strong>Jednostka obserwacji:</strong> powiat; miasta na prawach powiatu są osobnymi jednostkami. Plik liczy 381 wierszy.</li>
+<li><strong>Zapis pliku:</strong> kolumny rozdzielone średnikiem, przecinek dziesiętny, kody powiatów z województw o numerach 02–08 rozpoczynające się od zera (<a href="03_praca_z_danymi.html#sec-pd-wlasne" class="quarto-xref"><span>3.12 Wczytanie własnych danych</span></a>).</li>
+<li><strong>Braki danych:</strong> w 11 wierszach brakuje wartości z jednego roku (9 braków dla 2000 roku, 2 dla 2025 roku). Wiersze te odpowiadają zmianom podziału na powiaty.</li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Kolumna</th>
+<th>Znaczenie</th>
+<th>Jednostka</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Kod</code></td>
+<td>kod jednostki terytorialnej powiatu (TERYT), 7 cyfr</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td><code>Nazwa</code></td>
+<td>nazwa powiatu</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td><code>lasy2000</code></td>
+<td>powierzchnia lasów w 2000 roku</td>
+<td>ha</td>
+</tr>
+<tr class="even">
+<td><code>lasy2025</code></td>
+<td>powierzchnia lasów w 2025 roku</td>
+<td>ha</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sec-zd-wb" class="level2">
+<h2 class="anchored" data-anchor-id="sec-zd-wb">Dane Banku Światowego</h2>
+<p>Plik <code>API_SP.DYN.LE00.IN_DS2_en_excel_v2_1292.xls</code> zawiera wskaźnik <em>Life expectancy at birth, total (years)</em> o kodzie <code>SP.DYN.LE00.IN</code> z bazy <em>World Development Indicators</em> (<a href="https://data.worldbank.org/indicator/SP.DYN.LE00.IN" class="uri">https://data.worldbank.org/indicator/SP.DYN.LE00.IN</a>, licencja CC BY 4.0), według aktualizacji z 8 października 2026 roku. Pobranie, układ arkuszy i przygotowanie danych opisuje <a href="E_bank_swiatowy.html" class="quarto-xref"><span>Załącznik E — Praca z danymi Banku Światowego</span></a>.</p>
+<ul>
+<li><strong>Zakres:</strong> lata 1960–2025; kolumna <code>2025</code> nie zawiera wartości.</li>
+<li><strong>Jednostka obserwacji:</strong> kraj albo grupa krajów; arkusz <code>Data</code> liczy 266 wierszy, w tym 217 krajów i gospodarek po wyborze wierszy z podanym regionem.</li>
+<li><strong>Braki danych:</strong> wśród 217 jednostek brakuje 2 wartości w 1960 roku i żadnej w 2024 roku.</li>
+</ul>
+<p>Pliki <code>wb_dlugosc_zycia.csv</code> i <code>wb_dlugosc_zycia.gpkg</code> powstają w wyniku uruchomienia kodu załącznika. Opis ich kolumn zawiera <a href="E_bank_swiatowy.html#sec-bs-kraje" class="quarto-xref"><span>E.5 Wybór krajów</span></a>.</p>
+</section>
+<section id="sec-zd-ne" class="level2">
+<h2 class="anchored" data-anchor-id="sec-zd-ne">Granice państw z bazy Natural Earth</h2>
+<p>Funkcja <code>ne_countries()</code> z pakietu <code>rnaturalearth</code> zwraca granice państw świata z bazy Natural Earth (<a href="https://www.naturalearthdata.com/" class="uri">https://www.naturalearthdata.com/</a>, domena publiczna). Argument <code>scale = "medium"</code> wymaga pakietu <code>rnaturalearthdata</code>, który zawiera te dane, dlatego ich wczytanie przebiega bez połączenia z internetem.</p>
+<ul>
+<li><strong>Zakres:</strong> świat; 242 obiekty; układ współrzędnych WGS 84.</li>
+<li><strong>Jednostka obserwacji:</strong> państwo albo terytorium.</li>
+<li><strong>Wykorzystane kolumny:</strong> <code>iso_a3_eh</code> (trzyliterowy kod kraju, według którego następuje połączenie z danymi) i <code>geometry</code> (granice). Kolumna <code>iso_a3</code> ma dla Francji i Norwegii wartość <code>-99</code>, dlatego kod pochodzi z kolumny <code>iso_a3_eh</code>.</li>
+</ul>
+</section>
+<section id="sec-zd-woj" class="level2">
+<h2 class="anchored" data-anchor-id="sec-zd-woj">Granice województw</h2>
+<p>Plik <code>wojewodztwa.gpkg</code> w formacie GeoPackage zawiera granice województw z bazy Natural Earth (domena publiczna).</p>
+<ul>
+<li><strong>Zakres:</strong> 16 województw; układ współrzędnych WGS 84.</li>
+<li><strong>Jednostka obserwacji:</strong> województwo.</li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Kolumna</th>
+<th>Znaczenie</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>name</code>, <code>name_pl</code></td>
+<td>nazwa województwa po angielsku i po polsku</td>
+</tr>
+<tr class="even">
+<td><code>iso_3166_2</code></td>
+<td>kod województwa według normy ISO 3166-2, np. <code>PL-MA</code></td>
+</tr>
+<tr class="odd">
+<td><code>type</code></td>
+<td>typ jednostki</td>
+</tr>
+<tr class="even">
+<td><code>geom</code></td>
+<td>granice województwa</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sec-zd-gadm" class="level2">
+<h2 class="anchored" data-anchor-id="sec-zd-gadm">Granice powiatów z bazy GADM</h2>
+<p>Funkcja <code>gadm()</code> z pakietu <code>geodata</code> pobiera granice jednostek administracyjnych z bazy GADM w wersji 4.1 (<a href="https://gadm.org/" class="uri">https://gadm.org/</a>). Poziom 2 tej bazy to w Polsce powiaty. Przy pierwszym uruchomieniu kodu funkcja pobiera plik z serwera (ok. 22 MB; wymaga połączenia z internetem) i zapisuje go w folderze <code>granice/</code> obok pliku <code>.qmd</code>; przy kolejnych uruchomieniach wczytuje zapisany plik.</p>
+<ul>
+<li><strong>Zakres:</strong> 380 powiatów Polski; układ współrzędnych WGS 84.</li>
+<li><strong>Jednostka obserwacji:</strong> powiat.</li>
+<li><strong>Warunki korzystania:</strong> dane GADM są dostępne bezpłatnie do zastosowań akademickich i niekomercyjnych; ich redystrybucja wymaga zgody, dlatego granice nie są dołączone do folderu <code>dane/</code>, a pobranego pliku nie należy udostępniać innym osobom.</li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Kolumna</th>
+<th>Znaczenie</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>NAME_1</code></td>
+<td>nazwa województwa</td>
+</tr>
+<tr class="even">
+<td><code>CC_2</code></td>
+<td>kod powiatu (TERYT), 4 cyfry</td>
+</tr>
+<tr class="odd">
+<td><code>geometry</code></td>
+<td>granice powiatu</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sec-zd-anscombe" class="level2">
+<h2 class="anchored" data-anchor-id="sec-zd-anscombe">Kwartet Anscombe’a</h2>
+<p>Zbiór <code>anscombe</code> z pakietu <code>datasets</code>, wchodzącego w skład R, zawiera kwartet Anscombe’a (Anscombe, 1973): cztery zbiory po 11 par wartości <span class="math inline">\(x\)</span> i <span class="math inline">\(y\)</span> o tych samych statystykach opisowych (<a href="12_po_co_wizualizujemy.html#sec-wiz-anscombe" class="quarto-xref"><span>12.1 Kwartet Anscombe’a</span></a>). Zbiór ma kolumny <code>x1</code>–<code>x4</code> i <code>y1</code>–<code>y4</code>, nie ma braków danych, a jego wczytanie nie wymaga pliku.</p>
+</section>
+<section id="sec-zd-zrodla" class="level2">
+<h2 class="anchored" data-anchor-id="sec-zd-zrodla">Źródła</h2>
+<ul>
+<li>Anscombe F.J., 1973. Graphs in statistical analysis. <em>The American Statistician</em> 27, 17–21.</li>
+<li>Czernecki B., Głogowski A., Nowosad J., 2020. Climate: An R Package to Access Free In-Situ Meteorological and Hydrological Datasets For Environmental Assessment. <em>Sustainability</em> 12, 394. <a href="https://doi.org/10.3390/su12010394" class="uri">https://doi.org/10.3390/su12010394</a>.</li>
+<li>Bank Danych Lokalnych GUS: <a href="https://bdl.stat.gov.pl/" class="uri">https://bdl.stat.gov.pl/</a>.</li>
+<li>Bank Światowy, World Development Indicators: <a href="https://data.worldbank.org/indicator" class="uri">https://data.worldbank.org/indicator</a>.</li>
+<li>GADM: <a href="https://gadm.org/" class="uri">https://gadm.org/</a>.</li>
+<li>Gapminder: <a href="https://www.gapminder.org/data/" class="uri">https://www.gapminder.org/data/</a>.</li>
+<li>IMGW-PIB, dane publiczne: <a href="https://danepubliczne.imgw.pl" class="uri">https://danepubliczne.imgw.pl</a>.</li>
+<li>Natural Earth: <a href="https://www.naturalearthdata.com/" class="uri">https://www.naturalearthdata.com/</a>.</li>
+</ul>
+
+
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+WyJkYW5lL3diX2RsdWdvc2NfenljaWEuY3N2IiwiZGFuZS9sYXN5X2JsZC5jc3YiLCJkYW5lL2dhcG1pbmRlcl9yZWdpb25zLmNzdiIsImRhbmUvbWV0ZW8yMDIwLmNzdiIsImRhbmUvd29qZXdvZHp0d2EuZ3BrZyIsImRhbmUvQVBJX1NQLkRZTi5MRTAwLklOX0RTMl9lbl9leGNlbF92Ml8xMjkyLnhscyIsImRhbmUvd2JfZGx1Z29zY196eWNpYS5ncGtnIiwiZGFuZS9ndXMvd2FydG9zY19kb2RhbmFfd29qLmNzdiIsImRhbmUvZ3VzL3dza2F6bmlraV9kZW1vZ3JhZmljem5lX3Bvd2lhdHkuY3N2IiwiZGFuZS9ndXMvcGlyYW1pZGFfd2lla3VfcG9sc2thLmNzdiIsImRhbmUvZ3VzL3J1Y2hfbmF0dXJhbG55X3BvbHNrYS5jc3YiLCJkYW5lL2d1cy9wcmFjdWphY3lfZ3J1cHlfc2VrY2ppLmNzdiIsImRhbmUvZ3VzL2x1ZG5vc2NfZWtvbm9taWN6bmVfZ3J1cHlfd29qLmNzdiIsImRhbmUvZ3VzL3dza2F6bmlraV9kZW1vZ3JhZmljem5lX3BvZHJlZ2lvbnkuY3N2IiwiZGFuZS9ndXMvbHVkbm9zY19ncnVweV93aWVrdV9wb2xza2EuY3N2IiwiZGFuZS9ndXMvZHppYWxhbG5vc2NfYnJfd29qLmNzdiIsInBsaWtpX2t1cnN1LnppcCJd
+</script>
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Skopiowano!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Skopiowano!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="O skrypcie">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">O skrypcie</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./01_instalacja.html" class="pagination-link" aria-label="Instalacja R i RStudio">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Instalacja R i RStudio</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

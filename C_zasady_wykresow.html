@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Załącznik C — Zasady opracowywania wykresów – Statystyczne i graficzne podstawy geowizualizacji</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./D_dobor_wykresu_przyklady.html" rel="next">
+<link href="./B_wykresy_statystyka_regionalna.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-3708d7fbbef66c9ac9ec4ecfd1afb0ee.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Brak wyników",
+    "search-matching-documents-text": "dopasowane dokumenty",
+    "search-copy-link-title": "Kopiuj link do wyszukiwania",
+    "search-hide-matches-text": "Ukryj dodatkowe dopasowania",
+    "search-more-match-text": "więcej dopasowań w tym dokumencie",
+    "search-more-matches-text": "więcej dopasowań w tym dokumencie",
+    "search-clear-button-title": "Wyczyść",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Anuluj",
+    "search-submit-button-title": "Zatwierdź",
+    "search-label": "Szukaj"
+  }
+}</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./A_typy_wykresow.html">Załączniki</a></li><li class="breadcrumb-item"><a href="./C_zasady_wykresow.html"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Zasady opracowywania wykresów</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Szukaj" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statystyczne i graficzne podstawy geowizualizacji</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Szukaj"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">O skrypcie</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00_dane.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dane</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">PRACA W R</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_instalacja.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Instalacja R i RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_rstudio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Praca w RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_praca_z_danymi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Praca z danymi</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_wykresy_ggplot2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wykresy w ggplot2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_dane_przestrzenne.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dane przestrzenne w R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_pakiety.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pakiety</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">QUARTO</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_raport.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Raport statystyczny</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">PODSTAWY STATYSTYKI</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_pojecia_podstawowe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pojęcia podstawowe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_statystyki_opisowe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Statystyki opisowe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_korelacja.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Analiza korelacji</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">WIZUALIZACJA DANYCH</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_po_co_wizualizujemy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Po co wizualizujemy dane</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_gramatyka_grafiki.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Gramatyka grafiki</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_typy_wykresow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Typy wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_wizualizacja_statystyk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wizualizacja statystyk opisowych</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16_wizualizacja_zaleznosci.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Wizualizacja zależności</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17_dobor_wykresu.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Dobór wykresu do problemu badawczego</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18_formatowanie.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Formatowanie wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19_zrodla.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Źródła informacji o wizualizacji</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">PRZYKŁADY</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20_dlugosc_zycia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Oczekiwana długość życia na kontynentach w latach 1952–2007</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21_dlugosc_zycia_2007.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Oczekiwana długość życia na świecie w 2007 roku</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22_meteo_2020.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Warunki meteorologiczne w Polsce w 2020 roku</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">PRZYKŁADOWE RAPORTY</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23_dlugosc_zycia_europa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Zmienność oczekiwanej długości życia w Europie w latach 1952 i 2007</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./24_meteo_zakopane.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Warunki meteorologiczne wybranej stacji</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./25_meteo_trzy_stacje.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Porównanie warunków meteorologicznych trzech stacji</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26_lasy_wielkopolska.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Lesistość powiatów województwa wielkopolskiego w latach 2000 i 2025</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Załączniki</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./A_typy_wykresow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Katalog typów wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./B_wykresy_statystyka_regionalna.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Wykresy w statystyce regionalnej</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C_zasady_wykresow.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Zasady opracowywania wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./D_dobor_wykresu_przyklady.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Dobór wykresu do problemu badawczego: przykłady</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./E_bank_swiatowy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Praca z danymi Banku Światowego</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Spis treści</h2>
+   
+  <ul>
+  <li><a href="#cel-i-zasady-ogólne" id="toc-cel-i-zasady-ogólne" class="nav-link active" data-scroll-target="#cel-i-zasady-ogólne"><span class="header-section-number">C.1</span> Cel i zasady ogólne</a></li>
+  <li><a href="#przedstawienie-wartości" id="toc-przedstawienie-wartości" class="nav-link" data-scroll-target="#przedstawienie-wartości"><span class="header-section-number">C.2</span> Przedstawienie wartości</a></li>
+  <li><a href="#osie-i-skale" id="toc-osie-i-skale" class="nav-link" data-scroll-target="#osie-i-skale"><span class="header-section-number">C.3</span> Osie i skale</a></li>
+  <li><a href="#porównania-i-układ" id="toc-porównania-i-układ" class="nav-link" data-scroll-target="#porównania-i-układ"><span class="header-section-number">C.4</span> Porównania i układ</a></li>
+  <li><a href="#kolejność" id="toc-kolejność" class="nav-link" data-scroll-target="#kolejność"><span class="header-section-number">C.5</span> Kolejność</a></li>
+  <li><a href="#rozkłady-i-obserwacje" id="toc-rozkłady-i-obserwacje" class="nav-link" data-scroll-target="#rozkłady-i-obserwacje"><span class="header-section-number">C.6</span> Rozkłady i obserwacje</a></li>
+  <li><a href="#wykres-kołowy" id="toc-wykres-kołowy" class="nav-link" data-scroll-target="#wykres-kołowy"><span class="header-section-number">C.7</span> Wykres kołowy</a></li>
+  <li><a href="#kolor" id="toc-kolor" class="nav-link" data-scroll-target="#kolor"><span class="header-section-number">C.8</span> Kolor</a></li>
+  <li><a href="#opisy-legendy-i-etykiety" id="toc-opisy-legendy-i-etykiety" class="nav-link" data-scroll-target="#opisy-legendy-i-etykiety"><span class="header-section-number">C.9</span> Opisy, legendy i etykiety</a></li>
+  <li><a href="#elementy-które-nie-przedstawiają-danych" id="toc-elementy-które-nie-przedstawiają-danych" class="nav-link" data-scroll-target="#elementy-które-nie-przedstawiają-danych"><span class="header-section-number">C.10</span> Elementy, które nie przedstawiają danych</a></li>
+  <li><a href="#wykresy-złożone-i-panele" id="toc-wykresy-złożone-i-panele" class="nav-link" data-scroll-target="#wykresy-złożone-i-panele"><span class="header-section-number">C.11</span> Wykresy złożone i panele</a></li>
+  <li><a href="#mapy" id="toc-mapy" class="nav-link" data-scroll-target="#mapy"><span class="header-section-number">C.12</span> Mapy</a></li>
+  <li><a href="#sec-zas-gus" id="toc-sec-zas-gus" class="nav-link" data-scroll-target="#sec-zas-gus"><span class="header-section-number">C.13</span> Wybrane zasady tworzenia wykresów statystycznych według GUS (2014)</a></li>
+  <li><a href="#sec-zas-zrodla" id="toc-sec-zas-zrodla" class="nav-link" data-scroll-target="#sec-zas-zrodla"><span class="header-section-number">C.14</span> Źródła</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./A_typy_wykresow.html">Załączniki</a></li><li class="breadcrumb-item"><a href="./C_zasady_wykresow.html"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Zasady opracowywania wykresów</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-zasady" class="quarto-section-identifier">Załącznik C — Zasady opracowywania wykresów</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Zestawienie łączy zasady podane w źródłach wykorzystanych w skrypcie; pełne opisy źródeł zawiera <a href="#sec-zas-zrodla" class="quarto-xref"><span>Sekcja C.14</span></a>. Zasady te mają charakter zaleceń. Healy (2026) wskazuje, że uczciwego przedstawienia danych nie rozstrzygają sztywne reguły, a Wilke (2019, rozdz. 23) część decyzji projektowych określa jako kwestię osobistej oceny. Listę najważniejszych zasad do sprawdzenia gotowego wykresu zawiera <a href="12_po_co_wizualizujemy.html#sec-wiz-lista" class="quarto-xref"><span>Sekcja 12.11.1</span></a>. Oddzielnie przedstawiono zasady GUS (2014) (<a href="#sec-zas-gus" class="quarto-xref"><span>Sekcja C.13</span></a>).</p>
+<section id="cel-i-zasady-ogólne" class="level2" data-number="C.1">
+<h2 data-number="C.1" class="anchored" data-anchor-id="cel-i-zasady-ogólne"><span class="header-section-number">C.1</span> Cel i zasady ogólne</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 36%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Zasada</th>
+<th style="text-align: left;">Warunki, wyjątki, różnice między źródłami</th>
+<th style="text-align: left;">Źródła</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">informację przedstawia się jasno i precyzyjnie, bez wprowadzania odbiorcy w błąd</td>
+<td style="text-align: left;">cel główny (<a href="12_po_co_wizualizujemy.html#sec-wiz-cel" class="quarto-xref"><span>Sekcja 12.2</span></a>)</td>
+<td style="text-align: left;">GUS (2014); Broman (2018); Bryan (2019)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wykres ma prostą budowę, atrakcyjną formę i zwięzły, czytelny opis</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">GUS (2014)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">forma wykresu odpowiada danym i pytaniu</td>
+<td style="text-align: left;">np. wykres liniowy do przebiegu zjawiska w czasie; dobór opisuje <a href="17_dobor_wykresu.html" class="quarto-xref"><span>Rozdział 17</span></a></td>
+<td style="text-align: left;">GUS (2014); Holtz i Healy (2018)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wykres ułatwia porównania i ujawnia trendy</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Bryan (2019)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wykres pokazuje możliwie dużo informacji i nie zaciemnia przekazu</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Broman (2018)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">z wykresu usuwa się elementy poboczne wobec przekazu</td>
+<td style="text-align: left;">nie należy zakładać, że odbiorca szybko odczyta złożoną rycinę; złożony wykres poprzedza się prostszym fragmentem</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 29)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wykres uzupełnia tekst i mapy, nie powiela ich treści</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">GUS (2014)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tekst i podpis są zgodne z ryciną</td>
+<td style="text-align: left;">wartości wpisane na wykresie należy sprawdzić</td>
+<td style="text-align: left;">Bryan (2019); Biecek (2016); Holtz i Healy (2018)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">zakresu skali i zbioru danych nie dobiera się pod tezę</td>
+<td style="text-align: left;">zniekształcenie jest wadą niezależnie od intencji autora</td>
+<td style="text-align: left;">Healy (2026); Holtz i Healy (2018)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="przedstawienie-wartości" class="level2" data-number="C.2">
+<h2 data-number="C.2" class="anchored" data-anchor-id="przedstawienie-wartości"><span class="header-section-number">C.2</span> Przedstawienie wartości</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 36%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Zasada</th>
+<th style="text-align: left;">Warunki, wyjątki, różnice między źródłami</th>
+<th style="text-align: left;">Źródła</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">wartości ilościowe przedstawia się przede wszystkim położeniem na wspólnej skali</td>
+<td style="text-align: left;">mniej dokładne są długość, kąt i pole (<a href="17_dobor_wykresu.html#sec-db-mapowanie" class="quarto-xref"><span>Sekcja 17.3</span></a>)</td>
+<td style="text-align: left;">Healy (2026); Broman (2018); Bryan (2019)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">pole zacieniowanego obszaru jest proporcjonalne do przedstawianej wartości</td>
+<td style="text-align: left;">zasada proporcjonalnego atramentu; odbiorca ocenia długość dokładniej niż pole</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 17)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wartość przedstawiana wielkością znaku odpowiada polu znaku, nie promieniowi</td>
+<td style="text-align: left;">Broman (2018) zaleca w takim przypadku długość zamiast pola</td>
+<td style="text-align: left;">Broman (2018); Holtz i Healy (2018); Biecek (2016)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wykresów trójwymiarowych nie stosuje się</td>
+<td style="text-align: left;">dotyczy wykresów, w których trzeci wymiar nie przedstawia danych (<a href="12_po_co_wizualizujemy.html#sec-wiz-3d" class="quarto-xref"><span>Sekcja 12.10</span></a>)</td>
+<td style="text-align: left;">GUS (2014); Wilke (2019, rozdz. 26); Broman (2018); Kosara (2010); Biecek (2016); Holtz i Healy (2018)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wykresu nie obraca się ani nie nachyla</td>
+<td style="text-align: left;">utrudnia to odczytanie wartości</td>
+<td style="text-align: left;">Biecek (2016)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">nie łączy się wielu kanałów dla wielu zmiennych</td>
+<td style="text-align: left;">wyjątek: dane o wyraźnej strukturze</td>
+<td style="text-align: left;">Healy (2026)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="osie-i-skale" class="level2" data-number="C.3">
+<h2 data-number="C.3" class="anchored" data-anchor-id="osie-i-skale"><span class="header-section-number">C.3</span> Osie i skale</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 36%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Zasada</th>
+<th style="text-align: left;">Warunki, wyjątki, różnice między źródłami</th>
+<th style="text-align: left;">Źródła</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">oś wykresu słupkowego zaczyna się od zera</td>
+<td style="text-align: left;">Healy (2026) mówi o umiarkowanej zgodzie w tej sprawie; wykres słupkowy może przedstawiać jawnie podaną różnicę, z wartościami ujemnymi poniżej zera (<a href="12_po_co_wizualizujemy.html#sec-wiz-zero" class="quarto-xref"><span>Sekcja 12.5</span></a>)</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 17); Healy (2026); Holtz i Healy (2018); Li (2022); Bryan (2019); Biecek (2016)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">oś wykresu liniowego i punktowego może nie zaczynać się od zera</td>
+<td style="text-align: left;">Bryan (2019) nie podaje ogólnej reguły i zaleca ocenę w każdym przypadku; zakres nie może wzmacniać tezy</td>
+<td style="text-align: left;">Holtz i Healy (2018); Healy (2026); Li (2022); Bryan (2019)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">skalę logarytmiczną stosuje się przy zmianach multiplikatywnych i danych skośnych</td>
+<td style="text-align: left;">na tej skali słupki przedstawiają ilorazy i zaczynają się od 1; wielkości przedstawia się punktami</td>
+<td style="text-align: left;">Bryan (2019); Broman (2018); Wilke (2019, rozdz. 17)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">porównywane wykresy mają wspólny zakres i skalę osi</td>
+<td style="text-align: left;">jeżeli różne skale są konieczne, informuje o tym podpis (<a href="12_po_co_wizualizujemy.html#sec-wiz-skala" class="quarto-xref"><span>Sekcja 12.9</span></a>)</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 21); Broman (2018); Bryan (2019); Holtz i Healy (2018)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">na jednej osi nie umieszcza się dwóch różnych skal dla dwóch zmiennych</td>
+<td style="text-align: left;">dopuszczalne są dwie jednostki tej samej wielkości, np. °C i °F; alternatywą są panele</td>
+<td style="text-align: left;">Bryan (2019); Holtz i Healy (2018)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">oś czasu jest podzielona proporcjonalnie</td>
+<td style="text-align: left;">okresy bez danych zaznacza się linią przerywaną</td>
+<td style="text-align: left;">GUS (2014); Holtz i Healy (2018)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">proporcje wykresu dobiera się do odczytu zmian</td>
+<td style="text-align: left;">Bryan (2019): średni odcinek linii pod kątem około 45°</td>
+<td style="text-align: left;">Bryan (2019); Healy (2026); Holtz i Healy (2018)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">punkty łączy się linią tylko przy uporządkowanej osi x, np. czasu</td>
+<td style="text-align: left;">na nieuporządkowanej osi kategorii linia sugeruje nieistniejący przebieg</td>
+<td style="text-align: left;">Bryan (2019)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wykres biegunowy stosuje się tylko do zmian w zamkniętym cyklu czasu</td>
+<td style="text-align: left;">do zróżnicowania regionalnego nie jest zalecany</td>
+<td style="text-align: left;">GUS (2014); Holtz i Healy (2018)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">osie są czytelne i pozwalają odczytać wartości</td>
+<td style="text-align: left;">brak osi uniemożliwia wykrycie zniekształcenia (<a href="12_po_co_wizualizujemy.html#sec-wiz-wilke" class="quarto-xref"><span>Sekcja 12.4</span></a>)</td>
+<td style="text-align: left;">Wilke (2019); Biecek (2016); Healy (2026)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="porównania-i-układ" class="level2" data-number="C.4">
+<h2 data-number="C.4" class="anchored" data-anchor-id="porównania-i-układ"><span class="header-section-number">C.4</span> Porównania i układ</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 36%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Zasada</th>
+<th style="text-align: left;">Warunki, wyjątki, różnice między źródłami</th>
+<th style="text-align: left;">Źródła</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">porównywane elementy znajdują się obok siebie</td>
+<td style="text-align: left;">słupki jednej grupy na wykresie zgrupowanym są blisko siebie (<a href="12_po_co_wizualizujemy.html#sec-wiz-porownania" class="quarto-xref"><span>Sekcja 12.8</span></a>)</td>
+<td style="text-align: left;">Broman (2018); Bryan (2019); Holtz i Healy (2018)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">porównywane wykresy wyrównuje się w pionie</td>
+<td style="text-align: left;">szczególnie rozkłady jednej zmiennej</td>
+<td style="text-align: left;">Broman (2018); Wilke (2019, rozdz. 21); Holtz i Healy (2018)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">jeżeli przedmiotem porównania jest różnica, wykres przedstawia różnicę</td>
+<td style="text-align: left;">odbiorca nie powinien obliczać jej w pamięci</td>
+<td style="text-align: left;">Bryan (2019); Broman (2018); Holtz i Healy (2018)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dwie wartości w wielu grupach można przedstawić wykresem hantlowym</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Holtz i Healy (2018)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">na wykresie liniowym nie umieszcza się wielu linii</td>
+<td style="text-align: left;">Holtz i Healy (2018): od około 5 grup; rozwiązania: wyróżnienie jednej linii na tle szarych albo panele</td>
+<td style="text-align: left;">Holtz i Healy (2018)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">na wykresie dynamicznym stosuje się najwyżej 3 szeregi słupków</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">GUS (2014)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wiele grup przedstawia się w panelach zamiast nakładania</td>
+<td style="text-align: left;">Bryan (2019): nakładanie wymaga różnych kształtów, wypełnień i kolorów</td>
+<td style="text-align: left;">Bryan (2019); Wilke (2019, rozdz. 18)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ciągu wykresów skumulowanych o więcej niż dwóch segmentach zwykle się nie stosuje</td>
+<td style="text-align: left;">łatwo odczytać tylko dolny segment; słupek skumulowany nie zawiera miar rozrzutu</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 10); Bryan (2019); Li (2022); Holtz i Healy (2018)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="kolejność" class="level2" data-number="C.5">
+<h2 data-number="C.5" class="anchored" data-anchor-id="kolejność"><span class="header-section-number">C.5</span> Kolejność</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 36%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Zasada</th>
+<th style="text-align: left;">Warunki, wyjątki, różnice między źródłami</th>
+<th style="text-align: left;">Źródła</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">kategorie porządkuje się według wartości, nie alfabetycznie</td>
+<td style="text-align: left;">kategorie o naturalnym porządku, np. miesiące, zachowują ten porządek; GUS (2014) dopuszcza też kolejność zgodną z klasyfikacją (<a href="12_po_co_wizualizujemy.html#sec-wiz-kolejnosc" class="quarto-xref"><span>Sekcja 12.6</span></a>)</td>
+<td style="text-align: left;">Holtz i Healy (2018); Broman (2018); GUS (2014); Biecek (2016)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">panele porządkuje się w sposób logiczny</td>
+<td style="text-align: left;">np. według klasy, roku albo malejącej wartości</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 21)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">kolejność w legendzie odpowiada kolejności na wykresie</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Wilke (2019, rozdz. 20); BBC (2019)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wiersze i kolumny heatmapy można uporządkować</td>
+<td style="text-align: left;">wyjątek: układ wynikający z fizycznego położenia obiektów</td>
+<td style="text-align: left;">Li (2022); Holtz i Healy (2018)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="rozkłady-i-obserwacje" class="level2" data-number="C.6">
+<h2 data-number="C.6" class="anchored" data-anchor-id="rozkłady-i-obserwacje"><span class="header-section-number">C.6</span> Rozkłady i obserwacje</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 36%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Zasada</th>
+<th style="text-align: left;">Warunki, wyjątki, różnice między źródłami</th>
+<th style="text-align: left;">Źródła</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">wykres w miarę możliwości pokazuje obserwacje</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Broman (2018); Holtz i Healy (2018)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">przed porównaniem średnich sprawdza się rozkłady</td>
+<td style="text-align: left;">jednakowe średnie i odchylenia mogą opisywać różne rozkłady (<a href="12_po_co_wizualizujemy.html#sec-wiz-anscombe" class="quarto-xref"><span>Sekcja 12.1</span></a>); dlatego Li (2022) odradza wykres słupkowy do tego porównania</td>
+<td style="text-align: left;">Li (2022); Holtz i Healy (2018)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">przy słupkach błędu podaje się przedstawianą miarę</td>
+<td style="text-align: left;">odchylenie standardowe, błąd standardowy albo przedział ufności</td>
+<td style="text-align: left;">Holtz i Healy (2018)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wykres pudełkowy uzupełnia się obserwacjami albo zastępuje wykresem skrzypcowym</td>
+<td style="text-align: left;">wykres pudełkowy ukrywa liczebność i kształt rozkładu; nie nadaje się do rozkładu dwumodalnego</td>
+<td style="text-align: left;">Holtz i Healy (2018); Li (2022)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wykresów skrzypcowych i krzywych gęstości nie stosuje się przy małej liczebności</td>
+<td style="text-align: left;">Li (2022) podaje stabilizację kwartyli powyżej n = 50 we własnym doświadczeniu</td>
+<td style="text-align: left;">Li (2022)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">histogram sprawdza się przy kilku szerokościach przedziału</td>
+<td style="text-align: left;">przy n &lt; 30 Li (2022) zaleca pokazanie wszystkich obserwacji (<a href="15_wizualizacja_statystyk.html#sec-ws-histogram" class="quarto-xref"><span>Sekcja 15.1</span></a>)</td>
+<td style="text-align: left;">Holtz i Healy (2018); Li (2022)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">na wykresie podaje się liczebność</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Holtz i Healy (2018)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">nakładające się punkty rozdziela się przezroczystością i niewielkim rozsunięciem</td>
+<td style="text-align: left;">zbyt duże rozsunięcie tworzy punkty w niereprezentatywnych miejscach; przy bardzo dużej liczbie obserwacji stosuje się histogram dwuwymiarowy, sześciokąty albo izolinie</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 18); Holtz i Healy (2018)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="wykres-kołowy" class="level2" data-number="C.7">
+<h2 data-number="C.7" class="anchored" data-anchor-id="wykres-kołowy"><span class="header-section-number">C.7</span> Wykres kołowy</h2>
+<p>Źródła oceniają ten wykres różnie. Lima (2018) opisuje spór o wykres kołowy: chwalony za intuicyjność i krytykowany za małą dokładność.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 36%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Zasada</th>
+<th style="text-align: left;">Warunki, wyjątki, różnice między źródłami</th>
+<th style="text-align: left;">Źródła</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">do porównania wartości stosuje się wykres słupkowy albo punktowy, nie kołowy</td>
+<td style="text-align: left;">kąty i pola odczytuje się mało dokładnie (<a href="12_po_co_wizualizujemy.html#sec-wiz-kolowy" class="quarto-xref"><span>Sekcja 12.7</span></a>); Holtz i Healy (2018), Li (2022) i Biecek (2016) odradzają wykres kołowy w ogóle</td>
+<td style="text-align: left;">Healy (2026); Broman (2018); Bryan (2019); Holtz i Healy (2018); Li (2022); Biecek (2016)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wykres kołowy może przedstawiać prosty udział w całości</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 10): proste ułamki i bardzo małe zbiory, a żaden z wykresów proporcji nie jest zawsze najlepszy; Kosara (2010): części tworzą sensowną całość i wzajemnie się wykluczają</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 10); Kosara (2010)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">struktura obejmuje niewiele elementów</td>
+<td style="text-align: left;">GUS (2014) zaleca 5–7 elementów; Kosara (2010) przy większej liczbie zaleca inny wykres</td>
+<td style="text-align: left;">GUS (2014); Kosara (2010)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">kilku wykresów kołowych nie stosuje się do porównań</td>
+<td style="text-align: left;">zmiany w czasie przedstawia się wykresem liniowym albo słupkowym</td>
+<td style="text-align: left;">Kosara (2010); Bryan (2019); Biecek (2016)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">nie stosuje się koncentrycznych wykresów pierścieniowych</td>
+<td style="text-align: left;">zewnętrzny pierścień wydaje się dłuższy; środek koła nie jest zasłonięty</td>
+<td style="text-align: left;">Li (2022); Kosara (2010)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">na wykresie kołowym podaje się liczby, a udziały sumują się do 100%</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Kosara (2010); Holtz i Healy (2018)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="kolor" class="level2" data-number="C.8">
+<h2 data-number="C.8" class="anchored" data-anchor-id="kolor"><span class="header-section-number">C.8</span> Kolor</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 36%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Zasada</th>
+<th style="text-align: left;">Warunki, wyjątki, różnice między źródłami</th>
+<th style="text-align: left;">Źródła</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">kolor stosuje się w określonym celu</td>
+<td style="text-align: left;">rozróżnienie grup, przedstawienie wartości albo wyróżnienie; kolor użyty bez celu jest błędem (<a href="18_formatowanie.html#sec-fo-kolor" class="quarto-xref"><span>Sekcja 18.5</span></a>)</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 4, 19); Holtz i Healy (2018)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">liczba kolorów jest niewielka</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 19): najlepiej 3–5, najwyżej 8 kategorii; przy większej liczbie stosuje się bezpośrednie etykiety</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 19); GUS (2014); Holtz i Healy (2018)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wartości ilościowe przedstawia się skalą sekwencyjną</td>
+<td style="text-align: left;">barwy nie mogą sugerować nieistniejącego porządku; do grup nie stosuje się gradientu</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 4); Holtz i Healy (2018)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">skalę rozbieżną stosuje się dla odchyleń od znaczącego punktu środkowego</td>
+<td style="text-align: left;">jasny środek i zrównoważone połowy; Li (2022): nie dla danych jednokierunkowych</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 4); Li (2022); Holtz i Healy (2018)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">skali tęczowej nie stosuje się</td>
+<td style="text-align: left;">barwy nie zmieniają się monotonicznie i wyróżniają przypadkowe wartości</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 19); Li (2022); Holtz i Healy (2018)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">kolory dobiera się z uwzględnieniem zaburzeń rozpoznawania barw</td>
+<td style="text-align: left;">unika się kontrastu czerwień–zieleń; paleta Okabe–Ito, palety typu viridis; wykres warto sprawdzić w symulatorze</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 19); Li (2022); Broman (2018); Healy (2026); Holtz i Healy (2018)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">kluczowej informacji nie przekazuje się wyłącznie kolorem</td>
+<td style="text-align: left;">ta sama zmienna może mieć też kształt punktu; linii przerywanych zwykle się unika</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 20)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">unika się dużych obszarów o silnie nasyconych barwach</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Wilke (2019, rozdz. 19); Holtz i Healy (2018)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wyróżnia się barwą element, na który odbiorca ma zwrócić uwagę</td>
+<td style="text-align: left;">pozostałe elementy mają barwy stonowane</td>
+<td style="text-align: left;">GUS (2014); Wilke (2019, rozdz. 4)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">te same grupy mają ten sam kolor na wszystkich rycinach</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Wilke (2019, rozdz. 21); Holtz i Healy (2018)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">palety dobiera się świadomie, nie według ustawień domyślnych</td>
+<td style="text-align: left;">pomocą jest <a href="https://colorbrewer2.org" class="uri">https://colorbrewer2.org</a></td>
+<td style="text-align: left;">GUS (2014); Healy (2026)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="opisy-legendy-i-etykiety" class="level2" data-number="C.9">
+<h2 data-number="C.9" class="anchored" data-anchor-id="opisy-legendy-i-etykiety"><span class="header-section-number">C.9</span> Opisy, legendy i etykiety</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 36%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Zasada</th>
+<th style="text-align: left;">Warunki, wyjątki, różnice między źródłami</th>
+<th style="text-align: left;">Źródła</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">osie mają nazwę zmiennej i jednostkę</td>
+<td style="text-align: left;">zmienne jakościowe nie mają jednostek; tytuł można pominąć, gdy etykiety są jednoznaczne, np. lata</td>
+<td style="text-align: left;">GUS (2014); Wilke (2019, rozdz. 22)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rycina ma tytuł albo podpis określający jej przedmiot</td>
+<td style="text-align: left;">GUS (2014): tytuł jednoznacznie definiuje przedmiot; Wilke (2019, rozdz. 22) oraz Holtz i Healy (2018): tytuł formułuje wniosek; tytuł wewnątrz grafiki Wilke (2019, rozdz. 22) zaleca głównie dla publikacji bez podpisu</td>
+<td style="text-align: left;">GUS (2014); Wilke (2019, rozdz. 22); Holtz i Healy (2018)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">podpis ryciny znajduje się pod ryciną, podpis tabeli — nad tabelą</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Wilke (2019, rozdz. 22)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dane opisuje się etykietami zamiast legendy, jeżeli to możliwe</td>
+<td style="text-align: left;">GUS (2014): opis na wykresie ogranicza legendę</td>
+<td style="text-align: left;">Broman (2018); Wilke (2019, rozdz. 20); BBC (2019); Wickham, Navarro i Pedersen; GUS (2014); Holtz i Healy (2018)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">etykiet nie dodaje się do wszystkich obserwacji</td>
+<td style="text-align: left;">opisuje się wartości wyróżniające się albo reprezentatywny podzbiór (<a href="18_formatowanie.html#sec-fo-tekst" class="quarto-xref"><span>Sekcja 18.7</span></a>)</td>
+<td style="text-align: left;">Wickham, Navarro i Pedersen; Wilke (2019, rozdz. 19)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">etykiety nie nachodzą na dane i na siebie</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Wickham, Navarro i Pedersen; Holtz i Healy (2018)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tekst na wykresie jest odpowiednio duży</td>
+<td style="text-align: left;">sprawdza się rycinę w docelowym rozmiarze; domyślne wielkości bywają za małe</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 24); Holtz i Healy (2018)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">etykiety są poziome, a liczby zaokrąglone</td>
+<td style="text-align: left;">nie trzeba opisywać każdej podziałki</td>
+<td style="text-align: left;">Holtz i Healy (2018)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wykres zawiera informację o źródle danych</td>
+<td style="text-align: left;">w grafikach BBC umieszcza się ją w stopce</td>
+<td style="text-align: left;">BBC (2019)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="elementy-które-nie-przedstawiają-danych" class="level2" data-number="C.10">
+<h2 data-number="C.10" class="anchored" data-anchor-id="elementy-które-nie-przedstawiają-danych"><span class="header-section-number">C.10</span> Elementy, które nie przedstawiają danych</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 36%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Zasada</th>
+<th style="text-align: left;">Warunki, wyjątki, różnice między źródłami</th>
+<th style="text-align: left;">Źródła</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">elementy, które nie przedstawiają danych, ogranicza się w rozsądnym zakresie</td>
+<td style="text-align: left;">Tufte (1983), za: Wilke (2019, rozdz. 23); Few, za: Dark Horse Analytics (2013): część powtórzeń ułatwia odbiór (<a href="12_po_co_wizualizujemy.html#sec-wiz-mniej" class="quarto-xref"><span>Sekcja 12.3</span></a>)</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 23); Dark Horse Analytics (2013); Bryan (2019); Broman (2018); Holtz i Healy (2018)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">usuwa się zbędne ramki i pomocnicze linie siatki</td>
+<td style="text-align: left;">główne linie siatki są jasnoszare; Wilke (2019, rozdz. 23) uznaje część wyborów, np. ramkę panelu, za kwestię oceny</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 23); Holtz i Healy (2018)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">siatka odpowiada zmiennej głównej</td>
+<td style="text-align: left;">linie prostopadłe do osi tej zmiennej; dla danych sparowanych linia y = x</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 23)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">linia odniesienia ułatwia odczyt</td>
+<td style="text-align: left;">wartości takiej linii są znaczące, np. 100 albo 50%; można ją dodać też w panelach</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 10, 23); Wickham, Navarro i Pedersen</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tekst osi i legendy nie jest zbyt blady</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Wilke (2019, rozdz. 23)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">używa się niewielu krojów pisma</td>
+<td style="text-align: left;">Holtz i Healy (2018): dwa kroje; Wilke (2019, rozdz. 21): oznaczenia paneli tym samym krojem</td>
+<td style="text-align: left;">Holtz i Healy (2018); Wilke (2019, rozdz. 21)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="wykresy-złożone-i-panele" class="level2" data-number="C.11">
+<h2 data-number="C.11" class="anchored" data-anchor-id="wykresy-złożone-i-panele"><span class="header-section-number">C.11</span> Wykresy złożone i panele</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 36%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Zasada</th>
+<th style="text-align: left;">Warunki, wyjątki, różnice między źródłami</th>
+<th style="text-align: left;">Źródła</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">panele mają ten sam zakres i skalę osi</td>
+<td style="text-align: left;">zob. „Osie i skale”</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 21); Holtz i Healy (2018)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">części ryciny złożonej oznacza się literami</td>
+<td style="text-align: left;">oznaczenia nie dominują; małych wielokrotności zwykle się nimi nie oznacza</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 21)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">panele mają wspólny język wizualny</td>
+<td style="text-align: left;">te same kolory i kolejność grup, jedna legenda</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 21); Holtz i Healy (2018)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">osie i elementy paneli są wyrównane</td>
+<td style="text-align: left;">między wykresami pozostawia się odstępy</td>
+<td style="text-align: left;">Wilke (2019, rozdz. 21); Holtz i Healy (2018)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="mapy" class="level2" data-number="C.12">
+<h2 data-number="C.12" class="anchored" data-anchor-id="mapy"><span class="header-section-number">C.12</span> Mapy</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 36%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Zasada</th>
+<th style="text-align: left;">Warunki, wyjątki, różnice między źródłami</th>
+<th style="text-align: left;">Źródła</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">wartości na mapie odnosi się do odpowiedniej podstawy</td>
+<td style="text-align: left;">zob. kartogram i pole odniesienia (<a href="05_dane_przestrzenne.html#sec-sf-kartogram" class="quarto-xref"><span>Sekcja 5.7.3</span></a>)</td>
+<td style="text-align: left;">Holtz i Healy (2018)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">brak danych przedstawia się jako brak danych</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Holtz i Healy (2018)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">małe obszary pozostają widoczne</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Holtz i Healy (2018)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">układ odwzorowania dobiera się świadomie</td>
+<td style="text-align: left;">Holtz i Healy (2018) ostrzega przed odwzorowaniem Mercatora (<a href="05_dane_przestrzenne.html#sec-sf-crs" class="quarto-xref"><span>Sekcja 5.5</span></a>)</td>
+<td style="text-align: left;">Holtz i Healy (2018)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">przed wyborem mapy rozważa się inny wykres</td>
+<td style="text-align: left;">mapa nie zawsze jest potrzebna</td>
+<td style="text-align: left;">Holtz i Healy (2018)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sec-zas-gus" class="level2" data-number="C.13">
+<h2 data-number="C.13" class="anchored" data-anchor-id="sec-zas-gus"><span class="header-section-number">C.13</span> Wybrane zasady tworzenia wykresów statystycznych według GUS (2014)</h2>
+<p>GUS (2014, rozdz. 2.4) porządkuje dobre praktyki opracowywania wykresów statystycznych w pięciu grupach (<a href="#tbl-zas-gus" class="quarto-xref">Tabela&nbsp;<span>C.1</span></a>).</p>
+<div id="tbl-zas-gus" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[18,82]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-zas-gus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;C.1: Wybrane zasady tworzenia wykresów statystycznych; opracowanie na podstawie: GUS (2014, rozdz. 2.4, tab. 2.1)
+</figcaption>
+<div aria-describedby="tbl-zas-gus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 82%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Grupa zasad</th>
+<th style="text-align: left;">Zasada</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ogólne</td>
+<td style="text-align: left;">budowa wykresu jest prosta, forma atrakcyjna, a opis krótki i czytelny</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ogólne</td>
+<td style="text-align: left;">wykres uzupełnia tekst i mapy publikacji, zamiast powtarzać ich treść</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ogólne</td>
+<td style="text-align: left;">informacja jest przekazana jasno i dokładnie, bez wprowadzania odbiorcy w błąd</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">treść</td>
+<td style="text-align: left;">na osiach podaje się jednostkę</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">treść</td>
+<td style="text-align: left;">tytuł jednoznacznie określa przedmiot wykresu; tytuł wykresu złożonego może być ogólny, a treść uzupełniają wtedy opisy osi</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">treść</td>
+<td style="text-align: left;">opis umieszczony bezpośrednio na wykresie, np. liniowym, ogranicza zawartość legendy</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">forma</td>
+<td style="text-align: left;">formę wykresu dobiera się do szeregu statystycznego; np. przebieg zjawiska w czasie przedstawia wykres liniowy</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">forma</td>
+<td style="text-align: left;">wykresów trójwymiarowych się nie zaleca</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">forma</td>
+<td style="text-align: left;">struktura składa się z 5–7 elementów; większą ich liczbę można pokazać, wydzielając część wykresu w większej skali</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">forma</td>
+<td style="text-align: left;">oś czasu na wykresach dynamicznych dzieli się proporcjonalnie, a lukę w szeregu danych zaznacza się linią przerywaną</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">forma</td>
+<td style="text-align: left;">wykres biegunowy przedstawia zmiany w zamkniętym cyklu czasu (miesięcznym, kwartalnym, rocznym); do zróżnicowania regionalnego nie jest zalecany</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">forma</td>
+<td style="text-align: left;">na wykresie dynamicznym nie umieszcza się więcej niż 3 szeregów słupków</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">kolorystyka</td>
+<td style="text-align: left;">liczba kolorów i typów szrafów jest ograniczona</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">kolorystyka</td>
+<td style="text-align: left;">zamiast automatycznej kolorystyki MS Excel stosuje się barwy dobrane, np. w ColorBrewer (<a href="https://colorbrewer2.org/" class="uri">https://colorbrewer2.org/</a>)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">pozostałe</td>
+<td style="text-align: left;">barwą albo teksturą można wyróżnić element, na który należy zwrócić uwagę czytelnika</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">pozostałe</td>
+<td style="text-align: left;">elementy szeregu opartego na cechach niemierzalnych porządkuje się najczęściej zgodnie z klasyfikacją, co zapewnia jednolitość publikacji; porządek od największego do najmniejszego ułatwia porównanie danych</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="sec-zas-zrodla" class="level2" data-number="C.14">
+<h2 data-number="C.14" class="anchored" data-anchor-id="sec-zas-zrodla"><span class="header-section-number">C.14</span> Źródła</h2>
+<ul>
+<li>Anscombe F.J., 1973. Graphs in statistical analysis. <em>The American Statistician</em> 27, 17–21.</li>
+<li>BBC Visual and Data Journalism, 2019. <em>BBC Visual and Data Journalism cookbook for R graphics</em>: <a href="https://bbc.github.io/rcookbook/" class="uri">https://bbc.github.io/rcookbook/</a>.</li>
+<li>Biecek P., 2016. <em>Odkrywać! Ujawniać! Objaśniać! Zbiór esejów o sztuce przedstawiania danych</em>, esej „Info-pomyłka”. Fundacja Naukowa SmarterPoland.pl: <a href="http://biecek.pl/Eseje/indexPomylka.html" class="uri">http://biecek.pl/Eseje/indexPomylka.html</a>.</li>
+<li>Broman K., 2018. <em>Creating effective figures and tables</em>: <a href="https://github.com/kbroman/Talk_Graphs" class="uri">https://github.com/kbroman/Talk_Graphs</a>.</li>
+<li>Bryan J., 2019. <em>STAT 545</em>, rozdział „Do’s and don’ts of making effective graphics”: <a href="https://stat545.com/effective-graphs.html" class="uri">https://stat545.com/effective-graphs.html</a>.</li>
+<li>de Saint-Exupéry A., 1939. <em>Terre des hommes</em>. Gallimard.</li>
+<li>Dark Horse Analytics, 2013. <em>Data Looks Better Naked</em>: <a href="https://www.darkhorseanalytics.com/blog/data-looks-better-naked" class="uri">https://www.darkhorseanalytics.com/blog/data-looks-better-naked</a>.</li>
+<li>Główny Urząd Statystyczny (GUS), 2014. <em>Graficzna prezentacja danych statystycznych. Wykresy, mapy, GIS</em>. Warszawa (licencja CC BY 3.0 PL), rozdział 2.4, tabela 2.1.</li>
+<li>Healy K., 2026. <em>Data Visualization: A practical introduction</em>, wydanie 2 (wersja internetowa), rozdział 1 „Look at Data”: <a href="https://socviz.co/01-look-at-data.html#what-makes-bad-figures-bad" class="uri">https://socviz.co/01-look-at-data.html#what-makes-bad-figures-bad</a>.</li>
+<li>Holtz Y., Healy C., 2018. <em>From Data to Viz</em>, zestawienie błędów: <a href="https://www.data-to-viz.com/caveats.html" class="uri">https://www.data-to-viz.com/caveats.html</a>.</li>
+<li>Kosara R., 2010. <em>Understanding pie charts</em>: <a href="https://eagereyes.org/blog/2010/pie-charts" class="uri">https://eagereyes.org/blog/2010/pie-charts</a>.</li>
+<li>Li C., 2022. <em>Friends Don’t Let Friends Make Bad Graphs</em>: <a href="https://github.com/cxli233/FriendsDontLetFriends" class="uri">https://github.com/cxli233/FriendsDontLetFriends</a>.</li>
+<li>Lima M., 2018. <em>Why humans love pie charts</em>: <a href="https://medium.com/@mslima/why-humans-love-pie-charts-9cd346000bdc" class="uri">https://medium.com/@mslima/why-humans-love-pie-charts-9cd346000bdc</a>.</li>
+<li>Tufte E.R., 1983. <em>The Visual Display of Quantitative Information</em>. Graphics Press.</li>
+<li>Wickham H., Navarro D., Pedersen T.L. <em>ggplot2: Elegant Graphics for Data Analysis</em>, wydanie 3 w przygotowaniu (wersja internetowa), rozdział o adnotacjach: <a href="https://ggplot2-book.org/annotations.html" class="uri">https://ggplot2-book.org/annotations.html</a>.</li>
+<li>Wilke C.O., 2019. <em>Fundamentals of Data Visualization</em>, rozdziały 1, 4, 10, 17–24, 26 i 29: <a href="https://clauswilke.com/dataviz/" class="uri">https://clauswilke.com/dataviz/</a>.</li>
+</ul>
+
+
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+WyJkYW5lL3diX2RsdWdvc2NfenljaWEuY3N2IiwiZGFuZS9sYXN5X2JsZC5jc3YiLCJkYW5lL2dhcG1pbmRlcl9yZWdpb25zLmNzdiIsImRhbmUvbWV0ZW8yMDIwLmNzdiIsImRhbmUvd29qZXdvZHp0d2EuZ3BrZyIsImRhbmUvQVBJX1NQLkRZTi5MRTAwLklOX0RTMl9lbl9leGNlbF92Ml8xMjkyLnhscyIsImRhbmUvd2JfZGx1Z29zY196eWNpYS5ncGtnIiwiZGFuZS9ndXMvd2FydG9zY19kb2RhbmFfd29qLmNzdiIsImRhbmUvZ3VzL3dza2F6bmlraV9kZW1vZ3JhZmljem5lX3Bvd2lhdHkuY3N2IiwiZGFuZS9ndXMvcGlyYW1pZGFfd2lla3VfcG9sc2thLmNzdiIsImRhbmUvZ3VzL3J1Y2hfbmF0dXJhbG55X3BvbHNrYS5jc3YiLCJkYW5lL2d1cy9wcmFjdWphY3lfZ3J1cHlfc2VrY2ppLmNzdiIsImRhbmUvZ3VzL2x1ZG5vc2NfZWtvbm9taWN6bmVfZ3J1cHlfd29qLmNzdiIsImRhbmUvZ3VzL3dza2F6bmlraV9kZW1vZ3JhZmljem5lX3BvZHJlZ2lvbnkuY3N2IiwiZGFuZS9ndXMvbHVkbm9zY19ncnVweV93aWVrdV9wb2xza2EuY3N2IiwiZGFuZS9ndXMvZHppYWxhbG5vc2NfYnJfd29qLmNzdiIsInBsaWtpX2t1cnN1LnppcCJd
+</script>
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Skopiowano!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Skopiowano!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./B_wykresy_statystyka_regionalna.html" class="pagination-link" aria-label="Wykresy w statystyce regionalnej">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Wykresy w statystyce regionalnej</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./D_dobor_wykresu_przyklady.html" class="pagination-link" aria-label="Dobór wykresu do problemu badawczego: przykłady">
+        <span class="nav-page-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Dobór wykresu do problemu badawczego: przykłady</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

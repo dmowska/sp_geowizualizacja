@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>21&nbsp; Oczekiwana długość życia na świecie w 2007 roku – Statystyczne i graficzne podstawy geowizualizacji</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./22_meteo_2020.html" rel="next">
+<link href="./20_dlugosc_zycia.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-3708d7fbbef66c9ac9ec4ecfd1afb0ee.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Brak wyników",
+    "search-matching-documents-text": "dopasowane dokumenty",
+    "search-copy-link-title": "Kopiuj link do wyszukiwania",
+    "search-hide-matches-text": "Ukryj dodatkowe dopasowania",
+    "search-more-match-text": "więcej dopasowań w tym dokumencie",
+    "search-more-matches-text": "więcej dopasowań w tym dokumencie",
+    "search-clear-button-title": "Wyczyść",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Anuluj",
+    "search-submit-button-title": "Zatwierdź",
+    "search-label": "Szukaj"
+  }
+}</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./20_dlugosc_zycia.html">PRZYKŁADY</a></li><li class="breadcrumb-item"><a href="./21_dlugosc_zycia_2007.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Oczekiwana długość życia na świecie w 2007 roku</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Przełącz pasek boczny" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Szukaj" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Statystyczne i graficzne podstawy geowizualizacji</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Szukaj"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">O skrypcie</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00_dane.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dane</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">PRACA W R</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_instalacja.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Instalacja R i RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_rstudio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Praca w RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_praca_z_danymi.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Praca z danymi</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_wykresy_ggplot2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wykresy w ggplot2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_dane_przestrzenne.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dane przestrzenne w R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_pakiety.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pakiety</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">QUARTO</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_raport.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Raport statystyczny</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">PODSTAWY STATYSTYKI</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_pojecia_podstawowe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pojęcia podstawowe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_statystyki_opisowe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Statystyki opisowe</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_korelacja.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Analiza korelacji</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">WIZUALIZACJA DANYCH</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_po_co_wizualizujemy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Po co wizualizujemy dane</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_gramatyka_grafiki.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Gramatyka grafiki</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_typy_wykresow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Typy wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_wizualizacja_statystyk.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wizualizacja statystyk opisowych</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16_wizualizacja_zaleznosci.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Wizualizacja zależności</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17_dobor_wykresu.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Dobór wykresu do problemu badawczego</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18_formatowanie.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Formatowanie wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19_zrodla.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Źródła informacji o wizualizacji</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">PRZYKŁADY</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20_dlugosc_zycia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Oczekiwana długość życia na kontynentach w latach 1952–2007</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21_dlugosc_zycia_2007.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Oczekiwana długość życia na świecie w 2007 roku</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22_meteo_2020.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Warunki meteorologiczne w Polsce w 2020 roku</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">PRZYKŁADOWE RAPORTY</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23_dlugosc_zycia_europa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Zmienność oczekiwanej długości życia w Europie w latach 1952 i 2007</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./24_meteo_zakopane.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Warunki meteorologiczne wybranej stacji</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./25_meteo_trzy_stacje.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Porównanie warunków meteorologicznych trzech stacji</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26_lasy_wielkopolska.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Lesistość powiatów województwa wielkopolskiego w latach 2000 i 2025</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Załączniki</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Przełącz sekcję">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./A_typy_wykresow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Katalog typów wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./B_wykresy_statystyka_regionalna.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Wykresy w statystyce regionalnej</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./C_zasady_wykresow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Zasady opracowywania wykresów</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./D_dobor_wykresu_przyklady.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Dobór wykresu do problemu badawczego: przykłady</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./E_bank_swiatowy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Praca z danymi Banku Światowego</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Spis treści</h2>
+   
+  <ul>
+  <li><a href="#wprowadzenie" id="toc-wprowadzenie" class="nav-link active" data-scroll-target="#wprowadzenie"><span class="header-section-number">21.1</span> Wprowadzenie</a></li>
+  <li><a href="#dane" id="toc-dane" class="nav-link" data-scroll-target="#dane"><span class="header-section-number">21.2</span> Dane</a>
+  <ul class="collapse">
+  <li><a href="#źródło-i-zakres" id="toc-źródło-i-zakres" class="nav-link" data-scroll-target="#źródło-i-zakres"><span class="header-section-number">21.2.1</span> Źródło i zakres</a></li>
+  <li><a href="#przygotowanie-danych" id="toc-przygotowanie-danych" class="nav-link" data-scroll-target="#przygotowanie-danych"><span class="header-section-number">21.2.2</span> Przygotowanie danych</a></li>
+  </ul></li>
+  <li><a href="#sec-2007-swiat" id="toc-sec-2007-swiat" class="nav-link" data-scroll-target="#sec-2007-swiat"><span class="header-section-number">21.3</span> Oczekiwana długość życia na świecie</a></li>
+  <li><a href="#sec-2007-kontynenty" id="toc-sec-2007-kontynenty" class="nav-link" data-scroll-target="#sec-2007-kontynenty"><span class="header-section-number">21.4</span> Zróżnicowanie oczekiwanej długości życia między kontynentami</a></li>
+  <li><a href="#sec-2007-mapa" id="toc-sec-2007-mapa" class="nav-link" data-scroll-target="#sec-2007-mapa"><span class="header-section-number">21.5</span> Rozmieszczenie przestrzenne</a></li>
+  <li><a href="#wnioski" id="toc-wnioski" class="nav-link" data-scroll-target="#wnioski"><span class="header-section-number">21.6</span> Wnioski</a></li>
+  <li><a href="#zadania-do-samodzielnego-wykonania" id="toc-zadania-do-samodzielnego-wykonania" class="nav-link" data-scroll-target="#zadania-do-samodzielnego-wykonania"><span class="header-section-number">21.7</span> Zadania do samodzielnego wykonania</a></li>
+  <li><a href="#sec-2007-raport" id="toc-sec-2007-raport" class="nav-link" data-scroll-target="#sec-2007-raport"><span class="header-section-number">21.8</span> Od przykładu do raportu</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./20_dlugosc_zycia.html">PRZYKŁADY</a></li><li class="breadcrumb-item"><a href="./21_dlugosc_zycia_2007.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Oczekiwana długość życia na świecie w 2007 roku</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-dl2007" class="quarto-section-identifier"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Oczekiwana długość życia na świecie w 2007 roku</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Jak czytać ten rozdział
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Rozdział pokazuje na przykładzie, jak wykonuje się obliczenia dla poszczególnych etapów raportu i jak interpretuje się uzyskane wyniki. Układ rozdziału służy nauce i różni się od typowej konstrukcji raportu: każda sekcja składa się z kodu R z wynikiem, <strong>interpretacji</strong> — tekstu, który wchodzi do raportu — oraz części <strong>Obliczenia w R</strong>, która wyjaśnia działanie kodu.</p>
+<p>Sekcja <a href="#sec-2007-raport" class="quarto-xref"><span>Sekcja 21.8</span></a> wskazuje, które elementy rozdziału tworzą raport, a plik <code>kod/21_raport.qmd</code> zawiera je w układzie raportu, który można otworzyć i wyrenderować. Kompletny przykład raportu przedstawia <a href="23_dlugosc_zycia_europa.html" class="quarto-xref"><span>Rozdział 23</span></a>.</p>
+</div>
+</div>
+<section id="wprowadzenie" class="level2" data-number="21.1">
+<h2 data-number="21.1" class="anchored" data-anchor-id="wprowadzenie"><span class="header-section-number">21.1</span> Wprowadzenie</h2>
+<p>Raport opisuje oczekiwaną długość życia w chwili urodzenia w 142 krajach świata w 2007 roku: jej poziom na świecie, różnice między kontynentami i wewnątrz nich oraz rozmieszczenie przestrzenne.</p>
+<p>Raport odpowiada na pytania badawcze:</p>
+<ul>
+<li>Jaka była typowa oczekiwana długość życia na świecie w 2007 roku? (<a href="#sec-2007-swiat" class="quarto-xref"><span>Sekcja 21.3</span></a>)</li>
+<li>Czy oczekiwana długość życia różniła się między kontynentami i jak była zróżnicowana wewnątrz nich? (<a href="#sec-2007-kontynenty" class="quarto-xref"><span>Sekcja 21.4</span></a>)</li>
+<li>Jak rozmieszczone są przestrzennie kraje o krótkiej i długiej oczekiwanej długości życia? (<a href="#sec-2007-mapa" class="quarto-xref"><span>Sekcja 21.5</span></a>)</li>
+</ul>
+</section>
+<section id="dane" class="level2" data-number="21.2">
+<h2 data-number="21.2" class="anchored" data-anchor-id="dane"><span class="header-section-number">21.2</span> Dane</h2>
+<section id="źródło-i-zakres" class="level3" data-number="21.2.1">
+<h3 data-number="21.2.1" class="anchored" data-anchor-id="źródło-i-zakres"><span class="header-section-number">21.2.1</span> Źródło i zakres</h3>
+<p>Zbiór <code>gapminder_regions.csv</code> zawiera dane Gapminder (<a href="https://www.gapminder.org/data/" class="uri">https://www.gapminder.org/data/</a>), dostępne w R w pakiecie <code>gapminder</code> (licencja CC0). Zbiór obejmuje 142 kraje i 12 lat: od 1952 do 2007 roku, co 5 lat. Raport wykorzystuje dane z 2007 roku. W raporcie wykorzystywane są kolumny: <code>lifeExp</code> (badana cecha), <code>kontynent</code> (podział na grupy), <code>kraj</code>, <code>year</code> (wybór roku) i <code>Kod</code> (połączenie z mapą).</p>
+</section>
+<section id="przygotowanie-danych" class="level3" data-number="21.2.2">
+<h3 data-number="21.2.2" class="anchored" data-anchor-id="przygotowanie-danych"><span class="header-section-number">21.2.2</span> Przygotowanie danych</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wczytanie pakietu tidyverse: zestawu pakietów do przetwarzania danych (dplyr)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># i tworzenia wykresów (ggplot2)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># wczytanie pliku CSV i zapisanie tabeli jako obiektu o nazwie dane</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>dane <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"dane/gapminder_regions.csv"</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># zamiana wszystkich kolumn tekstowych na zmienne typu factor (zmienne jakościowe)</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>dane <span class="ot">&lt;-</span> dane <span class="sc">|&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), as.factor))</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wybrany rok; lata z danych: od 1952 do 2007, co 5 lat</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>wybrany_rok <span class="ot">&lt;-</span> <span class="dv">2007</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># wybór obserwacji z wybranego roku i zapisanie ich jako nowego obiektu dane2007</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>dane2007 <span class="ot">&lt;-</span> dane <span class="sc">|&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> wybrany_rok)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Obliczenia w R.</strong></p>
+<ul>
+<li><code>read.csv()</code> wczytuje plik tekstowy, w którym wartości oddzielone są przecinkami, i zwraca tabelę. Znak <code>&lt;-</code> zapisuje ją jako obiekt o nazwie <code>dane</code>.</li>
+<li><code>mutate(across(where(is.character), as.factor))</code> zamienia typ kolumn: <code>where(is.character)</code> wybiera wszystkie kolumny tekstowe, <code>as.factor</code> zamienia każdą z nich na factor, czyli typ zmiennej, którym R zapisuje zmienne jakościowe, a <code>mutate()</code> zapisuje zmienione kolumny w tabeli.</li>
+<li><code>filter()</code> z pakietu <code>dplyr</code> pozostawia w tabeli wyłącznie wiersze spełniające podany warunek. Warunek <code>year == wybrany_rok</code> jest spełniony w wierszach, w których kolumna <code>year</code> ma wartość zapisaną w obiekcie <code>wybrany_rok</code>, tu: 2007. Podwójny znak <code>==</code> oznacza porównanie („czy jest równe”); pojedynczy znak <code>=</code> służy w R do nadawania wartości argumentom funkcji.</li>
+<li>Wynik zostaje zapisany jako nowy obiekt <code>dane2007</code>. Obiekt <code>dane</code> z wszystkimi latami pozostaje bez zmian.</li>
+</ul>
+</section>
+</section>
+<section id="sec-2007-swiat" class="level2" data-number="21.3">
+<h2 data-number="21.3" class="anchored" data-anchor-id="sec-2007-swiat"><span class="header-section-number">21.3</span> Oczekiwana długość życia na świecie</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># liczba krajów na każdym kontynencie w 2007 roku</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dane2007<span class="sc">$</span>kontynent)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Afryka   Ameryki Australia      Azja    Europa 
+       52        25         2        34        29 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># podstawowe statystyki oczekiwanej długości życia w 2007 roku</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dane2007<span class="sc">$</span>lifeExp)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  39.61   57.16   71.94   67.01   76.41   82.60 </code></pre>
+</div>
+</div>
+<p><strong>Interpretacja.</strong> W 2007 roku zbiór obejmuje 142 kraje: 52 w Afryce, 34 w Azji, 29 w Europie, 25 w Amerykach i 2 w grupie „Australia” (Australia i Nowa Zelandia). Oczekiwana długość życia w chwili urodzenia mieściła się w przedziale od 39,6 do 82,6 roku (rozstęp 43 lata). Średnia dla 142 krajów wynosiła 67,0 roku. Mediana (71,9 roku) wskazuje, że w połowie krajów oczekiwana długość życia przekraczała 71,9 roku. W połowie krajów mieściła się w przedziale od 57,2 (pierwszy kwartyl) do 76,4 roku (trzeci kwartyl). Kolumna <code>lifeExp</code> nie zawiera braków danych.</p>
+<p><strong>Obliczenia w R.</strong></p>
+<p><code>summary()</code> dla zmiennej typu factor (<code>kontynent</code>) podaje liczbę obserwacji w każdej kategorii, a dla zmiennej liczbowej (<code>lifeExp</code>) — minimum, pierwszy kwartyl, medianę, średnią, trzeci kwartyl i maksimum.</p>
+<p>Funkcje <code>summary()</code> i <code>summarise()</code> mają podobne nazwy, ale działają w różny sposób:</p>
+<ul>
+<li><code>summary()</code> (pakiet podstawowy R) zwraca <strong>stały zestaw</strong> podsumowań, zależny od typu zmiennej. Nie pozwala wybrać miar — nie podaje np. odchylenia standardowego — i nie oblicza ich w grupach. Służy do szybkiego przeglądu danych.</li>
+<li><code>summarise()</code> (pakiet <code>dplyr</code>) tworzy <strong>nową tabelę</strong> z miarami wybranymi przez użytkownika: każdy argument <code>nazwa = obliczenie</code> tworzy jedną kolumnę. Działa w potoku. Bez <code>group_by()</code> oblicza miary dla całej tabeli — stosuje się ją wtedy, gdy potrzebny jest samodzielnie dobrany zestaw statystyk zamiast stałego zestawu z <code>summary()</code>. Razem z <code>group_by()</code> oblicza miary osobno w każdej grupie (następna sekcja).</li>
+</ul>
+</section>
+<section id="sec-2007-kontynenty" class="level2" data-number="21.4">
+<h2 data-number="21.4" class="anchored" data-anchor-id="sec-2007-kontynenty"><span class="header-section-number">21.4</span> Zróżnicowanie oczekiwanej długości życia między kontynentami</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># statystyki opisowe oczekiwanej długości życia, osobno dla każdego kontynentu</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>dane2007 <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(kontynent) <span class="sc">|&gt;</span>                            <span class="co"># podział tabeli na kontynenty</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),                                        <span class="co"># liczba krajów</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">srednia =</span> <span class="fu">round</span>(<span class="fu">mean</span>(lifeExp), <span class="dv">1</span>),              <span class="co"># średnia arytmetyczna</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mediana =</span> <span class="fu">round</span>(<span class="fu">median</span>(lifeExp), <span class="dv">1</span>),            <span class="co"># mediana</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">minimum =</span> <span class="fu">round</span>(<span class="fu">min</span>(lifeExp), <span class="dv">1</span>),               <span class="co"># wartość najmniejsza</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">maksimum =</span> <span class="fu">round</span>(<span class="fu">max</span>(lifeExp), <span class="dv">1</span>),              <span class="co"># wartość największa</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">odch_std =</span> <span class="fu">round</span>(<span class="fu">sd</span>(lifeExp), <span class="dv">1</span>),               <span class="co"># odchylenie standardowe</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">wsp_zmiennosci =</span> <span class="fu">round</span>(<span class="fu">sd</span>(lifeExp) <span class="sc">/</span> <span class="fu">mean</span>(lifeExp) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>)   <span class="co"># współczynnik zmienności [%]</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 8
+  kontynent     n srednia mediana minimum maksimum odch_std wsp_zmiennosci
+  &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;          &lt;dbl&gt;
+1 Afryka       52    54.8    52.9    39.6     76.4      9.6           17.6
+2 Ameryki      25    73.6    72.9    60.9     80.7      4.4            6  
+3 Australia     2    80.7    80.7    80.2     81.2      0.7            0.9
+4 Azja         34    70.8    72.2    43.8     82.6      7.8           11.1
+5 Europa       29    77.9    78.9    72.5     81.8      2.8            3.6</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wykres pudełkowy oczekiwanej długości życia w podziale na kontynenty</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dane2007, <span class="fu">aes</span>(<span class="at">x =</span> kontynent, <span class="at">y =</span> lifeExp)) <span class="sc">+</span>    <span class="co"># dane i mapowanie</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.colour =</span> <span class="st">"red"</span>) <span class="sc">+</span>           <span class="co"># wartości odstające w kolorze czerwonym</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Kontynent"</span>, <span class="at">y =</span> <span class="st">"Oczekiwana długość życia [lata]"</span>) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-2007-boxplot" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2007-boxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="21_dlugosc_zycia_2007_files/figure-html/fig-2007-boxplot-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2007-boxplot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;21.1: Oczekiwana długość życia w podziale na kontynenty, 2007
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Interpretacja.</strong> W 2007 roku oczekiwana długość życia różniła się między kontynentami. Najwyższa średnia dotyczy Australii (80,7 roku) i Europy (77,9 roku), najniższa — Afryki (54,8 roku). Różnica między średnią dla Europy i dla Afryki, obliczona z wartości niezaokrąglonych, wynosi 23,0 roku. Pośrednie wartości przyjmują Ameryki (73,6 roku) i Azja (70,8 roku). Wykres pudełkowy (<a href="#fig-2007-boxplot" class="quarto-xref">Rycina&nbsp;<span>21.1</span></a>) pokazuje, że mediana dla Afryki (52,9 roku) leży poniżej pierwszego kwartyla wszystkich pozostałych kontynentów.</p>
+<p>Zróżnicowanie kilku zbiorowości pod względem tej samej cechy porównuje się za pomocą współczynnika zmienności. Największy współczynnik zmienności ma Afryka (17,6%) i Azja (11,1%), najmniejszy — Australia (0,9%) i Europa (3,6%). Odchylenie standardowe jest największe w Afryce (9,6 roku). Na wykresie pudełkowym wysokość pudełka odpowiada rozstępowi kwartylowemu: najwyższe jest pudełko Afryki, a w dalszej kolejności Azji.</p>
+<p>Wykres pudełkowy pozwala na identyfikację wartości odstających, tj. wartości mniejszych od Q1 − 1,5 × IQR albo większych od Q3 + 1,5 × IQR, gdzie Q1 i Q3 to pierwszy i trzeci kwartyl, a IQR — rozstęp kwartylowy danego kontynentu. Wartości odstające odnotowano dla dwóch kontynentów:</p>
+<ul>
+<li>Azja: Afganistan (43,8 roku), poniżej pudełka;</li>
+<li>Ameryki: Haiti (60,9 roku), poniżej pudełka.</li>
+</ul>
+<p>Grupa „Australia” obejmuje dwa kraje, Australię (81,2 roku) i Nową Zelandię (80,2 roku). Statystyki i pudełko tej grupy wyznaczono z dwóch wartości, dlatego nie są porównywalne z grupami liczącymi od 25 do 52 krajów.</p>
+<p><strong>Obliczenia w R.</strong></p>
+<p>Statystyki obliczono potokiem z funkcją <code>summarise()</code>, znanym z rozdziału „Oczekiwana długość życia na kontynentach w latach 1952–2007”, rozszerzonym o jeden krok: <code>group_by(kontynent)</code>. Funkcja <code>group_by()</code> z pakietu <code>dplyr</code> dzieli tabelę na grupy według wartości kolumny <code>kontynent</code>. Następna funkcja w potoku, <code>summarise()</code>, oblicza miary osobno w każdej grupie. Wynik zawiera jeden wiersz dla każdego kontynentu oraz kolumnę <code>kontynent</code> z nazwą grupy. Zestaw miar ograniczono do liczby krajów, średniej, mediany, wartości skrajnych, odchylenia standardowego i współczynnika zmienności; kwartyle przedstawia wykres pudełkowy.</p>
+<p>Wykres pudełkowy powstaje z tego samego schematu wywołania co wykresy z rozdziału „Oczekiwana długość życia na kontynentach w latach 1952–2007”:</p>
+<ul>
+<li>mapowanie: <code>aes(x = kontynent, y = lifeExp)</code> — kontynenty na osi x, oczekiwana długość życia na osi y;</li>
+<li>obiekt geometryczny: <code>geom_boxplot()</code> — wykres pudełkowy, rysowany osobno dla każdej kategorii zmiennej na osi x. Argument <code>outlier.colour = "red"</code> nadaje punktom oznaczającym wartości odstające kolor czerwony.</li>
+</ul>
+<p>Odczytanie wykresu pudełkowego:</p>
+<ul>
+<li><strong>pudełko</strong> rozciąga się od pierwszego kwartyla (Q1, dolna krawędź) do trzeciego kwartyla (Q3, górna krawędź) i obejmuje środkowe 50% obserwacji; jego wysokość to rozstęp kwartylowy (IQR);</li>
+<li><strong>linia wewnątrz pudełka</strong> oznacza medianę;</li>
+<li><strong>wąsy</strong> sięgają od pudełka do najdalszej obserwacji leżącej nie dalej niż 1,5 × IQR od krawędzi pudełka;</li>
+<li><strong>punkty</strong> (na wykresie w kolorze czerwonym) to wartości odstające — obserwacje leżące dalej niż 1,5 × IQR od krawędzi pudełka, czyli poza zasięgiem wąsów. Każdy punkt to jeden kraj.</li>
+</ul>
+<p>Wykres pudełkowy pokazuje położenie wartości odstających, ale nie podaje, których krajów dotyczą. Poniższy kod wyznacza je tą samą regułą, którą stosuje <code>geom_boxplot()</code>, i zwraca tabelę z kontynentem, krajem, rokiem i wartością:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># wartości odstające oczekiwanej długości życia, osobno dla każdego kontynentu</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>dane2007 <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(kontynent) <span class="sc">|&gt;</span>                            <span class="co"># podział tabeli na kontynenty</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">q1 =</span> <span class="fu">quantile</span>(lifeExp, <span class="fl">0.25</span>),                   <span class="co"># pierwszy kwartyl kontynentu</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">q3 =</span> <span class="fu">quantile</span>(lifeExp, <span class="fl">0.75</span>),                   <span class="co"># trzeci kwartyl kontynentu</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">iqr =</span> <span class="fu">IQR</span>(lifeExp)                              <span class="co"># rozstęp kwartylowy kontynentu</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span>                                      <span class="co"># koniec obliczeń w grupach</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(lifeExp <span class="sc">&lt;</span> q1 <span class="sc">-</span> <span class="fl">1.5</span> <span class="sc">*</span> iqr <span class="sc">|</span>                 <span class="co"># poniżej zasięgu dolnego wąsa</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>         lifeExp <span class="sc">&gt;</span> q3 <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> iqr) <span class="sc">|&gt;</span>               <span class="co"># albo powyżej zasięgu górnego wąsa</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(kontynent, kraj, year, lifeExp) <span class="sc">|&gt;</span>         <span class="co"># wybór czterech kolumn</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(kontynent, lifeExp)                       <span class="co"># sortowanie: kontynent, potem wartość</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  kontynent kraj        year lifeExp
+  &lt;fct&gt;     &lt;fct&gt;      &lt;int&gt;   &lt;dbl&gt;
+1 Ameryki   Haiti       2007    60.9
+2 Azja      Afganistan  2007    43.8</code></pre>
+</div>
+</div>
+<ul>
+<li><code>mutate()</code> dodaje do tabeli nowe kolumny. Po <code>group_by(kontynent)</code> wartości <code>q1</code>, <code>q3</code> i <code>iqr</code> są obliczane osobno dla każdego kontynentu i wpisywane do każdego wiersza danego kontynentu — w odróżnieniu od <code>summarise()</code>, liczba wierszy tabeli się nie zmienia.</li>
+<li><code>ungroup()</code> usuwa podział na grupy; kolejne kroki działają na całej tabeli.</li>
+<li><code>filter()</code> pozostawia wiersze spełniające warunek. Znak <code>|</code> oznacza „lub”: wiersz zostaje, jeśli wartość leży poniżej <code>q1 - 1.5 * iqr</code> albo powyżej <code>q3 + 1.5 * iqr</code>.</li>
+<li><code>select()</code> wybiera kolumny, które pojawią się w wyniku.</li>
+<li><code>arrange()</code> sortuje wiersze rosnąco: najpierw według kontynentu, w obrębie kontynentu według wartości <code>lifeExp</code>.</li>
+</ul>
+</section>
+<section id="sec-2007-mapa" class="level2" data-number="21.5">
+<h2 data-number="21.5" class="anchored" data-anchor-id="sec-2007-mapa"><span class="header-section-number">21.5</span> Rozmieszczenie przestrzenne</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pakiety do pracy z danymi przestrzennymi i granice państw świata</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rnaturalearth)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># granice państw jako obiekt przestrzenny sf</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>swiat <span class="ot">&lt;-</span> <span class="fu">ne_countries</span>(<span class="at">scale =</span> <span class="st">"medium"</span>, <span class="at">returnclass =</span> <span class="st">"sf"</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># połączenie granic z danymi: wszystkie państwa z mapy, dane tam, gdzie zgadza się kod</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>mapa <span class="ot">&lt;-</span> swiat <span class="sc">|&gt;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(dane2007, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"iso_a3_eh"</span> <span class="ot">=</span> <span class="st">"Kod"</span>))</span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mapa: kolor państwa odpowiada klasie oczekiwanej długości życia</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mapa) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> lifeExp), <span class="at">colour =</span> <span class="st">"grey40"</span>, <span class="at">linewidth =</span> <span class="fl">0.1</span>) <span class="sc">+</span>  <span class="co"># państwa i granice</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_fermenter</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>),     <span class="co"># granice klas co 10 lat</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">"YlGnBu"</span>,               <span class="co"># paleta sekwencyjna Brewer</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">direction =</span> <span class="dv">1</span>,                    <span class="co"># ciemniejszy kolor = wyższa wartość</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">na.value =</span> <span class="st">"grey85"</span>) <span class="sc">+</span>            <span class="co"># kolor państw bez danych</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">fill =</span> <span class="st">"Oczekiwana długość</span><span class="sc">\n</span><span class="st">życia [lata]"</span>) <span class="sc">+</span>      <span class="co"># tytuł legendy</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span>                           <span class="co"># motyw bez osi i siatki</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)                      <span class="co"># legenda pod mapą</span></span></code><button title="Kopiuj do schowka" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-2007-mapa" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2007-mapa-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="21_dlugosc_zycia_2007_files/figure-html/fig-2007-mapa-1.png" class="img-fluid figure-img" width="864">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2007-mapa-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Rycina&nbsp;21.2: Oczekiwana długość życia w 2007 roku
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Interpretacja.</strong> Mapa (<a href="#fig-2007-mapa" class="quarto-xref">Rycina&nbsp;<span>21.2</span></a>) pokazuje wyraźne zróżnicowanie przestrzenne oczekiwanej długości życia. Najjaśniejszy kolor, oznaczający oczekiwaną długość życia poniżej 50 lat, mają kraje Afryki Wschodniej, Zachodniej, Środkowej i Południowej oraz Afganistan. Większość krajów Afryki Północnej należy do klasy 70–80 lat. Najciemniejszy kolor (80 lat i więcej) mają m.in. kraje Europy Zachodniej i Północnej, Japonia, Australia, Nowa Zelandia i Kanada.</p>
+<p>Szarym kolorem oznaczono obszary, których nie obejmuje zbiór danych, m.in. Rosję, Ukrainę, Kazachstan i Antarktydę.</p>
+<p><strong>Obliczenia w R.</strong></p>
+<p>Granice państw:</p>
+<ul>
+<li>Pakiet <code>sf</code> obsługuje dane przestrzenne. Obiekt <code>sf</code> jest tabelą, w której każdy wiersz ma dodatkową kolumnę <code>geometry</code> z kształtem obiektu — tu z granicami państwa (<a href="05_dane_przestrzenne.html#sec-sf-obiekt" class="quarto-xref"><span>Sekcja 5.1</span></a>).</li>
+<li>Pakiet <code>rnaturalearth</code> udostępnia granice państw świata z bazy Natural Earth. Funkcja <code>ne_countries()</code> zwraca je jako obiekt <code>sf</code> (<code>returnclass = "sf"</code>), w szczegółowości <code>scale = "medium"</code> (wymaga zainstalowanego pakietu <code>rnaturalearthdata</code>).</li>
+</ul>
+<p>Połączenie tabel:</p>
+<ul>
+<li><code>left_join()</code> łączy dwie tabele według wspólnego klucza. Zapis <code>by = c("iso_a3_eh" = "Kod")</code> oznacza, że kolumna <code>iso_a3_eh</code> z tabeli granic odpowiada kolumnie <code>Kod</code> z tabeli danych.</li>
+<li>Połączenie typu <em>left</em> zachowuje wszystkie wiersze pierwszej tabeli (<code>swiat</code>). Państwa bez odpowiednika w danych otrzymują w kolumnach z danymi brak wartości (<code>NA</code>) (<a href="05_dane_przestrzenne.html#sec-sf-join" class="quarto-xref"><span>Sekcja 5.4</span></a>).</li>
+<li>Reunion nie ma w Natural Earth osobnych granic — jest częścią Francji, dlatego nie ma go na mapie. Terytoria zamorskie zapisane w warstwie jako część państwa (np. Gujana Francuska) mają kolor tego państwa.</li>
+</ul>
+<p>Mapa:</p>
+<ul>
+<li><code>geom_sf()</code> rysuje obiekty przestrzenne z kolumny <code>geometry</code>. Mapowanie <code>fill = lifeExp</code> nadaje kolor wypełnienia według oczekiwanej długości życia; <code>colour</code> i <code>linewidth</code> ustalają kolor i grubość linii granic.</li>
+<li><code>scale_fill_fermenter()</code> dzieli wartości liczbowe na klasy podczas rysowania mapy — nie trzeba tworzyć w tabeli nowej zmiennej z klasami. Argument <code>breaks</code> podaje granice klas: wartości 50, 60, 70 i 80 tworzą pięć klas (poniżej 50, 50–60, 60–70, 70–80, 80 i więcej). <code>palette = "YlGnBu"</code> wybiera paletę <strong>sekwencyjną</strong> z zestawu Brewer — od jasnego do ciemnego odcienia, z przejściem barw od żółtej przez zieloną do niebieskiej, co ułatwia rozróżnienie sąsiednich klas. Paleta sekwencyjna odpowiada klasom uporządkowanym: ciemniejszy kolor oznacza dłuższą oczekiwaną długość życia; <code>direction = 1</code> ustala ten kierunek. <code>na.value</code> podaje kolor dla obszarów bez danych.</li>
+<li><code>theme_void()</code> to motyw bez osi, siatki i tła — współrzędne geograficzne nie są potrzebne do odczytu mapy.</li>
+<li>Znak <code>\n</code> w tytule legendy oznacza przejście do nowego wiersza.</li>
+</ul>
+</section>
+<section id="wnioski" class="level2" data-number="21.6">
+<h2 data-number="21.6" class="anchored" data-anchor-id="wnioski"><span class="header-section-number">21.6</span> Wnioski</h2>
+<ul>
+<li><strong>Oczekiwana długość życia na świecie</strong> (<a href="#sec-2007-swiat" class="quarto-xref"><span>Sekcja 21.3</span></a>). W 2007 roku oczekiwana długość życia wynosiła od 39,6 do 82,6 roku, przy średniej 67,0 roku i medianie 71,9 roku.</li>
+<li><strong>Zróżnicowanie między kontynentami</strong> (<a href="#sec-2007-kontynenty" class="quarto-xref"><span>Sekcja 21.4</span></a>). Średnia dla Afryki (54,8 roku) jest niższa o 23,0 roku od średniej dla Europy (77,9 roku). Mediana dla Afryki leży poniżej pierwszego kwartyla pozostałych kontynentów. Największy współczynnik zmienności mają Afryka (17,6%) i Azja (11,1%). Wartości odstające to Afganistan i Haiti. Statystyki dla Australii opisują dwa kraje.</li>
+<li><strong>Rozmieszczenie przestrzenne</strong> (<a href="#sec-2007-mapa" class="quarto-xref"><span>Sekcja 21.5</span></a>). Kraje o oczekiwanej długości życia poniżej 50 lat leżą — z wyjątkiem Afganistanu — w Afryce Wschodniej, Zachodniej, Środkowej i Południowej. Najdłuższa oczekiwana długość życia (80 lat i więcej) dotyczy krajów Europy, Japonii, Hongkongu, Izraela, Australii, Nowej Zelandii i Kanady.</li>
+</ul>
+</section>
+<section id="zadania-do-samodzielnego-wykonania" class="level2" data-number="21.7">
+<h2 data-number="21.7" class="anchored" data-anchor-id="zadania-do-samodzielnego-wykonania"><span class="header-section-number">21.7</span> Zadania do samodzielnego wykonania</h2>
+<p>Zadania polegają na zmianie jednego elementu w kodzie pokazanym w raporcie.</p>
+<p><strong>Zadanie 1. Raport dla innego roku.</strong> Otwórz plik <code>kod/21_dlugosc_zycia_2007.qmd</code>, zmień wartość obiektu <code>wybrany_rok</code> (np. na <code>1952</code>) i wyrenderuj dokument przyciskiem <strong>Render</strong> (<a href="07_quarto.html#sec-q-render" class="quarto-xref"><span>Sekcja 7.6</span></a>). Ta jedna zmiana tworzy od nowa wszystkie tabele i ryciny dla wybranego roku. Porównaj średnie dla kontynentów i mapę z wynikami dla 2007 roku. Podpisy rycin i tekst opisujący wyniki są zapisane w pliku na stałe, dlatego w nowym raporcie należy je zmienić samodzielnie. Nazwa obiektu <code>dane2007</code> pozostaje bez zmian.</p>
+<p><strong>Zadanie 2. Zmiana grupowania.</strong> Oblicz statystyki i wykonaj wykres pudełkowy w podziale na grupy dochodowe (<code>income_grp_pl</code>) albo subregiony (<code>subregion_pl</code>) zamiast kontynentów. Przy grupach dochodowych dwa kraje nie mają przypisanej grupy (<a href="03_praca_z_danymi.html#sec-pd-braki" class="quarto-xref"><span>Sekcja 3.5</span></a>): pustą kategorię pomija warunek <code>filter(income_grp_pl != "")</code> dodany do potoku.</p>
+<p><strong>Zadanie 3. Zmiana mapy.</strong> Zmień granice klas w argumencie <code>breaks</code> (np. co 5 lat) albo paletę kolorów (np. <code>"Blues"</code>, <code>"OrRd"</code>, <code>"YlOrBr"</code>).</p>
+</section>
+<section id="sec-2007-raport" class="level2" data-number="21.8">
+<h2 data-number="21.8" class="anchored" data-anchor-id="sec-2007-raport"><span class="header-section-number">21.8</span> Od przykładu do raportu</h2>
+<p>Plik <code>kod/21_raport.qmd</code> zawiera wyłącznie te elementy rozdziału, które wchodzą do raportu, oraz analizę korelacji z PKB per capita. Pełny tekst pliku przedstawia <a href="08_raport.html#sec-r-przyklad" class="quarto-xref"><span>Sekcja 8.6</span></a>. Otwiera się go w RStudio i renderuje przyciskiem <strong>Render</strong> (<a href="07_quarto.html#sec-q-render" class="quarto-xref"><span>Sekcja 7.6</span></a>).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Część raportu</th>
+<th>Element rozdziału</th>
+<th>Opracowanie w pliku</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Wprowadzenie</td>
+<td>Wprowadzenie</td>
+<td>dodane pytanie o związek z PKB per capita</td>
+</tr>
+<tr class="even">
+<td>Dane</td>
+<td>Źródło i zakres</td>
+<td>tabela zmiennych z jednostką i skalą pomiarową</td>
+</tr>
+<tr class="odd">
+<td>Metody</td>
+<td>—</td>
+<td>nowa część: miary, formy prezentacji wyników, uzasadnienie wyboru współczynnika korelacji, oprogramowanie</td>
+</tr>
+<tr class="even">
+<td>Wyniki</td>
+<td>interpretacje, wykres pudełkowy (<a href="#fig-2007-boxplot" class="quarto-xref">Rycina&nbsp;<span>21.1</span></a>), mapa (<a href="#fig-2007-mapa" class="quarto-xref">Rycina&nbsp;<span>21.2</span></a>)</td>
+<td>tekst poprzedza tabele i ryciny; wyniki <code>summary()</code> i <code>summarise()</code> przedstawiono w tabelach z podpisem; dodana sekcja o związku z PKB per capita (<a href="16_wizualizacja_zaleznosci.html#sec-wz-rozrzut" class="quarto-xref"><span>Sekcja 16.1</span></a>)</td>
+</tr>
+<tr class="odd">
+<td>Wnioski</td>
+<td>Wnioski</td>
+<td>odpowiedzi na pytania badawcze z odesłaniem do sekcji wyników</td>
+</tr>
+<tr class="even">
+<td>Źródła</td>
+<td>—</td>
+<td>nowa część: źródła danych i granic państw</td>
+</tr>
+</tbody>
+</table>
+<p>Do raportu nie wchodzą: opis odczytania wykresu pudełkowego, kod wyznaczający wartości odstające, części <strong>Obliczenia w R</strong> i zadania.</p>
+
+
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+WyJkYW5lL3diX2RsdWdvc2NfenljaWEuY3N2IiwiZGFuZS9sYXN5X2JsZC5jc3YiLCJkYW5lL2dhcG1pbmRlcl9yZWdpb25zLmNzdiIsImRhbmUvbWV0ZW8yMDIwLmNzdiIsImRhbmUvd29qZXdvZHp0d2EuZ3BrZyIsImRhbmUvQVBJX1NQLkRZTi5MRTAwLklOX0RTMl9lbl9leGNlbF92Ml8xMjkyLnhscyIsImRhbmUvd2JfZGx1Z29zY196eWNpYS5ncGtnIiwiZGFuZS9ndXMvd2FydG9zY19kb2RhbmFfd29qLmNzdiIsImRhbmUvZ3VzL3dza2F6bmlraV9kZW1vZ3JhZmljem5lX3Bvd2lhdHkuY3N2IiwiZGFuZS9ndXMvcGlyYW1pZGFfd2lla3VfcG9sc2thLmNzdiIsImRhbmUvZ3VzL3J1Y2hfbmF0dXJhbG55X3BvbHNrYS5jc3YiLCJkYW5lL2d1cy9wcmFjdWphY3lfZ3J1cHlfc2VrY2ppLmNzdiIsImRhbmUvZ3VzL2x1ZG5vc2NfZWtvbm9taWN6bmVfZ3J1cHlfd29qLmNzdiIsImRhbmUvZ3VzL3dza2F6bmlraV9kZW1vZ3JhZmljem5lX3BvZHJlZ2lvbnkuY3N2IiwiZGFuZS9ndXMvbHVkbm9zY19ncnVweV93aWVrdV9wb2xza2EuY3N2IiwiZGFuZS9ndXMvZHppYWxhbG5vc2NfYnJfd29qLmNzdiIsInBsaWtpX2t1cnN1LnppcCJd
+</script>
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Skopiowano!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Skopiowano!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./20_dlugosc_zycia.html" class="pagination-link" aria-label="Oczekiwana długość życia na kontynentach w latach 1952–2007">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Oczekiwana długość życia na kontynentach w latach 1952–2007</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./22_meteo_2020.html" class="pagination-link" aria-label="Warunki meteorologiczne w Polsce w 2020 roku">
+        <span class="nav-page-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Warunki meteorologiczne w Polsce w 2020 roku</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
